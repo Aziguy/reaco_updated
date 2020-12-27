@@ -9768,7 +9768,9 @@ a.nav-link.active{
   color: #fff !important;
 }
 
-
+.filtre{
+    filter: opacity(0.5) drop-shadow(0 0 0 blue);
+}
 
 
 

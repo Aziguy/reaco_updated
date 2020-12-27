@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Comégusto</title>
+    <title>Comégusto{% block title %}  {% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
 
@@ -42,7 +42,7 @@
 <body>
 <div class="page_loader"></div>
 
-{% include "includes/topbar.html" %}
+{% include "includes/topbar.html" with infosdata=infos %}
 
 {% include "includes/navbar.html" %}
 
