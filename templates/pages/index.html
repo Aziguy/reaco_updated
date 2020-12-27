@@ -1,118 +1,12 @@
 {% extends "base.html" %}
 
+{% block title %} | Accueil {% endblock %}
+
 {% block content %}
 
-{% load static %}	
-<!-- Banner start -->
-<div class="banner" id="banner">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner banner-slider-inner text-center">
-            <div class="carousel-item banner-max-height active item-bg">
-                <img class="d-block w-100 h-100" src="{% static "img/car-1.jpg" %}" alt="banner">
-                <div class="carousel-content container banner-info-2 bi-2 text-left">
-                    <h3>Wow Factor Standard</h3>
-                    <h5>Allow us to guide you through the innovative stress<br>
-                        free approach in finding your dream car.</h5>
-                    <a href="services.html" class="btn btn-lg btn-theme">Read more</a>
-                </div>
-            </div>
-            <div class="carousel-item banner-max-height item-bg">
-                <img class="d-block w-100 h-100" src="{% static "img/car-2.jpg" %}" alt="banner">
-                <div class="carousel-content container banner-info-2 bi-2 text-left">
-                    <h3>Explore Your Dream Car</h3>
-                    <h5>Allow us to guide you through the innovative stress<br>
-                        free approach in finding your dream car.</h5>
-                    <a href="#" class="btn btn-lg btn-theme">Read more</a>
-                </div>
-            </div>
-            <div class="carousel-item banner-max-height item-bg">
-                <img class="d-block w-100 h-100" src="{% static "img/car-3.jpg" %}" alt="banner">
-                <div class="carousel-content container banner-info-2 bi-2 text-left">
-                    <h3>We Are Wheel</h3>
-                    <h5>Allow us to guide you through the innovative stress<br>
-                        free approach in finding your dream car.</h5>
-                    <a href="#" class="btn btn-lg btn-theme">Read more</a>
-                </div>
-            </div>
-        </div>
-        <!-- Search box 3 start -->
-        <div class="search-box-4 sb-8">
-            <form action="#" method="">
-                <div class="form-group">
-                    <input type="text" name="keyword" placeholder="Search by name" class="form-control">
-                </div>
-                <div class="form-group">
-                    <select class="form-control search-fields" name="select-brand">
-                        <option selected="true" disabled="disabled">Brand</option>
-                        <option>Audi</option>
-                        <option>BMW</option>
-                        <option>Honda</option>
-                        <option>Nissan</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control search-fields" name="select-make">
-                        <option selected="true" disabled="disabled">Model</option>
-                        <option>BMW</option>
-                        <option>Honda</option>
-                        <option>Lamborghini Huracán</option>
-                        <option>Sports Car</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control search-fields" name="select-location">
-                        <option selected="true" disabled="disabled">Location</option>
-                        <option>United States</option>
-                        <option>United Kingdom</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control search-fields" name="select-year">
-                        <option selected="true" disabled="disabled">Year</option>
-                        <option>2016</option>
-                        <option>2017</option>
-                        <option>2018</option>
-                        <option>2019</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <select class="form-control search-fields" name="select-type">
-                        <option selected="true" disabled="disabled">Select Type Of Car</option>
-                        <option>Sedan</option>
-                        <option>Sports</option>
-                        <option>Hatchback</option>
-                        <option>Pickup Truck</option>
-                        <option>SUV</option>
-                    </select>
-                </div>
-                <div class="range-slider clearfix">
-                                <label>Price</label>
-                                <div data-min="0" data-max="150000"  data-min-name="min_price" data-max-name="max_price" data-unit="USD" class="range-slider-ui ui-slider" aria-disabled="false"></div>
-                                <div class="clearfix"></div>
-                            </div>
-                <div class="form-group">
-                    <button class="btn btn-block button-theme btn-md">
-                        <i class="fa fa-search"></i> Search
-                    </button>
-                </div>
-            </form>
-        </div>
-        <!-- Search box 3 end -->
-        <a class="carousel-control-prev none-580" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="slider-mover-left" aria-hidden="true">
-                <i class="fa fa-angle-left"></i>
-            </span>
-        </a>
-        <a class="carousel-control-next none-580" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="slider-mover-right" aria-hidden="true">
-                <i class="fa fa-angle-right"></i>
-            </span>
-        </a>
-    </div>
-</div>
-<!-- Banner end -->
+{% include "includes/banner.html" with sliderdata=slider %}
 
-<!-- Search box 2 end -->
+{% load static %}	
 
 <!-- Featured car start -->
 <div class="featured-car content-area-5">
@@ -897,96 +791,28 @@
         <!-- Slick slider area start -->
         <div class="slick-slider-area clearfix">
             <div class="row slick-carousel" data-slick='{"slidesToShow": 4, "responsive":[{"breakpoint": 1024,"settings":{"slidesToShow": 2}}, {"breakpoint": 768,"settings":{"slidesToShow": 1}}]}'>
+                
+                {% for row in teams %}
                 <div class="slick-slide-item">
                     <div class="team-1">
                         <div class="photo">
                             <a href="#">
-                                <img src="{% static "img/avatar/avatar-12.jpg" %}" alt="team-1" class="img-fluid">
+                                <img src="{{ row.photo.url }}" alt="team-1" class="img-fluid">
                             </a>
                             <div class="social-list clearfix">
-                                <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="google-bg"><i class="fa fa-google"></i></a>
+                                <a href="{{ row.facebook_link }}" class="facebook-bg"><i class="fa fa-facebook"></i></a>
+                                <a href="{{ row.twitter_link }}" class="twitter-bg"><i class="fa fa-twitter"></i></a>
+                                <a href="{{ row.linkedin_link }}" class="linkedin-bg"><i class="fa fa-linkedin"></i></a>
                             </div>
                         </div>
                         <div class="details">
-                            <h4><a href="team-detail.html">Brandon Miller</a></h4>
-                            <h5>Manager</h5>
+                            <h4><a href="team-detail.html">{{ row.first_name }} {{ row.last_name }}</a></h4>
+                            <h5>{{ row.job_title }}</h5>
                         </div>
                     </div>
                 </div>
-                <div class="slick-slide-item">
-                    <div class="team-1">
-                        <div class="photo">
-                            <a href="#">
-                                <img src="{% static "img/avatar/avatar-9.jpg" %}" alt="team-1" class="img-fluid">
-                            </a>
-                            <div class="social-list clearfix">
-                                <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="google-bg"><i class="fa fa-google"></i></a>
-                            </div>
-                        </div>
-                        <div class="details">
-                            <h4><a href="team-detail.html">Michelle Nelson</a></h4>
-                            <h5>Support Manager</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="slick-slide-item">
-                    <div class="team-1">
-                        <div class="photo">
-                            <a href="#">
-                                <img src="{% static "img/avatar/avatar-11.jpg" %}" alt="team-1" class="img-fluid">
-                            </a>
-                            <div class="social-list clearfix">
-                                <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="google-bg"><i class="fa fa-google"></i></a>
-                            </div>
-                        </div>
-                        <div class="details">
-                            <h4><a href="team-detail.html">Stone Carolyn</a></h4>
-                            <h5>Creative Director</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="slick-slide-item">
-                    <div class="team-1">
-                        <div class="photo">
-                            <a href="#">
-                                <img src="{% static "img/avatar/avatar-10.jpg" %}" alt="team-1" class="img-fluid">
-                            </a>
-                            <div class="social-list clearfix">
-                                <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="google-bg"><i class="fa fa-google"></i></a>
-                            </div>
-                        </div>
-                        <div class="details">
-                            <h4><a href="team-detail.html">Martin Smith</a></h4>
-                            <h5>Web Developer</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="slick-slide-item">
-                    <div class="team-1">
-                        <div class="photo">
-                            <a href="#">
-                                <img src="{% static "img/avatar/avatar-11.jpg" %}" alt="team-1" class="img-fluid">
-                            </a>
-                            <div class="social-list clearfix">
-                                <a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a>
-                                <a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a>
-                                <a href="#" class="google-bg"><i class="fa fa-google"></i></a>
-                            </div>
-                        </div>
-                        <div class="details">
-                            <h4><a href="team-detail.html">Stone Carolyn</a></h4>
-                            <h5>Creative Director</h5>
-                        </div>
-                    </div>
-                </div>
+              {% endfor %}
+
             </div>
         </div>
     </div>
@@ -999,11 +825,11 @@
         <div class="row">
             <div class="col-lg-9 col-md-8 col-sm-12">
                 <div class="intro-text">
-                    <h3>Do You Have Questions ?</h3>
+                    <h3>Vous avez des questions ?</h3>
                 </div>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-12">
-                <a href="contact.html" class="btn btn-md">Get in Touch</a>
+                <a href="contact.html" class="btn btn-md">Contactez-nous</a>
             </div>
         </div>
     </div>
