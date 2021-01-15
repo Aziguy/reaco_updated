@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . import views
 from . models import Info, Slider, Team, Service, AboutDesc
+from recipe.models import Recipe
 
 # Create your views here.
 
@@ -8,10 +9,14 @@ def home(request):
 	sliderdata = Slider.objects.all()
 	infosdata = Info.objects.all()[0]
 	teams = Team.objects.all()
+	recipe_feature = Recipe.objects.order_by('-created_date').filter(is_feature=True)
+	all_recipe = Recipe.objects.order_by('-created_date')
 	context = {
 		'slider': sliderdata,
 		'infos' : infosdata,
-		'teams': teams
+		'teams': teams,
+		'recipe_feature':recipe_feature,
+		'all_recipe':all_recipe,
 	}
 	return render(request, 'pages/index.html', context)
 
@@ -31,13 +36,13 @@ def services(request):
 	servicesdata = Service.objects.all()
 	context = {
 		'infos' : infosdata,
-		'services' : servicesdata
+		'services' : servicesdata,
 	}
 	return render(request, 'pages/services.html', context)
 
 def contact(request):
 	infosdata = Info.objects.all()[0]
 	context = {
-		'infos' : infosdata
+		'infos' : infosdata,
 	}
 	return render(request, 'pages/contact.html', context)

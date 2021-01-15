@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'recipe.apps.RecipeConfig',
     'pages.apps.PagesConfig',
+    'clearcache',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
