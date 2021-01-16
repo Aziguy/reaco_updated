@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+<!-- Banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Résultats de la recherche</h1>
+            <ul class="breadcrumbs">
+                <li><a href="index.html">Accueil</a></li>
+                <li class="active">Recherche</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Banner end -->
+
+<!-- Search box 3 start -->
+<div class="search-box-3 sb-7 bg-active">
+    <div class="container">
+        <div class="search-area-inner">
+            <div class="search-contents">
+                <form method="GET" action="{% url 'search' %}">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="category">
+                                    <option disabled="disabled" selected="selected">Catégorie</option>
+                                    {% for category in category_search %}
+                                    <option value="{{ category }}">{{ category }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="level">
+                                    <option disabled="disabled" selected="selected">Difficulté</option>
+                                    {% for level in level_search %}
+                                    <option value="{{ level }}">{{ level }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="origine">
+                                    <option disabled="disabled" selected="selected">Origine</option>
+                                    {% for origine in origine_search %}
+                                    <option value="{{ origine }}">{{ origine }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="cooking_time">
+                                    <option disabled="disabled" selected="selected">Temps de cuisson</option>
+                                    {% for times in time_search %}
+                                    <option value="{{ times }}">{{ times }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="diet">
+                                    <option disabled="disabled" selected="selected">Régime</option>
+                                    {% for diet in diet_search %}
+                                    <option value="{{ diet }}">{{ diet }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <select class="selectpicker search-fields" name="portion">
+                                    <option disabled="disabled" selected="selected">Portion</option>
+                                    {% for portion in portion_search %}
+                                    <option value="{{ portion }}">{{ portion }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <div class="range-slider">
+                                    <div data-min="0" data-max="2000" data-unit="Kcal" data-min-name="min_kcal" data-max-name="max_kcal" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-6">
+                            <div class="form-group">
+                                <button class="btn btn-block button-theme btn-md">
+                                    <i class="fa fa-search"></i>Rechercher
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Search box 3 end -->
+
+<!-- Featured car start -->
+<div class="featured-car content-area">
+    <div class="container">
+        <!-- Main title -->
+        <div class="main-title">
+            <h1>Voici vos <span>Recettes</span></h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="row">
+            {% for recipe in recipes  %}
+            <div class="col-lg-4 col-md-6">
+                <div class="car-box">
+                    <div class="car-thumbnail">
+                        <a href="{% url 'recipe_details' recipe.id %}" class="car-img">
+                            <div class="tag">Miam!</div>
+                            <img class="d-block w-100" src="{{ recipe.recipe_photo.url }}" alt="car">
+                            <div class="facilities-list clearfix">
+                                <ul>
+                                    <li>
+                                        <span><i class="flaticon-prepare"></i></span>{{ recipe.preparation }}
+                                    </li>
+                                    <li>
+                                        <span><i class="flaticon-cooking"></i></span>{{ recipe.cooking_time }}
+                                    </li>
+                                    <li>
+                                        <span><i class="flaticon-restaurant"></i></span>{{ recipe.portion }}
+                                    </li>
+                                </ul>
+                            </div>
+                        </a>
+                        <div class="carbox-overlap-wrapper">
+                            <div class="overlap-box">
+                                <div class="overlap-btns-area">
+                                    <a class="overlap-btn" data-toggle="modal" href="{% url 'recipe_details' recipe.id %}" data-target="#{{ recipe.id }}">
+                                        <i class="fa fa-eye-slash"></i>
+                                    </a>
+                                    <div class="car-magnify-gallery">
+                                        <a href="{{ recipe.recipe_photo.url }}" class="overlap-btn" data-sub-html="<h4>{{ recipe.name }}</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt...</p>">
+                                            <i class="fa fa-expand"></i>
+                                            <img class="hidden" src="{{ recipe.recipe_photo.url }}" alt="hidden-img">
+                                        </a>
+                                        <a href="{{ recipe.recipe_photo_1.url }}" class="hidden" data-sub-html="<h4>{{ recipe.name }}</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt...</p>">
+                                            <img class="hidden" src="{{ recipe.recipe_photo_1.url }}" alt="hidden-img">
+                                        </a>
+                                        <a href="{{ recipe.recipe_photo_2.url }}" class="hidden" data-sub-html="<h4>{{ recipe.name }}</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt...</p>">
+                                            <img class="hidden" src="{{ recipe.recipe_photo_2.url }}" alt="hidden-img">
+                                        </a>
+                                        <a href="{{ recipe.recipe_photo_3.url }}" class="hidden" data-sub-html="<h4>{{ recipe.name }}</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt...</p>">
+                                            <img class="hidden" src="{{ recipe.recipe_photo_3.url }}" alt="hidden-img">
+                                        </a>
+                                        <a href="{{ recipe.recipe_photo_4.url }}" class="hidden" data-sub-html="<h4>{{ recipe.name }}</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt...</p>">
+                                            <img class="hidden" src="{{ recipe.recipe_photo_4.url }}" alt="hidden-img">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <h1 class="title">
+                            <a href="{% url 'recipe_details' recipe.id %}">{{ recipe.name }}</a>
+                        </h1>
+                        <div class="location">
+                            <a href="{% url 'recipe_details' recipe.id %}">
+                                <i class="flaticon-pin"></i>{{ recipe.origine }}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="footer clearfix">
+                        <div class="pull-left ratings days">
+                            <p class="cartype"><i class="flaticon-hourglass"></i> {{ recipe.level }}</p>
+                        </div>
+                        <div class="pull-right">
+                            <p class="price"><i class="flaticon-calorie"></i>{{ recipe.kcal }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Recipe Overview Modal -->
+            <div class="car-model-2">
+                <div class="modal fade" id="{{ recipe.id }}" tabindex="-1" role="dialog" aria-labelledby="carOverviewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="modal-title" id="carOverviewModalLabel">
+                                    <h4>Aperçu de votre recette</h4>
+                                    <h5><i class="flaticon-pin"></i> {{ recipe.origine }}</h5>
+                                </div>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row modal-raw">
+                                    <div class="col-lg-6 modal-left">
+                                        <div class="item active">
+                                            <img src="{{ recipe.recipe_photo.url }}" alt="best-car" class="img-fluid modalLabel-1">
+                                            <img src="{% static 'img/default.jpg' %}" alt="best-car" class="img-fluid modalLabel-2">
+                                            <div class="sobuz">
+                                                <div class="price-box" style="padding-bottom: 5px;">
+                                                    <span class="del-2"><i class="flaticon-calorie"></i>{{ recipe.kcal }}</span>
+                                                </div>
+                                                <div class="ratings-2">
+                                                   <a href="{% url 'recipe_details' recipe.id %}" class="btn btn-md btn-round btn-theme">{{ recipe.name }}</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 modal-right">
+                                        <div class="modal-right-content">
+                                            <section>
+                                                <h3>Aperçu nutritionnel</h3>
+                                                <ul class="bullets">
+                                                    <li>Calories</li>
+                                                    <li>protéines</li>
+                                                    <li>Lipides</li>
+                                                    <li>Glucides</li>
+                                                    <li>{{ recipe.kcal }}.0 g</li>
+                                                    <li>{{ recipe.proteins }}.0 g</li>
+                                                    <li>{{ recipe.lipids }}.0 g</li>
+                                                    <li>{{ recipe.glucids }}.0 g</li>
+                                                </ul>
+                                            </section>
+                                            <section>
+                                                <h3>Ingredients</h3>
+                                                <div class="features">
+                                                    <ul class="bullets">
+                                                        {% for i in recipe.ingredients.all %}
+                                                        <li><img class="" src="{{ i.image.url }}" alt="ingrédients" style="width:50px; height: 50px; border-radius: 50px;"> {{ i.name }}</li>
+                                                       {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </section>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Recipe Overview Modal -->
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Featured car end -->
+
+{% endblock %}

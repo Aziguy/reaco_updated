@@ -16,62 +16,58 @@
         </div>
         <!-- Search box 3 start -->
         <div class="search-box-4 sb-8">
-            <form action="#" method="">
+            <form action="{% url 'search' %}" method="">
                 <div class="form-group">
-                    <input type="text" name="keyword" placeholder="Search by name" class="form-control">
+                    <input type="text" name="keyword" placeholder="recherche par nom" class="form-control">
                 </div>
                 <div class="form-group">
-                    <select class="form-control search-fields" name="select-brand">
-                        <option selected="true" disabled="disabled">Brand</option>
-                        <option>Audi</option>
-                        <option>BMW</option>
-                        <option>Honda</option>
-                        <option>Nissan</option>
+                    <select class="form-control search-fields" name="category">
+                        <option selected="true" disabled="disabled">Catégorie</option>
+                        {% for category in category_search %}
+                        <option value="{{ category }}">{{ category }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select class="form-control search-fields" name="select-make">
-                        <option selected="true" disabled="disabled">Model</option>
-                        <option>BMW</option>
-                        <option>Honda</option>
-                        <option>Lamborghini Huracán</option>
-                        <option>Sports Car</option>
+                    <select class="form-control search-fields" name="level">
+                        <option selected="true" disabled="disabled">Difficulté</option>
+                        {% for level in level_search %}
+                        <option value="{{ level }}">{{ level }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select class="form-control search-fields" name="select-location">
-                        <option selected="true" disabled="disabled">Location</option>
-                        <option>United States</option>
-                        <option>United Kingdom</option>
+                    <select class="form-control search-fields" name="origine">
+                        <option selected="true" disabled="disabled">Origine</option>
+                        {% for origine in origine_search %}
+                        <option value="{{ origine }}">{{ origine }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select class="form-control search-fields" name="select-year">
-                        <option selected="true" disabled="disabled">Year</option>
-                        <option>2016</option>
-                        <option>2017</option>
-                        <option>2018</option>
-                        <option>2019</option>
+                    <select class="form-control search-fields" name="cooking_time">
+                        <option selected="true" disabled="disabled">Temps de cuisson</option>
+                        {% for times in time_search %}
+                        <option value="{{ times }}">{{ times }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="form-group">
-                    <select class="form-control search-fields" name="select-type">
-                        <option selected="true" disabled="disabled">Select Type Of Car</option>
-                        <option>Sedan</option>
-                        <option>Sports</option>
-                        <option>Hatchback</option>
-                        <option>Pickup Truck</option>
-                        <option>SUV</option>
+                    <select class="form-control search-fields" name="diet">
+                        <option selected="true" disabled="disabled">Régime</option>
+                        {% for diet in diet_search %}
+                        <option value="{{ diet }}">{{ diet }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="range-slider clearfix">
                                 <label>Calories</label>
-                                <div data-min="0" data-max="2000"  data-min-name="min_price" data-max-name="max_price" data-unit="Kcal" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div data-min="0" data-max="2000"  data-min-name="min_kcal" data-max-name="max_kcal" data-unit="Kcal" class="range-slider-ui ui-slider" aria-disabled="false"></div>
                                 <div class="clearfix"></div>
                             </div>
                 <div class="form-group">
                     <button class="btn btn-block button-theme btn-md">
-                        <i class="fa fa-search"></i> Search
+                        <i class="fa fa-search"></i> Rechercher
                     </button>
                 </div>
             </form>

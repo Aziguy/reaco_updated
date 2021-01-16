@@ -126,71 +126,64 @@
                     <!-- Advanced search start -->
                     <div class="widget advanced-search2">
                         <h3 class="sidebar-title">Recherchez la recette désirée</h3>
-                        <form method="GET">
+                        <form action="{% url 'search' %}" method="">
                             <div class="form-group">
-                                <select class="selectpicker search-fields" name="brand">
-                                    <option>Brand</option>
-                                    <option>Any</option>
-                                    <option>New</option>
-                                    <option>Semi-New</option>
-                                    <option>Damaged</option>
-                                    <option>Used</option>
+                                <input type="text" name="keyword" placeholder="rechercher par nom" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control search-fields" name="category">
+                                    <option selected="true" disabled="disabled">Catégorie</option>
+                                    {% for category in category_search %}
+                                    <option value="{{ category }}">{{ category }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="selectpicker search-fields" name="location">
-                                    <option>Location</option>
-                                    <option>United States</option>
-                                    <option>United Kingdom</option>
-                                    <option>American Samoa</option>
-                                    <option>Belgium</option>
-                                    <option>Cameroon</option>
-                                    <option>Canada</option>
+                                <select class="form-control search-fields" name="level">
+                                    <option selected="true" disabled="disabled">Difficulté</option>
+                                    {% for level in level_search %}
+                                    <option value="{{ level }}">{{ level }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="selectpicker search-fields" name="year">
-                                    <option>Year</option>
-                                    <option>2016</option>
-                                    <option>2017</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
+                                <select class="form-control search-fields" name="origine">
+                                    <option selected="true" disabled="disabled">Origine</option>
+                                    {% for origine in origine_search %}
+                                    <option value="{{ origine }}">{{ origine }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="selectpicker search-fields" name="category">
-                                    <option>Category</option>
-                                    <option>Luxury Car</option>
-                                    <option>Pickup Truck</option>
-                                    <option>Minivan</option>
-                                    <option>Truck</option>
-                                    <option>Sports Car</option>
-                                    <option>Wagon</option>
+                                <select class="form-control search-fields" name="cooking_time">
+                                    <option selected="true" disabled="disabled">Temps de cuisson</option>
+                                    {% for times in time_search %}
+                                    <option value="{{ times }}">{{ times }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group">
-                                <select class="selectpicker search-fields" name="transmission">
-                                    <option>Transmission</option>
-                                    <option>Automatic</option>
-                                    <option>Manual</option>
-                                    <option>Tiptronic</option>
+                                <select class="form-control search-fields" name="diet">
+                                    <option selected="true" disabled="disabled">Régime</option>
+                                    {% for diet in diet_search %}
+                                    <option value="{{ diet }}">{{ diet }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             <div class="range-slider clearfix">
                                 <label>Calories</label>
-                                <div data-min="0" data-max="2000"  data-min-name="min_price" data-max-name="max_price" data-unit="Kcal" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div data-min="0" data-max="2000"  data-min-name="min_kcal" data-max-name="max_kcal" data-unit="Kcal" class="range-slider-ui ui-slider" aria-disabled="false"></div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="form-group mb-0">
-                                <button class="search-button btn">Search</button>
+                                <button class="search-button btn">Rechercher</button>
                             </div>
                         </form>
                     </div>
                    
                     <!-- Question start -->
                     <div class="widget question widget-3">
-                        <h5 class="sidebar-title">Follow us</h5>
+                        <h5 class="sidebar-title">Nous suivre</h5>
                         <div class="social-list clearfix">
                             <ul>
                                 <li><a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a></li>

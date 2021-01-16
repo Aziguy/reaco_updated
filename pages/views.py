@@ -11,12 +11,22 @@ def home(request):
 	teams = Team.objects.all()
 	recipe_feature = Recipe.objects.order_by('-created_date').filter(is_feature=True)
 	all_recipe = Recipe.objects.order_by('-created_date')
+	category_search = Recipe.objects.values_list('category', flat=True).distinct().order_by('category')
+	level_search = Recipe.objects.values_list('level', flat=True).distinct().order_by('level')
+	origine_search = Recipe.objects.values_list('origine', flat=True).distinct().order_by('origine')
+	time_search = Recipe.objects.values_list('cooking_time', flat=True).distinct().order_by('cooking_time')
+	diet_search = Recipe.objects.values_list('diet', flat=True).distinct().order_by('diet')
 	context = {
 		'slider': sliderdata,
 		'infos' : infosdata,
 		'teams': teams,
-		'recipe_feature':recipe_feature,
-		'all_recipe':all_recipe,
+		'recipe_feature': recipe_feature,
+		'all_recipe': all_recipe,
+		'category_search':category_search,
+		'level_search':level_search,
+		'origine_search':origine_search,
+		'time_search':time_search,
+		'diet_search':diet_search,
 	}
 	return render(request, 'pages/index.html', context)
 
