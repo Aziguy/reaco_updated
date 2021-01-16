@@ -23,12 +23,12 @@
                 <div class="slick-slide-item">
                     <div class="car-box-3">
                         <div class="car-thumbnail">
-                            <a href="car-details.html" class="car-img">
+                            <a href="{% url 'recipe_details' recipe.id %}" class="car-img">
                                 <div class="tag-2">A l'aune</div>
                                 <div class="price-box">
                                     <span> <i class="flaticon-cooking-time"></i> {{ recipe.cooking_time }}  </span>
                                 </div>
-                                <img class="d-block w-100" src="{{ recipe.recipe_photo.url }}" alt="recette" style="min-height: 262px; max-height: 262px">
+                                <img class="d-block w-100" src="{{ recipe.recipe_photo.url }}" alt="recette" style="min-height: 262px; max-height: 262px;">
                             </a>
                             <div class="carbox-overlap-wrapper">
                                 <div class="overlap-box">
@@ -57,12 +57,11 @@
                                 <a href="{% url 'recipe_details' recipe.id %}">{{ recipe.name }}</a>
                             </h1>
                             <div class="location">
-                                <a href="car-details.html">
+                                <a href="{% url 'recipe_details' recipe.id %}">
                                     <i class="flaticon-pin"></i> {{ recipe.origine }}
                                 </a>
                             </div>
                             <ul class="facilities-list clearfix">
-                                <li>{{ recipe.level }}</li>
                                 <li>{{ recipe.kcal }} kcal</li>
                                 <li>{{ recipe.proteins }} g protéines</li>
                                 <li>{{ recipe.lipids }} g lipides</li>
@@ -99,9 +98,9 @@
             <div class="col-lg-4 col-md-6">
                 <div class="car-box">
                     <div class="car-thumbnail">
-                        <a href="car-details.html" class="car-img">
+                        <a href="{% url 'recipe_details' recipe.id %}" class="car-img">
                             <div class="tag">Miam!</div>
-                            <img class="d-block w-100" src="{{ recipe.recipe_photo.url }}" alt="car">
+                            <img class="d-block w-100" src="{{ recipe.recipe_photo.url }}" alt="car" style="min-height: 262px; max-height: 262px;">
                             <div class="facilities-list clearfix">
                                 <ul>
                                     <li>
@@ -143,10 +142,10 @@
                     </div>
                     <div class="detail">
                         <h1 class="title">
-                            <a href="car-details.html">{{ recipe.name }}</a>
+                            <a href="{% url 'recipe_details' recipe.id %}">{{ recipe.name }}</a>
                         </h1>
                         <div class="location">
-                            <a href="car-details.html">
+                            <a href="{% url 'recipe_details' recipe.id %}">
                                 <i class="flaticon-pin"></i>{{ recipe.origine }}
                             </a>
                         </div>
