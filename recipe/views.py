@@ -6,8 +6,13 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 def recipe(request):
 	infosdata = Info.objects.all()[0]
+	recipes = Recipe.objects.order_by('-created_date')
+	paginator = Paginator(recipes, 4)
+	page = request.GET.get('page')
+	paged_recipes = paginator.get_page(page)
 	context = {
 		'infos' : infosdata,
+		'recipes' : paged_recipes,
 	}
 	return render(request, 'recipes/recipe.html', context)
 
