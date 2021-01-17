@@ -33,6 +33,7 @@ LOGIN_REDIRECT_URL = 'dashboard'
 # Application definition
 
 INSTALLED_APPS = [
+    'dashboard.apps.DashboardConfig',
     'accounts.apps.AccountsConfig',
     'recipe.apps.RecipeConfig',
     'pages.apps.PagesConfig',
@@ -162,6 +163,13 @@ MESSAGE_TAGS = {
 }
 
 SITE_ID = 1
+
+# Email sending
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'someone@gmail.com'
+EMAIL_HOST_PASSWORD = 'azerty0123@#'
+EMAIL_USE_TLS = True
 
 # Linkedin Authentication Setting
 SOCIALACCOUNT_PROVIDERS = {
