@@ -85,6 +85,12 @@ class Recipe(models.Model):
 		('Détox', 'Détox'),
 		('Sans sel', 'Sans sel'),
 		('Hypoglucidique', 'Hypoglucidique'),
+		('Vegan', 'Vegan'),
+		('Végétarien', 'Végétarien'),
+		('Hallal', 'Hallal'),
+		('Sans gluten', 'Sans gluten'),
+		('Sans Lactose', 'Sans Lactose'),
+		('Casher', 'Casher'),
 	)
 
 	category = models.CharField(choices=categorie_choice, max_length=100)

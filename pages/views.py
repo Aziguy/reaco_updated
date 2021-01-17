@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import views
 from . models import Info, Slider, Team, Service, AboutDesc
 from recipe.models import Recipe
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.contrib import messages
 
 # Create your views here.
 
@@ -51,6 +54,29 @@ def services(request):
 	return render(request, 'pages/services.html', context)
 
 def contact(request):
+	if request.method == 'POST':
+		name = request.POST['name']
+		email = request.POST['email']
+		subject = request.POST['subject']
+		phone = request.POST['phone']
+		message = request.POST['message']
+
+		email_subject = 'Nouveau message concernant : ' + subject
+		message_body = 'Noms : ' + name + '\n' + '. Email : ' + '\n' + email + '. Téléphone : ' + '\n' + phone + '\n' + '. Message : ' + message
+
+		admin_info = User.objects.get(is_superuser=True)
+		admin_email = admin_info.email
+		send_mail(
+				email_subject,
+				message_body,
+				'someone@gmail.com',
+				[admin_email],
+				fail_silently=False,
+            )
+
+		messages.success(request, 'Merci d\'avoir pris contact avec nous. Nous reviendrons vers vous dans les plus bref delais')
+		return redirect('contact')
+	
 	infosdata = Info.objects.all()[0]
 	context = {
 		'infos' : infosdata,

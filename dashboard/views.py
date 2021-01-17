@@ -31,7 +31,7 @@ def inquiry(request):
 		send_mail(
                 'Ajout d\'une recette',
                 'La recette ' + recipe_name + ' a été ajouté depuis le site. Connectez vous à l\'admin pour plus d\'informations.',
-                'someone@gmail.com',
+                'mandatairessm@gmail.com',
                 [admin_email],
                 fail_silently=False,
             )
