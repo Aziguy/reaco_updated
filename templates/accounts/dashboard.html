@@ -4,6 +4,8 @@
 
 {% block content %}
 
+{% load static %}
+
 <!-- Sub banner start -->
 <div class="sub-banner overview-bgi">
     <div class="container breadcrumb-area">
@@ -22,44 +24,37 @@
 <div class="container mt-50 mb-50">
 	{% include 'includes/messages.html' %}
 	<div class="main-title" style="text-align:left !important;">
-            <h1>Bienvenu <span>{{ user.first_name }}</span></h1>
-            <p>Voici les recettes que vous avez choisies</p>
-        </div>
-	<table class="table table-hover">
+		<h1>Bienvenu <span>{{ user.first_name }}</span></h1>
+		<p>Voici les recettes que vous avez ajoutés</p>
+    </div>
+
+    {% if inquiries %}
+    <table class="table table-hover">
 	  <thead>
 		<tr>
 		  <th scope="col">Image</th>
+		  <th scope="col">Recettes</th>
 		  <th scope="col">Noms</th>
-		  <th scope="col">Description</th>
-		  <th scope="col">Prix le moins cher</th>
+		  <th scope="col">Prénoms</th>
 		  <th scope="col">Action</th>
 		</tr>
 	  </thead>
 	  <tbody>
+	  	{% for inquiry in inquiries %}
 		<tr>
-		  <th scope="row">.png</th>
-		  <td>Raclette</td>
-		  <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		  tempor.</td>
-		  <td>13,50€</td>
-		  <td><a href="#" class="btn btn-outline-dark">Supprimer</a></td>
+		  <th scope="row"><img src="{{ inquiry.recipe_photo }}" style="width:40px; height: 40px; border-radius: 50px;"></th>
+		  <td>{{ inquiry.recipe_name }}</td>
+		  <td>{{ inquiry.last_name }}</td>
+		  <td>{{ inquiry.first_name }}</td>
+		  <td><a href="{% url 'recipe_details' inquiry.recipe_id %}" class="btn btn-outline-dark"><i class="fa fa-eye-slash"></i></a></td>
 		</tr>
-		<tr>
-		  <th scope="row">.png</th>
-		  <td>Soupion</td>
-		  <td>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</td>
-		  <td>19,50€</td>
-		  <td><a href="#" class="btn btn-outline-dark">Supprimer</a></td>
-		</tr>
-		<tr>
-		  <th scope="row">.png</th>
-		  <td>Boeuf bleu</td>
-		  <td>Duis aute irure dolor in reprehenderit in voluptate velit.</td>
-		  <td>15,20</td>
-		  <td><a href="#" class="btn btn-outline-dark">Supprimer</a></td>
-		</tr>
+		{% endfor %}
 	  </tbody>
-	</table>
+	</table>	
+    {% else %}
+    <h3>Vous n'avez pas encore ajouté de recettes !!!</h3>	
+    {% endif %}
+	
 </div>
 <!--   Dashboard End   -->
 

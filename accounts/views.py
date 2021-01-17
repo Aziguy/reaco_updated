@@ -3,6 +3,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from pages.models import Info
+from dashboard.models import Dashboard
 
 # Create your views here.
 def login(request):
@@ -64,9 +65,11 @@ def register(request):
 
 @login_required(login_url = 'login')
 def dashboard(request):
+	user_inquiry = Dashboard.objects.order_by('-create_date').filter(user_id=request.user.id)
 	infosdata = Info.objects.all()[0]
 	context = {
-		'infos' : infosdata
+		'infos' : infosdata,
+		'inquiries': user_inquiry,
 	}
 	return render(request, 'accounts/dashboard.html', context)
 
