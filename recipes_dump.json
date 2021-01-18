@@ -1,0 +1,3249 @@
+[
+{
+    "model": "dashboard.dashboard",
+    "pk": 3,
+    "fields": {
+        "first_name": "HIPPOLYTE",
+        "last_name": "KENGNI",
+        "recipe_id": 1,
+        "recipe_name": "Choucroute de poisson",
+        "recipe_photo": "/media/recipe/choucroute-aux-trois-poissons.jpeg",
+        "user_id": 1,
+        "create_date": "2021-01-17T13:37:07.396Z"
+    }
+},
+{
+    "model": "recipe.drive",
+    "pk": 1,
+    "fields": {
+        "name": "Carrefour Drive Toulon Mayol",
+        "image": "drive/Carrefour.png",
+        "address": "Rue du Murier - Centre Commercial Mayol, 83000 Toulon",
+        "created_date": "2021-01-12T22:22:36.011Z"
+    }
+},
+{
+    "model": "recipe.drive",
+    "pk": 2,
+    "fields": {
+        "name": "Drive Intermarché Toulon",
+        "image": "drive/Intermache.png",
+        "address": "77 Rue d'Octave Teissier, 83000 Toulon",
+        "created_date": "2021-01-12T22:22:36.011Z"
+    }
+},
+{
+    "model": "recipe.drive",
+    "pk": 3,
+    "fields": {
+        "name": "Casino Drive Toulon Siblas",
+        "image": "drive/Casino.png",
+        "address": "484, Avenue de Siblas, 83000 Toulon",
+        "created_date": "2021-01-12T22:22:36.011Z"
+    }
+},
+{
+    "model": "recipe.drive",
+    "pk": 4,
+    "fields": {
+        "name": "Courses U Drive Pierrefeu Du Var",
+        "image": "drive/U_drive.png",
+        "address": "Avenue Frédéric Mistral - Lieu-dit Le Logis, 83390 Pierrefeu-du-Var",
+        "created_date": "2021-01-12T22:22:36.011Z"
+    }
+},
+{
+    "model": "recipe.drive",
+    "pk": 5,
+    "fields": {
+        "name": "Auchan Drive La Seyne",
+        "image": "drive/Auchan.png",
+        "address": "851 Boulevard de l'Europe, 83500 La Seyne-sur-Mer",
+        "created_date": "2021-01-12T22:22:36.011Z"
+    }
+},
+{
+    "model": "recipe.drive",
+    "pk": 6,
+    "fields": {
+        "name": "E. Leclerc Drive Toulon Le piéton",
+        "image": "drive/E_Leclerc.png",
+        "address": "404, Avenue François Cuzin, 83000 Toulon",
+        "created_date": "2021-01-12T22:22:36.011Z"
+    }
+},
+{
+    "model": "recipe.drive",
+    "pk": 7,
+    "fields": {
+        "name": "Chronodrive La Garde",
+        "image": "drive/Chronodrive.png",
+        "address": "Avenue Robespierre - ZAC de la Pauline, 83130 La Garde",
+        "created_date": "2021-01-12T22:22:36.011Z"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 1,
+    "fields": {
+        "name": "Boucherie"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 2,
+    "fields": {
+        "name": "Poissonnerie"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 3,
+    "fields": {
+        "name": "Volaillerie"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 4,
+    "fields": {
+        "name": "Fruits"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 5,
+    "fields": {
+        "name": "Légumes"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 6,
+    "fields": {
+        "name": "Beurre"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 7,
+    "fields": {
+        "name": "Oeufs"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 8,
+    "fields": {
+        "name": "Crèmerie"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 9,
+    "fields": {
+        "name": "Fromagerie"
+    }
+},
+{
+    "model": "recipe.categorie",
+    "pk": 10,
+    "fields": {
+        "name": "Epices"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 1,
+    "fields": {
+        "name": "Pavé de Saumon",
+        "image": "ingredient/1_Pavé_De_Saumon_100g.jpg",
+        "categorie": 2,
+        "created_date": "2021-01-12T22:22:36.379Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 2,
+    "fields": {
+        "name": "Pomme de terre",
+        "image": "ingredient/100g_De_Pomme_de_terre_GcMbB2R.jpg",
+        "categorie": 5,
+        "created_date": "2021-01-12T22:22:36.379Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 3,
+    "fields": {
+        "name": "Choucroute crue",
+        "image": "ingredient/200g_De_Choucroute_Crue.jpg",
+        "categorie": 5,
+        "created_date": "2021-01-12T22:22:36.379Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 4,
+    "fields": {
+        "name": "Oignons",
+        "image": "ingredient/Oignon.png",
+        "categorie": 5,
+        "created_date": "2021-01-12T22:22:36.379Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 5,
+    "fields": {
+        "name": "Feuille de laurier",
+        "image": "ingredient/1_Feuille_De_Laurier.jpg",
+        "categorie": 5,
+        "created_date": "2021-01-12T23:11:37.660Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 6,
+    "fields": {
+        "name": "Sel",
+        "image": "ingredient/sel-epsom.jpg",
+        "categorie": 10,
+        "created_date": "2021-01-12T23:13:10.681Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 7,
+    "fields": {
+        "name": "Poivre",
+        "image": "ingredient/poivre-noir.jpg",
+        "categorie": 10,
+        "created_date": "2021-01-12T23:13:28.153Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 8,
+    "fields": {
+        "name": "Citron",
+        "image": "ingredient/Citron.jpg",
+        "categorie": 4,
+        "created_date": "2021-01-12T23:14:01.473Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 9,
+    "fields": {
+        "name": "Graines de Chia",
+        "image": "ingredient/Graines_De_Chia.jpg",
+        "categorie": 10,
+        "created_date": "2021-01-12T23:14:35.057Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 10,
+    "fields": {
+        "name": "10 oeufs",
+        "image": "ingredient/10oeuf.jpg",
+        "categorie": 7,
+        "created_date": "2021-01-12T23:30:11.434Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 11,
+    "fields": {
+        "name": "Gruyère râpé",
+        "image": "ingredient/gruyère_râpé.jpg",
+        "categorie": 9,
+        "created_date": "2021-01-12T23:31:00.252Z"
+    }
+},
+{
+    "model": "recipe.ingredient",
+    "pk": 12,
+    "fields": {
+        "name": "Huile d'olive",
+        "image": "ingredient/huile_dolive.jpg",
+        "categorie": 6,
+        "created_date": "2021-01-13T00:35:55.294Z"
+    }
+},
+{
+    "model": "recipe.drive_ingredient",
+    "pk": 1,
+    "fields": {
+        "ingredient": 4,
+        "drive": 1,
+        "price": "2.30",
+        "created_date": "2021-01-12T22:22:36.365Z"
+    }
+},
+{
+    "model": "recipe.drive_ingredient",
+    "pk": 2,
+    "fields": {
+        "ingredient": 4,
+        "drive": 2,
+        "price": "2.50",
+        "created_date": "2021-01-12T22:22:36.365Z"
+    }
+},
+{
+    "model": "recipe.drive_ingredient",
+    "pk": 3,
+    "fields": {
+        "ingredient": 4,
+        "drive": 6,
+        "price": "4.50",
+        "created_date": "2021-01-12T22:22:36.365Z"
+    }
+},
+{
+    "model": "recipe.recipe",
+    "pk": 1,
+    "fields": {
+        "category": "Plats principaux",
+        "level": "Intermédiaire",
+        "name": "Choucroute de poisson",
+        "portion": "1",
+        "cooking_time": 40,
+        "preparation": 15,
+        "diet": "Protéiné",
+        "origine": "Normandie, France",
+        "kcal": 340,
+        "proteins": 28,
+        "lipids": 23,
+        "glucids": 5,
+        "is_feature": true,
+        "steps": "<p>Rincez La Choucroute<br />\r\nEmincez L&#39;oignon&nbsp;<br />\r\nPrenez Une Cocotte , Ajoutez L&#39;oignon , La Choucroute La Feuille De Laurier&nbsp;Le Poivre&nbsp;<br />\r\n10cl D&#39;eau , 2cl De Vin Blanc ( En Option ) Puis Ajoutez Les Pdt<br />\r\nFaites Cuire 30 mn &agrave; Feu Doux En Remuant De Temps En Temps<br />\r\nEcartez La Choucroute Puis Disposez Le Pav&eacute; De Saumon Et Faites Cuire 5-6mn<br />\r\nDans Une Assiette Creuse Disposez En Premier De La Choucroute Puis Le Reste Des Aliments</p>",
+        "recipe_photo": "recipe/choucroute-aux-trois-poissons.jpeg",
+        "recipe_photo_1": "recipe/choucroute_au_poissons_leiser.jpg",
+        "recipe_photo_2": "recipe/choucroute.jpeg",
+        "recipe_photo_3": "recipe/choucroute-mer-poisson.jpg",
+        "recipe_photo_4": "recipe/choucroute-de-poissons.jpeg",
+        "created_date": "2021-01-13T00:25:20.822Z",
+        "ingredients": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+        ]
+    }
+},
+{
+    "model": "recipe.recipe",
+    "pk": 2,
+    "fields": {
+        "category": "Entrées / Hors d'oeuvre",
+        "level": "Facile",
+        "name": "Omelette roulée au fromage",
+        "portion": "4",
+        "cooking_time": 15,
+        "preparation": 5,
+        "diet": "Hyperproteiné",
+        "origine": "Nice,  France",
+        "kcal": 340,
+        "proteins": 28,
+        "lipids": 23,
+        "glucids": 5,
+        "is_feature": false,
+        "steps": "<p>Battez les &oelig;ufs avec du sel et du poivre dans un saladier.<br />\r\nDivisez la pr&eacute;paration dans 4 bols.<br />\r\nFaites chauffer de l&#39;huile d&#39;olive dans une po&ecirc;le.<br />\r\nMettez-y &agrave; cuire une omelette.<br />\r\nSaupoudrez de gruy&egrave;re et roulez-la.<br />\r\nRetirez de la po&ecirc;le et servez dans l&#39;assiette.<br />\r\nR&eacute;p&eacute;tez l&#39;op&eacute;ration pour les autres omelettes.<br />\r\nD&eacute;gustez de suite.</p>",
+        "recipe_photo": "recipe/omelette-roulee-apéritive.jpg",
+        "recipe_photo_1": "recipe/omelette-roulee-au-fromage-frais-et-jambon.jpeg",
+        "recipe_photo_2": "recipe/om-5.jpg",
+        "recipe_photo_3": "recipe/omelette-roulee-comte-fines-herbes.jpg",
+        "recipe_photo_4": "recipe/OMELETTE-ROULÉE-AU-THON-ET-AU-FROMAGE.jpg",
+        "created_date": "2021-01-13T00:37:28.413Z",
+        "ingredients": [
+            6,
+            7,
+            10,
+            11,
+            12
+        ]
+    }
+},
+{
+    "model": "pages.slider",
+    "pk": 1,
+    "fields": {
+        "titre": "WOW FACTOR STANDARD",
+        "description": "<p>Allow us to guide you through<br />\r\nthe innovative stress free approach in finding your dream car.</p>",
+        "image": "slider/recipes_1.jpg"
+    }
+},
+{
+    "model": "pages.slider",
+    "pk": 2,
+    "fields": {
+        "titre": "EXPLORE YOUR DREAM CAR",
+        "description": "<p>Allow us to guide you through<br />\r\nthe innovative stress free approach in finding your dream car.</p>",
+        "image": "slider/recipes_2.jpeg"
+    }
+},
+{
+    "model": "pages.slider",
+    "pk": 3,
+    "fields": {
+        "titre": "WE ARE WHEEL",
+        "description": "<p>Allow us to guide you through<br />\r\nthe innovative stress free approach in finding your dream car.</p>",
+        "image": "slider/recipes_3.jpg"
+    }
+},
+{
+    "model": "pages.info",
+    "pk": 1,
+    "fields": {
+        "numero": "+33-4XX-634-7071",
+        "email": "infos@comegusto.fr",
+        "horaire": "Lun - Dim: 7:30am - 9:30pm",
+        "site": "www.comegusto.fr",
+        "fax": "+33-4XX-634-7070"
+    }
+},
+{
+    "model": "pages.team",
+    "pk": 1,
+    "fields": {
+        "first_name": "Martin",
+        "last_name": "Smith",
+        "job_title": "Web Developer",
+        "photo": "teams/avatar-1.jpg",
+        "facebook_link": "https://fr-fr.facebook.com/",
+        "twitter_link": "https://twitter.com/",
+        "linkedin_link": "https://www.linkedin.com/",
+        "created_date": "2020-12-16T22:09:21.139Z"
+    }
+},
+{
+    "model": "pages.team",
+    "pk": 2,
+    "fields": {
+        "first_name": "Stone",
+        "last_name": "Carolyn",
+        "job_title": "Creative Director",
+        "photo": "teams/avatar-9.jpg",
+        "facebook_link": "https://fr-fr.facebook.com/",
+        "twitter_link": "https://twitter.com/",
+        "linkedin_link": "https://www.linkedin.com/",
+        "created_date": "2020-12-16T22:35:09.254Z"
+    }
+},
+{
+    "model": "pages.team",
+    "pk": 3,
+    "fields": {
+        "first_name": "Brandon",
+        "last_name": "Miller",
+        "job_title": "Manager",
+        "photo": "teams/avatar-12.jpg",
+        "facebook_link": "https://fr-fr.facebook.com/",
+        "twitter_link": "https://twitter.com/",
+        "linkedin_link": "https://www.linkedin.com/",
+        "created_date": "2020-12-16T22:37:04.994Z"
+    }
+},
+{
+    "model": "pages.team",
+    "pk": 4,
+    "fields": {
+        "first_name": "Michelle",
+        "last_name": "Nelson",
+        "job_title": "Support Manager",
+        "photo": "teams/avatar-2.jpg",
+        "facebook_link": "http://fr-fr.facebook.com",
+        "twitter_link": "https://twitter.com/",
+        "linkedin_link": "https://www.linkedin.com/",
+        "created_date": "2020-12-16T22:38:50.956Z"
+    }
+},
+{
+    "model": "pages.team",
+    "pk": 5,
+    "fields": {
+        "first_name": "Lorem",
+        "last_name": "Ipsum",
+        "job_title": "Dolor Ipsum",
+        "photo": "teams/avatar-4.jpg",
+        "facebook_link": "https://fr-fr.facebook.com/",
+        "twitter_link": "https://twitter.com/",
+        "linkedin_link": "https://www.linkedin.com/",
+        "created_date": "2020-12-16T22:41:14.345Z"
+    }
+},
+{
+    "model": "pages.team",
+    "pk": 6,
+    "fields": {
+        "first_name": "Cheap",
+        "last_name": "Recipes",
+        "job_title": "Where Something",
+        "photo": "teams/avatar-3.jpg",
+        "facebook_link": "http://fr-fr.facebook.com",
+        "twitter_link": "https://twitter.com/",
+        "linkedin_link": "https://www.linkedin.com/",
+        "created_date": "2020-12-16T22:45:38.959Z"
+    }
+},
+{
+    "model": "pages.team",
+    "pk": 7,
+    "fields": {
+        "first_name": "Aziguy",
+        "last_name": "Hermann",
+        "job_title": "Product Owner",
+        "photo": "teams/avatar-10.jpg",
+        "facebook_link": "https://fr-fr.facebook.com/",
+        "twitter_link": "https://twitter.com/",
+        "linkedin_link": "https://www.linkedin.com/",
+        "created_date": "2020-12-16T22:48:30.845Z"
+    }
+},
+{
+    "model": "pages.team",
+    "pk": 8,
+    "fields": {
+        "first_name": "Jasman",
+        "last_name": "Auretro",
+        "job_title": "Data Analyst",
+        "photo": "teams/avatar-11.jpg",
+        "facebook_link": "https://fr-fr.facebook.com/",
+        "twitter_link": "https://twitter.com/",
+        "linkedin_link": "https://www.linkedin.com/",
+        "created_date": "2020-12-16T22:50:46.531Z"
+    }
+},
+{
+    "model": "pages.service",
+    "pk": 1,
+    "fields": {
+        "icone": "<i class=\"flaticon-customer-service\"></i>",
+        "numero": 1,
+        "titre": "Free Support",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
+        "created_date": "2020-12-17T09:43:28.236Z"
+    }
+},
+{
+    "model": "pages.service",
+    "pk": 2,
+    "fields": {
+        "icone": "<i class=\"flaticon-delivery\"></i>",
+        "numero": 2,
+        "titre": "Super Fast",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
+        "created_date": "2020-12-17T09:45:17.786Z"
+    }
+},
+{
+    "model": "pages.service",
+    "pk": 3,
+    "fields": {
+        "icone": "<i class=\"flaticon-piston-1\"></i>",
+        "numero": 3,
+        "titre": "Repairing",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
+        "created_date": "2020-12-17T09:46:17.561Z"
+    }
+},
+{
+    "model": "pages.service",
+    "pk": 4,
+    "fields": {
+        "icone": "<i class=\"flaticon-air-conditioner\"></i>",
+        "numero": 4,
+        "titre": "AIR conditioning",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
+        "created_date": "2020-12-17T09:47:30.781Z"
+    }
+},
+{
+    "model": "pages.service",
+    "pk": 5,
+    "fields": {
+        "icone": "<i class=\"flaticon-gas-station\"></i>",
+        "numero": 5,
+        "titre": "Oil Change",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
+        "created_date": "2020-12-17T09:48:24.405Z"
+    }
+},
+{
+    "model": "pages.service",
+    "pk": 6,
+    "fields": {
+        "icone": "<i class=\"flaticon-car-key\"></i>",
+        "numero": 6,
+        "titre": "Dealership",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
+        "created_date": "2020-12-17T09:50:04.788Z"
+    }
+},
+{
+    "model": "pages.service",
+    "pk": 7,
+    "fields": {
+        "icone": "<i class=\"flaticon-car-repair\"></i>",
+        "numero": 7,
+        "titre": "Engine Repair",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
+        "created_date": "2020-12-17T09:51:06.645Z"
+    }
+},
+{
+    "model": "pages.service",
+    "pk": 8,
+    "fields": {
+        "icone": "<i class=\"flaticon-lock\"></i>",
+        "numero": 8,
+        "titre": "Security",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
+        "created_date": "2020-12-17T09:51:57.270Z"
+    }
+},
+{
+    "model": "pages.service",
+    "pk": 9,
+    "fields": {
+        "icone": "<i class=\"flaticon-deal\"></i>",
+        "numero": 9,
+        "titre": "Trusted Agents",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt",
+        "created_date": "2020-12-20T20:13:06.279Z"
+    }
+},
+{
+    "model": "pages.aboutdesc",
+    "pk": 2,
+    "fields": {
+        "titre1": "Welcome to",
+        "titre2": "Comégusto",
+        "description": "<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker</p>",
+        "image1": "abouts/recipes_1.jpg",
+        "image2": "abouts/recipes_2.jpeg",
+        "image3": "abouts/recipes_3.jpg"
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$216000$6lr2o17SsrSr$FPmFj4SkKWTfvu30ScvsiDKoPD6VVGh4R8YDMJPJ8M4=",
+        "last_login": "2021-01-17T13:00:58Z",
+        "is_superuser": true,
+        "username": "djangoadmin",
+        "first_name": "HIPPOLYTE",
+        "last_name": "KENGNI",
+        "email": "elyes-ben-ali@etud.univ-tln.fr",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2020-12-15T20:41:52Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "!WEnfpXAWisLkFM5NkupvshSQzWnm5pWRnoojvOJa",
+        "last_login": "2020-12-26T09:55:43.537Z",
+        "is_superuser": false,
+        "username": "linda",
+        "first_name": "Linda",
+        "last_name": "Kemtsombou",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2020-12-26T09:55:43.281Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$216000$5JG8uEGxPSMs$rzJxa1M56iCSY+e3BlUZ+UGFCHr3+fcM2ohcoel5h7M=",
+        "last_login": "2021-01-17T18:24:30.207Z",
+        "is_superuser": false,
+        "username": "Aziguy",
+        "first_name": "Aziguy",
+        "last_name": "HERNANDEZ",
+        "email": "aziguy@mydomaine.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2021-01-17T18:24:29.915Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "ipbkerfmdq1vcjoycka8amr4p4g9s8pr",
+    "fields": {
+        "session_data": ".eJxVzMEOgjAMgOF36ZkQ2MRtHo1XT56MMaTrhqC4IhsHY3x3wXjx1vT_2hdEpg57JOIppDomTB42pxcMI5OPETbQ86ULkEEkHuYG84hTausBR7wvAN4ZrA7Hx65k_dRbC-cM6i-Zoh_rzs2mhL-dRbr5sAR3xXDhnDiksbP5QvJfjfmene-3P_v3oMXYztdrU1lVOGF1gcIaKamSWggirEpaF8aSaqzXDo1UyiBqlI2qjGucJGGEg_cHeAFVFA:1l0ScV:LvDhagvUIGFGCljsnok4Cjpua3Ghq596s1RnlXJ5vE8",
+        "expire_date": "2021-01-29T17:10:43.585Z"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "oyzeg246prvnnk6biubuhejhtr3fcguf",
+    "fields": {
+        "session_data": ".eJxVjMsOwiAUBf-FtSEUQuG6dO83kPsAqRqalHZl_Hdt0oVuz8ycl0q4rTVtPS9pEnVWgzr9boT8yG0Hcsd2mzXPbV0m0ruiD9r1dZb8vBzu30HFXr_1CJ6CEUvRoCVwjr2L1jKjH3g0QBwK5SgILgRAjOhK8CBFHFuwot4f4A04Ow:1l0mf0:yh2xYudJdu6lpvKJj_xSCPlr6a5AWPntjbrp_SSNo2w",
+        "expire_date": "2021-01-30T14:34:38.078Z"
+    }
+},
+{
+    "model": "sites.site",
+    "fields": {
+        "domain": "localhost:8000",
+        "name": "localhost:8000"
+    }
+},
+{
+    "model": "socialaccount.socialapp",
+    "pk": 1,
+    "fields": {
+        "provider": "facebook",
+        "name": "Facebook Login",
+        "client_id": "591524468331136",
+        "secret": "a5f83a9a1c92bfbb2c7fa8af0bf504ce",
+        "key": "",
+        "sites": [
+            [
+                "localhost:8000"
+            ]
+        ]
+    }
+},
+{
+    "model": "socialaccount.socialapp",
+    "pk": 2,
+    "fields": {
+        "provider": "google",
+        "name": "Google Login",
+        "client_id": "374043331765-748pquveob9rrbphv93th9q1s6p7lkeg.apps.googleusercontent.com",
+        "secret": "zTGoHaNbXV2bpa2-U-g4VhD2",
+        "key": "",
+        "sites": [
+            [
+                "localhost:8000"
+            ]
+        ]
+    }
+},
+{
+    "model": "socialaccount.socialapp",
+    "pk": 4,
+    "fields": {
+        "provider": "linkedin_oauth2",
+        "name": "Linkedin Login",
+        "client_id": "77blq7wc3bw8c5",
+        "secret": "ZiBnW7Lp5zaFkbDS",
+        "key": "",
+        "sites": [
+            [
+                "localhost:8000"
+            ]
+        ]
+    }
+},
+{
+    "model": "socialaccount.socialaccount",
+    "pk": 3,
+    "fields": {
+        "user": [
+            "linda"
+        ],
+        "provider": "linkedin_oauth2",
+        "uid": "05e-wGFuTF",
+        "last_login": "2020-12-26T09:55:43.384Z",
+        "date_joined": "2020-12-26T09:55:43.384Z",
+        "extra_data": "{\"firstName\": {\"localized\": {\"fr_FR\": \"Linda\"}, \"preferredLocale\": {\"country\": \"FR\", \"language\": \"fr\"}}, \"lastName\": {\"localized\": {\"fr_FR\": \"Kemtsombou\"}, \"preferredLocale\": {\"country\": \"FR\", \"language\": \"fr\"}}, \"id\": \"05e-wGFuTF\"}"
+    }
+},
+{
+    "model": "socialaccount.socialtoken",
+    "pk": 3,
+    "fields": {
+        "app": 4,
+        "account": 3,
+        "token": "AQUKkbR08OvyBkGznMGQvL8Iq_uqjM3GycmtaFywENQMNwxwc9F6mijcOQ8D2u63rR7rNuEzSDNS1DPPZbFD0Qlgn6nPE7ad5Qn1Za_RHXezjqD1LOFeDNhpho-udIX9RNz14P4x_rEoWYhTF-6ZZTCT_YF5V3adsid63IFQ7P1-7KWNN8polkNPdSb7I5SaC-qUce8HYxxJWIfiEJ9nqQqaXGv58w1KEs2WWYEVBP9qnoXojKTXfY9Z9jSAexdlpiuqeN5cMs1SOYUZAcA1qfeMaCeJj_DqjTcaw8s-06Y8l81KsludtFjLrOTlYfQsTesBhVKOqxy3KT_u3EnTw2UYu0HLLQ",
+        "token_secret": "",
+        "expires_at": "2021-02-24T09:55:41.801Z"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2020-12-15T20:43:59.985Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "1",
+        "object_repr": "djangoadmin",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Last login\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2020-12-15T20:48:05.721Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "info"
+        ],
+        "object_id": "1",
+        "object_repr": "+33-4XX-634-7071",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2020-12-15T20:52:39.193Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "1",
+        "object_repr": "WOW FACTOR STANDARD",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2020-12-15T20:53:17.873Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "2",
+        "object_repr": "EXPLORE YOUR DREAM CAR",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2020-12-15T20:53:51.984Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "WE ARE WHEEL",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2020-12-15T20:53:59.547Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "2",
+        "object_repr": "EXPLORE YOUR DREAM CAR",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2020-12-15T20:54:03.043Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "WE ARE WHEEL",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2020-12-15T21:16:47.885Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "1",
+        "object_repr": "WOW FACTOR STANDARD",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2020-12-15T21:17:01.315Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "2",
+        "object_repr": "EXPLORE YOUR DREAM CAR",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2020-12-15T21:17:08.578Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "WE ARE WHEEL",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 11,
+    "fields": {
+        "action_time": "2020-12-15T22:41:16.386Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "1",
+        "object_repr": "T1_WOW FACTOR STANDARD",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Titre\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 12,
+    "fields": {
+        "action_time": "2020-12-15T22:45:53.513Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "1",
+        "object_repr": "WOW FACTOR STANDARD",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Titre\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 13,
+    "fields": {
+        "action_time": "2020-12-15T22:46:08.797Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "2",
+        "object_repr": "2_EXPLORE YOUR DREAM CAR",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Titre\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 14,
+    "fields": {
+        "action_time": "2020-12-15T22:46:16.115Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "3_WE ARE WHEEL",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Titre\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 15,
+    "fields": {
+        "action_time": "2020-12-15T22:46:22.385Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "1",
+        "object_repr": "1_WOW FACTOR STANDARD",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Titre\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 16,
+    "fields": {
+        "action_time": "2020-12-15T23:02:10.409Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "1",
+        "object_repr": "WOW FACTOR STANDARD",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Titre\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 17,
+    "fields": {
+        "action_time": "2020-12-15T23:02:40.235Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "2",
+        "object_repr": "EXPLORE YOUR DREAM CAR",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Titre\", \"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 18,
+    "fields": {
+        "action_time": "2020-12-15T23:03:02.490Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "WE ARE WHEEL",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Titre\", \"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 19,
+    "fields": {
+        "action_time": "2020-12-15T23:03:19.637Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "1",
+        "object_repr": "WOW FACTOR STANDARD",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 20,
+    "fields": {
+        "action_time": "2020-12-15T23:55:13.893Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "WE ARE WHEEL",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 21,
+    "fields": {
+        "action_time": "2020-12-16T00:00:28.915Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "WE ARE WHEEL",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 22,
+    "fields": {
+        "action_time": "2020-12-16T00:02:52.206Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "WE ARE WHEEL",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 23,
+    "fields": {
+        "action_time": "2020-12-16T00:03:02.776Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "2",
+        "object_repr": "EXPLORE YOUR DREAM CAR",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 24,
+    "fields": {
+        "action_time": "2020-12-16T00:03:12.659Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "1",
+        "object_repr": "WOW FACTOR STANDARD",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 25,
+    "fields": {
+        "action_time": "2020-12-16T00:03:56.493Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "WE ARE WHEEL",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 26,
+    "fields": {
+        "action_time": "2020-12-16T00:04:38.439Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "2",
+        "object_repr": "EXPLORE YOUR DREAM CAR",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 27,
+    "fields": {
+        "action_time": "2020-12-16T00:04:50.827Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "1",
+        "object_repr": "WOW FACTOR STANDARD",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 28,
+    "fields": {
+        "action_time": "2020-12-16T00:05:45.133Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "slider"
+        ],
+        "object_id": "3",
+        "object_repr": "WE ARE WHEEL",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 29,
+    "fields": {
+        "action_time": "2020-12-16T13:53:02.946Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "info"
+        ],
+        "object_id": "1",
+        "object_repr": "+33-4XX-634-7071",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Horaire\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 30,
+    "fields": {
+        "action_time": "2020-12-16T21:27:16.196Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "info"
+        ],
+        "object_id": "1",
+        "object_repr": "+33-4XX-634-7071",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Email\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 31,
+    "fields": {
+        "action_time": "2020-12-16T21:30:35.443Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "info"
+        ],
+        "object_id": "1",
+        "object_repr": "+33-4XX-634-7071",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Email\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 32,
+    "fields": {
+        "action_time": "2020-12-16T21:33:35.654Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "info"
+        ],
+        "object_id": "1",
+        "object_repr": "+33-4XX-634-7071",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Email\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 33,
+    "fields": {
+        "action_time": "2020-12-16T21:35:14.002Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "info"
+        ],
+        "object_id": "1",
+        "object_repr": "+33-4XX-634-7071",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Email\", \"Horaire\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 34,
+    "fields": {
+        "action_time": "2020-12-16T22:09:21.141Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "1",
+        "object_repr": "HIPPOLYTE",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 35,
+    "fields": {
+        "action_time": "2020-12-16T22:33:02.533Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "1",
+        "object_repr": "Martin",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"First name\", \"Last name\", \"Job title\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 36,
+    "fields": {
+        "action_time": "2020-12-16T22:35:09.256Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "2",
+        "object_repr": "Stone",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 37,
+    "fields": {
+        "action_time": "2020-12-16T22:37:04.995Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "3",
+        "object_repr": "Brandon",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 38,
+    "fields": {
+        "action_time": "2020-12-16T22:38:50.960Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "4",
+        "object_repr": "Michelle",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 39,
+    "fields": {
+        "action_time": "2020-12-16T22:41:14.347Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "5",
+        "object_repr": "Lorem",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 40,
+    "fields": {
+        "action_time": "2020-12-16T22:45:38.961Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "6",
+        "object_repr": "Cheap",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 41,
+    "fields": {
+        "action_time": "2020-12-16T22:48:30.847Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "7",
+        "object_repr": "Aziguy",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 42,
+    "fields": {
+        "action_time": "2020-12-16T22:50:46.534Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "8",
+        "object_repr": "Jasman",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 43,
+    "fields": {
+        "action_time": "2020-12-16T23:36:40.730Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "team"
+        ],
+        "object_id": "6",
+        "object_repr": "Cheap",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Job title\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 44,
+    "fields": {
+        "action_time": "2020-12-17T09:43:28.239Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "1",
+        "object_repr": "Free Support",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 45,
+    "fields": {
+        "action_time": "2020-12-17T09:45:17.788Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "2",
+        "object_repr": "Super Fast",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 46,
+    "fields": {
+        "action_time": "2020-12-17T09:46:17.563Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "3",
+        "object_repr": "Repairing",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 47,
+    "fields": {
+        "action_time": "2020-12-17T09:47:30.785Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "4",
+        "object_repr": "AIR conditioning",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 48,
+    "fields": {
+        "action_time": "2020-12-17T09:48:24.407Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "5",
+        "object_repr": "Oil Change",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 49,
+    "fields": {
+        "action_time": "2020-12-17T09:50:04.790Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "6",
+        "object_repr": "Dealership",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 50,
+    "fields": {
+        "action_time": "2020-12-17T09:51:06.648Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "7",
+        "object_repr": "Engine Repair",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 51,
+    "fields": {
+        "action_time": "2020-12-17T09:51:57.273Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "8",
+        "object_repr": "Security",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 52,
+    "fields": {
+        "action_time": "2020-12-17T11:59:53.398Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "info"
+        ],
+        "object_id": "1",
+        "object_repr": "+33-4XX-634-7071",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Site\", \"Fax\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 53,
+    "fields": {
+        "action_time": "2020-12-17T14:43:40.575Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "aboutdesc"
+        ],
+        "object_id": "2",
+        "object_repr": "Welcome to",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 54,
+    "fields": {
+        "action_time": "2020-12-17T15:15:42.992Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "aboutdesc"
+        ],
+        "object_id": "2",
+        "object_repr": "Welcome to",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 55,
+    "fields": {
+        "action_time": "2020-12-20T20:13:06.430Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "9",
+        "object_repr": "Trusted Agents",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 56,
+    "fields": {
+        "action_time": "2020-12-23T22:29:04.595Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "2",
+        "object_repr": "hkengni682",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 57,
+    "fields": {
+        "action_time": "2020-12-24T09:25:35.943Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "socialaccount",
+            "socialapp"
+        ],
+        "object_id": "1",
+        "object_repr": "Facebook Login",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 58,
+    "fields": {
+        "action_time": "2020-12-24T09:27:06.195Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "sites",
+            "site"
+        ],
+        "object_id": "1",
+        "object_repr": "localhost:8000",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Domain name\", \"Display name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 59,
+    "fields": {
+        "action_time": "2020-12-24T10:48:18.763Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "socialaccount",
+            "socialapp"
+        ],
+        "object_id": "2",
+        "object_repr": "Google Login",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 60,
+    "fields": {
+        "action_time": "2020-12-24T11:15:52.030Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "socialaccount",
+            "socialapp"
+        ],
+        "object_id": "3",
+        "object_repr": "Linkedin Login",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 61,
+    "fields": {
+        "action_time": "2020-12-24T14:17:10.847Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "aboutdesc"
+        ],
+        "object_id": "2",
+        "object_repr": "Welcome to",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Image1\", \"Image2\", \"Image3\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 62,
+    "fields": {
+        "action_time": "2020-12-24T14:25:12.265Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "socialaccount",
+            "socialapp"
+        ],
+        "object_id": "3",
+        "object_repr": "Linkedin Login",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 63,
+    "fields": {
+        "action_time": "2020-12-24T16:05:22.012Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "4",
+        "object_repr": "hippolyte",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 64,
+    "fields": {
+        "action_time": "2020-12-24T16:05:22.075Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "5",
+        "object_repr": "hippolyte6",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 65,
+    "fields": {
+        "action_time": "2020-12-24T16:05:22.104Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "3",
+        "object_repr": "hkengni682",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 66,
+    "fields": {
+        "action_time": "2020-12-26T09:48:44.863Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "socialaccount",
+            "socialapp"
+        ],
+        "object_id": "3",
+        "object_repr": "Linkedin Login",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 67,
+    "fields": {
+        "action_time": "2020-12-26T09:53:35.104Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "socialaccount",
+            "socialapp"
+        ],
+        "object_id": "4",
+        "object_repr": "Linkedin Login",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 68,
+    "fields": {
+        "action_time": "2021-01-11T21:28:43.276Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "1",
+        "object_repr": "Boucherie",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 69,
+    "fields": {
+        "action_time": "2021-01-11T21:29:02.137Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "2",
+        "object_repr": "Poissonnerie",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 70,
+    "fields": {
+        "action_time": "2021-01-11T21:29:25.973Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "3",
+        "object_repr": "Volaillerie",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 71,
+    "fields": {
+        "action_time": "2021-01-11T21:29:39.257Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "4",
+        "object_repr": "Fruits",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 72,
+    "fields": {
+        "action_time": "2021-01-11T21:29:49.778Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "5",
+        "object_repr": "Légumes",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 73,
+    "fields": {
+        "action_time": "2021-01-11T21:30:01.435Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "6",
+        "object_repr": "Beurre",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 74,
+    "fields": {
+        "action_time": "2021-01-11T21:30:25.164Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "7",
+        "object_repr": "Oeufs",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 75,
+    "fields": {
+        "action_time": "2021-01-11T21:30:38.269Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "8",
+        "object_repr": "Crèmerie",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 76,
+    "fields": {
+        "action_time": "2021-01-11T21:30:53.187Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "9",
+        "object_repr": "Fromagerie",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 77,
+    "fields": {
+        "action_time": "2021-01-11T21:34:25.279Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "1",
+        "object_repr": "Carrefour Drive Toulon Mayol",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 78,
+    "fields": {
+        "action_time": "2021-01-11T21:36:18.999Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "2",
+        "object_repr": "Drive Intermarché Toulon",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 79,
+    "fields": {
+        "action_time": "2021-01-11T21:37:05.502Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "3",
+        "object_repr": "Casino Drive Toulon Siblas",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 80,
+    "fields": {
+        "action_time": "2021-01-11T21:38:02.448Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "4",
+        "object_repr": "Courses U Drive Pierrefeu Du Var",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 81,
+    "fields": {
+        "action_time": "2021-01-11T21:39:02.271Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "5",
+        "object_repr": "Auchan Drive La Seyne",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 82,
+    "fields": {
+        "action_time": "2021-01-11T21:40:16.939Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "6",
+        "object_repr": "E. Leclerc Drive Toulon Le piéton",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 83,
+    "fields": {
+        "action_time": "2021-01-11T21:41:09.600Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "7",
+        "object_repr": "Chronodrive La Garde",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 84,
+    "fields": {
+        "action_time": "2021-01-11T21:45:24.551Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "1",
+        "object_repr": "Carrefour Drive Toulon Mayol",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 85,
+    "fields": {
+        "action_time": "2021-01-11T21:45:45.964Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "2",
+        "object_repr": "Drive Intermarché Toulon",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 86,
+    "fields": {
+        "action_time": "2021-01-11T21:46:14.228Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "3",
+        "object_repr": "Casino Drive Toulon Siblas",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 87,
+    "fields": {
+        "action_time": "2021-01-11T21:46:37.645Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "4",
+        "object_repr": "Courses U Drive Pierrefeu Du Var",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 88,
+    "fields": {
+        "action_time": "2021-01-11T21:47:02.262Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "5",
+        "object_repr": "Auchan Drive La Seyne",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 89,
+    "fields": {
+        "action_time": "2021-01-11T21:47:36.490Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "6",
+        "object_repr": "E. Leclerc Drive Toulon Le piéton",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 90,
+    "fields": {
+        "action_time": "2021-01-11T21:47:57.399Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "7",
+        "object_repr": "Chronodrive La Garde",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 91,
+    "fields": {
+        "action_time": "2021-01-11T21:48:04.305Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive"
+        ],
+        "object_id": "6",
+        "object_repr": "E. Leclerc Drive Toulon Le piéton",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 92,
+    "fields": {
+        "action_time": "2021-01-11T21:51:46.164Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "1",
+        "object_repr": "viande de bœuf 250g",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 93,
+    "fields": {
+        "action_time": "2021-01-11T21:52:17.539Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "2",
+        "object_repr": "Lait demi écrémé",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 94,
+    "fields": {
+        "action_time": "2021-01-11T21:52:45.553Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "3",
+        "object_repr": "Poisson d'eau douce",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 95,
+    "fields": {
+        "action_time": "2021-01-11T21:56:02.978Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "4",
+        "object_repr": "Steak Haché Pur Bœuf 5% Mg Filiere Qualite Carrefour - la barquette de 4 - 500g",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 96,
+    "fields": {
+        "action_time": "2021-01-11T22:02:57.340Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive_ingredient"
+        ],
+        "object_id": "1",
+        "object_repr": "Drive_Ingredient object (1)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 97,
+    "fields": {
+        "action_time": "2021-01-11T22:03:24.304Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive_ingredient"
+        ],
+        "object_id": "2",
+        "object_repr": "Drive_Ingredient object (2)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 98,
+    "fields": {
+        "action_time": "2021-01-11T22:07:13.087Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "drive_ingredient"
+        ],
+        "object_id": "3",
+        "object_repr": "Drive_Ingredient object (3)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 99,
+    "fields": {
+        "action_time": "2021-01-12T22:57:15.846Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "1",
+        "object_repr": "1 Pavé de Saumon 100g",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Image\", \"Categorie\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 100,
+    "fields": {
+        "action_time": "2021-01-12T22:57:55.402Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "2",
+        "object_repr": "100g de pomme de terre",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Image\", \"Categorie\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 101,
+    "fields": {
+        "action_time": "2021-01-12T23:06:19.987Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "2",
+        "object_repr": "100g de pomme de terre",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Image\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 102,
+    "fields": {
+        "action_time": "2021-01-12T23:10:02.231Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "3",
+        "object_repr": "200g de choucroute crue",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Image\", \"Categorie\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 103,
+    "fields": {
+        "action_time": "2021-01-12T23:10:43.014Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "4",
+        "object_repr": "1/2 Oignon",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Image\", \"Categorie\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 104,
+    "fields": {
+        "action_time": "2021-01-12T23:11:37.698Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "5",
+        "object_repr": "1 Feuille de laurier",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 105,
+    "fields": {
+        "action_time": "2021-01-12T23:12:55.947Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "categorie"
+        ],
+        "object_id": "10",
+        "object_repr": "Epices",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 106,
+    "fields": {
+        "action_time": "2021-01-12T23:13:10.683Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "6",
+        "object_repr": "Sel",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 107,
+    "fields": {
+        "action_time": "2021-01-12T23:13:28.155Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "7",
+        "object_repr": "Poivre",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 108,
+    "fields": {
+        "action_time": "2021-01-12T23:14:01.475Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "8",
+        "object_repr": "Citron",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 109,
+    "fields": {
+        "action_time": "2021-01-12T23:14:35.059Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "9",
+        "object_repr": "1 Pincee de Graines de Chia",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 110,
+    "fields": {
+        "action_time": "2021-01-12T23:30:11.436Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "10",
+        "object_repr": "10 oeufs",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 111,
+    "fields": {
+        "action_time": "2021-01-12T23:31:00.253Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "11",
+        "object_repr": "Gruyère râpé",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 112,
+    "fields": {
+        "action_time": "2021-01-12T23:31:12.158Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "9",
+        "object_repr": "Graines de Chia",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 113,
+    "fields": {
+        "action_time": "2021-01-12T23:31:34.794Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "5",
+        "object_repr": "Feuille de laurier",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 114,
+    "fields": {
+        "action_time": "2021-01-12T23:31:54.398Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "4",
+        "object_repr": "Oignons",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 115,
+    "fields": {
+        "action_time": "2021-01-12T23:32:06.428Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "3",
+        "object_repr": "Choucroute crue",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 116,
+    "fields": {
+        "action_time": "2021-01-12T23:32:15.145Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "2",
+        "object_repr": "Pomme de terre",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 117,
+    "fields": {
+        "action_time": "2021-01-12T23:32:29.629Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "1",
+        "object_repr": "Pavé de Saumon",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 118,
+    "fields": {
+        "action_time": "2021-01-12T23:33:57.309Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "11",
+        "object_repr": "Gruyère râpé",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 119,
+    "fields": {
+        "action_time": "2021-01-13T00:25:20.830Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "recipe"
+        ],
+        "object_id": "1",
+        "object_repr": "Recipe object (1)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 120,
+    "fields": {
+        "action_time": "2021-01-13T00:35:55.295Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "12",
+        "object_repr": "Huile d'olive",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 121,
+    "fields": {
+        "action_time": "2021-01-13T00:37:28.421Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "recipe"
+        ],
+        "object_id": "2",
+        "object_repr": "Recipe object (2)",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 122,
+    "fields": {
+        "action_time": "2021-01-14T01:52:23.936Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "recipe"
+        ],
+        "object_id": "2",
+        "object_repr": "Recipe object (2)",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Origine\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 123,
+    "fields": {
+        "action_time": "2021-01-14T17:42:49.944Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "13",
+        "object_repr": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavvvvvvvvvvvvvvvvvvvvvvvvvvv11111111111111111111",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 124,
+    "fields": {
+        "action_time": "2021-01-14T17:44:32.167Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "recipe",
+            "ingredient"
+        ],
+        "object_id": "13",
+        "object_repr": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaavvvvvvvvvvvvvvvvvvvvvvvvvvv11111111111111111111",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 125,
+    "fields": {
+        "action_time": "2021-01-14T20:35:57.892Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "9",
+        "object_repr": "Trusted Agents",
+        "action_flag": 2,
+        "change_message": "[]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 126,
+    "fields": {
+        "action_time": "2021-01-14T20:36:30.037Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "1",
+        "object_repr": "Free Support",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 127,
+    "fields": {
+        "action_time": "2021-01-14T20:38:34.445Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "2",
+        "object_repr": "Super Fast",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 128,
+    "fields": {
+        "action_time": "2021-01-14T20:39:00.014Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "3",
+        "object_repr": "Repairing",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 129,
+    "fields": {
+        "action_time": "2021-01-14T20:40:11.043Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "5",
+        "object_repr": "Oil Change",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 130,
+    "fields": {
+        "action_time": "2021-01-14T20:41:37.488Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "6",
+        "object_repr": "Dealership",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 131,
+    "fields": {
+        "action_time": "2021-01-14T20:43:29.090Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "7",
+        "object_repr": "Engine Repair",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 132,
+    "fields": {
+        "action_time": "2021-01-14T20:44:23.783Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "7",
+        "object_repr": "Engine Repair",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 133,
+    "fields": {
+        "action_time": "2021-01-14T21:02:49.407Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "pages",
+            "service"
+        ],
+        "object_id": "7",
+        "object_repr": "Engine Repair",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 178,
+    "fields": {
+        "action_time": "2021-01-17T01:27:06.354Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "dashboard",
+            "dashboard"
+        ],
+        "object_id": "1",
+        "object_repr": "KENGNI",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"First name\", \"Last name\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 179,
+    "fields": {
+        "action_time": "2021-01-17T13:01:53.158Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "auth",
+            "user"
+        ],
+        "object_id": "1",
+        "object_repr": "djangoadmin",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Email address\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 180,
+    "fields": {
+        "action_time": "2021-01-17T13:36:24.388Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "dashboard",
+            "dashboard"
+        ],
+        "object_id": "2",
+        "object_repr": "KENGNI",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 181,
+    "fields": {
+        "action_time": "2021-01-17T13:36:24.831Z",
+        "user": [
+            "djangoadmin"
+        ],
+        "content_type": [
+            "dashboard",
+            "dashboard"
+        ],
+        "object_id": "1",
+        "object_repr": "KENGNI",
+        "action_flag": 3,
+        "change_message": ""
+    }
+}
+]
