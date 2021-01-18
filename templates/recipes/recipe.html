@@ -36,7 +36,7 @@
                                     <div class="price-box">
                                         <span><i class="flaticon-calorie"></i>{{ recipe.kcal }}</span>
                                     </div>
-                                    <img class="d-block w-100" src="{{ recipe.recipe_photo.url }}" alt="car">
+                                    <img class="d-block w-100" src="{{ recipe.recipe_photo.url }}" alt="car" style="min-height: 262px; max-height: 262px;">
                                 </a>
                                 <div class="carbox-overlap-wrapper">
                                     <div class="overlap-box">
@@ -44,7 +44,7 @@
                                             <div class="car-magnify-gallery">
                                                 <a href="{{ recipe.recipe_photo.url }}" class="overlap-btn">
                                                     <i class="fa fa-expand"></i>
-                                                    <img class="hidden" src="{{ recipe.recipe_photo.url }}" style="min-height: 262px; max-height: 262px;">
+                                                    <img class="hidden" src="{{ recipe.recipe_photo.url }}">
                                                 </a>
                                                 <a href="{{ recipe.recipe_photo_1.url }}" class="hidden" >
                                                     <img class="hidden" src="{{ recipe.recipe_photo_1.url }}">
