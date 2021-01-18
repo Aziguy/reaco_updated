@@ -78,3 +78,10 @@ def logout(request):
         auth.logout(request)
         return redirect('home')
     return redirect('home')
+
+# Random price
+list_for_random_1 = (3, 6, 2)
+return render(...{'list_for_random_1': list_for_random_1,}) 
+
+list_for_random_2 = (0, 99, 10)
+return render(...{'list_for_random_2': list_for_random_2,})
