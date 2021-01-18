@@ -6,11 +6,19 @@
 
 {% load static %}
 
+<style>
+
+	footer {
+		position: absolute;
+		width: 100%;
+		bottom: 0;
+	}
+</style>
 <!-- Sub banner start -->
 <div class="sub-banner overview-bgi">
     <div class="container breadcrumb-area">
         <div class="breadcrumb-areas">
-            <h1>Tableau de bord</h1>
+            <h1>Mes recettes</h1>
             <ul class="breadcrumbs">
                 <li><a href="index.html">Accueil</a></li>
                 <li class="active">{{ user.first_name }}</li>
@@ -24,8 +32,8 @@
 <div class="container mt-50 mb-50">
 	{% include 'includes/messages.html' %}
 	<div class="main-title" style="text-align:left !important;">
-		<h1>Bienvenu <span>{{ user.first_name }}</span></h1>
-		<p>Voici les recettes que vous avez ajoutés</p>
+		<h1>Bienvenue <span>{{ user.first_name }}</span></h1>
+		<p>Voici les recettes que vous avez ajoutées</p>
     </div>
 
     {% if inquiries %}
@@ -34,8 +42,7 @@
 		<tr>
 		  <th scope="col">Image</th>
 		  <th scope="col">Recettes</th>
-		  <th scope="col">Noms</th>
-		  <th scope="col">Prénoms</th>
+		  <th scope="col">Prix</th>
 		  <th scope="col">Action</th>
 		</tr>
 	  </thead>
@@ -44,15 +51,15 @@
 		<tr>
 		  <th scope="row"><img src="{{ inquiry.recipe_photo }}" style="width:40px; height: 40px; border-radius: 50px;"></th>
 		  <td>{{ inquiry.recipe_name }}</td>
-		  <td>{{ inquiry.last_name }}</td>
-		  <td>{{ inquiry.first_name }}</td>
-		  <td><a href="{% url 'recipe_details' inquiry.recipe_id %}" class="btn btn-outline-dark"><i class="fa fa-eye-slash"></i></a></td>
+		  <td>3 € <small>90</small></td>
+		  <td><a href="{% url 'recipe_details' inquiry.recipe_id %}" class="btn btn-outline-dark"><i class="fa fa-minus"></i></a></td>
 		</tr>
 		{% endfor %}
 	  </tbody>
 	</table>	
     {% else %}
-    <h3>Vous n'avez pas encore ajouté de recettes !!!</h3>	
+	<h3>Oups... Il n'y a rien ici !</h3>
+	<p>Commencez par ajouter quelques recettes.</p>
     {% endif %}
 	
 </div>

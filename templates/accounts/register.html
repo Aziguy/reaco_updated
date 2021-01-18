@@ -34,7 +34,7 @@
                             <img src="{% static 'img/logos/black-logo.png' %}" alt="logo">
                         </a>
                     </div>
-                    <h3>Créer un compte</h3>
+                    <h3>Inscription <span>(c'est gratuit !)</span></h3>
                     {% include 'includes/messages.html' %}
                     <form action="{% url 'register' %}" method="POST">
                     	{% csrf_token %}
@@ -44,35 +44,57 @@
                         </div>
                         <div class="form-group form-box">
                             <input type="text" name="lastname" class="input-text" placeholder="Noms" required>
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-signature"></i>
                         </div>
                         <div class="form-group form-box">
                             <input type="text" name="username" class="input-text" placeholder="Nom d'utilisateur" required>
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-address-card"></i>
                         </div>
                         <div class="form-group form-box">
                             <input type="email" name="email" class="input-text" placeholder="Adresse courriel" required>
-                            <i class="flaticon-mail"></i>
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <div class="form-group">
+                            <label style="display:block; text-align:left;color:#333;" for="exampleFormControlSelect2">Optionnel : Préférences et contraintes alimentaires</label>
+                            <select multiple class="form-control" id="exampleFormControlSelect2">
+                              <option>Sans gluten</option>
+                              <option>Sans lactose</option>
+                              <option>Végétarien</option>
+                              <option>Végan</option>
+                              <option>Hallal</option>
+                              <option>Casher</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label style="display:block; text-align:left;color:#333;" for="drive">Optionnel : Drive habituel</label>
+                            <select multiple class="form-control" id="drive">
+                              <option>Carrefour</option>
+                              <option>Leclerc</option>
+                              <option>Magasin U</option>
+                              <option>Chronodrive</option>
+                              <option>Intermarché</option>
+                              <option>Casino</option>
+                            </select>
                         </div>
                         <div class="form-group form-box">
                             <input type="password" name="password" class="input-text" placeholder="Mot de passe" required>
                             <i class="flaticon-lock"></i>
                         </div>
                         <div class="form-group form-box">
-                            <input type="password" name="confirm_password" class="input-text" placeholder="Repéter mon de passe" required>
+                            <input type="password" name="confirm_password" class="input-text" placeholder="Répéter mot de passe" required>
                             <i class="flaticon-lock"></i>
                         </div>
                         <div class="form-group mb-0 clearfix">
-                            <button type="submit" class="btn-md btn-theme float-left">Inscription</button>
+                            <button type="submit" class="btn-md btn-theme">Inscription</button>
                         </div>
                         <div class="extra-login clearfix">
                             <span>Ou connexion avec</span>
                         </div>
                         <div class="clearfix"></div>
                         <ul class="social-list">
-                            <li><a href="{% provider_login_url 'facebook' method='js_sdk' %}" class="facebook-bg"><i class="fa fa-facebook facebook-i"></i><span>Facebook</span></a></li>
-                            <li><a href="{% provider_login_url 'google' %}" class="google-bg"><i class="fa fa-google google-i"></i><span>Google</span></a></li>
-                            <li><a href="{% provider_login_url 'linkedin_oauth2' %}" class="linkedin-bg"><i class="fa fa-linkedin linkedin-i"></i><span>LinkedIn</span></a></li>
+                            <li><a href="{% provider_login_url 'facebook' method='js_sdk' %}" class="facebook-bg"><i class="fab fa-facebook facebook-i"></i><span>Facebook</span></a></li>
+                            <li><a href="{% provider_login_url 'google' %}" class="google-bg"><i class="fab fa-google google-i"></i><span>Google</span></a></li>
+                            <li><a href="{% provider_login_url 'linkedin_oauth2' %}" class="linkedin-bg"><i class="fab fa-linkedin linkedin-i"></i><span>LinkedIn</span></a></li>
                         </ul>
                     </form>
                     <p>Déjà membre ? <a href="login.html" class="thembo">Connexion</a></p>

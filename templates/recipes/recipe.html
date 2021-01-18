@@ -10,7 +10,7 @@
 <div class="sub-banner overview-bgi">
     <div class="container breadcrumb-area">
         <div class="breadcrumb-areas">
-            <h1>Our Recipe Inventory</h1>
+            <h1>Toutes les recettes</h1>
             <ul class="breadcrumbs">
                 <li><a href="{% url 'home' %}">Accueil</a></li>
                 <li class="active">Recettes</li>
@@ -36,7 +36,7 @@
                                     <div class="price-box">
                                         <span><i class="flaticon-calorie"></i>{{ recipe.kcal }}</span>
                                     </div>
-                                    <img class="d-block w-100" src="{{ recipe.recipe_photo.url }}" alt="car" style="min-height: 262px; max-height: 262px;">
+                                    <img class="d-block w-100" src="{{ recipe.recipe_photo.url }}" alt="car">
                                 </a>
                                 <div class="carbox-overlap-wrapper">
                                     <div class="overlap-box">
@@ -44,7 +44,7 @@
                                             <div class="car-magnify-gallery">
                                                 <a href="{{ recipe.recipe_photo.url }}" class="overlap-btn">
                                                     <i class="fa fa-expand"></i>
-                                                    <img class="hidden" src="{{ recipe.recipe_photo.url }}">
+                                                    <img class="hidden" src="{{ recipe.recipe_photo.url }}" style="min-height: 262px; max-height: 262px;">
                                                 </a>
                                                 <a href="{{ recipe.recipe_photo_1.url }}" class="hidden" >
                                                     <img class="hidden" src="{{ recipe.recipe_photo_1.url }}">
@@ -125,10 +125,10 @@
                 <div class="sidebar-right">
                     <!-- Advanced search start -->
                     <div class="widget advanced-search2">
-                        <h3 class="sidebar-title">Recherchez la recette désirée</h3>
+                        <h3 class="sidebar-title">Alors, <span>on mange quoi ce soir ?</span></h3>
                         <form action="{% url 'search' %}" method="">
                             <div class="form-group">
-                                <input type="text" name="keyword" placeholder="rechercher par nom" class="form-control">
+                                <input type="text" name="keyword" placeholder="Rechercher par nom" class="form-control">
                             </div>
                             <div class="form-group">
                                 <select class="form-control search-fields" name="category">
@@ -172,7 +172,7 @@
                             </div>
                             <div class="range-slider clearfix">
                                 <label>Calories</label>
-                                <div data-min="0" data-max="2000"  data-min-name="min_kcal" data-max-name="max_kcal" data-unit="Kcal" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div data-min="0" data-max="700"  data-min-name="min_kcal" data-max-name="max_kcal" data-unit="Kcal" class="range-slider-ui ui-slider" aria-disabled="false"></div>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="form-group mb-0">
@@ -186,11 +186,10 @@
                         <h5 class="sidebar-title">Nous suivre</h5>
                         <div class="social-list clearfix">
                             <ul>
-                                <li><a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#" class="rss-bg"><i class="fa fa-rss"></i></a></li>
-                                <li><a href="#" class="linkedin-bg"><i class="fa fa-linkedin"></i></a></li>
+                                <li><a href="#" class="facebook-bg"><i class="fab fa-facebook"></i></a></li>
+                                <li><a href="#" class="twitter-bg"><i class="fab fa-twitter"></i></a></li>
+                                <li><a href="#" class="google-bg"><i class="fab fa-google-plus"></i></a></li>
+                                <li><a href="#" class="linkedin-bg"><i class="fab fa-linkedin"></i></a></li>
                             </ul>
                         </div>
                     </div>

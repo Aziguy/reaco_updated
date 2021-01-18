@@ -13,8 +13,8 @@
     <div class="container">
         <!-- Main title -->
         <div class="main-title">
-            <h1>Recettes <span>à l'aune</span></h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <h1>Recettes <span>en vedette</span></h1>
+            <p>En panne d'idées ? Inspirez-vous des recettes du moment !</p>
         </div>
         <!-- Slick slider area start -->
         <div class="slick-slider-area clearfix">
@@ -24,7 +24,7 @@
                     <div class="car-box-3">
                         <div class="car-thumbnail">
                             <a href="{% url 'recipe_details' recipe.id %}" class="car-img">
-                                <div class="tag-2">A l'aune</div>
+                                <div class="tag-2"><i class="fas fa-star"></i></div>
                                 <div class="price-box">
                                     <span> <i class="flaticon-cooking-time"></i> {{ recipe.cooking_time }}  </span>
                                 </div>
@@ -90,8 +90,8 @@
     <div class="container">
         <!-- Main title -->
         <div class="main-title">
-            <h1>Dernière <span>Recettes</span></h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <h1>Les dernières <span>recettes</span></h1>
+            <p>Retrouvez des centaines de <span>recettes adaptées</span> à vos préférences et <span>soucieuses de vos contraintes alimentaires.</span></p>
         </div>
         <div class="row">
             {% for recipe in all_recipe %}
