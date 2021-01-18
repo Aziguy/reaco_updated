@@ -6,6 +6,8 @@
 
 {% load static %}
 
+{% load random_numbers %}
+
 <!-- Sub banner start -->
 <div class="sub-banner overview-bgi">
     <div class="container breadcrumb-area">
@@ -34,8 +36,7 @@
 		<tr>
 		  <th scope="col">Image</th>
 		  <th scope="col">Recettes</th>
-		  <th scope="col">Noms</th>
-		  <th scope="col">Prénoms</th>
+		  <th scope="col">Prix</th>
 		  <th scope="col">Action</th>
 		</tr>
 	  </thead>
@@ -44,7 +45,7 @@
 		<tr>
 		  <th scope="row"><img src="{{ inquiry.recipe_photo }}" style="width:40px; height: 40px; border-radius: 50px;"></th>
 		  <td>{{ inquiry.recipe_name }}</td>
-		  <td>{{ list_for_random_1 | random }} € <small>{{ list_for_random_2 | random }}</small></td>
+		  <td>{% random_int 3 6 %} € <small>{% random_int 1 99 %}</small></td>
 		  <td><a href="{% url 'recipe_details' inquiry.recipe_id %}" class="btn btn-outline-dark"><i class="fa fa-minus"></i></a></td>
 		</tr>
 		{% endfor %}
