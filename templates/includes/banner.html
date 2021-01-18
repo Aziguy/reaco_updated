@@ -9,7 +9,7 @@
                 <div class="carousel-content container banner-info-2 bi-2 text-left">
                     <h3>{{ row.titre }}</h3>
                     <h5>{{ row.description|safe }}</h5>
-                    <a href="{% url 'services' %}" class="btn btn-lg btn-theme"><i class="fa fa-eye" aria-hidden="true"></i> plus</a>
+                    <a href="{% url 'services' %}" class="btn btn-lg btn-theme">En savoir plus</a>
                 </div>
             </div>
             {% endfor %}
@@ -18,7 +18,7 @@
         <div class="search-box-4 sb-8">
             <form action="{% url 'search' %}" method="">
                 <div class="form-group">
-                    <input type="text" name="keyword" placeholder="recherche par nom" class="form-control">
+                    <input type="text" name="keyword" placeholder="Ex : Pâtes au ketchup (beurk..)" class="form-control">
                 </div>
                 <div class="form-group">
                     <select class="form-control search-fields" name="category">
@@ -62,7 +62,7 @@
                 </div>
                 <div class="range-slider clearfix">
                                 <label>Calories</label>
-                                <div data-min="0" data-max="2000"  data-min-name="min_kcal" data-max-name="max_kcal" data-unit="Kcal" class="range-slider-ui ui-slider" aria-disabled="false"></div>
+                                <div data-min="0" data-max="700"  data-min-name="min_kcal" data-max-name="max_kcal" data-unit="Kcal" class="range-slider-ui ui-slider" aria-disabled="false"></div>
                                 <div class="clearfix"></div>
                             </div>
                 <div class="form-group">
