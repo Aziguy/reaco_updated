@@ -6,14 +6,6 @@
 
 {% load static %}
 
-<style>
-
-	footer {
-		position: absolute;
-		width: 100%;
-		bottom: 0;
-	}
-</style>
 <!-- Sub banner start -->
 <div class="sub-banner overview-bgi">
     <div class="container breadcrumb-area">
@@ -42,7 +34,8 @@
 		<tr>
 		  <th scope="col">Image</th>
 		  <th scope="col">Recettes</th>
-		  <th scope="col">Prix</th>
+		  <th scope="col">Noms</th>
+		  <th scope="col">Prénoms</th>
 		  <th scope="col">Action</th>
 		</tr>
 	  </thead>
@@ -51,7 +44,8 @@
 		<tr>
 		  <th scope="row"><img src="{{ inquiry.recipe_photo }}" style="width:40px; height: 40px; border-radius: 50px;"></th>
 		  <td>{{ inquiry.recipe_name }}</td>
-		  <td>3 € <small>90</small></td>
+		  <td>{{ inquiry.last_name }}</td>
+		  <td>{{ inquiry.first_name }}</td>
 		  <td><a href="{% url 'recipe_details' inquiry.recipe_id %}" class="btn btn-outline-dark"><i class="fa fa-minus"></i></a></td>
 		</tr>
 		{% endfor %}
