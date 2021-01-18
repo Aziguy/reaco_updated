@@ -26,7 +26,7 @@ SECRET_KEY = '*_t@l+jw$%547upbsfp3)%ct!a-3%t+@&yvrws3#-r%in&l45g'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nameless-thicket-69877.herokuapp.com']
 
 LOGIN_REDIRECT_URL = 'dashboard'
 
@@ -96,15 +96,15 @@ WSGI_APPLICATION = 'recipes.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 # DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'recipes_db',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': '127.0.0.1',
-#         'PORT': '5432',
-#     }
-# }
+#      'default': {
+#          'ENGINE': 'django.db.backends.postgresql',
+#          'NAME': 'recipes_db',
+#          'USER': 'postgres',
+#          'PASSWORD': 'postgres',
+#          'HOST': '127.0.0.1',
+#          'PORT': '5432',
+#      }
+#  }
 
 DATABASES = {'default': dj_database_url.config(default='postgres://postgres:postgres@localhost/recipes_db')}
 
@@ -166,14 +166,18 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-SITE_ID = 1
+SITE_ID = 3
 
 # Email sending
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "mandatairessm@gmail.com"
 EMAIL_HOST_PASSWORD = "uatdrsm2020"
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = "mandatairessm@gmail.com"
+
 
 # Linkedin Authentication Setting
 SOCIALACCOUNT_PROVIDERS = {
@@ -195,3 +199,20 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # Whitenoise settings
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Fixing 500 error_
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+             'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        },
+    },
+}
