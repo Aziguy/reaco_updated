@@ -3,7 +3,7 @@
     "model": "recipe.drive",
     "pk": 1,
     "fields": {
-        "name": "Carrefour Drive Toulon Mayol",
+        "name": "Carrefour Drive Toulon Mayol",
         "image": "drive/Carrefour.png",
         "address": "Rue du Murier - Centre Commercial Mayol, 83000 Toulon",
         "created_date": "2021-01-12T22:22:36.011Z"
@@ -13,7 +13,7 @@
     "model": "recipe.drive",
     "pk": 2,
     "fields": {
-        "name": "Drive Intermarché Toulon",
+        "name": "Drive IntermarchÃ© Toulon",
         "image": "drive/Intermache.png",
         "address": "77 Rue d'Octave Teissier, 83000 Toulon",
         "created_date": "2021-01-12T22:22:36.011Z"
@@ -23,7 +23,7 @@
     "model": "recipe.drive",
     "pk": 3,
     "fields": {
-        "name": "Casino Drive Toulon Siblas",
+        "name": "Casino Drive Toulon Siblas",
         "image": "drive/Casino.png",
         "address": "484, Avenue de Siblas, 83000 Toulon",
         "created_date": "2021-01-12T22:22:36.011Z"
@@ -33,9 +33,9 @@
     "model": "recipe.drive",
     "pk": 4,
     "fields": {
-        "name": "Courses U Drive Pierrefeu Du Var",
+        "name": "Courses U Drive Pierrefeu Du Var",
         "image": "drive/U_drive.png",
-        "address": "Avenue Frédéric Mistral - Lieu-dit Le Logis, 83390 Pierrefeu-du-Var",
+        "address": "Avenue FrÃ©dÃ©ric Mistral - Lieu-dit Le Logis, 83390 Pierrefeu-du-Var",
         "created_date": "2021-01-12T22:22:36.011Z"
     }
 },
@@ -43,7 +43,7 @@
     "model": "recipe.drive",
     "pk": 5,
     "fields": {
-        "name": "Auchan Drive La Seyne",
+        "name": "Auchan Drive La Seyne",
         "image": "drive/Auchan.png",
         "address": "851 Boulevard de l'Europe, 83500 La Seyne-sur-Mer",
         "created_date": "2021-01-12T22:22:36.011Z"
@@ -53,9 +53,9 @@
     "model": "recipe.drive",
     "pk": 6,
     "fields": {
-        "name": "E. Leclerc Drive Toulon Le piéton",
+        "name": "E.Â LeclercÂ DriveÂ ToulonÂ LeÂ piÃ©ton",
         "image": "drive/E_Leclerc.png",
-        "address": "404, Avenue François Cuzin, 83000 Toulon",
+        "address": "404, Avenue FranÃ§ois Cuzin, 83000 Toulon",
         "created_date": "2021-01-12T22:22:36.011Z"
     }
 },
@@ -63,7 +63,7 @@
     "model": "recipe.drive",
     "pk": 7,
     "fields": {
-        "name": "Chronodrive La Garde",
+        "name": "Chronodrive La Garde",
         "image": "drive/Chronodrive.png",
         "address": "Avenue Robespierre - ZAC de la Pauline, 83130 La Garde",
         "created_date": "2021-01-12T22:22:36.011Z"
@@ -101,7 +101,7 @@
     "model": "recipe.categorie",
     "pk": 5,
     "fields": {
-        "name": "Légumes"
+        "name": "LÃ©gumes"
     }
 },
 {
@@ -122,7 +122,7 @@
     "model": "recipe.categorie",
     "pk": 8,
     "fields": {
-        "name": "Crèmerie"
+        "name": "CrÃ¨merie"
     }
 },
 {
@@ -143,8 +143,8 @@
     "model": "recipe.ingredient",
     "pk": 1,
     "fields": {
-        "name": "Pavé de Saumon",
-        "image": "ingredient/1_Pavé_De_Saumon_100g.jpg",
+        "name": "PavÃ© de Saumon",
+        "image": "ingredient/1_PavÃ©_De_Saumon_100g.jpg",
         "categorie": 2,
         "created_date": "2021-01-12T22:22:36.379Z"
     }
@@ -243,8 +243,8 @@
     "model": "recipe.ingredient",
     "pk": 11,
     "fields": {
-        "name": "Gruyère râpé",
-        "image": "ingredient/gruyère_râpé.jpg",
+        "name": "GruyÃ¨re rÃ¢pÃ©",
+        "image": "ingredient/gruyÃ¨re_rÃ¢pÃ©.jpg",
         "categorie": 9,
         "created_date": "2021-01-12T23:31:00.252Z"
     }
@@ -283,7 +283,7 @@
     "model": "recipe.ingredient",
     "pk": 16,
     "fields": {
-        "name": "Crème fraîche épaisse",
+        "name": "CrÃ¨me fraÃ®che Ã©paisse",
         "image": "ingredient/creme_fraiche_epaisse.webp",
         "categorie": 8,
         "created_date": "2021-01-17T10:58:35.070Z"
@@ -383,8 +383,8 @@
     "model": "recipe.ingredient",
     "pk": 26,
     "fields": {
-        "name": "Pâte",
-        "image": "ingredient/pâte.webp",
+        "name": "PÃ¢te",
+        "image": "ingredient/p?e.webp",
         "categorie": 10,
         "created_date": "2021-01-17T11:15:59.398Z"
     }
@@ -413,8 +413,8 @@
     "model": "recipe.ingredient",
     "pk": 29,
     "fields": {
-        "name": "Gruyère rapé",
-        "image": "ingredient/Gruyère_rapé.webp",
+        "name": "GruyÃ¨re rÃ¢pÃ©",
+        "image": "ingredient/GruyÃ¨re_rapÃ©.webp",
         "categorie": 9,
         "created_date": "2021-01-17T11:16:40.558Z"
     }
@@ -533,8 +533,8 @@
     "model": "recipe.ingredient",
     "pk": 41,
     "fields": {
-        "name": "Café",
-        "image": "ingredient/café.webp",
+        "name": "CafÃ©",
+        "image": "ingredient/cafÃ©.webp",
         "categorie": 10,
         "created_date": "2021-01-17T11:51:12.343Z"
     }
@@ -543,8 +543,8 @@
     "model": "recipe.ingredient",
     "pk": 42,
     "fields": {
-        "name": "Biscuits à la cuillère",
-        "image": "ingredient/biscuits_à_la_cuillère.webp",
+        "name": "Biscuits Ã  la cuillÃ¨re",
+        "image": "ingredient/biscuits_Ã _la_cuillÃ©e.webp",
         "categorie": 10,
         "created_date": "2021-01-17T11:51:22.112Z"
     }
@@ -563,8 +563,8 @@
     "model": "recipe.ingredient",
     "pk": 44,
     "fields": {
-        "name": "Sucre vanillé",
-        "image": "ingredient/sucre_vanillé.webp",
+        "name": "Sucre vanillÃ©",
+        "image": "ingredient/sucre_vanillÃ©.webp",
         "categorie": 10,
         "created_date": "2021-01-17T11:51:43.653Z"
     }
@@ -603,8 +603,8 @@
     "model": "recipe.ingredient",
     "pk": 48,
     "fields": {
-        "name": "Cacahuète",
-        "image": "ingredient/Cacahuètes.webp",
+        "name": "cacahuÃ¨te",
+        "image": "ingredient/CacahuÃ¨tes.webp",
         "categorie": 4,
         "created_date": "2021-01-17T11:58:54.323Z"
     }
@@ -623,8 +623,8 @@
     "model": "recipe.ingredient",
     "pk": 50,
     "fields": {
-        "name": "Cébette",
-        "image": "ingredient/Cébette.webp",
+        "name": "C?ette",
+        "image": "ingredient/C?ette.webp",
         "categorie": 5,
         "created_date": "2021-01-17T11:59:13.068Z"
     }
@@ -633,8 +633,8 @@
     "model": "recipe.ingredient",
     "pk": 51,
     "fields": {
-        "name": "Céleri",
-        "image": "ingredient/Céleri.webp",
+        "name": "CÃ©leri",
+        "image": "ingredient/CÃ©leri.webp",
         "categorie": 5,
         "created_date": "2021-01-17T11:59:22.589Z"
     }
@@ -684,12 +684,12 @@
     "pk": 1,
     "fields": {
         "category": "Plats principaux",
-        "level": "Intermédiaire",
+        "level": "IntermÃ©diaire",
         "name": "Choucroute de poisson",
         "portion": "1",
         "cooking_time": 40,
         "preparation": 15,
-        "diet": "Protéiné",
+        "diet": "ProtÃ©inÃ©",
         "origine": "Normandie, France",
         "kcal": 340,
         "proteins": 28,
@@ -720,13 +720,13 @@
     "model": "recipe.recipe",
     "pk": 2,
     "fields": {
-        "category": "Entrées / Hors d'oeuvre",
+        "category": "EntrÃ©es / Hors d'oeuvre",
         "level": "Facile",
-        "name": "Omelette roulée au fromage",
+        "name": "Omelette roulÃ©e au fromage",
         "portion": "4",
         "cooking_time": 15,
         "preparation": 5,
-        "diet": "Hyperproteiné",
+        "diet": "HyperproteinÃ©",
         "origine": "Nice,  France",
         "kcal": 340,
         "proteins": 28,
@@ -734,11 +734,11 @@
         "glucids": 5,
         "is_feature": false,
         "steps": "<p>Battez les &oelig;ufs avec du sel et du poivre dans un saladier.<br />\r\nDivisez la pr&eacute;paration dans 4 bols.<br />\r\nFaites chauffer de l&#39;huile d&#39;olive dans une po&ecirc;le.<br />\r\nMettez-y &agrave; cuire une omelette.<br />\r\nSaupoudrez de gruy&egrave;re et roulez-la.<br />\r\nRetirez de la po&ecirc;le et servez dans l&#39;assiette.<br />\r\nR&eacute;p&eacute;tez l&#39;op&eacute;ration pour les autres omelettes.<br />\r\nD&eacute;gustez de suite.</p>",
-        "recipe_photo": "recipe/omelette-roulee-apéritive.jpg",
+        "recipe_photo": "recipe/omelette-roulee-apÃ©ritive.jpg",
         "recipe_photo_1": "recipe/omelette-roulee-au-fromage-frais-et-jambon.jpeg",
         "recipe_photo_2": "recipe/om-5.jpg",
         "recipe_photo_3": "recipe/omelette-roulee-comte-fines-herbes.jpg",
-        "recipe_photo_4": "recipe/OMELETTE-ROULÉE-AU-THON-ET-AU-FROMAGE.jpg",
+        "recipe_photo_4": "recipe/OMELETTE-ROULÃ‰E-AU-THON-ET-AU-FROMAGE.jpg",
         "created_date": "2021-01-13T00:37:28.413Z",
         "ingredients": [
             6,
@@ -759,7 +759,7 @@
         "portion": "4",
         "cooking_time": 60,
         "preparation": 10,
-        "diet": "Protéiné",
+        "diet": "ProtÃ©inÃ©",
         "origine": "France",
         "kcal": 140,
         "proteins": 10,
@@ -792,12 +792,12 @@
     "fields": {
         "category": "Plats principaux",
         "level": "Facile",
-        "name": "Moussaka végétarienne",
+        "name": "Moussaka vÃ©gÃ©tarienne",
         "portion": "5",
         "cooking_time": 60,
         "preparation": 30,
-        "diet": "Détox",
-        "origine": "Turquie, Grèce",
+        "diet": "DÃ©tox",
+        "origine": "Turquie, GrÃ¨ce",
         "kcal": 141,
         "proteins": 6,
         "lipids": 10,
@@ -829,13 +829,13 @@
     "model": "recipe.recipe",
     "pk": 5,
     "fields": {
-        "category": "Entrées / Hors d'oeuvre",
-        "level": "Très facile",
-        "name": "Pâtes au thon",
+        "category": "EntrÃ©es / Hors d'oeuvre",
+        "level": "TrÃ¨s facile",
+        "name": "PÃ¢tes au thon",
         "portion": "2",
         "cooking_time": 15,
         "preparation": 10,
-        "diet": "Dissocié",
+        "diet": "DissociÃ©",
         "origine": "Europe",
         "kcal": 210,
         "proteins": 12,
@@ -867,12 +867,12 @@
     "pk": 6,
     "fields": {
         "category": "Plats principaux",
-        "level": "Intermédiaire",
+        "level": "IntermÃ©diaire",
         "name": "Gratin Dauphinois",
         "portion": "4",
         "cooking_time": 40,
         "preparation": 30,
-        "diet": "Protéiné",
+        "diet": "ProtÃ©inÃ©",
         "origine": "France",
         "kcal": 269,
         "proteins": 4,
@@ -979,12 +979,12 @@
     "pk": 9,
     "fields": {
         "category": "Salades",
-        "level": "Intermédiaire",
+        "level": "IntermÃ©diaire",
         "name": "Salade vietnamienne",
         "portion": "4",
         "cooking_time": 30,
         "preparation": 25,
-        "diet": "Détox",
+        "diet": "DÃ©tox",
         "origine": "Vietnam",
         "kcal": 86,
         "proteins": 1,
@@ -1019,7 +1019,7 @@
     "model": "pages.slider",
     "pk": 1,
     "fields": {
-        "titre": "Des idées de recettes",
+        "titre": "Des idÃ©es de recettes",
         "description": "<p>Plongez dans un univers culinaire riche et divers.</p>\r\n\r\n<p>Com&eacute;gusto s&#39;<strong>adapte &agrave; vos pr&eacute;f&eacute;rences</strong> et &agrave; vos <strong>contraintes alimentaires</strong>.</p>",
         "image": "slider/recipes_1.jpg"
     }
@@ -1028,7 +1028,7 @@
     "model": "pages.slider",
     "pk": 3,
     "fields": {
-        "titre": "Les ingrédients au meilleur prix",
+        "titre": "Les ingrÃ©dients au meilleur prix",
         "description": "<p>Vous en avez marre de passer du temps dans les magasins, &agrave; calculer et &agrave; comparer les produits entre eux ?</p>\r\n\r\n<p>Com&eacute;gusto se charge de tout &ccedil;a pour vous et vous propose les <strong>meilleures recettes</strong>, au <strong>meilleur prix</strong>.</p>",
         "image": "slider/recipes_3.jpg"
     }
@@ -1163,7 +1163,7 @@
         "icone": "<i class=\"flaticon-customer-service\"></i>",
         "numero": 6,
         "titre": "Assistance",
-        "description": "Besoin d'aide ? Une remarque ? Nous sommes à votre disposition 7 jours sur 7 pour répondre à toutes vos questions.",
+        "description": "Besoin d'aide ? Une remarque ? Nous sommes Ã  votre disposition 7 jours sur 7 pour rÃ©pondre Ã  toutes vos questions.",
         "created_date": "2020-12-17T09:43:28.236Z"
     }
 },
@@ -1173,8 +1173,8 @@
     "fields": {
         "icone": "<i class=\"fas fa-piggy-bank\"></i>",
         "numero": 4,
-        "titre": "Faites des économies",
-        "description": "Chez Comégusto, nous vous proposons une liste de courses toute prête au drive le moins cher pour les recettes que vous avez sélectionnées !",
+        "titre": "Faites des Ã©conomies",
+        "description": "Chez ComÃ©gusto, nous vous proposons une liste de courses toute prÃªte au drive le moins cher pour les recettes que vous avez sÃ©lectionnÃ©s !",
         "created_date": "2020-12-17T09:46:17.561Z"
     }
 },
@@ -1184,8 +1184,8 @@
     "fields": {
         "icone": "<i class=\"fas fa-bullseye\"></i>",
         "numero": 3,
-        "titre": "Des suggestions adaptées",
-        "description": "Nos propositions de recettes sont personnalisées en fonction de vos préférences alimentaires, de vos habitudes et de vos contraintes.",
+        "titre": "Des suggestions adaptÃ©es",
+        "description": "Nos propositions de recettes sont personnalisÃ©es en fonction de vos prÃ©fÃ©rences alimentaires, de vos habitudes et de vos contraintes.",
         "created_date": "2020-12-17T09:47:30.781Z"
     }
 },
@@ -1196,7 +1196,7 @@
         "icone": "<i class=\"fas fa-cookie-bite\"></i>",
         "numero": 2,
         "titre": "De nombreuses recettes",
-        "description": "Grâce à notre grande base de recettes, nous sommes en mesure de vous proposer un large choix de plats.",
+        "description": "GrÃ¢e Ã  notre grande base de recettes, nous sommes en mesure de vous proposer un large choix de plats.",
         "created_date": "2020-12-17T09:48:24.405Z"
     }
 },
@@ -1206,8 +1206,8 @@
     "fields": {
         "icone": "<i class=\"flaticon-car-key\"></i>",
         "numero": 1,
-        "titre": "Une solution clé en main",
-        "description": "Trouvez des idées de recettes, obtenez les étapes de préparation de vos plats, la liste des ingrédients nécessaires et le magasin le moins cher sans quitter Comégusto !",
+        "titre": "Une solution clÃ© en main",
+        "description": "Trouvez des idÃ©es de recettes, obtenez les Ã©tapes de prÃ©paration de vos plats, la liste des ingrÃ©dients nÃ©cessaires et le magasin le moins cher sans quitter ComÃ©gusto !",
         "created_date": "2020-12-17T09:50:04.788Z"
     }
 },
@@ -1217,8 +1217,8 @@
     "fields": {
         "icone": "<i class=\"flaticon-lock\"></i>",
         "numero": 5,
-        "titre": "Sécurité",
-        "description": "Vos données vous appartiennent. C'est pourquoi vous pouvez demander à tout moment la suppression de votre compte et le téléchargement de toutes vos données.",
+        "titre": "SÃ©curitÃ©",
+        "description": "Vos donnÃ©es vous appartiennent. C'est pourquoi vous pouvez demander Ã  tout moment la suppression de votre compte et le tÃ©lÃ©chargement de toutes vos donnÃ©es.",
         "created_date": "2020-12-17T09:51:57.270Z"
     }
 },
@@ -1227,7 +1227,7 @@
     "pk": 2,
     "fields": {
         "titre1": "Bienvenue sur",
-        "titre2": "Comégusto",
+        "titre2": "ComÃ©gusto",
         "description": "<h4>On mange quoi ce soir ?</h4>\r\n\r\n<h4>Com&eacute;gusto r&eacute;pond &agrave; cette question en vous proposant des recettes adapt&eacute;es &agrave; vos pr&eacute;f&eacute;rences et contraintes alimentaires, tout en vous faisant &eacute;conomiser de l&#39;argent !</h4>",
         "image1": "abouts/recipes_1.jpg",
         "image2": "abouts/recipes_2.jpeg",
@@ -2680,7 +2680,7 @@
             "categorie"
         ],
         "object_id": "5",
-        "object_repr": "Légumes",
+        "object_repr": "LÃ©gumes",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -2734,7 +2734,7 @@
             "categorie"
         ],
         "object_id": "8",
-        "object_repr": "Crèmerie",
+        "object_repr": "CrÃ¨merie",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -2770,7 +2770,7 @@
             "drive"
         ],
         "object_id": "1",
-        "object_repr": "Carrefour Drive Toulon Mayol",
+        "object_repr": "Carrefour Drive Toulon Mayol",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -2788,7 +2788,7 @@
             "drive"
         ],
         "object_id": "2",
-        "object_repr": "Drive Intermarché Toulon",
+        "object_repr": "Drive IntermarchÃ© Toulon",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -2806,7 +2806,7 @@
             "drive"
         ],
         "object_id": "3",
-        "object_repr": "Casino Drive Toulon Siblas",
+        "object_repr": "Casino Drive Toulon Siblas",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -2824,7 +2824,7 @@
             "drive"
         ],
         "object_id": "4",
-        "object_repr": "Courses U Drive Pierrefeu Du Var",
+        "object_repr": "Courses U Drive Pierrefeu Du Var",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -2842,7 +2842,7 @@
             "drive"
         ],
         "object_id": "5",
-        "object_repr": "Auchan Drive La Seyne",
+        "object_repr": "Auchan Drive La Seyne",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -2860,7 +2860,7 @@
             "drive"
         ],
         "object_id": "6",
-        "object_repr": "E. Leclerc Drive Toulon Le piéton",
+        "object_repr": "E.Leclerc Drive Toulon Le piÃ©ton",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -2878,7 +2878,7 @@
             "drive"
         ],
         "object_id": "7",
-        "object_repr": "Chronodrive La Garde",
+        "object_repr": "Chronodrive La Garde",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -2896,7 +2896,7 @@
             "drive"
         ],
         "object_id": "1",
-        "object_repr": "Carrefour Drive Toulon Mayol",
+        "object_repr": "Carrefour Drive Toulon Mayol",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
     }
@@ -2914,7 +2914,7 @@
             "drive"
         ],
         "object_id": "2",
-        "object_repr": "Drive Intermarché Toulon",
+        "object_repr": "Drive IntermarchÃ© Toulon",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
     }
@@ -2932,7 +2932,7 @@
             "drive"
         ],
         "object_id": "3",
-        "object_repr": "Casino Drive Toulon Siblas",
+        "object_repr": "Casino Drive Toulon Siblas",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
     }
@@ -2950,7 +2950,7 @@
             "drive"
         ],
         "object_id": "4",
-        "object_repr": "Courses U Drive Pierrefeu Du Var",
+        "object_repr": "Courses U Drive Pierrefeu Du Var",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
     }
@@ -2968,7 +2968,7 @@
             "drive"
         ],
         "object_id": "5",
-        "object_repr": "Auchan Drive La Seyne",
+        "object_repr": "Auchan Drive La Seyne",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
     }
@@ -2986,7 +2986,7 @@
             "drive"
         ],
         "object_id": "6",
-        "object_repr": "E. Leclerc Drive Toulon Le piéton",
+        "object_repr": "E.Leclerc Drive Toulon Le piÃ©ton",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
     }
@@ -3004,7 +3004,7 @@
             "drive"
         ],
         "object_id": "7",
-        "object_repr": "Chronodrive La Garde",
+        "object_repr": "Chronodrive La Garde",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Address\"]}}]"
     }
@@ -3022,7 +3022,7 @@
             "drive"
         ],
         "object_id": "6",
-        "object_repr": "E. Leclerc Drive Toulon Le piéton",
+        "object_repr": "E.Leclerc Drive Toulon Le piÃ©ton",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -3040,7 +3040,7 @@
             "ingredient"
         ],
         "object_id": "1",
-        "object_repr": "viande de bœuf 250g",
+        "object_repr": "viande de boeuf 250g",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -3058,7 +3058,7 @@
             "ingredient"
         ],
         "object_id": "2",
-        "object_repr": "Lait demi écrémé",
+        "object_repr": "Lait demi Ã©crÃ©mÃ©",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -3094,7 +3094,7 @@
             "ingredient"
         ],
         "object_id": "4",
-        "object_repr": "Steak Haché Pur Bœuf 5% Mg Filiere Qualite Carrefour - la barquette de 4 - 500g",
+        "object_repr": "Steak HachÃ© Pur Boeuf 5% Mg Filiere Qualite Carrefour - la barquette de 4 - 500g",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -3166,7 +3166,7 @@
             "ingredient"
         ],
         "object_id": "1",
-        "object_repr": "1 Pavé de Saumon 100g",
+        "object_repr": "1 PavÃ© de Saumon 100g",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Name\", \"Image\", \"Categorie\"]}}]"
     }
@@ -3382,7 +3382,7 @@
             "ingredient"
         ],
         "object_id": "11",
-        "object_repr": "Gruyère râpé",
+        "object_repr": "GruyÃ¨re rÃ¢pÃ©",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -3490,7 +3490,7 @@
             "ingredient"
         ],
         "object_id": "1",
-        "object_repr": "Pavé de Saumon",
+        "object_repr": "PavÃ© de Saumon",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Name\"]}}]"
     }
@@ -3508,7 +3508,7 @@
             "ingredient"
         ],
         "object_id": "11",
-        "object_repr": "Gruyère râpé",
+        "object_repr": "GruyÃ¨re rÃ¢pÃ©",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -3814,7 +3814,7 @@
             "slider"
         ],
         "object_id": "3",
-        "object_repr": "Des idées de recettes",
+        "object_repr": "Des idÃ©es de recettes",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Titre\", \"Description\"]}}]"
     }
@@ -3850,7 +3850,7 @@
             "slider"
         ],
         "object_id": "1",
-        "object_repr": "Des idées de recettes",
+        "object_repr": "Des idÃ©es de recettes",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Titre\"]}}]"
     }
@@ -3868,7 +3868,7 @@
             "slider"
         ],
         "object_id": "3",
-        "object_repr": "Les ingrédients au meilleur prix",
+        "object_repr": "Les ingrÃ©dients au meilleur prix",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Titre\", \"Description\"]}}]"
     }
@@ -3904,7 +3904,7 @@
             "slider"
         ],
         "object_id": "1",
-        "object_repr": "Des idées de recettes",
+        "object_repr": "Des idÃ©es de recettes",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
     }
@@ -3922,7 +3922,7 @@
             "slider"
         ],
         "object_id": "1",
-        "object_repr": "Des idées de recettes",
+        "object_repr": "Des idÃ©es de recettes",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -3976,7 +3976,7 @@
             "service"
         ],
         "object_id": "8",
-        "object_repr": "Sécurité",
+        "object_repr": "SÃ©curitÃ©",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Titre\", \"Description\"]}}]"
     }
@@ -4012,7 +4012,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Icone\", \"Titre\", \"Description\"]}}]"
     }
@@ -4030,7 +4030,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
     }
@@ -4048,7 +4048,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
     }
@@ -4066,7 +4066,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -4084,7 +4084,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
     }
@@ -4102,7 +4102,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
     }
@@ -4120,7 +4120,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
     }
@@ -4138,7 +4138,7 @@
             "service"
         ],
         "object_id": "4",
-        "object_repr": "Des suggestions adaptées",
+        "object_repr": "Des suggestions adaptÃ©es",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Titre\", \"Description\"]}}]"
     }
@@ -4192,7 +4192,7 @@
             "service"
         ],
         "object_id": "6",
-        "object_repr": "Une solution clé en main",
+        "object_repr": "Une solution clÃ© en main",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Titre\", \"Description\"]}}]"
     }
@@ -4210,7 +4210,7 @@
             "service"
         ],
         "object_id": "6",
-        "object_repr": "Une solution clé en main",
+        "object_repr": "Une solution clÃ© en main",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Description\"]}}]"
     }
@@ -4282,7 +4282,7 @@
             "service"
         ],
         "object_id": "6",
-        "object_repr": "Une solution clé en main",
+        "object_repr": "Une solution clÃ© en main",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Numero\"]}}]"
     }
@@ -4318,7 +4318,7 @@
             "service"
         ],
         "object_id": "4",
-        "object_repr": "Des suggestions adaptées",
+        "object_repr": "Des suggestions adaptÃ©es",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Numero\"]}}]"
     }
@@ -4336,7 +4336,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Numero\"]}}]"
     }
@@ -4354,7 +4354,7 @@
             "service"
         ],
         "object_id": "8",
-        "object_repr": "Sécurité",
+        "object_repr": "SÃ©curitÃ©",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Numero\"]}}]"
     }
@@ -4390,7 +4390,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
     }
@@ -4408,7 +4408,7 @@
             "service"
         ],
         "object_id": "4",
-        "object_repr": "Des suggestions adaptées",
+        "object_repr": "Des suggestions adaptÃ©es",
         "action_flag": 2,
         "change_message": "[{\"changed\": {\"fields\": [\"Icone\"]}}]"
     }
@@ -4462,7 +4462,7 @@
             "service"
         ],
         "object_id": "8",
-        "object_repr": "Sécurité",
+        "object_repr": "SÃ©curitÃ©",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -4480,7 +4480,7 @@
             "service"
         ],
         "object_id": "6",
-        "object_repr": "Une solution clé en main",
+        "object_repr": "Une solution clÃ© en main",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -4516,7 +4516,7 @@
             "service"
         ],
         "object_id": "4",
-        "object_repr": "Des suggestions adaptées",
+        "object_repr": "Des suggestions adaptÃ©es",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -4534,7 +4534,7 @@
             "service"
         ],
         "object_id": "3",
-        "object_repr": "Faites des économies",
+        "object_repr": "Faites des Ã©conomies",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -4552,7 +4552,7 @@
             "service"
         ],
         "object_id": "8",
-        "object_repr": "Sécurité",
+        "object_repr": "SÃ©curitÃ©",
         "action_flag": 2,
         "change_message": "[]"
     }
@@ -4642,7 +4642,7 @@
             "ingredient"
         ],
         "object_id": "16",
-        "object_repr": "Crème fraîche épaisse",
+        "object_repr": "CrÃ¨me fraÃ®che Ã©paisse",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -4858,7 +4858,7 @@
             "ingredient"
         ],
         "object_id": "26",
-        "object_repr": "Pâte",
+        "object_repr": "P?e",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -4912,7 +4912,7 @@
             "ingredient"
         ],
         "object_id": "29",
-        "object_repr": "Gruyère rapé",
+        "object_repr": "GruyÃ¨re rÃ¢pÃ©",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -5200,7 +5200,7 @@
             "ingredient"
         ],
         "object_id": "41",
-        "object_repr": "Café",
+        "object_repr": "CafÃ©",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -5218,7 +5218,7 @@
             "ingredient"
         ],
         "object_id": "42",
-        "object_repr": "Biscuits à la cuillère",
+        "object_repr": "Biscuits Ã  la cuillÃ¨re",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -5254,7 +5254,7 @@
             "ingredient"
         ],
         "object_id": "44",
-        "object_repr": "Sucre vanillé",
+        "object_repr": "Sucre vanillÃ©",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -5344,7 +5344,7 @@
             "ingredient"
         ],
         "object_id": "48",
-        "object_repr": "Cacahuète",
+        "object_repr": "CacahuÃ¨te",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -5380,7 +5380,7 @@
             "ingredient"
         ],
         "object_id": "50",
-        "object_repr": "Cébette",
+        "object_repr": "C?ette",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
@@ -5398,7 +5398,7 @@
             "ingredient"
         ],
         "object_id": "51",
-        "object_repr": "Céleri",
+        "object_repr": "CÃ©leri",
         "action_flag": 1,
         "change_message": "[{\"added\": {}}]"
     }
