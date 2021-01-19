@@ -7,23 +7,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
     <style>
+    {% load static %}
       #moussaka {
         background-position: center center;
-        background: url('recipes/static/img/pdf/moussaka%20vegetarienne.png');
+        background: url('{% static "img/pdf/moussaka_vegetarienne.png" %}');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: 0 0;
       }
       #gratin {
         background-position: center center;
-        background: url('recipes/static/img/pdf/gratin%20dauphinois%202.jpg');
+        background: url('{% static "img/pdf/gratin_dauphinois.jpg" %}');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: 0 0;
       }
       #tiramisu {
         background-position: center center;
-        background: url('recipes/static/img/pdf/gratin%20dauphinois%202.jpg');
+        background: url('{% static "img/pdf/tiramisu2.jpg" %}');
         background-size: cover;
         background-repeat: no-repeat;
         background-position: 0 0;
