@@ -2036,23 +2036,23 @@ input[type=checkbox]:checked+label:before {
 }
 
 .cat-1-bg {
-    background-image: url(../img/latest-offers/img-1.jpg);
+    background-image: url("../img/latest-offers/img-1.c14d7c95bf0c.jpg");
 }
 
 .cat-2-bg {
-    background-image: url(../img/latest-offers/img-2.jpg);
+    background-image: url("../img/latest-offers/img-2.b07cb99da084.jpg");
 }
 
 .cat-3-bg {
-    background-image: url(../img/latest-offers/img-3.jpg);
+    background-image: url("../img/latest-offers/img-3.e62f13f7ab11.jpg");
 }
 
 .cat-4-bg {
-    background-image: url(../img/latest-offers/img-4.jpg);
+    background-image: url("../img/latest-offers/img-4.21b63f22c6ea.jpg");
 }
 
 .cat-5-bg {
-    background-image: url(../img/latest-offers/img-5.jpg);
+    background-image: url("../img/latest-offers/img-5.022954085014.jpg");
 }
 
 .category:hover .category_bg_box {
@@ -3392,7 +3392,7 @@ div.detail>h1>a {
 }
 
 .our-team-2 {
-    background: rgba(0, 0, 0, 0.04) url(../img/bg-img-6.jpg) top left repeat;
+    background: rgba(0, 0, 0, 0.04) url("../img/bg-img-6.764a8d1f0f31.jpg") top left repeat;
     background-size: cover;
 }
 
@@ -3733,7 +3733,7 @@ div.detail>h1>a {
 }
 
 .blog-section {
-    background: rgba(0, 0, 0, 0.04) url(../img/bg-img-6.jpg) top left repeat;
+    background: rgba(0, 0, 0, 0.04) url("../img/bg-img-6.764a8d1f0f31.jpg") top left repeat;
     background-size: cover;
 }
 
@@ -4370,7 +4370,7 @@ footer {
 /** Counters start **/
 .counters {
     padding: 80px 0 50px;
-    background: url(../img/car-6.jpg);
+    background: url("../img/car-6.a77f64930f0c.jpg");
     z-index: 0;
     background-position: center center;
     background-repeat: no-repeat;
@@ -4410,7 +4410,7 @@ footer {
 /** Counters 2 start **/
 .counters-2 {
     padding: 100px 0 70px;
-    background: url(../img/car-7.jpg);
+    background: url("../img/car-7.12c77490e17a.jpg");
     z-index: 0;
     background-position: center center;
     background-repeat: no-repeat;
@@ -4489,21 +4489,21 @@ footer {
 }
 
 .service-section {
-    background: rgba(0, 0, 0, 0.04) url(../img/bg-img-6.jpg) top left repeat;
+    background: rgba(0, 0, 0, 0.04) url("../img/bg-img-6.764a8d1f0f31.jpg") top left repeat;
     background-size: cover;
     width: 100%;
 }
 
 /** Service section 2 start **/
 .service-section-2 {
-    background: rgba(0, 0, 0, 0.04) url(../img/bg-img-6.jpg) top left repeat;
+    background: rgba(0, 0, 0, 0.04) url("../img/bg-img-6.764a8d1f0f31.jpg") top left repeat;
     background-size: cover;
     width: 100%;
     padding: 100px 0 70px;
 }
 
 .featured-car.content-area {
-    background: rgba(0, 0, 0, 0.04) url(../img/bg-img-6.jpg) top left repeat;
+    background: rgba(0, 0, 0, 0.04) url("../img/bg-img-6.764a8d1f0f31.jpg") top left repeat;
     background-size: cover;
     width: 100%;
     padding: 100px 0 70px;
@@ -4530,7 +4530,7 @@ footer {
 /** Testimonial 2 start **/
 .testimonial-2 {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.04) url(../img/car-10.jpg) top left repeat;
+    background: rgba(0, 0, 0, 0.04) url("../img/car-10.764c65787894.jpg") top left repeat;
     z-index: 0;
     background-position: center center;
     background-repeat: no-repeat;
@@ -4616,7 +4616,7 @@ footer {
 /** Testimonial 3 start **/
 .testimonial-3 {
     padding: 100px 0;
-    background: url(../img/car-10.jpg);
+    background: url("../img/car-10.764c65787894.jpg");
     z-index: 0;
     background-position: center center;
     background-repeat: no-repeat;
@@ -4943,7 +4943,7 @@ footer {
 
 /** Coming soon start **/
 .coming-soon {
-    background: rgba(0, 0, 0, 0.04) url(../img/car-1.jpg) top left repeat;
+    background: rgba(0, 0, 0, 0.04) url("../img/car-1.20da6fb63e8b.jpg") top left repeat;
     background-size: cover;
     top: 0;
     width: 100%;
@@ -6127,7 +6127,7 @@ input[type=radio] {
 
 /** Sub Banner start **/
 .sub-banner {
-    background: rgba(0, 0, 0, 0.04) url(../img/car-1.jpg) top left repeat;
+    background: rgba(0, 0, 0, 0.04) url("../img/car-1.20da6fb63e8b.jpg") top left repeat;
     background-size: cover;
     height: 360px;
     background-position: center center;
@@ -6235,7 +6235,7 @@ input[type=radio] {
 
 /** Details banner start **/
 .details-banner {
-    background: rgba(0, 0, 0, 0.04) url(../img/car-11.jpg) top left repeat;
+    background: rgba(0, 0, 0, 0.04) url("../img/car-11.6dfb3f861ec1.jpg") top left repeat;
     background-size: cover;
     height: 550px;
     background-position: center center;
@@ -7872,7 +7872,7 @@ input[type="tel"] {
     width: 100%;
     height: 100%;
     z-index: 999999;
-    background: url(../img/loader.gif) center no-repeat #fff;
+    background: url("../img/loader.35b93ef8b6ff.gif") center no-repeat #fff;
 }
 
 .slider-section .simple-slider {
