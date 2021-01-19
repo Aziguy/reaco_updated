@@ -39,7 +39,3 @@ def inquiry(request):
 		dashboard.save()
 		messages.success(request, 'La recette a bien été ajouté à votre tableau de bord.')
 		return redirect('/recipe/'+recipe_id)
-
-	def pdf(request):
-		
-		return render(request, 'accounts/pdf.html')
