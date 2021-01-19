@@ -73,6 +73,12 @@ def dashboard(request):
 	}
 	return render(request, 'accounts/dashboard.html', context)
 
+
+@login_required(login_url = 'login')
+def pdf(request):
+	return render(request, 'accounts/pdf.html')
+
+
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
