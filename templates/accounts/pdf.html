@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Votre liste de courses est prête - Comégusto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <style>
+      #moussaka {
+        background-position: center center;
+        background: url('recipes/static/img/pdf/moussaka\ vegetarienne.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      #gratin {
+        background-position: center center;
+        background: url('recipes/static/img/pdf/gratin\ dauphinois\ 2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      #tiramisu {
+        background-position: center center;
+        background: url('recipes/static/img/pdf/tiramisu2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+      }
+      .center {
+        padding-left: 1.5rem;
+      }
+      .img {
+        width:180px;
+        border: 1px solid #fefefe;
+        height: 150px;
+        border-radius: 4px;
+        box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.25);
+      }
+        span {
+          font-weight: bold;
+            color:#BA635A;
+        }
+        p {
+            font-size: 1.2rem;
+        }
+        button {
+          background-color: #85C598 !important;
+        }
+        .btn.red {
+          background-color: #BA635A !important;
+        }
+        table {
+          font-size: 1.3rem;
+
+        }
+        .prix {
+        }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h4>C'est prêt ! <small>(ou presque...)</small></h4>
+      <p>
+        La liste de tous les ingrédients dont vous avez besoin, <span>au meilleur prix.</span>
+      </p>
+      <p class="float-right">{% now "d-m-Y" %}</p>
+      <table class="striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Recette</th>
+            <th>Ingrédients</th>
+            <th>Prix</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td class="center"><div class="img" id="gratin"></div></td>
+            <td>Gratin dauphinois</td>
+            <td>
+              <ul>
+                <li>1.5 kg de pommes de terre</li>
+                <li>30 cl de Crème fraiche épaisse</li>
+                <li>300 g de Gruyère râpée</li>
+                <li>1 L de lait</li>
+                <li>100 g de beurre</li>
+              </ul>
+            </td>
+            <td class="prix">5 € <small>80</small></td>
+          </tr>
+          <tr>
+            <td class="center"><div class="img" id="moussaka"></div></td>
+
+            <td>Moussaka Végétarienne</td>
+            <td>
+              <ul>
+                <li>3 Aubergines</li>
+                <li>500g de sauce tomate</li>
+                <li>2 courgettes</li>
+                <li>250g de gruyère râpée</li>
+              </ul>
+            </td>
+            <td class="prix">4 € <small>30</small></td>
+          </tr>
+          <tr>
+            <td class="center"><div class="img" id="tiramisu"></div></td>
+
+
+            <td>Tiramisu</td>
+            <td>
+              <ul>
+                <li>3 oeufs</li>
+                <li>100 g de sucre roux</li>
+                <li>1 sachet de sucre vanillé</li>
+                <li>250 g de mascarpone</li>
+                <li>24 biscuits à la cuillère</li>
+                <li>50 g de café noir</li>
+                <li>30g de cacao</li>
+              </ul>
+            </td>
+            <td class="prix">3 € <small>90</small></td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
+      <table>
+          <th>Total</th>
+          <td class="right"><b><span>14 €</span></b></td>
+      </table>
+
+      <p>D'après nos calculs, le magasin le moins cher est <span>Leclerc Drive Toulon.</span></p>
+      <button class="btn">Continuer sur le Drive du magasin</button>
+      <button class="btn red">Modifier ma liste de recettes</button>
+      <h4>Luttons contre le gaspillage alimentaire</h4>
+      <p>En préparant ces recettes, il devrait vous rester les ingrédients suivants :</p>
+      <table>
+        <th>Ingrédients restants</th>
+        <th>Quantité</th>
+        <tr>
+            <td>Sachet de sucre vanillé</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>Courgette</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>Beurre</td>
+            <td>150 g</td>
+        </tr>
+      </table>
+      <p>Ces ingrédients seront automatiquement ajoutés à votre panier après votre commande.</p>
+      <p>A bientôt sur <span>Comégusto</span>.</p>
+    </div>
+  </body>
+</html>
