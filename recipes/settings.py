@@ -14,6 +14,7 @@ import os.path
 from pathlib import Path
 import dj_database_url
 from decouple import config
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -107,7 +108,7 @@ DATABASES = {
     }
 }
 
-DATABASES = {'default': dj_database_url.config(default='postgres://postgres:postgres@localhost/recipes_db')}
+# DATABASES = {'default': dj_database_url.config(default='postgres://postgres:postgres@localhost/recipes_db')}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -148,6 +149,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'recipes/static'),
 ]
+
+django_heroku.settings(locals())
 
 # Configuration of our Media files
 
