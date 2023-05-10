@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = ['https://reacoupdated-production.up.railway.app/']
+ALLOWED_HOSTS = ['reacoupdated-production.up.railway.app']
 
 LOGIN_REDIRECT_URL = 'dashboard'
 
