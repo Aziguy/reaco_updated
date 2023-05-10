@@ -152,7 +152,7 @@ USE_TZ = True
 # ]
 STATICFILES_DIRS = ("recipes/static",)
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles_build" / "static"
+# STATIC_ROOT = BASE_DIR / "staticfiles_build" / "static"
 
 # django_heroku.settings(locals())
 
