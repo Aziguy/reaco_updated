@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Install psycopg2-binary
+echo "Install psycopg2-binary..."
+pip install psycopg2-binary
 # Build the project
 echo "Building the project..."
 python3.9 -m pip install -r requirements.txt
