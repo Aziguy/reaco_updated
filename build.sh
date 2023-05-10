@@ -15,4 +15,4 @@ echo "Collect Static..."
 python3.9 manage.py collectstatic --noinput --clear
 
 echo "Load datas into DB..."
-python3.9 manage.py load project_dump.json --noinput
+python3.9 manage.py loaddata project_dump.json --noinput
