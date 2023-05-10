@@ -91,7 +91,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'recipes.wsgi.application'
+WSGI_APPLICATION = 'recipes.wsgi.app'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
