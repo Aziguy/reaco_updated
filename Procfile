@@ -1,1 +1,1 @@
-web: gunicorn recipes.wsgi --log-file -
+web: python manage.py migrate && gunicorn recipes.wsgi --log-file - && python manage.py loaddata recipes_dump.json
