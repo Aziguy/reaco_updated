@@ -1237,7 +1237,7 @@
 {
     "model": "auth.user",
     "fields": {
-        "password": "LYNEpromotion2012",
+        "password": "pbkdf2_sha256$216000$6lr2o17SsrSr$FPmFj4SkKWTfvu30ScvsiDKoPD6VVGh4R8YDMJPJ8M4=",
         "last_login": "2021-01-17T10:50:52.845Z",
         "is_superuser": true,
         "username": "djangoadmin",
