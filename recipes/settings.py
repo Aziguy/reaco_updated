@@ -28,8 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
 
-ALLOWED_HOSTS = ['.vercel.app']
-# nameless-thicket-69877
+ALLOWED_HOSTS = ['*']
 
 LOGIN_REDIRECT_URL = 'dashboard'
 
@@ -91,7 +90,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'recipes.wsgi.app'
+WSGI_APPLICATION = 'recipes.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -108,8 +107,8 @@ DATABASES = {
     }
 }
 
-DATABASES = {'default': dj_database_url.config(ssl_require=True)}
-# DATABASES = {'default': dj_database_url.config(default='postgres://postgres:postgres@localhost/recipes_db')}
+# DATABASES = {'default': dj_database_url.config()}
+DATABASES = {'default': dj_database_url.config(default='postgres://postgres:LYNEpromotion2012@@localhost/recipes_db')}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -145,14 +144,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'recipes/static'),
-# ]
-STATICFILES_DIRS = ("recipes/static",)
-STATIC_URL = "/static/"
-# STATIC_ROOT = BASE_DIR / "staticfiles_build" / "static"
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'recipes/static'),
+]
 
 # django_heroku.settings(locals())
 

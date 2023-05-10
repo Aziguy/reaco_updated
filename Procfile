@@ -1,3 +1,1 @@
-release: python manage.py makemigrations
-release: python manage.py migrate
-web: gunicorn recipes.wsgi
+web: gunicorn recipes.wsgi --log-file -
