@@ -5,7 +5,7 @@ chardet
 click
 cryptography
 defusedxml
-dj-database-url==2.0.0
+dj-database-url
 Django==3.2.5
 django-allauth
 django-ckeditor
