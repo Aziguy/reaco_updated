@@ -108,7 +108,7 @@ DATABASES = {
     }
 }
 
-# DATABASES = {'default': dj_database_url.config(default='postgres://postgres:postgres@localhost/recipes_db')}
+DATABASES = {'default': dj_database_url.config(default='postgres://postgres:postgres@localhost/recipes_db')}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
