@@ -23,8 +23,18 @@ def record(record_id, country="FR", unit_price=Decimal("3.000"), brand="E. Lecle
     )  # fmt: skip
 
 
-def test_normalize_brand():
-    assert normalize_brand("E. Leclerc  Drive") == "E.Leclerc Drive"
+@pytest.mark.parametrize(
+    "raw, expected",
+    [
+        ("E. Leclerc  Drive", "E.Leclerc Drive"),
+        ("Centre commercial E.Leclerc", "E.Leclerc"),
+        ("ALDI", "Aldi"),
+        ("monop'", "Monop'"),
+        ("G20", "G20"),
+    ],
+)
+def test_normalize_brand(raw, expected):
+    assert normalize_brand(raw) == expected
 
 
 @pytest.mark.django_db
@@ -95,3 +105,18 @@ def test_estimate_near_falls_back_to_all_stores(ingredients, prices):
     basket, local = estimate_near(lines, near=(48.85, 2.35, 5))
     assert not local
     assert len(basket.offers) == 2
+
+
+@pytest.mark.django_db
+def test_implausible_prices_are_ignored(ingredients, stores):
+    tomato = ingredients["tomate"]
+    rows = [("2.00", stores["cheap"]), ("2.20", stores["cheap"]), ("2.10", stores["fancy"])]
+    rows.append(("90.00", stores["fancy"]))
+    for index, (price, store) in enumerate(rows):
+        PriceObservation.objects.create(
+            source_id=300 + index, ingredient=tomato, store=store, price=Decimal(price),
+            unit_price=Decimal(price), base_unit="kg", observed_on=date.today(),
+        )  # fmt: skip
+    basket = estimate([Line(tomato, Decimal(1), "kg")])
+    assert basket.lines[0].observations == 3
+    assert {offer.brand: offer.total for offer in basket.offers}["Premium"] == Decimal("2.10")

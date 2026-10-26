@@ -15,9 +15,15 @@ from .models import PriceObservation, Store
 logger = logging.getLogger(__name__)
 
 
+BRAND_PREFIX = re.compile(r"^(centre commercial|hypermarch[ée]|supermarch[ée])\s+", re.IGNORECASE)
+
+
 def normalize_brand(brand: str) -> str:
-    """Merge spelling variants such as "E. Leclerc" and "E.Leclerc"."""
-    return re.sub(r"\.\s+", ".", " ".join(brand.split()))
+    """Merge variants such as "E. Leclerc", "Centre commercial E.Leclerc" or "ALDI" and "Aldi"."""
+    brand = BRAND_PREFIX.sub("", re.sub(r"\.\s+", ".", " ".join(brand.split())))
+    if brand.isupper() and len(brand) > 3:
+        return brand.title()
+    return brand[:1].upper() + brand[1:]
 
 
 def _store_for(location: openprices.Location) -> Store:

@@ -15,6 +15,7 @@ from .models import PriceObservation, Store, distance_km
 CENT = Decimal("0.01")
 MIN_BRAND_COVERAGE = 0.4
 MIN_RAW_OBSERVATIONS = 5
+MAX_PRICE_RATIO = 4
 
 
 @dataclass
@@ -88,6 +89,11 @@ class BasketEstimate:
         if not self.offers:
             return Decimal(0)
         return max(self.total - self.offers[0].total, Decimal(0))
+
+
+def plausible(prices: list[Decimal], reference: Decimal) -> list[Decimal]:
+    """Drop prices far from the reference, such as a per-unit price for a whole garlic braid."""
+    return [p for p in prices if reference / MAX_PRICE_RATIO <= p <= reference * MAX_PRICE_RATIO]
 
 
 def estimate_near(lines: list[Line], near) -> tuple[BasketEstimate, bool]:
@@ -178,6 +184,8 @@ def estimate(
     for line in lines:
         ingredient = line.ingredient
         prices = market.get(ingredient.pk, [])
+        if prices:
+            prices = plausible(prices, median(prices))
         priced_lines.append(
             PricedLine(
                 ingredient=ingredient,
@@ -194,7 +202,7 @@ def estimate(
     for brand, brand_prices in by_brand.items():
         total, priced, fallback = Decimal(0), 0, 0
         for line in priceable:
-            prices = brand_prices.get(line.ingredient.pk)
+            prices = plausible(brand_prices.get(line.ingredient.pk, []), line.unit_price)
             if prices:
                 total += line.base_quantity * median(prices)
                 priced += 1
