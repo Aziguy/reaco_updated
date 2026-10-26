@@ -106,6 +106,11 @@ def about(request):
     return render(request, "core/about.html")
 
 
+def credits(request):
+    recipes = Recipe.objects.published().exclude(image_credit="").order_by("title")
+    return render(request, "core/credits.html", {"recipes": recipes})
+
+
 def contact(request):
     form = ContactForm(request.POST or None)
     if request.method == "POST" and form.is_valid():

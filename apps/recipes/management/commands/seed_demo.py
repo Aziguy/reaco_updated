@@ -16,9 +16,16 @@ DEMO_DIR = Path(settings.BASE_DIR) / "demo"
 class Command(BaseCommand):
     help = "Charge les recettes et ingrédients de démonstration (idempotent)."
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "--refresh-images", action="store_true", help="Remplace les images existantes."
+        )
+
     @transaction.atomic
-    def handle(self, *args, **options):
+    def handle(self, *args, refresh_images=False, **options):
+        self.refresh_images = refresh_images
         data = json.loads((DEMO_DIR / "recipes.json").read_text(encoding="utf-8"))
+        self.credits = json.loads((DEMO_DIR / "images" / "credits.json").read_text("utf-8"))
         diets = {
             name: Diet.objects.get_or_create(slug=make_slug(name), defaults={"name": name})[0]
             for name in data["diets"]
@@ -44,6 +51,17 @@ class Command(BaseCommand):
             self.style.SUCCESS(f"{len(ingredients)} ingrédients, {len(data['recipes'])} recettes.")
         )
 
+    def _credit(self, image: str) -> dict:
+        credit = self.credits.get(image)
+        if not credit:
+            return {"image_credit": "Illustration Comégusto", "image_license": "Licence MIT"}
+        return {
+            "image_credit": credit["author"][:200],
+            "image_license": credit["license"],
+            "image_license_url": credit["license_url"],
+            "image_source": credit["source"],
+        }
+
     def _recipe(self, row, ingredients):
         recipe, _ = Recipe.objects.update_or_create(
             slug=make_slug(row["title"]),
@@ -56,16 +74,17 @@ class Command(BaseCommand):
                 "prep_minutes": row["prep"],
                 "cook_minutes": row["cook"],
                 "origin": row["origin"],
-                "kcal": row["kcal"],
-                "proteins_g": row["proteins"],
-                "fat_g": row["fat"],
-                "carbs_g": row["carbs"],
-                "is_featured": row["featured"],
+                "kcal": row.get("kcal"),
+                "proteins_g": row.get("proteins"),
+                "fat_g": row.get("fat"),
+                "carbs_g": row.get("carbs"),
+                "is_featured": row.get("featured", False),
+                **self._credit(row["image"]),
             },
         )
-        if not recipe.image:
-            path = DEMO_DIR / "images" / row["image"]
-            with path.open("rb") as handle:
+        current = Path(recipe.image.name).name
+        if self.refresh_images or not current.startswith(Path(row["image"]).stem):
+            with (DEMO_DIR / "images" / row["image"]).open("rb") as handle:
                 recipe.image.save(row["image"], File(handle), save=True)
         recipe.items.all().delete()
         RecipeIngredient.objects.bulk_create(

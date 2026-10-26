@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Crédits{% endblock %}
+{% block content %}
+<article class="mx-auto max-w-3xl">
+  <h1 class="text-3xl">Crédits</h1>
+  <p class="mt-3 text-stone-600 dark:text-stone-300">{{ SITE_NAME }} repose sur des données et des images partagées sous licence libre. Merci à leurs auteurs.</p>
+
+  <h2 class="mt-10 text-xl">Photos des recettes</h2>
+  <p class="muted mt-1">Photos issues de <a href="https://commons.wikimedia.org" class="underline" rel="noopener">Wikimedia Commons</a>, redimensionnées. Cliquez sur une licence pour en consulter les conditions.</p>
+  <ul class="mt-4 divide-y divide-stone-200 text-sm dark:divide-stone-800">
+    {% for recipe in recipes %}
+      <li class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2.5">
+        <a href="{{ recipe.get_absolute_url }}" class="font-medium hover:underline">{{ recipe.title }}</a>
+        <span class="muted">
+          {% if recipe.image_source %}<a href="{{ recipe.image_source }}" class="underline" rel="noopener">{{ recipe.image_credit }}</a>{% else %}{{ recipe.image_credit }}{% endif %}{% if recipe.image_license %} ·
+          {% if recipe.image_license_url %}<a href="{{ recipe.image_license_url }}" class="underline" rel="noopener license">{{ recipe.image_license }}</a>{% else %}{{ recipe.image_license }}{% endif %}{% endif %}
+        </span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h2 class="mt-10 text-xl">Données</h2>
+  <ul class="mt-3 list-disc space-y-2 pl-5">
+    <li><a href="https://prices.openfoodfacts.org" class="underline" rel="noopener">Open Prices</a> et <a href="https://world.openfoodfacts.org" class="underline" rel="noopener">Open Food Facts</a> : Open Database License (ODbL).</li>
+    <li><a href="https://impactco2.fr" class="underline" rel="noopener">ADEME Impact CO2</a> et <a href="https://geoservices.ign.fr" class="underline" rel="noopener">IGN Géoplateforme</a> : Licence Ouverte 2.0.</li>
+    <li>Magasins : contributeurs <a href="https://www.openstreetmap.org/copyright" class="underline" rel="noopener">OpenStreetMap</a> (ODbL).</li>
+  </ul>
+</article>
+{% endblock %}

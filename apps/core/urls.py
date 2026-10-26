@@ -9,6 +9,7 @@ urlpatterns = [
     path("tableau-de-bord/", views.dashboard, name="dashboard"),
     path("saison/", views.season, name="season"),
     path("a-propos/", views.about, name="about"),
+    path("credits/", views.credits, name="credits"),
     path("contact/", views.contact, name="contact"),
     path("health/", views.health, name="health"),
 ]

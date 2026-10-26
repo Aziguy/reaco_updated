@@ -31,8 +31,8 @@
       {% for suggestion in suggestions %}
         {% with recipe=suggestion.recipe %}
           <article class="card flex flex-col overflow-hidden">
-            <a href="{{ recipe.get_absolute_url }}" class="block aspect-[16/9] bg-stone-100 dark:bg-stone-800">
-              {% if recipe.image %}<img src="{{ recipe.image.url }}" alt="" class="size-full object-cover" loading="lazy">{% endif %}
+            <a href="{{ recipe.get_absolute_url }}" class="block aspect-[16/9] overflow-hidden bg-stone-100 dark:bg-stone-800">
+              {% if recipe.image %}<img src="{{ recipe.image.url }}" alt="" class="size-full object-cover" loading="lazy">{% else %}{% include "partials/recipe_placeholder.html" %}{% endif %}
             </a>
             <div class="flex flex-1 flex-col p-4">
               <div class="flex items-center justify-between gap-2">

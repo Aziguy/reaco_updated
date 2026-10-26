@@ -7,9 +7,22 @@
 
 <div class="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
   <div>
-    {% if recipe.image %}
-      <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="aspect-[4/3] w-full rounded-2xl object-cover shadow-sm">
-    {% endif %}
+    <figure>
+      <div class="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-stone-100 shadow-sm dark:bg-stone-800">
+        {% if recipe.image %}
+          <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="size-full object-cover">
+        {% else %}
+          {% include "partials/recipe_placeholder.html" %}
+        {% endif %}
+      </div>
+      {% if recipe.image_credit %}
+        <figcaption class="muted mt-2 text-xs">
+          {% if recipe.image_source %}<a href="{{ recipe.image_source }}" class="underline" rel="noopener">Photo</a>{% else %}Image{% endif %} :
+          {{ recipe.image_credit }}{% if recipe.image_license %},
+          {% if recipe.image_license_url %}<a href="{{ recipe.image_license_url }}" class="underline" rel="noopener license">{{ recipe.image_license }}</a>{% else %}{{ recipe.image_license }}{% endif %}{% endif %}
+        </figcaption>
+      {% endif %}
+    </figure>
   </div>
   <div>
     <p class="text-sm font-medium uppercase tracking-wide text-brand-700 dark:text-brand-300">{{ recipe.get_course_display }}{% if recipe.origin %} · {{ recipe.origin }}{% endif %}</p>
