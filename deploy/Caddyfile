@@ -1,0 +1,13 @@
+{$DOMAIN} {
+	encode zstd gzip
+
+	handle_path /media/* {
+		root * /srv/media
+		header Cache-Control "public, max-age=604800"
+		file_server
+	}
+
+	handle {
+		reverse_proxy web:8000
+	}
+}

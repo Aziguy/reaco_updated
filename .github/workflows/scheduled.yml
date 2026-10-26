@@ -1,0 +1,35 @@
+name: Scheduled tasks
+
+# For hosts without free cron jobs: runs the daily commands against the production database.
+# Requires the DATABASE_URL and SECRET_KEY secrets (EMAIL_URL and SITE_URL are optional).
+
+on:
+  schedule:
+    - cron: "30 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      EMAIL_URL: ${{ secrets.EMAIL_URL }}
+      SITE_URL: ${{ secrets.SITE_URL }}
+    steps:
+      - name: Skip when not configured
+        id: check
+        run: echo "enabled=${{ env.DATABASE_URL != '' }}" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v4
+        if: steps.check.outputs.enabled == 'true'
+      - uses: astral-sh/setup-uv@v6
+        if: steps.check.outputs.enabled == 'true'
+      - if: steps.check.outputs.enabled == 'true'
+        run: uv sync --frozen --no-dev
+      - if: steps.check.outputs.enabled == 'true'
+        run: uv run python manage.py sync_prices --pages 2
+      - if: steps.check.outputs.enabled == 'true' && env.EMAIL_URL != ''
+        run: uv run python manage.py send_expiry_reminders --base-url "${SITE_URL:-https://example.org}"

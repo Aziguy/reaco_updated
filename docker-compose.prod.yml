@@ -1,0 +1,52 @@
+# Production override: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+x-prod-env: &prod-env
+  ALLOWED_HOSTS: ${DOMAIN:?DOMAIN must be set}
+  CSRF_TRUSTED_ORIGINS: https://${DOMAIN}
+  SECRET_KEY: ${SECRET_KEY:?SECRET_KEY must be set}
+  SECURE_SSL_REDIRECT: "true"
+  SECURE_COOKIES: "true"
+  SERVE_MEDIA: "false"
+  SITE_URL: https://${DOMAIN}
+
+services:
+  db:
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD must be set}
+    restart: unless-stopped
+
+  redis:
+    restart: unless-stopped
+
+  web:
+    ports: !reset []
+    environment:
+      <<: *prod-env
+      DATABASE_URL: postgres://comegusto:${POSTGRES_PASSWORD}@db:5432/comegusto
+    restart: unless-stopped
+
+  scheduler:
+    environment:
+      <<: *prod-env
+      DATABASE_URL: postgres://comegusto:${POSTGRES_PASSWORD}@db:5432/comegusto
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      DOMAIN: ${DOMAIN}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - media:/srv/media:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:
