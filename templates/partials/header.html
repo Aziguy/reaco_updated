@@ -1,9 +1,8 @@
-{% load reaco %}
+{% load static comegusto %}
 <header class="no-print sticky top-0 z-40 border-b border-stone-200 bg-white/85 backdrop-blur dark:border-stone-800 dark:bg-stone-950/85">
   <div class="container-page flex h-16 items-center gap-4">
-    <a href="{% url 'core:home' %}" class="flex items-center gap-2 font-semibold text-stone-900 no-underline dark:text-white">
-      <span class="flex size-8 items-center justify-center rounded-lg bg-brand-600 text-white">{% icon "leaf" "size-5" %}</span>
-      <span class="text-lg">{{ SITE_NAME }}</span>
+    <a href="{% url 'core:home' %}" class="shrink-0" aria-label="{{ SITE_NAME }}, accueil">
+      {% include "partials/logo.html" with css="h-9 w-auto" %}
     </a>
     <nav class="ml-4 hidden items-center gap-1 lg:flex" aria-label="Navigation principale">
       {% include "partials/nav_links.html" %}

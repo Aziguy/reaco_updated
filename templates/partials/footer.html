@@ -1,8 +1,8 @@
-{% load reaco %}
+{% load static comegusto %}
 <footer class="no-print mt-16 border-t border-stone-200 bg-white dark:border-stone-800 dark:bg-stone-900">
   <div class="container-page grid gap-8 py-10 sm:grid-cols-3">
     <div>
-      <p class="flex items-center gap-2 font-semibold text-stone-900 dark:text-white">{% icon "leaf" "size-5 text-brand-600" %}{{ SITE_NAME }}</p>
+      {% include "partials/logo.html" with css="h-10 w-auto" %}
       <p class="muted mt-2">Cuisiner malin, dépenser moins et jeter moins, grâce aux données ouvertes.</p>
     </div>
     <div>

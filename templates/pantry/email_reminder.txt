@@ -6,4 +6,4 @@ Ces produits de votre garde-manger arrivent à leur date limite :
 
 Des idées de recettes pour les utiliser : {{ url }}
 
-L'équipe Reaco
+L'équipe Comégusto

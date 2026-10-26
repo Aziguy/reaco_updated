@@ -1,4 +1,4 @@
-{% load reaco %}
+{% load comegusto %}
 <li id="item-{{ item.pk }}" class="flex items-center gap-3 px-4 py-3">
   <button type="button" class="flex size-6 shrink-0 items-center justify-center rounded-md border {% if item.is_checked %}border-brand-600 bg-brand-600 text-white{% else %}border-stone-300 dark:border-stone-600{% endif %}"
           hx-post="{% url 'shopping:toggle_item' item.pk %}" hx-target="#item-{{ item.pk }}" hx-swap="outerHTML"

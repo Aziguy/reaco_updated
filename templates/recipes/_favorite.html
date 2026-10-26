@@ -1,4 +1,4 @@
-{% load reaco %}
+{% load comegusto %}
 <button type="button" class="{% if is_favorite %}btn-secondary text-red-600 dark:text-red-400{% else %}btn-secondary{% endif %}"
         hx-post="{% url 'recipes:favorite' recipe.slug %}" hx-swap="outerHTML" aria-pressed="{{ is_favorite|yesno:'true,false' }}">
   {% icon "heart" "size-4" %}{% if is_favorite %}Dans mes favoris{% else %}Ajouter aux favoris{% endif %}

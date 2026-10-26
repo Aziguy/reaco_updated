@@ -4,8 +4,8 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.static import serve
 
-admin.site.site_header = "Administration Reaco"
-admin.site.site_title = "Reaco"
+admin.site.site_header = "Administration Comégusto"
+admin.site.site_title = "Comégusto"
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
