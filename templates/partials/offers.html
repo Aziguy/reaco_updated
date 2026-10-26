@@ -8,7 +8,8 @@
     <ol class="mt-3 space-y-2">
       {% for offer in basket.offers|slice:":8" %}
         <li class="flex items-center gap-3 rounded-xl border px-3 py-2.5 {% if forloop.first %}border-brand-300 bg-brand-50 dark:border-brand-800 dark:bg-brand-950{% else %}border-stone-200 dark:border-stone-800{% endif %}">
-          {% if offer.logo_url %}<img src="{{ offer.logo_url }}" alt="" data-logo class="size-8 rounded-md bg-white object-contain p-0.5" loading="lazy">{% else %}<span class="flex size-8 items-center justify-center rounded-md bg-stone-100 dark:bg-stone-800">{% icon "store" "size-4" %}</span>{% endif %}
+          {% if offer.logo_url %}<img src="{{ offer.logo_url }}" alt="" data-logo class="size-8 shrink-0 rounded-md bg-white object-contain p-0.5" loading="lazy">{% endif %}
+          <span class="{% if offer.logo_url %}hidden {% endif %}flex size-8 shrink-0 items-center justify-center rounded-md bg-stone-100 dark:bg-stone-800" data-logo-fallback>{% icon "store" "size-4" %}</span>
           <div class="min-w-0 flex-1">
             <p class="truncate font-medium">{{ offer.brand }}{% if forloop.first %} <span class="badge-brand ml-1">le moins cher</span>{% endif %}</p>
             <p class="muted truncate text-xs">

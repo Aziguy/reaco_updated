@@ -32,7 +32,10 @@ function setupBrokenLogos() {
   document.addEventListener(
     "error",
     (event) => {
-      if (event.target.matches?.("img[data-logo]")) event.target.classList.add("invisible");
+      const logo = event.target;
+      if (!logo.matches?.("img[data-logo]")) return;
+      logo.classList.add("hidden");
+      logo.nextElementSibling?.classList.remove("hidden");
     },
     true,
   );

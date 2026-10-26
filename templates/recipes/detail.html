@@ -71,7 +71,7 @@
         <div class="stat"><dt>Lipides</dt><dd class="!text-lg">{{ recipe.fat_g }} g</dd></div>
         <div class="stat"><dt>Glucides</dt><dd class="!text-lg">{{ recipe.carbs_g }} g</dd></div>
       </dl>
-      <p class="muted mt-2 text-xs">Calculées pour {{ recipe.servings }} portion{{ recipe.servings|pluralize }} à partir de la table <a href="https://ciqual.anses.fr" class="underline" rel="noopener">Ciqual 2025 de l'Anses</a>{% if recipe.nutrition_coverage < 100 %}, sur {{ recipe.nutrition_coverage }} % des ingrédients{% endif %}. Valeurs indicatives pour les ingrédients crus.</p>
+      <p class="muted mt-2 text-xs">Calculées à partir de la table <a href="https://ciqual.anses.fr" class="underline" rel="noopener">Ciqual 2025 de l'Anses</a>{% if recipe.nutrition_coverage < 100 %}, sur {{ recipe.nutrition_coverage }} % des ingrédients{% endif %}. Valeurs indicatives pour les ingrédients crus.</p>
     {% endif %}
   </section>
 </div>

@@ -28,7 +28,7 @@ class RecipeFilterForm(forms.Form):
     sort = forms.ChoiceField(
         label="Trier par",
         required=False,
-        choices=[(key, label) for key, (label, _) in SORTS.items()],
+        choices=[("" if key == "recent" else key, label) for key, (label, _) in SORTS.items()],
     )
     course = forms.ChoiceField(
         label="Type de plat", required=False, choices=[("", "Tous"), *Recipe.Course.choices]
@@ -62,7 +62,8 @@ class RecipeFilterForm(forms.Form):
         return sum(1 for name in SECONDARY if self.data.get(name))
 
     def filter(self, queryset):
-        data = self.cleaned_data if self.is_valid() else {}
+        self.is_valid()
+        data = self.cleaned_data
         for word in normalize(data.get("q") or "").split():
             queryset = queryset.filter(search_text__contains=word)
         if data.get("course"):

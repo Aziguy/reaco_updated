@@ -7,7 +7,7 @@ from django.urls import reverse
 
 from apps.recipes import metrics
 from apps.recipes.models import Favorite, Ingredient, Recipe, RecipeIngredient
-from apps.recipes.units import convert_unit_price, format_quantity, to_base
+from apps.recipes.units import convert_unit_price, format_quantity, to_base, unit_label
 
 
 class TestUnits:
@@ -71,7 +71,7 @@ class TestViews:
         response = client.get(recipe.get_absolute_url(), {"servings": 4})
         content = response.content.decode()
         assert "500 g" in content
-        assert "8 pièce(s)" in content
+        assert "8 pièces" in content
 
     def test_unpublished_recipe_is_hidden(self, client, recipe):
         recipe.is_published = False
@@ -143,3 +143,12 @@ def test_nutrition_block(client, recipe):
     content = client.get(recipe.get_absolute_url()).content.decode()
     assert "193 kcal" in content
     assert "Ciqual" in content
+
+
+@pytest.mark.parametrize(
+    "unit, quantity, expected",
+    [("piece", 1, "pièce"), ("piece", Decimal("0.5"), "pièce"), ("piece", 2, "pièces"),
+     ("pinch", 3, "pincées"), ("tbsp", 2, "c. à soupe"), ("g", 200, "g")],
+)  # fmt: skip
+def test_unit_label(unit, quantity, expected):
+    assert unit_label(unit, quantity) == expected

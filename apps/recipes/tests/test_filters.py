@@ -133,3 +133,14 @@ def test_search_index_follows_ingredients_and_diets(client, catalog):
     assert client.get(LIST_URL, {"q": "poireau"}).context["page"].paginator.count == 0
     recipe.diets.add(Diet.objects.create(name="Sans gluten", slug="sans-gluten"))
     assert client.get(LIST_URL, {"q": "sans gluten"}).context["page"].paginator.count == 1
+
+
+def test_invalid_parameter_keeps_other_filters(client, catalog):
+    response = client.get(LIST_URL, {"difficulty": "abc", "course": "dessert"})
+    assert {recipe.course for recipe in response.context["page"].object_list} == {"dessert"}
+
+
+def test_default_sort_is_not_sent(client, catalog):
+    content = client.get(LIST_URL).content.decode()
+    assert '<option value="" selected>Les plus récentes</option>' in content
+    assert client.get(LIST_URL, {"sort": "recent"}).status_code == 200

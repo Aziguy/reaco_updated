@@ -13,7 +13,7 @@
         {% endif %}
         <div class="min-w-0 flex-1">
           <p class="truncate font-medium">{{ item.name }}</p>
-          <p class="muted truncate text-xs">{% if item.brand %}{{ item.brand }} · {% endif %}{% if item.quantity %}{{ item.quantity|floatformat:"-2" }} {{ item.get_unit_display }}{% endif %}</p>
+          <p class="muted truncate text-xs">{% if item.brand %}{{ item.brand }} · {% endif %}{% if item.quantity %}{{ item.display_quantity }}{% endif %}</p>
           <p class="mt-1 flex flex-wrap items-center gap-1.5 text-xs">
             {% if item.expires_on %}
               <span class="{% if item.urgency == 'expired' %}badge-danger{% elif item.urgency == 'soon' %}badge-warn{% else %}badge-neutral{% endif %}">

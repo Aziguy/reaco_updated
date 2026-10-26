@@ -8,7 +8,7 @@ from django.urls import reverse
 from apps.core.models import TimeStampedModel
 from apps.core.text import make_slug, normalize
 
-from .units import BaseUnit, Unit, format_quantity
+from .units import BaseUnit, Unit, format_quantity, unit_label
 
 
 class Aisle(models.TextChoices):
@@ -220,7 +220,7 @@ class RecipeIngredient(models.Model):
             return ""
         if self.unit == Unit.PIECE:
             quantity = max((quantity * 2).quantize(Decimal(1)) / 2, Decimal("0.5"))
-        return f"{format_quantity(quantity)} {self.get_unit_display()}"
+        return f"{format_quantity(quantity)} {unit_label(self.unit, quantity)}"
 
 
 class RecipeStep(models.Model):

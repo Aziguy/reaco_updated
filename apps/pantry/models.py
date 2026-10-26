@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from apps.core.models import TimeStampedModel
 from apps.recipes.models import Ingredient
-from apps.recipes.units import Unit
+from apps.recipes.units import Unit, format_quantity, unit_label
 
 SOON_DAYS = 3
 
@@ -64,6 +64,12 @@ class PantryItem(TimeStampedModel):
 
     def __str__(self):
         return self.name
+
+    @property
+    def display_quantity(self) -> str:
+        if self.quantity is None:
+            return ""
+        return f"{format_quantity(self.quantity)} {unit_label(self.unit, self.quantity)}"
 
     @property
     def days_left(self) -> int | None:

@@ -9,10 +9,22 @@ class Unit(models.TextChoices):
     MILLILITER = "ml", "ml"
     CENTILITER = "cl", "cl"
     LITER = "l", "l"
-    PIECE = "piece", "pièce(s)"
+    PIECE = "piece", "pièce"
     TABLESPOON = "tbsp", "c. à soupe"
     TEASPOON = "tsp", "c. à café"
-    PINCH = "pinch", "pincée(s)"
+    PINCH = "pinch", "pincée"
+
+
+PLURALS = {"piece": "pièces", "pinch": "pincées"}
+
+
+def unit_label(unit: str, quantity) -> str:
+    """Unit label agreeing with the quantity: 1 pièce, 2 pièces."""
+    if unit in PLURALS:
+        return (
+            PLURALS[unit] if quantity is not None and Decimal(quantity) >= 2 else Unit(unit).label
+        )
+    return Unit(unit).label if unit in Unit.values else ""
 
 
 class BaseUnit(models.TextChoices):

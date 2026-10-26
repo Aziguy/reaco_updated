@@ -1,3 +1,5 @@
+from csp.constants import UNSAFE_INLINE
+from csp.decorators import csp_update
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerSplitView
 from rest_framework.routers import DefaultRouter
@@ -17,5 +19,11 @@ router.register("products", views.ProductViewSet, basename="product")
 urlpatterns = [
     path("v1/", include(router.urls)),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
-    path("docs/", SpectacularSwaggerSplitView.as_view(url_name="api:schema"), name="docs"),
+    path(
+        "docs/",
+        csp_update({"style-src": [UNSAFE_INLINE]})(
+            SpectacularSwaggerSplitView.as_view(url_name="api:schema")
+        ),
+        name="docs",
+    ),
 ]

@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from apps.core.models import TimeStampedModel
 from apps.recipes.models import Ingredient, Recipe
-from apps.recipes.units import Unit, format_quantity
+from apps.recipes.units import Unit, format_quantity, unit_label
 
 
 class ShoppingList(TimeStampedModel):
@@ -50,7 +50,7 @@ class ShoppingItem(models.Model):
     def display_quantity(self) -> str:
         if self.quantity is None:
             return ""
-        return f"{format_quantity(self.quantity)} {self.get_unit_display()}".strip()
+        return f"{format_quantity(self.quantity)} {unit_label(self.unit, self.quantity)}".strip()
 
     @property
     def aisle(self) -> str:
