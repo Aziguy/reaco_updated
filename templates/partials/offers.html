@@ -1,0 +1,31 @@
+{% load reaco %}
+{% if basket.offers %}
+  <div class="mt-6">
+    <div class="flex flex-wrap items-end justify-between gap-2">
+      <h3 class="text-base">Comparaison par enseigne{% if local %} <span class="muted font-normal">à moins de {{ near.2 }} km</span>{% endif %}</h3>
+      {% if basket.saving %}<p class="badge-brand">{{ basket.saving|euro }} de moins que le prix médian</p>{% endif %}
+    </div>
+    <ol class="mt-3 space-y-2">
+      {% for offer in basket.offers|slice:":8" %}
+        <li class="flex items-center gap-3 rounded-xl border px-3 py-2.5 {% if forloop.first %}border-brand-300 bg-brand-50 dark:border-brand-800 dark:bg-brand-950{% else %}border-stone-200 dark:border-stone-800{% endif %}">
+          {% if offer.logo_url %}<img src="{{ offer.logo_url }}" alt="" data-logo class="size-8 rounded-md bg-white object-contain p-0.5" loading="lazy">{% else %}<span class="flex size-8 items-center justify-center rounded-md bg-stone-100 dark:bg-stone-800">{% icon "store" "size-4" %}</span>{% endif %}
+          <div class="min-w-0 flex-1">
+            <p class="truncate font-medium">{{ offer.brand }}{% if forloop.first %} <span class="badge-brand ml-1">le moins cher</span>{% endif %}</p>
+            <p class="muted truncate text-xs">
+              {{ offer.priced }} prix relevé{{ offer.priced|pluralize }} dans l'enseigne, {{ offer.fallback }} estimé{{ offer.fallback|pluralize }}
+              {% with store=offer.stores.0 %}{% if local and store %} · {{ store.store.name }}{% if store.distance_km is not None %} ({{ store.distance_km|floatformat:1 }} km){% endif %}{% endif %}{% endwith %}
+            </p>
+          </div>
+          <p class="shrink-0 text-lg font-semibold tabular-nums">{{ offer.total|euro }}</p>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+{% endif %}
+{% if near and not local %}
+  <p class="muted mt-4 flex items-center gap-2">{% icon "info" "size-4" %}Pas encore assez de relevés à moins de {{ near.2 }} km : comparaison sur l'ensemble des magasins. <a href="https://prices.openfoodfacts.org" class="underline" rel="noopener">Contribuer</a></p>
+{% elif not near %}
+  <p class="muted mt-4 flex items-center gap-2">{% icon "map-pin" "size-4" %}
+    {% if user.is_authenticated %}<a href="{% url 'accounts:profile' %}" class="underline">Renseignez votre code postal</a>{% else %}<a href="{% url 'account_signup' %}" class="underline">Créez un compte</a>{% endif %}
+    pour comparer les magasins proches de chez vous.</p>
+{% endif %}

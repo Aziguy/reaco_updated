@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load reaco %}
+{% block title %}{{ list.name }}{% endblock %}
+{% block content %}
+<nav class="muted mb-4"><a href="{% url 'shopping:index' %}" class="hover:underline">Mes listes</a></nav>
+<header class="flex flex-wrap items-end justify-between gap-4">
+  <h1 class="text-3xl">{{ list.name }}</h1>
+  <div class="flex flex-wrap gap-2">
+    <a href="{% url 'shopping:print' list.pk %}" class="btn-secondary btn-sm">{% icon "printer" "size-4" %}Imprimer</a>
+    <form method="post" action="{% url 'shopping:checkout' list.pk %}" data-confirm="Ranger les articles cochés dans le garde-manger ?">{% csrf_token %}<button class="btn-primary btn-sm">{% icon "fridge" "size-4" %}Ranger les achats</button></form>
+    <form method="post" action="{% url 'shopping:archive' list.pk %}">{% csrf_token %}<button class="btn-ghost btn-sm">{% if list.is_archived %}Désarchiver{% else %}Archiver{% endif %}</button></form>
+    <form method="post" action="{% url 'shopping:delete' list.pk %}" data-confirm="Supprimer cette liste ?">{% csrf_token %}<button class="btn-danger btn-sm">{% icon "trash" "size-4" %}</button></form>
+  </div>
+</header>
+
+<div class="mt-8 grid gap-8 lg:grid-cols-[1.3fr_1fr]">
+  <section>
+    <form method="post" action="{% url 'shopping:add_item' list.pk %}" class="card flex flex-wrap gap-2 p-3">
+      {% csrf_token %}
+      <label for="{{ form.label.id_for_label }}" class="sr-only">Article</label>
+      <input type="text" name="label" id="{{ form.label.id_for_label }}" class="input min-w-40 flex-1" placeholder="Ajouter un article" required maxlength="200">
+      <label for="{{ form.quantity.id_for_label }}" class="sr-only">Quantité</label>
+      <input type="number" step="any" min="0" name="quantity" id="{{ form.quantity.id_for_label }}" class="input w-24" placeholder="Qté">
+      <label for="{{ form.unit.id_for_label }}" class="sr-only">Unité</label>
+      {{ form.unit }}
+      <button type="submit" class="btn-primary">{% icon "plus" "size-4" %}</button>
+    </form>
+    {% for aisle, items in aisles %}
+      <h2 class="mt-6 text-sm font-semibold uppercase tracking-wide text-stone-500">{{ aisle }}</h2>
+      <ul class="card mt-2 divide-y divide-stone-100 dark:divide-stone-800">
+        {% for item in items %}{% include "shopping/_item.html" %}{% endfor %}
+      </ul>
+    {% empty %}
+      <p class="muted mt-6">Liste vide. Ajoutez un article ou une recette.</p>
+    {% endfor %}
+  </section>
+  <aside>
+    <h2 class="section-title">Où faire ses courses ?</h2>
+    <div class="mt-4" hx-get="{% url 'shopping:compare' list.pk %}" hx-trigger="load, shopping-changed from:body">
+      <div class="card animate-pulse p-6"><p class="muted">Comparaison des enseignes…</p></div>
+    </div>
+  </aside>
+</div>
+{% endblock %}

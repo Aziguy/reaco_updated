@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load reaco %}
+{% block title %}Listes de courses{% endblock %}
+{% block content %}
+<header class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="text-3xl">Mes listes de courses</h1>
+    <p class="muted mt-1">Ajoutez des recettes depuis leur page : les quantités sont fusionnées et votre stock est déduit.</p>
+  </div>
+  <form method="post" class="flex gap-2">
+    {% csrf_token %}
+    <label for="id_name" class="sr-only">Nom de la liste</label>
+    <input id="id_name" name="name" class="input" placeholder="Nouvelle liste" required maxlength="120">
+    <button type="submit" class="btn-primary">{% icon "plus" "size-4" %}Créer</button>
+  </form>
+</header>
+{% if lists %}
+  <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {% for list in lists %}
+      <li class="card flex items-center justify-between gap-3 p-5 {% if list.is_archived %}opacity-60{% endif %}">
+        <div class="min-w-0">
+          <a href="{{ list.get_absolute_url }}" class="block truncate font-medium no-underline hover:underline">{{ list.name }}</a>
+          <p class="muted text-xs">Modifiée le {{ list.updated_at|date:"d/m/Y" }}{% if list.is_archived %} · archivée{% endif %}</p>
+        </div>
+        <span class="text-stone-400">{% icon "arrow-right" "size-4" %}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <div class="card mt-8 p-10 text-center">
+    <p class="font-medium">Aucune liste pour le moment.</p>
+    <a href="{% url 'recipes:list' %}" class="btn-primary mt-4">Choisir des recettes</a>
+  </div>
+{% endif %}
+{% endblock %}

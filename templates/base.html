@@ -1,0 +1,26 @@
+{% load static reaco %}<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% block description %}Cuisinez malin : recettes chiffrées avec de vrais prix, garde-manger anti-gaspi et listes de courses au meilleur prix.{% endblock %}">
+  <meta name="htmx-config" content='{"includeIndicatorStyles": false}'>
+  <title>{% block title %}Cuisiner malin, moins gaspiller{% endblock %} · {{ SITE_NAME }}</title>
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <script src="{% static 'js/theme.js' %}"></script>
+  <script src="{% static 'vendor/htmx.min.js' %}" defer></script>
+  <script src="{% static 'js/app.js' %}" defer></script>
+</head>
+<body class="flex min-h-screen flex-col" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 btn-primary">Aller au contenu</a>
+  {% include "partials/header.html" %}
+  {% include "partials/messages.html" %}
+  <main id="main" class="flex-1">
+    {% block main %}
+      <div class="container-page py-8 sm:py-10">{% block content %}{% endblock %}</div>
+    {% endblock %}
+  </main>
+  {% include "partials/footer.html" %}
+</body>
+</html>

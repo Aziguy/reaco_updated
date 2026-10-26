@@ -14,6 +14,8 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
 SITE_NAME = "Reaco"
+ADMIN_URL = env("ADMIN_URL", default="admin/")
+SERVE_MEDIA = env.bool("SERVE_MEDIA", default=True)
 CONTACT_EMAIL = env("CONTACT_EMAIL", default="contact@reaco.local")
 
 GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID", default="")
@@ -85,6 +87,7 @@ TEMPLATES = [
 DATABASES = {"default": env.db("DATABASE_URL", default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")}
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+FORMS_URLFIELD_ASSUME_HTTPS = True
 
 REDIS_URL = env("REDIS_URL", default="")
 CACHES = {
@@ -207,6 +210,8 @@ SPECTACULAR_SETTINGS = {
 INTEGRATIONS = {
     "USER_AGENT": f"Reaco/2.0 ({CONTACT_EMAIL})",
     "TIMEOUT": env.float("INTEGRATIONS_TIMEOUT", default=8.0),
+    "RETRIES": 2,
+    "BACKOFF": 0.5,
     "OPEN_FOOD_FACTS_URL": "https://world.openfoodfacts.org",
     "OPEN_PRICES_URL": "https://prices.openfoodfacts.org",
     "IMPACT_CO2_URL": "https://impactco2.fr/api/v1",

@@ -1,0 +1,11 @@
+{% load reaco %}
+<div class="card p-5">
+  {% if basket.total %}
+    <p class="muted">Panier estimé (articles non cochés)</p>
+    <p class="text-3xl font-semibold">{{ basket.total|euro }}</p>
+    <p class="muted mt-1 text-xs">{{ basket.coverage }} % des articles chiffrés avec des prix réels.</p>
+    {% include "partials/offers.html" %}
+  {% else %}
+    <p class="muted">Ajoutez des ingrédients reconnus pour estimer le coût de votre panier.</p>
+  {% endif %}
+</div>

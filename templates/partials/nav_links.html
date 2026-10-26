@@ -1,0 +1,6 @@
+{% load reaco %}
+<a href="{% url 'recipes:list' %}" class="nav-link"{% nav_current "/recettes/" %}>{% icon "chef" "size-4" %}Recettes</a>
+<a href="{% url 'pantry:suggestions' %}" class="nav-link"{% nav_current "/anti-gaspi/" %}>{% icon "leaf" "size-4" %}Anti-gaspi</a>
+<a href="{% url 'pantry:list' %}" class="nav-link"{% nav_current "/garde-manger/" %}>{% icon "fridge" "size-4" %}Garde-manger</a>
+<a href="{% url 'shopping:index' %}" class="nav-link"{% nav_current "/courses/" %}>{% icon "cart" "size-4" %}Courses</a>
+<a href="{% url 'core:season' %}" class="nav-link"{% nav_current "/saison/" %}>{% icon "sprout" "size-4" %}De saison</a>

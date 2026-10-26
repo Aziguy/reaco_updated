@@ -1,0 +1,19 @@
+{% load reaco %}
+<p class="muted" aria-live="polite">{{ page.paginator.count }} recette{{ page.paginator.count|pluralize }}</p>
+{% if page.object_list %}
+  <div class="mt-4 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    {% for recipe in page.object_list %}{% include "partials/recipe_card.html" %}{% endfor %}
+  </div>
+  {% if page.has_other_pages %}
+    <nav class="mt-8 flex items-center justify-center gap-2" aria-label="Pagination">
+      {% if page.has_previous %}<a class="btn-secondary btn-sm" href="{% querystring page=page.previous_page_number %}" hx-get="{% querystring page=page.previous_page_number %}" hx-target="#results" hx-push-url="true">Précédent</a>{% endif %}
+      <span class="muted">Page {{ page.number }} sur {{ page.paginator.num_pages }}</span>
+      {% if page.has_next %}<a class="btn-secondary btn-sm" href="{% querystring page=page.next_page_number %}" hx-get="{% querystring page=page.next_page_number %}" hx-target="#results" hx-push-url="true">Suivant</a>{% endif %}
+    </nav>
+  {% endif %}
+{% else %}
+  <div class="card mt-4 p-10 text-center">
+    <p class="font-medium">Aucune recette ne correspond à ces critères.</p>
+    <a href="{% url 'recipes:list' %}" class="mt-3 inline-block text-sm text-brand-700 dark:text-brand-300">Voir toutes les recettes</a>
+  </div>
+{% endif %}

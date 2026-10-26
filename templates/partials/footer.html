@@ -1,0 +1,27 @@
+{% load reaco %}
+<footer class="no-print mt-16 border-t border-stone-200 bg-white dark:border-stone-800 dark:bg-stone-900">
+  <div class="container-page grid gap-8 py-10 sm:grid-cols-3">
+    <div>
+      <p class="flex items-center gap-2 font-semibold text-stone-900 dark:text-white">{% icon "leaf" "size-5 text-brand-600" %}{{ SITE_NAME }}</p>
+      <p class="muted mt-2">Cuisiner malin, dépenser moins et jeter moins, grâce aux données ouvertes.</p>
+    </div>
+    <div>
+      <p class="text-sm font-semibold text-stone-900 dark:text-white">Données ouvertes</p>
+      <ul class="muted mt-2 space-y-1">
+        <li><a href="https://world.openfoodfacts.org" class="hover:underline" rel="noopener">Open Food Facts</a> (ODbL)</li>
+        <li><a href="https://prices.openfoodfacts.org" class="hover:underline" rel="noopener">Open Prices</a> (ODbL)</li>
+        <li><a href="https://impactco2.fr" class="hover:underline" rel="noopener">ADEME Impact CO2</a> (Licence Ouverte)</li>
+        <li><a href="https://geoservices.ign.fr" class="hover:underline" rel="noopener">IGN Géoplateforme</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-sm font-semibold text-stone-900 dark:text-white">{{ SITE_NAME }}</p>
+      <ul class="muted mt-2 space-y-1">
+        <li><a href="{% url 'core:about' %}" class="hover:underline">À propos et méthodologie</a></li>
+        <li><a href="{% url 'core:contact' %}" class="hover:underline">Contact</a></li>
+        <li><a href="{% url 'api:docs' %}" class="hover:underline">API</a></li>
+        <li><a href="https://github.com/Aziguy/reaco_updated" class="hover:underline" rel="noopener">Code source</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

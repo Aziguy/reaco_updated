@@ -1,0 +1,9 @@
+{% load reaco %}
+<li id="item-{{ item.pk }}" class="flex items-center gap-3 px-4 py-3">
+  <button type="button" class="flex size-6 shrink-0 items-center justify-center rounded-md border {% if item.is_checked %}border-brand-600 bg-brand-600 text-white{% else %}border-stone-300 dark:border-stone-600{% endif %}"
+          hx-post="{% url 'shopping:toggle_item' item.pk %}" hx-target="#item-{{ item.pk }}" hx-swap="outerHTML"
+          aria-pressed="{{ item.is_checked|yesno:'true,false' }}" aria-label="Cocher {{ item.label }}">{% if item.is_checked %}{% icon "check" "size-4" %}{% endif %}</button>
+  <span class="flex-1 {% if item.is_checked %}text-stone-400 line-through{% endif %}">{{ item.label }}</span>
+  <span class="text-sm tabular-nums text-stone-500">{{ item.display_quantity }}</span>
+  <button type="button" class="btn-ghost btn-sm px-1.5" hx-post="{% url 'shopping:delete_item' item.pk %}" hx-target="#item-{{ item.pk }}" hx-swap="outerHTML" aria-label="Supprimer {{ item.label }}">{% icon "x" "size-4" %}</button>
+</li>

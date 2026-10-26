@@ -1,0 +1,29 @@
+{% load reaco %}
+<div class="flex flex-wrap items-center justify-between gap-3">
+  <h2 id="ingredients-title" class="section-title">Ingrédients</h2>
+  <div class="flex items-center gap-2" role="group" aria-label="Nombre de portions">
+    <button type="button" class="btn-secondary btn-sm px-2" aria-label="Une portion de moins"
+            hx-get="{{ request.path }}?servings={{ servings|add:'-1' }}" hx-target="#ingredients" hx-swap="innerHTML"
+            {% if servings <= 1 %}disabled{% endif %}>{% icon "minus" "size-4" %}</button>
+    <span class="min-w-24 text-center text-sm font-medium">{% icon "users" "inline size-4 align-[-3px]" %} {{ servings }} portion{{ servings|pluralize }}</span>
+    <button type="button" class="btn-secondary btn-sm px-2" aria-label="Une portion de plus"
+            hx-get="{{ request.path }}?servings={{ servings|add:'1' }}" hx-target="#ingredients" hx-swap="innerHTML"
+            {% if servings >= 30 %}disabled{% endif %}>{% icon "plus" "size-4" %}</button>
+  </div>
+</div>
+<ul class="mt-5 divide-y divide-stone-100 dark:divide-stone-800">
+  {% for row in items %}
+    <li class="flex items-center justify-between gap-3 py-2.5">
+      <span class="flex items-center gap-2">
+        {% if row.in_pantry %}<span class="text-brand-600" title="Dans votre garde-manger">{% icon "check" "size-4" %}</span>{% endif %}
+        <span>{{ row.item.ingredient.name }}{% if row.item.note %} <span class="muted">({{ row.item.note }})</span>{% endif %}</span>
+        {% if row.seasonal %}<span class="badge-brand">de saison</span>{% endif %}
+      </span>
+      <span class="shrink-0 text-sm font-medium tabular-nums">{{ row.quantity|default:"à votre goût" }}</span>
+    </li>
+  {% endfor %}
+</ul>
+{% if request.htmx %}
+  <div hx-get="{% url 'recipes:prices' recipe.slug %}?servings={{ servings }}" hx-trigger="load" hx-target="#prices" hx-swap="innerHTML"></div>
+  {% if user.is_authenticated %}<input id="add-servings" type="number" name="servings" min="1" max="30" value="{{ servings }}" hx-swap-oob="true">{% endif %}
+{% endif %}

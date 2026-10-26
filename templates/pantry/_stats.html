@@ -1,0 +1,7 @@
+{% load reaco %}
+<dl class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+  <div class="stat"><dt>En stock</dt><dd>{{ stats.in_stock }}</dd></div>
+  <div class="stat"><dt>Périment sous 3 jours</dt><dd class="{% if stats.expiring %}!text-amber-600 dark:!text-amber-400{% endif %}">{{ stats.expiring }}</dd></div>
+  <div class="stat"><dt>Taux anti-gaspi (30 j)</dt><dd>{% if stats.anti_waste_rate is not None %}{{ stats.anti_waste_rate }} %{% else %}n.c.{% endif %}</dd></div>
+  <div class="stat"><dt>Valeur jetée (30 j)</dt><dd>{{ stats.wasted_value|euro }}</dd></div>
+</dl>

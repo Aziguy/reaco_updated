@@ -1,0 +1,33 @@
+{% load reaco %}
+<header class="no-print sticky top-0 z-40 border-b border-stone-200 bg-white/85 backdrop-blur dark:border-stone-800 dark:bg-stone-950/85">
+  <div class="container-page flex h-16 items-center gap-4">
+    <a href="{% url 'core:home' %}" class="flex items-center gap-2 font-semibold text-stone-900 no-underline dark:text-white">
+      <span class="flex size-8 items-center justify-center rounded-lg bg-brand-600 text-white">{% icon "leaf" "size-5" %}</span>
+      <span class="text-lg">{{ SITE_NAME }}</span>
+    </a>
+    <nav class="ml-4 hidden items-center gap-1 lg:flex" aria-label="Navigation principale">
+      {% include "partials/nav_links.html" %}
+    </nav>
+    <div class="ml-auto flex items-center gap-1">
+      <button type="button" class="btn-ghost px-2.5" data-theme-toggle aria-label="Changer de thème">
+        <span class="dark:hidden">{% icon "moon" %}</span><span class="hidden dark:inline">{% icon "sun" %}</span>
+      </button>
+      {% if user.is_authenticated %}
+        <a href="{% url 'core:dashboard' %}" class="nav-link hidden sm:flex"{% nav_current "/tableau-de-bord/" %}>{% icon "chart" "size-4" %}Tableau de bord</a>
+        <a href="{% url 'accounts:profile' %}" class="btn-ghost px-2.5" aria-label="Mon profil">{% icon "user" %}</a>
+      {% else %}
+        <a href="{% url 'account_login' %}" class="btn-ghost">Connexion</a>
+        <a href="{% url 'account_signup' %}" class="btn-primary hidden sm:inline-flex">Créer un compte</a>
+      {% endif %}
+      <button type="button" class="btn-ghost px-2.5 lg:hidden" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="Menu">{% icon "menu" %}</button>
+    </div>
+  </div>
+  <nav id="mobile-menu" class="hidden border-t border-stone-200 px-4 py-3 lg:hidden dark:border-stone-800" aria-label="Navigation mobile">
+    <div class="flex flex-col gap-1">
+      {% include "partials/nav_links.html" %}
+      {% if user.is_authenticated %}
+        <a href="{% url 'core:dashboard' %}" class="nav-link">{% icon "chart" "size-4" %}Tableau de bord</a>
+      {% endif %}
+    </div>
+  </nav>
+</header>

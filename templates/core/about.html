@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load reaco %}
+{% block title %}À propos et méthodologie{% endblock %}
+{% block content %}
+<article class="mx-auto max-w-3xl">
+  <h1 class="text-3xl">À propos de {{ SITE_NAME }}</h1>
+  <p class="mt-4 text-lg text-stone-600 dark:text-stone-300">En France, chaque habitant jette en moyenne une trentaine de kilos de nourriture par an, dont une partie encore emballée. {{ SITE_NAME }} aide à mieux planifier ses repas, à acheter au juste prix et à consommer ce que l'on a avant qu'il ne soit trop tard.</p>
+
+  <h2 class="mt-10 text-xl">Comment les prix sont calculés</h2>
+  <ul class="mt-3 list-disc space-y-2 pl-5">
+    <li>Chaque ingrédient est relié à une catégorie de la taxonomie Open Food Facts (par exemple <code>en:tomatoes</code>).</li>
+    <li>Les prix sont issus d'<a href="https://prices.openfoodfacts.org" class="underline" rel="noopener">Open Prices</a> : des relevés réels, photographiés sur les étiquettes et tickets par la communauté, sur les 12 derniers mois et hors promotions.</li>
+    <li>Ils sont ramenés au kilo, au litre ou à la pièce, puis on retient la médiane pour limiter l'effet des valeurs extrêmes.</li>
+    <li>La comparaison par enseigne utilise les prix propres à chaque enseigne quand ils existent, et la médiane nationale sinon. Le nombre de prix réellement relevés est toujours affiché.</li>
+  </ul>
+
+  <h2 class="mt-10 text-xl">Impact environnemental</h2>
+  <p class="mt-3">L'empreinte carbone (kg CO2e) provient de la base Agribalyse de l'ADEME via l'API <a href="https://impactco2.fr" class="underline" rel="noopener">Impact CO2</a>, tout comme le calendrier des fruits et légumes de saison.</p>
+
+  <h2 class="mt-10 text-xl">Données et licences</h2>
+  <ul class="mt-3 list-disc space-y-2 pl-5">
+    <li>Open Food Facts et Open Prices : Open Database License (ODbL).</li>
+    <li>ADEME Impact CO2 : Licence Ouverte Etalab 2.0.</li>
+    <li>Géocodage : IGN Géoplateforme.</li>
+    <li>Fonds de carte et magasins : contributeurs OpenStreetMap (ODbL).</li>
+  </ul>
+
+  <h2 class="mt-10 text-xl">Vos données</h2>
+  <p class="mt-3">Votre localisation n'est utilisée que pour trouver les magasins proches. Vous pouvez supprimer votre compte et toutes vos données à tout moment depuis votre profil.</p>
+</article>
+{% endblock %}

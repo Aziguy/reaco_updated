@@ -1,0 +1,5 @@
+<div id="messages" class="container-page no-print" aria-live="polite">
+  {% for message in messages %}
+    <div class="mt-4 rounded-xl border px-4 py-3 text-sm {% if message.level_tag == 'error' %}border-red-200 bg-red-50 text-red-800 dark:border-red-900 dark:bg-red-950 dark:text-red-200{% elif message.level_tag == 'warning' %}border-amber-200 bg-amber-50 text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200{% else %}border-brand-200 bg-brand-50 text-brand-900 dark:border-brand-900 dark:bg-brand-950 dark:text-brand-100{% endif %}" role="status">{{ message }}</div>
+  {% endfor %}
+</div>

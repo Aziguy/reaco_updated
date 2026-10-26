@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load reaco %}
+{% block title %}Fruits et légumes de saison{% endblock %}
+{% block content %}
+<header class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <p class="badge-brand">{% icon "sprout" "size-3.5" %}Calendrier ADEME</p>
+    <h1 class="mt-3 text-3xl">De saison en {{ month_name }}</h1>
+    <p class="muted mt-1 max-w-2xl">Manger de saison, c'est souvent moins cher et jusqu'à 10 fois moins émetteur qu'un produit cultivé sous serre chauffée ou importé par avion.</p>
+  </div>
+  <form method="get" class="flex items-center gap-2">
+    <label for="mois" class="muted">Mois</label>
+    <select id="mois" name="mois" class="input w-40" data-autosubmit>
+      {% for number, name in months %}<option value="{{ number }}" {% if number == month %}selected{% endif %}>{{ name|capfirst }}</option>{% endfor %}
+    </select>
+    <noscript><button class="btn-secondary btn-sm">Voir</button></noscript>
+  </form>
+</header>
+
+{% if unavailable %}
+  <p class="card mt-8 p-6 muted">Le calendrier ADEME est momentanément indisponible.</p>
+{% else %}
+  <div class="mt-8 grid gap-6 md:grid-cols-3">
+    {% for category, items in groups.items %}
+      <section class="card p-5">
+        <h2 class="text-base capitalize">{{ category }}</h2>
+        <ul class="mt-3 divide-y divide-stone-100 dark:divide-stone-800">
+          {% for item in items %}
+            <li class="flex items-center justify-between py-2 text-sm"><span>{{ item.name }}</span><span class="muted tabular-nums">{{ item.co2_per_kg|co2 }}/kg</span></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if recipes %}
+  <section class="mt-12">
+    <h2 class="section-title">Recettes avec des produits de saison</h2>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {% for recipe in recipes %}{% include "partials/recipe_card.html" %}{% endfor %}
+    </div>
+  </section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Mes favoris{% endblock %}
+{% block content %}
+<h1 class="text-3xl">Mes recettes favorites</h1>
+{% if recipes %}
+  <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {% for recipe in recipes %}{% include "partials/recipe_card.html" %}{% endfor %}
+  </div>
+{% else %}
+  <div class="card mt-8 p-10 text-center">
+    <p class="font-medium">Vous n'avez pas encore de favori.</p>
+    <a href="{% url 'recipes:list' %}" class="btn-primary mt-4">Parcourir les recettes</a>
+  </div>
+{% endif %}
+{% endblock %}

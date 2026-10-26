@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load reaco %}
+{% block title %}Tableau de bord{% endblock %}
+{% block content %}
+<header class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="text-3xl">Bonjour{% if user.first_name %} {{ user.first_name }}{% endif %} !</h1>
+    <p class="muted mt-1">Voici où en est votre cuisine anti-gaspi.</p>
+  </div>
+  {% if not user.has_location %}<a href="{% url 'accounts:profile' %}" class="btn-secondary btn-sm">{% icon "map-pin" "size-4" %}Ajouter ma localisation</a>{% endif %}
+</header>
+
+<dl class="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
+  <div class="stat"><dt>Produits en stock</dt><dd>{{ stats.in_stock }}</dd></div>
+  <div class="stat"><dt>Périment sous 3 jours</dt><dd class="{% if stats.expiring %}!text-amber-600 dark:!text-amber-400{% endif %}">{{ stats.expiring }}</dd></div>
+  <div class="stat"><dt>Consommés à temps (30 j)</dt><dd>{{ stats.consumed }}</dd></div>
+  <div class="stat"><dt>Taux anti-gaspi (30 j)</dt><dd>{% if stats.anti_waste_rate is not None %}{{ stats.anti_waste_rate }} %{% else %}n.c.{% endif %}</dd></div>
+</dl>
+
+<div class="mt-10 grid gap-8 lg:grid-cols-2">
+  <section class="card p-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-base">À consommer vite</h2>
+      <a href="{% url 'pantry:list' %}" class="text-sm text-brand-700 dark:text-brand-300">Garde-manger</a>
+    </div>
+    {% if expiring %}
+      <ul class="mt-4 divide-y divide-stone-100 dark:divide-stone-800">
+        {% for item in expiring %}
+          <li class="flex items-center justify-between py-2 text-sm">
+            <span>{{ item.name }}</span>
+            <span class="{% if item.urgency == 'expired' %}badge-danger{% else %}badge-warn{% endif %}">{{ item.expires_on|date:"d/m" }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="muted mt-4">Rien d'urgent, bravo !</p>
+    {% endif %}
+  </section>
+
+  <section class="card p-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-base">Idées pour vider le frigo</h2>
+      <a href="{% url 'pantry:suggestions' %}" class="text-sm text-brand-700 dark:text-brand-300">Toutes les idées</a>
+    </div>
+    {% if suggestions %}
+      <ul class="mt-4 space-y-3">
+        {% for suggestion in suggestions %}
+          <li class="flex items-center gap-3">
+            {% if suggestion.recipe.image %}<img src="{{ suggestion.recipe.image.url }}" alt="" class="size-12 rounded-lg object-cover">{% endif %}
+            <div class="min-w-0 flex-1">
+              <a href="{{ suggestion.recipe.get_absolute_url }}" class="block truncate font-medium no-underline hover:underline">{{ suggestion.recipe.title }}</a>
+              <p class="muted text-xs">{{ suggestion.matched|length }} ingrédient{{ suggestion.matched|length|pluralize }} déjà chez vous</p>
+            </div>
+            <span class="badge-brand">{{ suggestion.match_rate }} %</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="muted mt-4">Ajoutez des produits à votre garde-manger pour recevoir des suggestions.</p>
+    {% endif %}
+  </section>
+
+  <section class="card p-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-base">Listes de courses</h2>
+      <a href="{% url 'shopping:index' %}" class="text-sm text-brand-700 dark:text-brand-300">Toutes</a>
+    </div>
+    {% if lists %}
+      <ul class="mt-4 divide-y divide-stone-100 dark:divide-stone-800">
+        {% for list in lists %}<li class="py-2 text-sm"><a href="{{ list.get_absolute_url }}" class="hover:underline">{{ list.name }}</a></li>{% endfor %}
+      </ul>
+    {% else %}
+      <p class="muted mt-4">Aucune liste active.</p>
+    {% endif %}
+  </section>
+
+  <section class="card p-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-base">Favoris</h2>
+      <a href="{% url 'recipes:favorites' %}" class="text-sm text-brand-700 dark:text-brand-300">Tous</a>
+    </div>
+    {% if favorites %}
+      <ul class="mt-4 divide-y divide-stone-100 dark:divide-stone-800">
+        {% for recipe in favorites %}<li class="flex justify-between py-2 text-sm"><a href="{{ recipe.get_absolute_url }}" class="hover:underline">{{ recipe.title }}</a><span class="muted">{{ recipe.cost_per_serving|euro }}</span></li>{% endfor %}
+      </ul>
+    {% else %}
+      <p class="muted mt-4">Pas encore de favori.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

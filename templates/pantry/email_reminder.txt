@@ -1,0 +1,9 @@
+Bonjour{% if user.first_name %} {{ user.first_name }}{% endif %},
+
+Ces produits de votre garde-manger arrivent à leur date limite :
+{% for item in items %}
+- {{ item.name }} : {{ item.expires_on|date:"l j F" }}{% endfor %}
+
+Des idées de recettes pour les utiliser : {{ url }}
+
+L'équipe Reaco

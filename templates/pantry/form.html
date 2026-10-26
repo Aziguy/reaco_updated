@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load reaco %}
+{% block title %}{% if item %}Modifier un produit{% else %}Ajouter un produit{% endif %}{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-2xl">
+  <h1 class="text-3xl">{% if item %}Modifier « {{ item.name }} »{% else %}Ajouter au garde-manger{% endif %}</h1>
+  {% if not item %}
+    <section class="card mt-6 p-5" data-scanner data-target="id_code">
+      <h2 class="text-base">Scanner ou saisir un code-barres</h2>
+      <p class="muted mt-1">La fiche est complétée avec Open Food Facts et le prix médian Open Prices.</p>
+      <form class="mt-4 flex flex-wrap gap-2" hx-get="{% url 'pantry:lookup' %}" hx-target="#pantry-form" hx-trigger="submit, change from:#id_code" hx-indicator="#lookup-loading">
+        <label for="id_code" class="sr-only">Code-barres</label>
+        <input id="id_code" name="code" inputmode="numeric" pattern="[0-9]{8,14}" placeholder="3017620422003" class="input max-w-xs flex-1" autocomplete="off">
+        <button type="button" class="btn-secondary" data-scan>{% icon "scan" "size-4" %}Scanner</button>
+        <button type="submit" class="btn-primary">Rechercher</button>
+        <span id="lookup-loading" class="htmx-indicator muted self-center">Recherche…</span>
+      </form>
+      <video class="mt-4 w-full max-w-sm rounded-xl" hidden muted playsinline></video>
+      <p class="muted mt-2 text-xs" data-scanner-status></p>
+    </section>
+  {% endif %}
+  <div id="pantry-form" class="mt-6">{% include "pantry/_form.html" %}</div>
+</div>
+{% endblock %}

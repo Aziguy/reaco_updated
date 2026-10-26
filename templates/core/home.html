@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load reaco humanize %}
+{% block main %}
+<section class="relative overflow-hidden border-b border-stone-200 bg-gradient-to-b from-brand-50 to-stone-50 dark:border-stone-800 dark:from-brand-950 dark:to-stone-950">
+  <div class="container-page grid items-center gap-10 py-14 sm:py-20 lg:grid-cols-2">
+    <div>
+      <p class="badge-brand">{% icon "leaf" "size-3.5" %}Anti-gaspillage et pouvoir d'achat</p>
+      <h1 class="mt-4 text-4xl leading-tight sm:text-5xl">Mangez bien, dépensez moins, <span class="text-brand-600 dark:text-brand-400">ne jetez plus.</span></h1>
+      <p class="mt-5 max-w-xl text-lg text-stone-600 dark:text-stone-300">Des recettes chiffrées avec de vrais prix relevés en magasin, un garde-manger qui vous alerte avant la date limite et des listes de courses comparées entre enseignes.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="{% url 'recipes:list' %}" class="btn-primary">{% icon "search" "size-4" %}Explorer les recettes</a>
+        <a href="{% url 'pantry:suggestions' %}" class="btn-secondary">{% icon "fridge" "size-4" %}Cuisiner ce que j'ai</a>
+      </div>
+      <dl class="mt-10 grid max-w-lg grid-cols-3 gap-4">
+        <div><dt class="muted">Recettes chiffrées</dt><dd class="text-2xl font-semibold">{{ stats.recipes|intcomma }}</dd></div>
+        <div><dt class="muted">Prix réels</dt><dd class="text-2xl font-semibold">{{ stats.prices|intcomma }}</dd></div>
+        <div><dt class="muted">Magasins</dt><dd class="text-2xl font-semibold">{{ stats.stores|intcomma }}</dd></div>
+      </dl>
+    </div>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="card p-5">
+        <span class="flex size-10 items-center justify-center rounded-xl bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-200">{% icon "euro" %}</span>
+        <h2 class="mt-3 text-base">Le vrai coût d'une recette</h2>
+        <p class="muted mt-1">Calculé à partir des prix relevés par la communauté Open Prices.</p>
+      </div>
+      <div class="card p-5">
+        <span class="flex size-10 items-center justify-center rounded-xl bg-accent-400/20 text-accent-600">{% icon "store" %}</span>
+        <h2 class="mt-3 text-base">La bonne enseigne</h2>
+        <p class="muted mt-1">Votre panier comparé entre les magasins proches de chez vous.</p>
+      </div>
+      <div class="card p-5">
+        <span class="flex size-10 items-center justify-center rounded-xl bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300">{% icon "alert" %}</span>
+        <h2 class="mt-3 text-base">Zéro oubli</h2>
+        <p class="muted mt-1">Scannez vos produits, recevez une alerte avant la date de péremption.</p>
+      </div>
+      <div class="card p-5">
+        <span class="flex size-10 items-center justify-center rounded-xl bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300">{% icon "cloud" %}</span>
+        <h2 class="mt-3 text-base">L'impact carbone</h2>
+        <p class="muted mt-1">Empreinte de chaque plat et produits de saison selon l'ADEME.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container-page space-y-16 py-14">
+  {% if featured %}
+  <section>
+    <div class="flex items-end justify-between gap-4">
+      <h2 class="section-title">À la une</h2>
+      <a href="{% url 'recipes:list' %}" class="inline-flex items-center gap-1 text-sm font-medium text-brand-700 no-underline hover:underline dark:text-brand-300">Toutes les recettes{% icon "arrow-right" "size-4" %}</a>
+    </div>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {% for recipe in featured %}{% include "partials/recipe_card.html" %}{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if cheapest %}
+  <section>
+    <h2 class="section-title">Petits budgets</h2>
+    <p class="muted mt-1">Les recettes les moins chères par portion, d'après les derniers prix relevés.</p>
+    <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {% for recipe in cheapest %}{% include "partials/recipe_card.html" %}{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if produce %}
+  <section class="card p-6 sm:p-8">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 class="section-title">De saison en {{ month_name }}</h2>
+        <p class="muted mt-1">Moins cher, meilleur et moins émetteur. Source : ADEME.</p>
+      </div>
+      <a href="{% url 'core:season' %}" class="btn-secondary btn-sm">Calendrier complet</a>
+    </div>
+    <ul class="mt-5 flex flex-wrap gap-2">
+      {% for item in produce %}<li class="badge-brand px-3 py-1 text-sm">{{ item.name }}</li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

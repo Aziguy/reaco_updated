@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Supprimer mon compte{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-md">
+  <h1 class="text-2xl">Supprimer mon compte</h1>
+  <p class="muted mt-2">Cette action est irréversible : votre compte, votre garde-manger, vos listes et vos favoris seront effacés.</p>
+  <form method="post" class="card form-flow mt-6 p-6">
+    {% csrf_token %}
+    <div class="field">
+      <label for="{{ form.confirm.id_for_label }}">{{ form.confirm.label }}</label>
+      {{ form.confirm.errors }}{{ form.confirm }}
+    </div>
+    <button type="submit" class="!bg-red-600 hover:!bg-red-700">Supprimer définitivement</button>
+  </form>
+</div>
+{% endblock %}

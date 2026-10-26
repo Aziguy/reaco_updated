@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ list.name }}{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-2xl">
+  <div class="no-print mb-6 flex justify-between">
+    <a href="{{ list.get_absolute_url }}" class="btn-secondary btn-sm">Retour</a>
+    <button type="button" class="btn-primary btn-sm" data-print>Imprimer</button>
+  </div>
+  <h1 class="text-2xl">{{ list.name }}</h1>
+  {% for aisle, items in aisles %}
+    <h2 class="mt-6 text-sm font-semibold uppercase tracking-wide">{{ aisle }}</h2>
+    <ul class="mt-2 space-y-1">
+      {% for item in items %}{% if not item.is_checked %}
+        <li class="flex justify-between border-b border-dotted border-stone-300 py-1"><span>☐ {{ item.label }}</span><span>{{ item.display_quantity }}</span></li>
+      {% endif %}{% endfor %}
+    </ul>
+  {% endfor %}
+</div>
+{% endblock %}

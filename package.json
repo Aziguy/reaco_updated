@@ -1,0 +1,14 @@
+{
+  "name": "reaco",
+  "private": true,
+  "scripts": {
+    "build": "tailwindcss -i static/src/app.css -o static/css/app.css --minify",
+    "dev": "tailwindcss -i static/src/app.css -o static/css/app.css --watch",
+    "vendor": "node -e \"require('fs').copyFileSync('node_modules/htmx.org/dist/htmx.min.js','static/vendor/htmx.min.js')\""
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "tailwindcss": "4.3.3",
+    "htmx.org": "2.0.11"
+  }
+}

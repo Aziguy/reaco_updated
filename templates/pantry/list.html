@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load reaco %}
+{% block title %}Garde-manger{% endblock %}
+{% block content %}
+<header class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="text-3xl">Mon garde-manger</h1>
+    <p class="muted mt-1">{{ count }} produit{{ count|pluralize }} en stock. Consommez en priorité ce qui périme bientôt.</p>
+  </div>
+  <div class="flex gap-2">
+    <a href="{% url 'pantry:suggestions' %}" class="btn-secondary">{% icon "leaf" "size-4" %}Idées anti-gaspi</a>
+    <a href="{% url 'pantry:add' %}" class="btn-primary">{% icon "plus" "size-4" %}Ajouter</a>
+  </div>
+</header>
+
+<div id="pantry-stats" class="mt-8" hx-get="{% url 'pantry:stats' %}" hx-trigger="pantry-changed from:body">
+  {% include "pantry/_stats.html" %}
+</div>
+
+{% if count %}
+  {% with expired=groups.expired soon=groups.soon ok=groups.ok none=groups.none %}
+    {% if expired %}{% include "pantry/_group.html" with title="Date dépassée" items=expired tone="danger" %}{% endif %}
+    {% if soon %}{% include "pantry/_group.html" with title="À consommer très vite" items=soon tone="warn" %}{% endif %}
+    {% if ok %}{% include "pantry/_group.html" with title="Plus tard" items=ok tone="neutral" %}{% endif %}
+    {% if none %}{% include "pantry/_group.html" with title="Sans date" items=none tone="neutral" %}{% endif %}
+  {% endwith %}
+{% else %}
+  <div class="card mt-8 p-10 text-center">
+    <span class="mx-auto flex size-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-200">{% icon "scan" "size-6" %}</span>
+    <p class="mt-4 font-medium">Votre garde-manger est vide.</p>
+    <p class="muted mt-1">Scannez un code-barres ou ajoutez un produit pour recevoir des alertes avant sa date limite.</p>
+    <a href="{% url 'pantry:add' %}" class="btn-primary mt-5">Ajouter un produit</a>
+  </div>
+{% endif %}
+
+{% if recent %}
+  <section class="mt-10">
+    <h2 class="text-base">Derniers mouvements</h2>
+    <ul class="mt-3 divide-y divide-stone-100 text-sm dark:divide-stone-800">
+      {% for item in recent %}
+        <li class="flex items-center justify-between py-2">
+          <span>{{ item.name }}</span>
+          <span class="{% if item.status == 'wasted' %}badge-danger{% else %}badge-brand{% endif %}">{{ item.get_status_display }} le {{ item.closed_on|date:"d/m" }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+{% endblock %}

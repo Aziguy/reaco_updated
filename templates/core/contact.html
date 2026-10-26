@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load reaco %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-xl">
+  <h1 class="text-3xl">Nous contacter</h1>
+  <p class="muted mt-1">Une suggestion, une recette à proposer, un bug ? Écrivez-nous.</p>
+  <form method="post" class="card form-flow mt-6 p-6" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="field{% if field.name == 'website' %} sr-only{% endif %}" {% if field.name == 'website' %}aria-hidden="true"{% endif %}>
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field.errors }}{{ field }}
+      </div>
+    {% endfor %}
+    <button type="submit">{% icon "mail" "size-4" %}Envoyer</button>
+  </form>
+</div>
+{% endblock %}

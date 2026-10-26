@@ -1,0 +1,30 @@
+{% load reaco %}
+{% if error %}<p class="mb-4 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:bg-amber-950 dark:text-amber-200">{{ error }}</p>{% endif %}
+<form method="post" action="{% if item %}{% url 'pantry:edit' item.pk %}{% else %}{% url 'pantry:add' %}{% endif %}" class="card form-flow p-6">
+  {% csrf_token %}
+  {% with image=form.image_url.value nutriscore=form.nutriscore.value %}
+    {% if image %}
+      <div class="mb-5 flex items-center gap-4">
+        <img src="{{ image }}" alt="" class="size-20 rounded-xl bg-white object-contain">
+        {% if nutriscore %}<span class="grade grade-{{ nutriscore }} !size-8 !text-sm" title="Nutri-Score">{{ nutriscore }}</span>{% endif %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {{ form.non_field_errors }}
+  {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+  <div class="grid gap-x-4 sm:grid-cols-2">
+    {% for field in form.visible_fields %}
+      <div class="field {% if field.name == 'ingredient' or field.name == 'name' %}sm:col-span-2{% endif %}">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field.errors }}{{ field }}
+        {% if field.help_text %}<span class="helptext">{{ field.help_text }}</span>{% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  <button type="submit">{% icon "check" "size-4" %}Enregistrer</button>
+</form>
+{% if item %}
+  <form method="post" action="{% url 'pantry:delete' item.pk %}" class="mt-4 text-right" data-confirm="Supprimer ce produit ?">
+    {% csrf_token %}<button type="submit" class="btn-danger btn-sm">{% icon "trash" "size-4" %}Supprimer</button>
+  </form>
+{% endif %}
