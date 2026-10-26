@@ -132,27 +132,22 @@ Pendant le développement, `npm run dev` recompile les styles à chaque modifica
 
 ## Configuration
 
-Toute la configuration passe par des variables d'environnement (voir `.env.example`).
+Toute la configuration passe par des variables d'environnement (voir `.env.example`). Le guide [docs/CONFIGURATION.md](docs/CONFIGURATION.md) explique pas à pas :
 
-| Variable | Défaut | Description |
-| --- | --- | --- |
-| `SECRET_KEY` | obligatoire hors `DEBUG` | Clé secrète Django. |
-| `DEBUG` | `false` | Mode développement. |
-| `ALLOWED_HOSTS` | `localhost,127.0.0.1` | Domaines autorisés. |
-| `CSRF_TRUSTED_ORIGINS` | vide | Origines HTTPS de confiance. |
-| `DATABASE_URL` | SQLite local | Base de données (PostgreSQL recommandé). |
-| `REDIS_URL` | vide | Cache partagé (mémoire locale sinon). |
-| `EMAIL_URL` | `consolemail://` | Serveur SMTP, par exemple `smtp+tls://user:pass@host:587`. |
-| `CONTACT_EMAIL` | `contact@comegusto.local` | Destinataire du formulaire de contact. |
-| `ACCOUNT_EMAIL_VERIFICATION` | `optional` | `mandatory` pour imposer la vérification. |
-| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | vide | Active la connexion Google. |
-| `IMPACT_CO2_API_KEY` | vide | Clé facultative de l'API Impact CO2. |
-| `PRICE_COUNTRIES` | `FR` | Pays des magasins retenus. |
-| `PRICE_HISTORY_DAYS` | `365` | Profondeur d'historique des prix. |
-| `ADMIN_URL` | `admin/` | Chemin de l'administration. |
-| `AWS_STORAGE_BUCKET_NAME` et `AWS_*` | vide | Stockage des médias sur un service compatible S3 (R2, Scaleway, B2, S3). |
-| `DOMAIN`, `POSTGRES_PASSWORD` | vide | Utilisés par `docker-compose.prod.yml`. |
-| `SECURE_SSL_REDIRECT`, `SECURE_COOKIES`, `SECURE_HSTS_SECONDS` | actifs hors `DEBUG` | Durcissement HTTPS. |
+- l'**envoi d'emails** : format de `EMAIL_URL`, fournisseurs (Brevo, boîte mail du domaine, Gmail), délivrabilité, test et dépannage ;
+- la **connexion avec Google** : création du client OAuth et URL de redirection ;
+- le domaine, la sécurité, la base, le cache, les médias, les prix, les tâches planifiées et les alertes d'erreur ;
+- la référence complète des variables.
+
+Les variables essentielles en production :
+
+| Variable | Exemple |
+| --- | --- |
+| `SECRET_KEY` | chaîne aléatoire longue |
+| `DOMAIN` ou `ALLOWED_HOSTS` + `CSRF_TRUSTED_ORIGINS` | `comegusto.example.org` |
+| `DATABASE_URL` (ou `POSTGRES_PASSWORD` avec Docker Compose) | `postgres://...` |
+| `EMAIL_URL`, `DEFAULT_FROM_EMAIL`, `CONTACT_EMAIL` | `smtp+tls://...@smtp-relay.brevo.com:587` |
+| `ADMIN_URL` | `gestion-8f3k/` |
 
 ## Architecture
 

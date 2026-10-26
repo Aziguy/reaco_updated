@@ -1,6 +1,6 @@
 # Déployer Comégusto
 
-Ce guide couvre trois façons de mettre Comégusto en ligne, du gratuit au payant. Toutes reposent sur la même image Docker et les mêmes variables d'environnement.
+Ce guide couvre trois façons de mettre Comégusto en ligne, du gratuit au payant. Toutes reposent sur la même image Docker et les mêmes variables d'environnement, détaillées dans [CONFIGURATION.md](CONFIGURATION.md) (emails, connexion Google, sécurité...).
 
 - [Ce qu'il faut à Comégusto](#ce-quil-faut-à-comégusto)
 - [Quel hébergeur choisir ?](#quel-hébergeur-choisir-)
@@ -87,7 +87,7 @@ CONTACT_EMAIL=contact@example.org
 ADMIN_URL=gestion-8f3k/
 ```
 
-Pour générer une clé secrète : `python3 -c "import secrets; print(secrets.token_urlsafe(50))"`.
+Pour générer une clé secrète : `python3 -c "import secrets; print(secrets.token_urlsafe(50))"`. Pour choisir un fournisseur d'emails et écrire `EMAIL_URL`, voir [Configurer les emails](CONFIGURATION.md#emails).
 
 ### 3. Lancer
 
@@ -123,7 +123,8 @@ Le principe est le même sur Render, Railway, Clever Cloud, Scalingo, Koyeb ou C
    | `CSRF_TRUSTED_ORIGINS` | `https://comegusto.example.org` |
    | `DATABASE_URL` | URL PostgreSQL (ajoutez `?sslmode=require` pour Neon) |
    | `AWS_*` | voir la section S3 |
-   | `EMAIL_URL`, `DEFAULT_FROM_EMAIL`, `CONTACT_EMAIL` | votre SMTP |
+   | `EMAIL_URL`, `DEFAULT_FROM_EMAIL`, `CONTACT_EMAIL` | votre SMTP, voir [Configurer les emails](CONFIGURATION.md#emails) |
+   | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | facultatif, voir [Connexion avec Google](CONFIGURATION.md#connexion-avec-google) |
    | `REDIS_URL` | facultatif |
 
 5. **Premier lancement** : depuis le shell de la plateforme, exécutez `python manage.py createsuperuser`, `seed_demo` puis `sync_prices`. Sans shell disponible, lancez ces commandes depuis votre poste avec la même `DATABASE_URL`.
@@ -131,7 +132,7 @@ Le principe est le même sur Render, Railway, Clever Cloud, Scalingo, Koyeb ou C
 
 Particularités :
 
-- **Render gratuit** : mise en veille après 15 minutes d'inactivité et SMTP bloqué. Pour les emails, passez à une instance payante.
+- **Render gratuit** : mise en veille après 15 minutes d'inactivité et ports SMTP 25, 465 et 587 bloqués. Essayez le port 2525 de Brevo ou passez à une instance payante.
 - **Clever Cloud et Scalingo** : choisissez le déploiement Docker et ajoutez l'extension PostgreSQL ; l'URL de la base est fournie dans une variable que vous recopiez dans `DATABASE_URL`.
 - **Cloud Run** : l'image se construit avec Cloud Build ou depuis GitHub. Définissez le port `8000` et une instance minimale à `0` pour rester dans le quota gratuit.
 
@@ -180,7 +181,8 @@ AWS_S3_CUSTOM_DOMAIN=media.example.org                          # facultatif, bu
 - [ ] `ALLOWED_HOSTS` et `CSRF_TRUSTED_ORIGINS` limités à vos domaines.
 - [ ] HTTPS actif (Caddy ou plateforme), `SECURE_SSL_REDIRECT` et cookies sécurisés laissés à leur valeur par défaut.
 - [ ] `ADMIN_URL` personnalisée et mot de passe administrateur robuste.
-- [ ] SMTP configuré et `ACCOUNT_EMAIL_VERIFICATION=mandatory` si l'inscription est ouverte au public.
+- [ ] SMTP configuré et testé (`sendtestemail`), `ACCOUNT_EMAIL_VERIFICATION=mandatory` si l'inscription est ouverte au public.
+- [ ] `ADMINS` renseigné pour recevoir les erreurs serveur.
 - [ ] Médias persistants (volume ou S3) et sauvegardes de la base.
 - [ ] `python manage.py check --deploy` sans avertissement.
 - [ ] Tâche quotidienne de synchronisation des prix en place.
