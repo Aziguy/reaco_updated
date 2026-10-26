@@ -12,3 +12,4 @@ STORAGES["staticfiles"]["BACKEND"] = "django.contrib.staticfiles.storage.StaticF
 CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
 REST_FRAMEWORK = {**REST_FRAMEWORK, "DEFAULT_THROTTLE_CLASSES": []}  # noqa: F405
 MEDIA_ROOT = BASE_DIR / ".pytest_media"  # noqa: F405
+INTEGRATIONS = {**INTEGRATIONS, "RETRIES": 1, "BACKOFF": 0}  # noqa: F405
