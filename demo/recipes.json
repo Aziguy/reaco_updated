@@ -1,0 +1,245 @@
+{
+  "diets": ["Végétarien", "Sans gluten", "Sans lactose", "Riche en protéines", "Pescétarien"],
+  "ingredients": [
+    {"name": "Pavé de saumon", "aisle": "fish", "price_unit": "kg", "unit_weight_g": 125, "off": "en:salmon-fillets", "co2": "saumon"},
+    {"name": "Pomme de terre", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 150, "off": "en:potatoes", "co2": "pommedeterre"},
+    {"name": "Choucroute crue", "aisle": "grocery", "price_unit": "kg", "off": "en:sauerkrauts", "co2": "chou"},
+    {"name": "Oignon", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 100, "off": "en:onions", "co2": "oignon"},
+    {"name": "Cébette", "aisle": "produce", "price_unit": "unit", "unit_weight_g": 20, "co2": "oignon"},
+    {"name": "Feuille de laurier", "aisle": "spices", "price_unit": "unit", "staple": true},
+    {"name": "Sel", "aisle": "spices", "price_unit": "kg", "off": "en:salts", "staple": true},
+    {"name": "Poivre", "aisle": "spices", "price_unit": "kg", "off": "en:black-peppers", "staple": true},
+    {"name": "Muscade", "aisle": "spices", "price_unit": "kg", "off": "en:nutmeg", "staple": true},
+    {"name": "Moutarde", "aisle": "spices", "price_unit": "kg", "off": "en:mustards", "staple": true},
+    {"name": "Huile d'olive", "aisle": "grocery", "price_unit": "l", "off": "en:olive-oils", "staple": true},
+    {"name": "Harissa", "aisle": "spices", "price_unit": "kg", "off": "en:harissa-sauces"},
+    {"name": "Nuoc-mâm", "aisle": "spices", "price_unit": "l"},
+    {"name": "Citron", "aisle": "produce", "price_unit": "unit", "unit_weight_g": 100, "off": "en:lemons"},
+    {"name": "Citron vert", "aisle": "produce", "price_unit": "unit", "unit_weight_g": 70, "off": "en:limes"},
+    {"name": "Œuf", "aisle": "dairy", "price_unit": "unit", "unit_weight_g": 60, "off": "en:eggs", "co2": "oeuf"},
+    {"name": "Gruyère râpé", "aisle": "cheese", "price_unit": "kg", "off": "en:grated-cheese", "co2": "fromagedure"},
+    {"name": "Feta", "aisle": "cheese", "price_unit": "kg", "off": "en:feta", "co2": "feta"},
+    {"name": "Mozzarella", "aisle": "cheese", "price_unit": "kg", "unit_weight_g": 125, "off": "en:mozzarella", "co2": "mozarella"},
+    {"name": "Mascarpone", "aisle": "dairy", "price_unit": "kg", "off": "en:mascarpone", "co2": "fromagemolle"},
+    {"name": "Beurre", "aisle": "dairy", "price_unit": "kg", "off": "en:butters", "co2": "beurre"},
+    {"name": "Crème fraîche épaisse", "aisle": "dairy", "price_unit": "kg", "off": "en:creams", "co2": "matieregrasse"},
+    {"name": "Yaourt grec", "aisle": "dairy", "price_unit": "kg", "off": "en:greek-style-yogurts", "co2": "yaourt"},
+    {"name": "Lait demi-écrémé", "aisle": "dairy", "price_unit": "l", "off": "en:semi-skimmed-milks", "co2": "laitdevache"},
+    {"name": "Veau (épaule)", "aisle": "meat", "price_unit": "kg", "off": "en:veal-meat", "co2": "veau"},
+    {"name": "Poulet (cuisses)", "aisle": "meat", "price_unit": "kg", "unit_weight_g": 250, "off": "en:chickens", "co2": "poulet"},
+    {"name": "Thon au naturel", "aisle": "fish", "price_unit": "kg", "off": "en:canned-tunas", "co2": "thon"},
+    {"name": "Champignon de Paris", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 20, "off": "en:mushrooms"},
+    {"name": "Carotte", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 100, "off": "en:carrots", "co2": "carotte"},
+    {"name": "Navet", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 150, "off": "en:turnip", "co2": "navet"},
+    {"name": "Céleri branche", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 40, "off": "en:celery", "co2": "celeri"},
+    {"name": "Courgette", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 250, "off": "en:zucchini", "co2": "courgette"},
+    {"name": "Aubergine", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 300, "off": "en:aubergines"},
+    {"name": "Poivron rouge", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 180, "off": "en:red-bell-peppers"},
+    {"name": "Tomate", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 120, "off": "en:tomatoes", "co2": "tomate"},
+    {"name": "Ail", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 5, "off": "en:garlic", "co2": "ail"},
+    {"name": "Piment", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 10, "off": "en:chili-peppers"},
+    {"name": "Chou blanc", "aisle": "produce", "price_unit": "kg", "unit_weight_g": 1000, "off": "en:cabbages", "co2": "chou"},
+    {"name": "Pâtes", "aisle": "grocery", "price_unit": "kg", "off": "en:pastas", "co2": "pates"},
+    {"name": "Semoule de couscous", "aisle": "grocery", "price_unit": "kg", "off": "en:couscous", "co2": "ble"},
+    {"name": "Farine de blé", "aisle": "grocery", "price_unit": "kg", "off": "en:wheat-flours", "co2": "ble"},
+    {"name": "Pois chiches", "aisle": "grocery", "price_unit": "kg", "off": "en:chickpeas", "co2": "poischiches"},
+    {"name": "Concentré de tomate", "aisle": "grocery", "price_unit": "kg", "off": "en:tomato-pastes"},
+    {"name": "Bouillon de volaille", "aisle": "grocery", "price_unit": "unit", "unit_weight_g": 10, "off": "en:bouillon-cubes"},
+    {"name": "Café moulu", "aisle": "grocery", "price_unit": "kg", "off": "en:ground-coffees"},
+    {"name": "Biscuits à la cuillère", "aisle": "grocery", "price_unit": "unit", "unit_weight_g": 6},
+    {"name": "Sucre", "aisle": "grocery", "price_unit": "kg", "off": "en:white-sugars"},
+    {"name": "Sucre roux", "aisle": "grocery", "price_unit": "kg", "off": "en:brown-sugars"},
+    {"name": "Sucre vanillé", "aisle": "grocery", "price_unit": "unit", "unit_weight_g": 7.5, "off": "en:vanilla-sugars"},
+    {"name": "Cacao en poudre", "aisle": "grocery", "price_unit": "kg", "off": "en:cocoa-powders"},
+    {"name": "Cacahuètes", "aisle": "grocery", "price_unit": "kg", "off": "en:peanuts"}
+  ],
+  "recipes": [
+    {
+      "title": "Choucroute de poisson",
+      "summary": "Une choucroute légère au saumon, prête en moins d'une heure.",
+      "course": "main", "difficulty": 3, "servings": 2, "prep": 15, "cook": 40,
+      "origin": "Normandie, France", "diets": ["Pescétarien", "Sans gluten", "Riche en protéines"],
+      "kcal": 340, "proteins": 28, "fat": 23, "carbs": 5, "featured": true,
+      "image": "choucroute-de-poisson.webp",
+      "ingredients": [
+        ["Choucroute crue", 400, "g"], ["Pavé de saumon", 2, "piece"], ["Pomme de terre", 300, "g"],
+        ["Oignon", 1, "piece"], ["Feuille de laurier", 2, "piece"], ["Citron", 0.5, "piece"],
+        ["Poivre", 1, "pinch"]
+      ],
+      "steps": [
+        "Rincez la choucroute à l'eau froide et égouttez-la.",
+        "Émincez l'oignon et épluchez les pommes de terre.",
+        "Dans une cocotte, mettez l'oignon, la choucroute, le laurier et le poivre avec 10 cl d'eau, puis ajoutez les pommes de terre.",
+        "Laissez cuire 30 minutes à feu doux en remuant de temps en temps.",
+        "Écartez la choucroute, déposez les pavés de saumon et faites cuire 5 à 6 minutes.",
+        "Servez la choucroute, les pommes de terre et le saumon arrosé d'un filet de citron."
+      ]
+    },
+    {
+      "title": "Omelette roulée au fromage",
+      "summary": "Des petites omelettes fines roulées au gruyère, parfaites pour utiliser des œufs.",
+      "course": "starter", "difficulty": 2, "servings": 4, "prep": 5, "cook": 15,
+      "origin": "Nice, France", "diets": ["Végétarien", "Sans gluten"],
+      "kcal": 340, "proteins": 28, "fat": 23, "carbs": 5, "featured": false,
+      "image": "omelette-roulee-au-fromage.webp",
+      "ingredients": [
+        ["Œuf", 8, "piece"], ["Gruyère râpé", 100, "g"], ["Huile d'olive", 2, "tbsp"],
+        ["Sel", 1, "pinch"], ["Poivre", 1, "pinch"]
+      ],
+      "steps": [
+        "Battez les œufs avec le sel et le poivre dans un saladier.",
+        "Répartissez la préparation dans 4 bols.",
+        "Faites chauffer un peu d'huile d'olive dans une poêle et versez un bol.",
+        "Quand l'omelette est presque prise, saupoudrez de gruyère et roulez-la.",
+        "Répétez l'opération pour les autres omelettes et servez aussitôt."
+      ]
+    },
+    {
+      "title": "Blanquette de veau",
+      "summary": "Le classique mijoté du dimanche, avec sa sauce onctueuse aux champignons.",
+      "course": "main", "difficulty": 2, "servings": 4, "prep": 20, "cook": 90,
+      "origin": "France", "diets": ["Riche en protéines"],
+      "kcal": 140, "proteins": 10, "fat": 15, "carbs": 5, "featured": true,
+      "image": "blanquette-de-veau.webp",
+      "ingredients": [
+        ["Veau (épaule)", 800, "g"], ["Carotte", 3, "piece"], ["Champignon de Paris", 250, "g"],
+        ["Oignon", 1, "piece"], ["Céleri branche", 1, "piece"], ["Bouillon de volaille", 2, "piece"],
+        ["Crème fraîche épaisse", 200, "g"], ["Farine de blé", 30, "g"], ["Beurre", 30, "g"],
+        ["Feuille de laurier", 1, "piece"], ["Sel", 1, "pinch"], ["Poivre", 1, "pinch"]
+      ],
+      "steps": [
+        "Coupez la viande en morceaux, épluchez les carottes et l'oignon.",
+        "Coupez les carottes en rondelles, l'oignon et les champignons en quatre.",
+        "Dans une cocotte, faites revenir la viande dans le beurre sans la colorer, saupoudrez de farine et mélangez.",
+        "Ajoutez 1 litre d'eau, les cubes de bouillon, les carottes, l'oignon, le céleri et le laurier. Salez, poivrez.",
+        "Laissez mijoter 1 heure à couvert, puis ajoutez les champignons pour 30 minutes.",
+        "Hors du feu, incorporez la crème à la sauce et servez immédiatement."
+      ]
+    },
+    {
+      "title": "Moussaka végétarienne",
+      "summary": "Couches de légumes du soleil, yaourt grec et feta gratinés au four.",
+      "course": "main", "difficulty": 2, "servings": 6, "prep": 30, "cook": 60,
+      "origin": "Grèce", "diets": ["Végétarien", "Sans gluten"],
+      "kcal": 141, "proteins": 6, "fat": 10, "carbs": 7, "featured": true,
+      "image": "moussaka-vegetarienne.webp",
+      "ingredients": [
+        ["Aubergine", 2, "piece"], ["Courgette", 2, "piece"], ["Poivron rouge", 2, "piece"],
+        ["Oignon", 2, "piece"], ["Ail", 2, "piece", "gousses"], ["Tomate", 4, "piece"],
+        ["Yaourt grec", 300, "g"], ["Feta", 200, "g"], ["Mozzarella", 1, "piece"],
+        ["Huile d'olive", 4, "tbsp"], ["Beurre", 10, "g"], ["Sel", 2, "pinch"]
+      ],
+      "steps": [
+        "Coupez les aubergines en tranches épaisses dans la longueur, salez-les et laissez-les dégorger 1 heure.",
+        "Coupez les courgettes en tranches et les poivrons en lamelles, faites-les revenir à l'huile d'olive.",
+        "Faites revenir les oignons en rondelles avec l'ail écrasé, ajoutez les tomates en dés et laissez mijoter 30 minutes.",
+        "Rincez et épongez les aubergines.",
+        "Dans un plat beurré, alternez aubergines, courgettes, poivrons, tomates, yaourt et feta. Terminez par les aubergines et la mozzarella.",
+        "Enfournez à 150 °C pendant 45 minutes à 1 heure et servez bien chaud."
+      ]
+    },
+    {
+      "title": "Pâtes au thon",
+      "summary": "Un plat familial express à base de placards : pâtes, thon et béchamel.",
+      "course": "main", "difficulty": 1, "servings": 4, "prep": 10, "cook": 15,
+      "origin": "Europe", "diets": ["Pescétarien", "Riche en protéines"],
+      "kcal": 210, "proteins": 12, "fat": 5, "carbs": 31, "featured": true,
+      "image": "pates-au-thon.webp",
+      "ingredients": [
+        ["Pâtes", 400, "g"], ["Thon au naturel", 280, "g"], ["Beurre", 40, "g"],
+        ["Farine de blé", 40, "g"], ["Lait demi-écrémé", 500, "ml"], ["Moutarde", 1, "tbsp"],
+        ["Gruyère râpé", 80, "g"], ["Sel", 1, "pinch"], ["Poivre", 1, "pinch"]
+      ],
+      "steps": [
+        "Faites cuire les pâtes et égouttez-les.",
+        "Faites fondre le beurre dans une casserole, ajoutez la farine et mélangez sur feu doux.",
+        "Versez peu à peu le lait tiède sans cesser de remuer jusqu'à épaississement.",
+        "Hors du feu, salez, poivrez, ajoutez la moutarde et le gruyère.",
+        "Émiettez le thon égoutté dans la sauce, ajoutez les pâtes et mélangez."
+      ]
+    },
+    {
+      "title": "Gratin dauphinois",
+      "summary": "Pommes de terre fondantes cuites dans le lait et la crème.",
+      "course": "main", "difficulty": 3, "servings": 6, "prep": 30, "cook": 60,
+      "origin": "Dauphiné, France", "diets": ["Végétarien", "Sans gluten"],
+      "kcal": 269, "proteins": 4, "fat": 7, "carbs": 12, "featured": true,
+      "image": "gratin-dauphinois.webp",
+      "ingredients": [
+        ["Pomme de terre", 1.5, "kg"], ["Lait demi-écrémé", 750, "ml"], ["Crème fraîche épaisse", 250, "g"],
+        ["Ail", 2, "piece", "gousses"], ["Beurre", 20, "g"], ["Muscade", 1, "pinch"],
+        ["Sel", 2, "pinch"], ["Poivre", 1, "pinch"]
+      ],
+      "steps": [
+        "Épluchez et lavez les pommes de terre, puis coupez-les en rondelles fines sans les relaver.",
+        "Hachez finement l'ail.",
+        "Portez à ébullition le lait avec l'ail, le sel, le poivre et la muscade, puis faites-y cuire les pommes de terre 10 à 15 minutes.",
+        "Préchauffez le four à 180 °C et beurrez un plat à gratin.",
+        "Disposez les pommes de terre égouttées, recouvrez de crème et parsemez de noisettes de beurre.",
+        "Enfournez pour 50 minutes à 1 heure."
+      ]
+    },
+    {
+      "title": "Couscous",
+      "summary": "Semoule vapeur, bouillon de légumes et poulet, à partager.",
+      "course": "main", "difficulty": 4, "servings": 6, "prep": 30, "cook": 60,
+      "origin": "Maghreb", "diets": ["Sans lactose", "Riche en protéines"],
+      "kcal": 371, "proteins": 14, "fat": 3, "carbs": 72, "featured": false,
+      "image": "couscous.webp",
+      "ingredients": [
+        ["Semoule de couscous", 500, "g"], ["Poulet (cuisses)", 1, "kg"], ["Carotte", 4, "piece"],
+        ["Navet", 3, "piece"], ["Courgette", 3, "piece"], ["Pois chiches", 400, "g"],
+        ["Oignon", 2, "piece"], ["Ail", 3, "piece", "gousses"], ["Concentré de tomate", 70, "g"],
+        ["Harissa", 1, "tsp"], ["Huile d'olive", 4, "tbsp"], ["Sel", 2, "pinch"], ["Poivre", 1, "pinch"]
+      ],
+      "steps": [
+        "Dans une grande cocotte, faites revenir les oignons et l'ail dans 3 cuillères d'huile, puis dorer le poulet.",
+        "Salez, poivrez, ajoutez les carottes en rondelles et laissez cuire 15 minutes à feu doux.",
+        "Ajoutez le concentré de tomate et 2 litres d'eau bouillante, laissez cuire 20 minutes.",
+        "Ajoutez les navets, les pois chiches puis les courgettes 10 minutes avant la fin.",
+        "Mouillez la semoule d'autant d'eau salée chaude, couvrez 5 minutes, égrainez avec le reste d'huile.",
+        "Servez la semoule avec les légumes, le poulet, le bouillon et la harissa à part."
+      ]
+    },
+    {
+      "title": "Tiramisu",
+      "summary": "Le dessert italien au mascarpone et au café, sans cuisson.",
+      "course": "dessert", "difficulty": 2, "servings": 6, "prep": 20, "cook": 0,
+      "origin": "Italie", "diets": ["Végétarien"],
+      "kcal": 305, "proteins": 3, "fat": 45, "carbs": 12, "featured": false,
+      "image": "tiramisu.webp",
+      "ingredients": [
+        ["Œuf", 3, "piece"], ["Mascarpone", 250, "g"], ["Sucre roux", 75, "g"],
+        ["Sucre vanillé", 1, "piece", "sachet"], ["Biscuits à la cuillère", 24, "piece"],
+        ["Café moulu", 20, "g", "pour 30 cl de café"], ["Cacao en poudre", 2, "tbsp"]
+      ],
+      "steps": [
+        "Préparez le café et laissez-le refroidir.",
+        "Séparez les blancs des jaunes. Fouettez les jaunes avec le sucre roux et le sucre vanillé, puis ajoutez le mascarpone.",
+        "Montez les blancs en neige et incorporez-les délicatement à la crème.",
+        "Trempez rapidement les biscuits dans le café et tapissez-en le fond du plat.",
+        "Alternez couches de crème et de biscuits, en terminant par la crème.",
+        "Réfrigérez au moins 4 heures et saupoudrez de cacao avant de servir."
+      ]
+    },
+    {
+      "title": "Salade vietnamienne",
+      "summary": "Chou croquant, crudités et sauce nuoc-mâm citronnée.",
+      "course": "salad", "difficulty": 3, "servings": 4, "prep": 25, "cook": 0,
+      "origin": "Vietnam", "diets": ["Sans gluten", "Sans lactose"],
+      "kcal": 86, "proteins": 1, "fat": 6, "carbs": 4, "featured": false,
+      "image": "salade-vietnamienne.webp",
+      "ingredients": [
+        ["Chou blanc", 400, "g"], ["Carotte", 2, "piece"], ["Céleri branche", 1, "piece"],
+        ["Cébette", 2, "piece"], ["Poivron rouge", 1, "piece"], ["Cacahuètes", 50, "g"],
+        ["Piment", 1, "piece"], ["Ail", 1, "piece", "gousse"], ["Nuoc-mâm", 3, "tbsp"],
+        ["Citron vert", 2, "piece"], ["Sucre", 1, "tbsp"], ["Huile d'olive", 1, "tbsp"]
+      ],
+      "steps": [
+        "Émincez finement le chou, le céleri, les cébettes et le poivron, râpez les carottes.",
+        "Mélangez le nuoc-mâm, le jus des citrons verts, le sucre, l'ail et le piment hachés.",
+        "Versez la sauce sur les légumes au dernier moment et parsemez de cacahuètes concassées."
+      ]
+    }
+  ]
+}
