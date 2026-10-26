@@ -1,13 +1,13 @@
 from collections import defaultdict
 from dataclasses import dataclass
-from decimal import Decimal
+from decimal import ROUND_CEILING, Decimal
 
 from django.db import transaction
 
 from apps.pantry.models import PantryItem
 from apps.pricing.estimator import Line
 from apps.recipes.models import Recipe
-from apps.recipes.units import to_base
+from apps.recipes.units import Unit, to_base
 
 from .models import ShoppingItem, ShoppingList
 
@@ -38,6 +38,14 @@ def _available(ingredient, items: list[PantryItem]) -> Decimal | None:
     return total
 
 
+def _rounded(quantity: Decimal | None, unit: str) -> Decimal | None:
+    if quantity is None:
+        return None
+    if unit == Unit.PIECE:
+        return quantity.to_integral_value(rounding=ROUND_CEILING)
+    return quantity.quantize(Decimal("0.01"))
+
+
 @transaction.atomic
 def add_recipe(
     shopping_list: ShoppingList, recipe: Recipe, servings: int, *, use_pantry: bool = True
@@ -52,7 +60,7 @@ def add_recipe(
 
     for entry in recipe.items.select_related("ingredient"):
         ingredient = entry.ingredient
-        if ingredient.is_staple and ingredient.pk in stock:
+        if ingredient.is_staple:
             continue
         quantity = entry.scaled(factor)
         if ingredient.pk in stock:
@@ -66,7 +74,7 @@ def add_recipe(
         item = existing.get((ingredient.pk, entry.unit))
         if item:
             if item.quantity is not None and quantity is not None:
-                item.quantity += quantity
+                item.quantity = _rounded(item.quantity + quantity, entry.unit)
                 item.save(update_fields=["quantity"])
             result.merged += 1
         else:
@@ -74,7 +82,7 @@ def add_recipe(
                 shopping_list=shopping_list,
                 ingredient=ingredient,
                 label=ingredient.name,
-                quantity=quantity.quantize(Decimal("0.01")) if quantity is not None else None,
+                quantity=_rounded(quantity, entry.unit),
                 unit=entry.unit,
             )
             existing[(ingredient.pk, entry.unit)] = item

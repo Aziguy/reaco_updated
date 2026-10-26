@@ -72,6 +72,11 @@ class PantryItem(TimeStampedModel):
         return (self.expires_on - timezone.localdate()).days
 
     @property
+    def days_overdue(self) -> int:
+        days = self.days_left
+        return -days if days is not None and days < 0 else 0
+
+    @property
     def urgency(self) -> str:
         days = self.days_left
         if days is None:

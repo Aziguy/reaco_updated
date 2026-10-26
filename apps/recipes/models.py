@@ -182,6 +182,8 @@ class RecipeIngredient(models.Model):
         quantity = self.scaled(factor)
         if quantity is None:
             return ""
+        if self.unit == Unit.PIECE:
+            quantity = max((quantity * 2).quantize(Decimal(1)) / 2, Decimal("0.5"))
         return f"{format_quantity(quantity)} {self.get_unit_display()}"
 
 
