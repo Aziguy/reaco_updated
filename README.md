@@ -32,6 +32,7 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 ## Fonctionnalités
 
 **Recettes**
+- 31 recettes de démonstration, économiques et anti-gaspi (pain perdu, hachis parmentier, riz cantonais, banana bread…), illustrées par des photos sous licence libre.
 - Recherche et filtres instantanés (type de plat, régime, difficulté, temps, tri par prix ou par CO2).
 - Ajustement des portions, quantités recalculées à la volée.
 - Coût par portion calculé à partir de prix réels, détail par ingrédient.
@@ -87,6 +88,21 @@ L'application est disponible sur <http://localhost:8000>, l'administration sur `
 
 La pile comprend PostgreSQL, Redis, l'application (Gunicorn + WhiteNoise) et un planificateur qui synchronise les prix et envoie les rappels une fois par jour.
 
+## Déploiement
+
+Le guide [docs/DEPLOIEMENT.md](docs/DEPLOIEMENT.md) détaille :
+
+- un comparatif des hébergeurs **gratuits** (Oracle Cloud Always Free, Render + Neon, Cloud Run) et **payants** (VPS Hetzner, OVHcloud ou Scaleway, Clever Cloud, Scalingo, Railway…) ;
+- le déploiement sur un VPS avec `docker-compose.prod.yml` et Caddy (HTTPS automatique, médias servis par Caddy) ;
+- le déploiement sur une plateforme PaaS, le stockage S3 des médias, les tâches planifiées (y compris via GitHub Actions), les sauvegardes et une checklist de mise en production.
+
+En résumé, sur un serveur avec un nom de domaine :
+
+```bash
+cp .env.example .env   # DOMAIN, SECRET_KEY, POSTGRES_PASSWORD, EMAIL_URL...
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+```
+
 ## Développement local
 
 Prérequis : [uv](https://docs.astral.sh/uv/) et Node.js 20+.
@@ -107,7 +123,7 @@ Pendant le développement, `npm run dev` recompile les styles à chaque modifica
 
 | Commande | Rôle |
 | --- | --- |
-| `seed_demo` | Charge les 51 ingrédients et 9 recettes de démonstration (idempotent). |
+| `seed_demo [--refresh-images]` | Charge les 83 ingrédients et 31 recettes de démonstration avec leurs photos (idempotent). |
 | `sync_prices [slug ...] [--days N] [--pages N]` | Importe les prix Open Prices puis recalcule les recettes. |
 | `refresh_metrics` | Recalcule coût par portion et empreinte carbone. |
 | `send_expiry_reminders [--days N]` | Envoie les rappels de péremption. |
@@ -132,6 +148,8 @@ Toute la configuration passe par des variables d'environnement (voir `.env.examp
 | `PRICE_COUNTRIES` | `FR` | Pays des magasins retenus. |
 | `PRICE_HISTORY_DAYS` | `365` | Profondeur d'historique des prix. |
 | `ADMIN_URL` | `admin/` | Chemin de l'administration. |
+| `AWS_STORAGE_BUCKET_NAME` et `AWS_*` | vide | Stockage des médias sur un service compatible S3 (R2, Scaleway, B2, S3). |
+| `DOMAIN`, `POSTGRES_PASSWORD` | vide | Utilisés par `docker-compose.prod.yml`. |
 | `SECURE_SSL_REDIRECT`, `SECURE_COOKIES`, `SECURE_HSTS_SECONDS` | actifs hors `DEBUG` | Durcissement HTTPS. |
 
 ## Architecture
@@ -149,7 +167,9 @@ apps/
   api/               API REST (DRF) et schéma OpenAPI
 templates/           gabarits Django (HTMX pour les interactions)
 assets/app.css       source Tailwind CSS v4, compilée vers static/css/app.css
-demo/                données et photos de démonstration
+demo/                recettes de démonstration, photos et crédits (images/credits.json)
+deploy/              configuration Caddy pour la production
+docs/                guide de déploiement, captures
 ```
 
 ```mermaid
@@ -217,4 +237,4 @@ Les contributions sont bienvenues : voir [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licence
 
-Code sous licence [MIT](LICENSE). Les données issues d'Open Food Facts, d'Open Prices et d'OpenStreetMap restent sous licence ODbL, celles de l'ADEME et de l'IGN sous Licence Ouverte 2.0.
+Code sous licence [MIT](LICENSE). Les photos des recettes proviennent de Wikimedia Commons sous licences CC0, CC BY ou CC BY-SA : leurs auteurs et licences sont indiqués sous chaque photo, sur la page `/credits/` et dans `demo/images/credits.json`. Les données issues d'Open Food Facts, d'Open Prices et d'OpenStreetMap restent sous licence ODbL, celles de l'ADEME et de l'IGN sous Licence Ouverte 2.0.

@@ -25,6 +25,8 @@ uv run python manage.py migrate && uv run python manage.py seed_demo
 
 Ingrédients et recettes se gèrent dans l'administration. Pour qu'un ingrédient soit chiffré, renseignez sa catégorie Open Food Facts (par exemple `en:carrots`, à vérifier sur <https://world.openfoodfacts.org/categories>) et, si possible, son identifiant ADEME Impact CO2. Lancez ensuite `sync_prices <slug>`.
 
+Pour une recette de démonstration (`demo/recipes.json`), utilisez une image sous licence libre (CC0, CC BY, CC BY-SA, par exemple sur Wikimedia Commons), redimensionnée en WebP de 1000 px de large maximum, et ajoutez son auteur, sa licence et sa source dans `demo/images/credits.json`. Sans photo libre satisfaisante, une illustration SVG originale convient aussi.
+
 ## Données ouvertes
 
 Comégusto vit grâce aux contributions de la communauté. Le meilleur moyen d'améliorer les prix est de photographier vos tickets et étiquettes sur [Open Prices](https://prices.openfoodfacts.org).
