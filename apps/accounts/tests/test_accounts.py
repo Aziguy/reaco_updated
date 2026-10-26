@@ -1,3 +1,5 @@
+import importlib
+
 import pytest
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -73,3 +75,7 @@ def test_delete_account(auth_client, user):
 def test_delete_account_needs_confirmation(auth_client, user):
     auth_client.post(reverse("accounts:delete"), {"confirm": "oui"})
     assert get_user_model().objects.filter(pk=user.pk).exists()
+
+
+def test_google_provider_dependencies_are_installed():
+    importlib.import_module("allauth.socialaccount.providers.google.provider")
