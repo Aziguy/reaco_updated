@@ -1,0 +1,58 @@
+x-app: &app
+  build: .
+  env_file:
+    - path: .env
+      required: false
+  environment:
+    DATABASE_URL: postgres://comegusto:comegusto@db:5432/comegusto
+    REDIS_URL: redis://redis:6379/0
+    SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
+    ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+    SECURE_SSL_REDIRECT: ${SECURE_SSL_REDIRECT:-false}
+    SECURE_COOKIES: ${SECURE_COOKIES:-false}
+    MEDIA_ROOT: /app/media
+  volumes:
+    - media:/app/media
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_started
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: comegusto
+      POSTGRES_USER: comegusto
+      POSTGRES_PASSWORD: comegusto
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U comegusto"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+
+  web:
+    <<: *app
+    ports:
+      - "8000:8000"
+
+  scheduler:
+    <<: *app
+    environment:
+      DATABASE_URL: postgres://comegusto:comegusto@db:5432/comegusto
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-production}
+      MEDIA_ROOT: /app/media
+      RUN_MIGRATIONS: "0"
+    command: ["docker/scheduler.sh"]
+    healthcheck:
+      disable: true
+
+volumes:
+  pgdata:
+  media:

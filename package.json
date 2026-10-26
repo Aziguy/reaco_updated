@@ -1,9 +1,9 @@
 {
-  "name": "reaco",
+  "name": "comegusto",
   "private": true,
   "scripts": {
-    "build": "tailwindcss -i static/src/app.css -o static/css/app.css --minify",
-    "dev": "tailwindcss -i static/src/app.css -o static/css/app.css --watch",
+    "build": "tailwindcss -i assets/app.css -o static/css/app.css --minify",
+    "dev": "tailwindcss -i assets/app.css -o static/css/app.css --watch",
     "vendor": "node -e \"require('fs').copyFileSync('node_modules/htmx.org/dist/htmx.min.js','static/vendor/htmx.min.js')\""
   },
   "devDependencies": {

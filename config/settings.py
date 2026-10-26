@@ -13,10 +13,10 @@ SECRET_KEY = env("SECRET_KEY", default="django-insecure-dev-only") if DEBUG else
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
-SITE_NAME = "Reaco"
+SITE_NAME = "Comégusto"
 ADMIN_URL = env("ADMIN_URL", default="admin/")
 SERVE_MEDIA = env.bool("SERVE_MEDIA", default=True)
-CONTACT_EMAIL = env("CONTACT_EMAIL", default="contact@reaco.local")
+CONTACT_EMAIL = env("CONTACT_EMAIL", default="contact@comegusto.local")
 
 GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID", default="")
 GOOGLE_CLIENT_SECRET = env("GOOGLE_CLIENT_SECRET", default="")
@@ -52,6 +52,7 @@ if GOOGLE_CLIENT_ID:
     INSTALLED_APPS.append("allauth.socialaccount.providers.google")
 
 MIDDLEWARE = [
+    "apps.core.middleware.HealthCheckMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -151,7 +152,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 
 EMAIL_CONFIG = env.email_url("EMAIL_URL", default="consolemail://")
 vars().update(EMAIL_CONFIG)
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default=f"Reaco <{CONTACT_EMAIL}>")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default=f"Comégusto <{CONTACT_EMAIL}>")
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -159,12 +160,12 @@ SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=not DEBUG)
 SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=0 if DEBUG else 31536000)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
 SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=False)
+SILENCED_SYSTEM_CHECKS = [] if SECURE_HSTS_PRELOAD else ["security.W021"]
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
-SECURE_REDIRECT_EXEMPT = [r"^health/$"]
-SESSION_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SECURE = env.bool("SECURE_COOKIES", default=not DEBUG)
 SESSION_COOKIE_HTTPONLY = True
-CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = SESSION_COOKIE_SECURE
 X_FRAME_OPTIONS = "DENY"
 
 OFF_IMAGE_HOSTS = ["https://images.openfoodfacts.org", "https://static.openfoodfacts.org"]
@@ -198,7 +199,7 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {"anon": "60/min", "user": "240/min"},
 }
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Reaco API",
+    "TITLE": "Comégusto API",
     "DESCRIPTION": "Recettes, estimation de prix, garde-manger et listes de courses.",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
@@ -208,7 +209,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 INTEGRATIONS = {
-    "USER_AGENT": f"Reaco/2.0 ({CONTACT_EMAIL})",
+    "USER_AGENT": f"Comegusto/2.0 ({CONTACT_EMAIL})",
     "TIMEOUT": env.float("INTEGRATIONS_TIMEOUT", default=8.0),
     "RETRIES": 2,
     "BACKOFF": 0.5,

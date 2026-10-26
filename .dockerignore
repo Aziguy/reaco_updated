@@ -1,0 +1,15 @@
+.git
+.github
+.venv
+node_modules
+media
+staticfiles
+static/css/app.css
+.pytest_cache
+.pytest_media
+.ruff_cache
+.coverage
+htmlcov
+*.sqlite3
+.env
+**/__pycache__

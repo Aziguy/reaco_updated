@@ -63,6 +63,15 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
 
 class OwnedMixin:
     permission_classes = [permissions.IsAuthenticated]
+    model = None
+
+    def get_queryset(self):
+        if getattr(self, "swagger_fake_view", False):
+            return self.model.objects.none()
+        return self.owned(self.model.objects.all())
+
+    def owned(self, queryset):
+        return queryset.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -70,16 +79,15 @@ class OwnedMixin:
 
 class PantryItemViewSet(OwnedMixin, viewsets.ModelViewSet):
     serializer_class = serializers.PantryItemSerializer
-
-    def get_queryset(self):
-        return PantryItem.objects.filter(user=self.request.user)
+    model = PantryItem
 
 
 class ShoppingListViewSet(OwnedMixin, viewsets.ModelViewSet):
     serializer_class = serializers.ShoppingListSerializer
+    model = ShoppingList
 
-    def get_queryset(self):
-        return ShoppingList.objects.filter(user=self.request.user).prefetch_related("items")
+    def owned(self, queryset):
+        return super().owned(queryset).prefetch_related("items")
 
     @extend_schema(
         request=serializers.AddRecipeSerializer, responses=serializers.ShoppingListSerializer
@@ -94,13 +102,13 @@ class ShoppingListViewSet(OwnedMixin, viewsets.ModelViewSet):
 
 
 class ShoppingItemViewSet(
-    mixins.UpdateModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet
+    OwnedMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet
 ):
-    permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.ShoppingItemSerializer
+    model = ShoppingItem
 
-    def get_queryset(self):
-        return ShoppingItem.objects.filter(shopping_list__user=self.request.user)
+    def owned(self, queryset):
+        return queryset.filter(shopping_list__user=self.request.user)
 
 
 class ProductViewSet(viewsets.ViewSet):
