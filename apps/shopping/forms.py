@@ -17,6 +17,10 @@ class ShoppingItemForm(forms.ModelForm):
         fields = ["label", "quantity", "unit"]
         widgets = {"unit": forms.Select(attrs={"class": "input w-32"})}
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["unit"].choices = [("", "Unité"), *self.fields["unit"].choices[1:]]
+
 
 class AddRecipeForm(forms.Form):
     recipe = forms.ModelChoiceField(queryset=Recipe.objects.published(), widget=forms.HiddenInput)
