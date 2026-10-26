@@ -15,7 +15,7 @@ class ShoppingList(TimeStampedModel):
     is_archived = models.BooleanField("archivée", default=False)
 
     class Meta:
-        ordering = ["is_archived", "-updated_at"]
+        ordering = ["is_archived", "-updated_at", "-pk"]
         verbose_name = "liste de courses"
         verbose_name_plural = "listes de courses"
 
@@ -40,7 +40,7 @@ class ShoppingItem(models.Model):
     is_checked = models.BooleanField("dans le panier", default=False)
 
     class Meta:
-        ordering = ["is_checked", "label"]
+        ordering = ["is_checked", "label", "pk"]
         verbose_name = "article"
 
     def __str__(self):

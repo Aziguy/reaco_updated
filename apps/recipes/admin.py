@@ -62,6 +62,10 @@ class RecipeAdmin(admin.ModelAdmin):
     inlines = (RecipeIngredientInline, RecipeStepInline)
     actions = ("refresh_metrics",)
 
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        metrics.refresh(Recipe.objects.with_relations().get(pk=form.instance.pk))
+
     @admin.display(description="")
     def thumbnail(self, obj):
         if not obj.image:

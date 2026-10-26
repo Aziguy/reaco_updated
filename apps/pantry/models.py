@@ -57,7 +57,7 @@ class PantryItem(TimeStampedModel):
     objects = PantryQuerySet.as_manager()
 
     class Meta:
-        ordering = [models.F("expires_on").asc(nulls_last=True), "name"]
+        ordering = [models.F("expires_on").asc(nulls_last=True), "name", "pk"]
         verbose_name = "article du garde-manger"
         verbose_name_plural = "garde-manger"
         indexes = [models.Index(fields=["user", "status", "expires_on"])]

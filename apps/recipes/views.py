@@ -1,4 +1,5 @@
 from decimal import Decimal
+from urllib.parse import urlencode
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
@@ -18,11 +19,27 @@ PAGE_SIZE = 12
 
 
 def recipe_list(request):
-    form = RecipeFilterForm(request.GET or None)
+    params = {key: value for key, value in request.GET.items() if value and key != "page"}
+    form = RecipeFilterForm(params)
     recipes = form.filter(Recipe.objects.published().prefetch_related("diets"))
-    page = Paginator(recipes, PAGE_SIZE).get_page(request.GET.get("page"))
-    template = "recipes/_results.html" if request.htmx else "recipes/list.html"
-    return render(request, template, {"form": form, "page": page})
+    paginator = Paginator(recipes, PAGE_SIZE)
+    page = paginator.get_page(request.GET.get("page"))
+    query = urlencode(params)
+    context = {
+        "form": form,
+        "page": page,
+        "query": query,
+        "page_range": paginator.get_elided_page_range(page.number, on_each_side=1, on_ends=1),
+        "filtered": bool(params),
+    }
+    if not request.htmx:
+        return render(request, "recipes/list.html", context)
+    response = render(request, "recipes/_results.html", context)
+    page_part = f"page={page.number}" if page.number > 1 else ""
+    response["HX-Push-Url"] = "?".join(
+        filter(None, [request.path, "&".join(filter(None, [query, page_part]))])
+    )
+    return response
 
 
 def _servings(request, recipe: Recipe) -> int:

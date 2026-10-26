@@ -1,0 +1,3 @@
+{% with target=number|default:label %}<a class="btn-secondary btn-sm" href="?{% if query %}{{ query }}&amp;{% endif %}page={{ target }}"
+   hx-get="?{% if query %}{{ query }}&amp;{% endif %}page={{ target }}" hx-target="#results" hx-swap="innerHTML show:#results:top"
+   {% if rel %}rel="{{ rel }}"{% else %}aria-label="Page {{ target }}"{% endif %}>{{ label }}</a>{% endwith %}

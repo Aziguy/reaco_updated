@@ -1,19 +1,31 @@
 {% load comegusto %}
-<p class="muted" aria-live="polite">{{ page.paginator.count }} recette{{ page.paginator.count|pluralize }}</p>
+<p class="muted" aria-live="polite">{{ page.paginator.count }} recette{{ page.paginator.count|pluralize }}{% if page.paginator.num_pages > 1 %} · page {{ page.number }} sur {{ page.paginator.num_pages }}{% endif %}</p>
 {% if page.object_list %}
   <div class="mt-4 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
     {% for recipe in page.object_list %}{% include "partials/recipe_card.html" %}{% endfor %}
   </div>
   {% if page.has_other_pages %}
-    <nav class="mt-8 flex items-center justify-center gap-2" aria-label="Pagination">
-      {% if page.has_previous %}<a class="btn-secondary btn-sm" href="{% querystring page=page.previous_page_number %}" hx-get="{% querystring page=page.previous_page_number %}" hx-target="#results" hx-push-url="true">Précédent</a>{% endif %}
-      <span class="muted">Page {{ page.number }} sur {{ page.paginator.num_pages }}</span>
-      {% if page.has_next %}<a class="btn-secondary btn-sm" href="{% querystring page=page.next_page_number %}" hx-get="{% querystring page=page.next_page_number %}" hx-target="#results" hx-push-url="true">Suivant</a>{% endif %}
+    <nav class="mt-10 flex flex-wrap items-center justify-center gap-1" aria-label="Pagination">
+      {% if page.has_previous %}
+        {% include "partials/page_link.html" with number=page.previous_page_number label="Précédent" rel="prev" %}
+      {% endif %}
+      {% for number in page_range %}
+        {% if number == page.paginator.ELLIPSIS %}
+          <span class="px-2 text-stone-400" aria-hidden="true">…</span>
+        {% elif number == page.number %}
+          <span class="btn-sm btn bg-brand-600 text-white" aria-current="page">{{ number }}</span>
+        {% else %}
+          {% include "partials/page_link.html" with label=number %}
+        {% endif %}
+      {% endfor %}
+      {% if page.has_next %}
+        {% include "partials/page_link.html" with number=page.next_page_number label="Suivant" rel="next" %}
+      {% endif %}
     </nav>
   {% endif %}
 {% else %}
   <div class="card mt-4 p-10 text-center">
     <p class="font-medium">Aucune recette ne correspond à ces critères.</p>
-    <a href="{% url 'recipes:list' %}" class="mt-3 inline-block text-sm text-brand-700 dark:text-brand-300">Voir toutes les recettes</a>
+    {% if filtered %}<a href="{% url 'recipes:list' %}" class="mt-3 inline-block text-sm text-brand-700 underline dark:text-brand-300">Réinitialiser les filtres</a>{% endif %}
   </div>
 {% endif %}

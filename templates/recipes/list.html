@@ -12,23 +12,28 @@
 
 <div class="mt-8 grid gap-8 lg:grid-cols-[16rem_1fr]">
   <form id="filters" class="form-flow card h-fit p-5 lg:sticky lg:top-24"
-        hx-get="{% url 'recipes:list' %}" hx-target="#results" hx-push-url="true"
-        hx-trigger="change, keyup changed delay:400ms from:#id_q, submit" hx-indicator="#results-loading" role="search">
+        action="{% url 'recipes:list' %}" method="get"
+        hx-get="{% url 'recipes:list' %}" hx-target="#results"
+        hx-trigger="change, input changed delay:400ms from:#id_q, submit" hx-indicator="#results-loading" role="search">
     {% include "partials/field.html" with field=form.q %}
     {% include "partials/field.html" with field=form.sort %}
-    <button type="button" class="btn-secondary btn-sm mb-4 w-full lg:hidden" data-menu-toggle aria-controls="more-filters" aria-expanded="false">Plus de filtres</button>
-    <div id="more-filters" class="hidden lg:block">
+    {% with active=form.secondary_active %}
+    <button type="button" class="btn-secondary btn-sm mb-4 w-full lg:hidden" data-menu-toggle aria-controls="more-filters" aria-expanded="{% if active %}true{% else %}false{% endif %}">
+      Plus de filtres{% if active %} <span class="badge-brand">{{ active }}</span>{% endif %}
+    </button>
+    <div id="more-filters" class="{% if not active %}hidden {% endif %}lg:block">
       {% include "partials/field.html" with field=form.course %}
       {% include "partials/field.html" with field=form.diet %}
       {% include "partials/field.html" with field=form.difficulty %}
       {% include "partials/field.html" with field=form.max_minutes %}
     </div>
+    {% endwith %}
     <noscript><button type="submit">Filtrer</button></noscript>
-    <a href="{% url 'recipes:list' %}" class="text-sm">Réinitialiser</a>
+    <a href="{% url 'recipes:list' %}" class="text-sm">Réinitialiser les filtres</a>
   </form>
   <div class="relative">
     <div id="results-loading" class="htmx-indicator absolute inset-x-0 -top-3 h-1 rounded-full bg-brand-500"></div>
-    <div id="results">{% include "recipes/_results.html" %}</div>
+    <div id="results" class="scroll-mt-24">{% include "recipes/_results.html" %}</div>
   </div>
 </div>
 {% endblock %}

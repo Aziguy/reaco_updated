@@ -6,7 +6,7 @@ from django.db import models
 from django.urls import reverse
 
 from apps.core.models import TimeStampedModel
-from apps.core.text import make_slug
+from apps.core.text import make_slug, normalize
 
 from .units import BaseUnit, Unit, format_quantity
 
@@ -154,11 +154,12 @@ class Recipe(TimeStampedModel):
         "kg CO2e / portion", max_digits=7, decimal_places=3, null=True, blank=True, editable=False
     )
     metrics_updated_at = models.DateTimeField(null=True, blank=True, editable=False)
+    search_text = models.TextField(blank=True, editable=False)
 
     objects = RecipeQuerySet.as_manager()
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["-created_at", "-pk"]
         verbose_name = "recette"
         indexes = [models.Index(fields=["is_published", "course"])]
 
@@ -168,7 +169,20 @@ class Recipe(TimeStampedModel):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = make_slug(self.title)
+        update_fields = kwargs.get("update_fields")
+        if update_fields is None or "search_text" in update_fields:
+            self.search_text = self.build_search_text()
         super().save(*args, **kwargs)
+
+    def build_search_text(self) -> str:
+        parts = [self.title, self.summary, self.origin, self.get_course_display()]
+        if self.pk:
+            parts += self.items.values_list("ingredient__name", flat=True)
+            parts += self.diets.values_list("name", flat=True)
+        return normalize(" ".join(parts))
+
+    def refresh_search(self):
+        self.save(update_fields=["search_text"])
 
     def get_absolute_url(self):
         return reverse("recipes:detail", args=[self.slug])
