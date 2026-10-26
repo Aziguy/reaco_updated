@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Guide utilisateur{% endblock %}
+{% block description %}Le guide complet de Comégusto : recettes, prix, garde-manger, anti-gaspi et listes de courses, illustré pas à pas.{% endblock %}
+{% block content %}
+<header class="max-w-3xl">
+  <p class="badge-brand">{% icon "help" "size-3.5" %}Guide utilisateur</p>
+  <h1 class="mt-3 text-3xl sm:text-4xl">Bien utiliser {{ SITE_NAME }}</h1>
+  <p class="mt-3 text-lg text-stone-600 dark:text-stone-300">Ce guide présente chaque fonctionnalité avec des captures annotées : les repères numérotés renvoient aux explications sous chaque image.</p>
+  <a href="{% url 'guide:chapter' chapters.0.slug %}" class="btn-primary mt-6">Commencer{% icon "arrow-right" "size-4" %}</a>
+</header>
+
+<ol class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  {% for chapter in chapters %}
+    <li>
+      <a href="{% url 'guide:chapter' chapter.slug %}" class="card group flex h-full gap-4 p-5 no-underline transition hover:-translate-y-0.5 hover:shadow-md">
+        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-200">{% icon chapter.icon %}</span>
+        <span>
+          <span class="muted block text-xs">Chapitre {{ forloop.counter }}</span>
+          <span class="block font-semibold text-stone-900 group-hover:underline dark:text-white">{{ chapter.title }}</span>
+          <span class="muted mt-1 block">{{ chapter.summary }}</span>
+        </span>
+      </a>
+    </li>
+  {% endfor %}
+</ol>
+
+<aside class="card mt-10 flex flex-wrap items-center justify-between gap-4 p-6">
+  <div>
+    <h2 class="text-base">Une question sans réponse ?</h2>
+    <p class="muted mt-1">Consultez la méthodologie ou écrivez-nous.</p>
+  </div>
+  <div class="flex flex-wrap gap-2">
+    <a href="{% url 'core:about' %}" class="btn-secondary btn-sm">Méthodologie</a>
+    <a href="{% url 'core:contact' %}" class="btn-primary btn-sm">{% icon "mail" "size-4" %}Contact</a>
+  </div>
+</aside>
+{% endblock %}

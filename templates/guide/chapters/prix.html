@@ -1,0 +1,22 @@
+{% load guide %}
+<p>Les prix affichés ne sont ni des prix catalogue ni des moyennes inventées : ce sont des prix réels, relevés en magasin par la communauté <a href="https://prices.openfoodfacts.org" rel="noopener">Open Prices</a>.</p>
+
+<h2 id="cout-recette">Le coût d'une recette</h2>
+<p>Le panneau <strong>Combien ça coûte ?</strong> de chaque recette donne le coût total pour le nombre de portions choisi, le coût par portion et la part des ingrédients chiffrés.</p>
+{% guide_figure "recipe-prices" %}
+
+<h2 id="methode">Comment les prix sont calculés</h2>
+<ul>
+  <li>Seuls les relevés des 12 derniers mois, hors promotions, sont retenus.</li>
+  <li>Chaque prix est ramené au kilo, au litre ou à la pièce. Les prix au poids des produits en vrac sont privilégiés quand ils sont assez nombreux.</li>
+  <li>Le prix retenu est la <strong>médiane</strong> des relevés, ce qui limite l'effet des valeurs extrêmes.</li>
+  <li>Les produits de base (sel, poivre, huile...) sont comptés au prorata de la quantité utilisée.</li>
+</ul>
+
+<h2 id="enseignes">Comparer les enseignes</h2>
+<p>Pour chaque enseigne, le panier utilise les prix relevés dans cette enseigne quand ils existent, et le prix médian sinon. Le nombre de prix réellement relevés est toujours indiqué, pour juger de la fiabilité de la comparaison.</p>
+<p>Avec un code postal dans votre profil, la comparaison porte sur les magasins situés dans votre rayon de recherche (10 km par défaut). Sans relevés suffisants autour de vous, elle s'étend à l'ensemble des magasins et un message vous le signale.</p>
+<p class="guide-warning">Les prix sont des estimations : ils varient selon les magasins, les formats et les promotions du moment.</p>
+
+<h2 id="contribuer">Améliorer les prix</h2>
+<p>Un ingrédient indique « pas de relevé » ? Photographiez vos tickets de caisse ou les étiquettes en rayon sur <a href="https://prices.openfoodfacts.org" rel="noopener">Open Prices</a> : chaque contribution améliore les estimations pour tous.</p>

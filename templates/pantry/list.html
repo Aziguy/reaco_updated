@@ -5,7 +5,7 @@
 <header class="flex flex-wrap items-end justify-between gap-4">
   <div>
     <h1 class="text-3xl">Mon garde-manger</h1>
-    <p class="muted mt-1">{{ count }} produit{{ count|pluralize }} en stock. Consommez en priorité ce qui périme bientôt.</p>
+    <p class="muted mt-1">{{ count }} produit{{ count|pluralize }} en stock. Consommez en priorité ce qui périme bientôt. {% include "partials/help_link.html" with chapter="garde-manger" %}</p>
   </div>
   <div class="flex gap-2">
     <a href="{% url 'pantry:suggestions' %}" class="btn-secondary">{% icon "leaf" "size-4" %}Idées anti-gaspi</a>

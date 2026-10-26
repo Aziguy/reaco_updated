@@ -5,7 +5,7 @@
 <header class="flex flex-wrap items-end justify-between gap-4">
   <div>
     <h1 class="text-3xl">Recettes</h1>
-    <p class="muted mt-1">Chaque recette est chiffrée avec les prix médians relevés en magasin.</p>
+    <p class="muted mt-1">Chaque recette est chiffrée avec les prix médians relevés en magasin. {% include "partials/help_link.html" with chapter="recettes" %}</p>
   </div>
   {% if user.is_authenticated %}<a href="{% url 'recipes:favorites' %}" class="btn-secondary btn-sm">{% icon "heart" "size-4" %}Mes favoris</a>{% endif %}
 </header>

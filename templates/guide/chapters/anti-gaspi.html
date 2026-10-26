@@ -1,0 +1,14 @@
+{% load guide %}
+<p>La page <strong>Anti-gaspi</strong> répond à la question « Que cuisiner avec ce que j'ai ? » à partir de votre garde-manger.</p>
+
+<h2 id="suggestions">Les suggestions</h2>
+{% guide_figure "anti-gaspi" %}
+<p>Les recettes sont classées selon les ingrédients que vous possédez déjà. Les produits qui périment bientôt comptent davantage : une recette qui les utilise remonte en tête de liste, avec la mention <strong>Sauve</strong>.</p>
+<p>Chaque suggestion indique ce que vous avez déjà et ce qu'il vous manque. Les produits de base comme le sel ou l'huile ne sont pas pris en compte.</p>
+
+<h2 id="conseils">Pour de meilleures suggestions</h2>
+<ul>
+  <li>Reliez chaque produit du garde-manger à un <strong>ingrédient</strong> : sans lien, il ne peut pas être proposé dans une recette.</li>
+  <li>Renseignez les <strong>dates limites</strong> pour que les produits urgents soient priorisés.</li>
+  <li>Il manque un ingrédient ? Ajoutez la recette à une <a href="{% url 'guide:chapter' 'courses' %}">liste de courses</a> : seul ce qui manque y sera ajouté.</li>
+</ul>

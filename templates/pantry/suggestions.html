@@ -5,7 +5,7 @@
 <header>
   <p class="badge-brand">{% icon "leaf" "size-3.5" %}Anti-gaspi</p>
   <h1 class="mt-3 text-3xl">Que cuisiner avec ce que j'ai ?</h1>
-  <p class="muted mt-1 max-w-2xl">Les recettes sont classées selon les produits de votre garde-manger, en donnant la priorité à ceux qui arrivent à péremption.</p>
+  <p class="muted mt-1 max-w-2xl">Les recettes sont classées selon les produits de votre garde-manger, en donnant la priorité à ceux qui arrivent à péremption. {% include "partials/help_link.html" with chapter="anti-gaspi" %}</p>
 </header>
 
 {% if not user.is_authenticated %}

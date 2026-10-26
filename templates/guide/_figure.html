@@ -1,0 +1,22 @@
+{% load static %}
+<figure class="my-8">
+  <div class="card overflow-hidden {% if figure.mobile %}mx-auto max-w-xs{% endif %}">
+    <a href="{% static light %}" class="block dark:hidden" target="_blank" rel="noopener" aria-label="Agrandir : {{ figure.caption }}">
+      <img src="{% static light %}" alt="{{ figure.caption }}" {% if width %}width="{{ width }}" height="{{ height }}"{% endif %} loading="lazy" class="block h-auto w-full">
+    </a>
+    <a href="{% static dark %}" class="hidden dark:block" target="_blank" rel="noopener" aria-label="Agrandir : {{ figure.caption }}">
+      <img src="{% static dark %}" alt="{{ figure.caption }}" {% if width %}width="{{ width }}" height="{{ height }}"{% endif %} loading="lazy" class="block h-auto w-full">
+    </a>
+  </div>
+  <figcaption class="mt-3">
+    <p class="muted">{{ figure.caption }}</p>
+    <ol class="mt-3 grid gap-3 sm:grid-cols-2">
+      {% for callout in figure.callouts %}
+        <li class="flex gap-3 text-sm">
+          <span class="guide-marker" aria-hidden="true">{{ forloop.counter }}</span>
+          <span><span class="sr-only">Repère {{ forloop.counter }} : </span><strong class="font-semibold text-stone-900 dark:text-white">{{ callout.title }}</strong>{% if callout.text %}<span class="block text-stone-600 dark:text-stone-400">{{ callout.text }}</span>{% endif %}</span>
+        </li>
+      {% endfor %}
+    </ol>
+  </figcaption>
+</figure>

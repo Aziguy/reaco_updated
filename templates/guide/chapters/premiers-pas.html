@@ -1,0 +1,28 @@
+{% load guide %}
+<p>{{ SITE_NAME }} vous aide à cuisiner malin : des recettes chiffrées avec de vrais prix relevés en magasin, un garde-manger qui vous prévient avant la date limite et des listes de courses comparées entre enseignes.</p>
+
+<h2 id="decouvrir">Découvrir l'application</h2>
+<p>Les recettes, les prix et le calendrier de saison sont accessibles sans compte. Le menu principal mène à chaque grande fonctionnalité.</p>
+{% guide_figure "home" %}
+
+<h2 id="creer-un-compte">Créer un compte</h2>
+<p>Un compte gratuit débloque le garde-manger, les suggestions anti-gaspi, les favoris et les listes de courses.</p>
+<ol>
+  <li>Cliquez sur <strong>Créer un compte</strong> en haut de la page.</li>
+  <li>Saisissez votre adresse email et choisissez un mot de passe.</li>
+  <li>Validez : vous êtes connecté et arrivez sur votre tableau de bord.</li>
+</ol>
+{% guide_figure "signup" %}
+<p class="guide-note">Si l'instance l'exige, un email de confirmation vous est envoyé : cliquez sur le lien qu'il contient pour activer votre compte. Mot de passe oublié ? Utilisez le lien proposé sur la page de connexion.</p>
+
+<h2 id="tableau-de-bord">Le tableau de bord</h2>
+<p>Après connexion, le tableau de bord résume l'état de votre cuisine : produits à consommer, idées de recettes, listes de courses en cours et favoris.</p>
+{% guide_figure "dashboard" %}
+<p>Le <strong>taux anti-gaspi</strong> correspond à la part des produits consommés parmi ceux sortis du garde-manger sur les 30 derniers jours. Plus il est proche de 100 %, moins vous jetez.</p>
+
+<h2 id="et-ensuite">Et ensuite ?</h2>
+<ul>
+  <li>Renseignez votre code postal dans <a href="{% url 'guide:chapter' 'compte' %}">votre profil</a> pour comparer les magasins proches.</li>
+  <li>Ajoutez vos premiers produits au <a href="{% url 'guide:chapter' 'garde-manger' %}">garde-manger</a>.</li>
+  <li>Choisissez une <a href="{% url 'guide:chapter' 'recettes' %}">recette</a> et ajoutez-la à vos courses.</li>
+</ul>

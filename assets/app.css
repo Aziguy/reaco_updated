@@ -143,6 +143,20 @@
     dark:border-stone-700 dark:bg-stone-950 dark:text-stone-100;
 }
 
+@utility guide-marker {
+  @apply inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-accent-600 text-xs font-bold text-white;
+}
+
+@utility guide-note {
+  @apply rounded-xl border-l-4 border-brand-500 bg-brand-50 px-4 py-3 text-sm text-stone-700
+    dark:bg-brand-950 dark:text-stone-200;
+}
+
+@utility guide-warning {
+  @apply rounded-xl border-l-4 border-amber-500 bg-amber-50 px-4 py-3 text-sm text-stone-700
+    dark:bg-amber-950 dark:text-stone-200;
+}
+
 @layer components {
   .nav-link[aria-current="page"] {
     @apply bg-brand-50 text-brand-800 dark:bg-brand-950 dark:text-brand-200;
@@ -184,6 +198,40 @@
   }
   .form-flow a {
     @apply text-brand-700 underline dark:text-brand-300;
+  }
+  .guide-prose > * + * {
+    @apply mt-4;
+  }
+  .guide-prose h2 {
+    @apply mt-12 scroll-mt-24 text-2xl;
+  }
+  .guide-prose h3 {
+    @apply mt-8 scroll-mt-24 text-lg;
+  }
+  .guide-prose p,
+  .guide-prose li {
+    @apply leading-relaxed;
+  }
+  .guide-prose ul:not([class]) {
+    @apply list-disc space-y-1 pl-6;
+  }
+  .guide-prose ol:not([class]) {
+    @apply list-decimal space-y-1 pl-6;
+  }
+  .guide-prose a:not([class]) {
+    @apply text-brand-700 underline dark:text-brand-300;
+  }
+  .guide-prose strong {
+    @apply font-semibold text-stone-900 dark:text-white;
+  }
+  .guide-prose details {
+    @apply card px-5 py-4;
+  }
+  .guide-prose summary {
+    @apply cursor-pointer font-medium text-stone-900 dark:text-white;
+  }
+  .guide-prose details > :not(summary) {
+    @apply mt-2 text-stone-600 dark:text-stone-300;
   }
 }
 

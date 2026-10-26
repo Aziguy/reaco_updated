@@ -17,6 +17,7 @@
     <div>
       <p class="text-sm font-semibold text-stone-900 dark:text-white">{{ SITE_NAME }}</p>
       <ul class="muted mt-2 space-y-1">
+        <li><a href="{% url 'guide:index' %}" class="hover:underline">Guide utilisateur</a></li>
         <li><a href="{% url 'core:about' %}" class="hover:underline">À propos et méthodologie</a></li>
         <li><a href="{% url 'core:credits' %}" class="hover:underline">Crédits</a></li>
         <li><a href="{% url 'core:contact' %}" class="hover:underline">Contact</a></li>

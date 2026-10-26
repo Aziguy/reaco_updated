@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}{{ chapter.title }} · Guide{% endblock %}
+{% block description %}{{ chapter.summary }}{% endblock %}
+{% block content %}
+<div class="grid gap-8 lg:grid-cols-[15rem_1fr]">
+  <aside class="no-print">
+    <details class="card p-3 lg:hidden">
+      <summary class="cursor-pointer px-2 py-1 text-sm font-medium">Sommaire du guide</summary>
+      <nav class="mt-2" aria-label="Sommaire du guide (mobile)">{% include "guide/_nav.html" %}</nav>
+    </details>
+    <nav class="sticky top-24 hidden lg:block" aria-label="Sommaire du guide">
+      <a href="{% url 'guide:index' %}" class="muted mb-3 block px-3 font-medium no-underline hover:underline">Guide utilisateur</a>
+      {% include "guide/_nav.html" %}
+    </nav>
+  </aside>
+
+  <article class="min-w-0 max-w-3xl">
+    <nav class="muted mb-4" aria-label="Fil d'Ariane"><a href="{% url 'guide:index' %}" class="hover:underline">Guide</a> / {{ chapter.title }}</nav>
+    <header>
+      <h1 class="flex items-center gap-3 text-3xl">
+        <span class="flex size-10 items-center justify-center rounded-xl bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-200">{% icon chapter.icon %}</span>{{ chapter.title }}
+      </h1>
+      <p class="mt-3 text-lg text-stone-600 dark:text-stone-300">{{ chapter.summary }}</p>
+    </header>
+
+    <div class="guide-prose mt-8">{% include chapter.template %}</div>
+
+    <nav class="no-print mt-12 grid gap-4 border-t border-stone-200 pt-6 sm:grid-cols-2 dark:border-stone-800" aria-label="Chapitres voisins">
+      {% if previous %}
+        <a href="{% url 'guide:chapter' previous.slug %}" class="card p-4 no-underline hover:shadow-md"><span class="muted block text-xs">Précédent</span><span class="font-medium">{{ previous.title }}</span></a>
+      {% else %}<span></span>{% endif %}
+      {% if next %}
+        <a href="{% url 'guide:chapter' next.slug %}" class="card p-4 text-right no-underline hover:shadow-md"><span class="muted block text-xs">Suivant</span><span class="font-medium">{{ next.title }}</span></a>
+      {% endif %}
+    </nav>
+  </article>
+</div>
+{% endblock %}

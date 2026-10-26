@@ -1,0 +1,23 @@
+{% load guide %}
+<p>Le garde-manger recense ce que vous avez chez vous et vous alerte avant les dates limites. C'est lui qui alimente les suggestions anti-gaspi et la déduction des listes de courses.</p>
+
+<h2 id="vue-ensemble">Vue d'ensemble</h2>
+<p>Les produits sont regroupés par urgence : <strong>date dépassée</strong>, <strong>à consommer très vite</strong> (3 jours ou moins), <strong>plus tard</strong> et <strong>sans date</strong>.</p>
+{% guide_figure "pantry-list" %}
+<p>Quand vous utilisez ou jetez un produit, sortez-le du stock avec <strong>Consommé</strong> ou <strong>Jeté</strong>. Ces informations calculent votre taux anti-gaspi et la valeur jetée sur 30 jours.</p>
+
+<h2 id="ajouter">Ajouter un produit</h2>
+{% guide_figure "pantry-add" %}
+<ol>
+  <li><strong>Avec un code-barres</strong> : saisissez-le ou scannez-le avec la caméra. Le nom, la marque, la photo et le Nutri-Score sont complétés grâce à Open Food Facts, ainsi que le prix médian quand il est connu.</li>
+  <li><strong>Sans code-barres</strong> : remplissez simplement le nom, la quantité et l'unité.</li>
+  <li>Choisissez l'<strong>ingrédient</strong> correspondant : il relie le produit aux recettes.</li>
+  <li>Indiquez la <strong>date limite</strong> imprimée sur l'emballage, puis enregistrez.</li>
+</ol>
+<p class="guide-note">Le scanner utilise la caméra de votre appareil : autorisez-la quand le navigateur le demande. Il fonctionne sur les navigateurs compatibles avec la détection de codes-barres, principalement sur mobile.</p>
+
+<h2 id="rappels">Rappels par email</h2>
+<p>Chaque jour, un email récapitule les produits qui arrivent à échéance dans les deux jours, avec un lien vers les idées de recettes. Vous pouvez désactiver ces rappels dans <a href="{% url 'guide:chapter' 'compte' %}">votre profil</a>.</p>
+
+<h2 id="modifier">Modifier ou supprimer</h2>
+<p>Le bouton <strong>Modifier</strong> d'un produit permet de corriger sa quantité ou sa date, ou de le supprimer s'il a été saisi par erreur.</p>

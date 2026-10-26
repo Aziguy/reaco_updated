@@ -77,7 +77,7 @@
 </div>
 
 <section class="mt-10" aria-labelledby="prices-title">
-  <h2 id="prices-title" class="section-title">Combien ça coûte ?</h2>
+  <div class="flex flex-wrap items-baseline justify-between gap-2"><h2 id="prices-title" class="section-title">Combien ça coûte ?</h2><span class="text-sm">{% include "partials/help_link.html" with chapter="prix" %}</span></div>
   <div id="prices" class="mt-4" hx-get="{% url 'recipes:prices' recipe.slug %}?servings={{ servings }}" hx-trigger="load">
     <div class="card animate-pulse p-6"><p class="muted">Calcul du coût avec les prix relevés en magasin…</p></div>
   </div>

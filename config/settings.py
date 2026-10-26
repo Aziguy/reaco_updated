@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "apps.pantry",
     "apps.shopping",
     "apps.api",
+    "apps.guide",
 ]
 if GOOGLE_CLIENT_ID:
     INSTALLED_APPS.append("allauth.socialaccount.providers.google")

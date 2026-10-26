@@ -5,7 +5,7 @@
 <header class="flex flex-wrap items-end justify-between gap-4">
   <div>
     <h1 class="text-3xl">Bonjour{% if user.first_name %} {{ user.first_name }}{% endif %} !</h1>
-    <p class="muted mt-1">Voici où en est votre cuisine anti-gaspi.</p>
+    <p class="muted mt-1">Voici où en est votre cuisine anti-gaspi. {% include "partials/help_link.html" with chapter="premiers-pas" %}</p>
   </div>
   {% if not user.has_location %}<a href="{% url 'accounts:profile' %}" class="btn-secondary btn-sm">{% icon "map-pin" "size-4" %}Ajouter ma localisation</a>{% endif %}
 </header>

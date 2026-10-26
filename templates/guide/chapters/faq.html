@@ -1,0 +1,42 @@
+<h2 id="donnees">Données et fiabilité</h2>
+<details>
+  <summary>D'où viennent les prix ?</summary>
+  <p>D'<a href="https://prices.openfoodfacts.org" rel="noopener">Open Prices</a>, une base ouverte de prix relevés en magasin par des bénévoles. La méthode est détaillée dans le chapitre <a href="{% url 'guide:chapter' 'prix' %}">Comprendre les prix</a>.</p>
+</details>
+<details>
+  <summary>Pourquoi une recette n'a-t-elle pas de prix ?</summary>
+  <p>Certains ingrédients n'ont pas encore assez de relevés. Vous pouvez contribuer sur Open Prices en photographiant vos tickets.</p>
+</details>
+<details>
+  <summary>Comment est calculée l'empreinte carbone ?</summary>
+  <p>À partir de la base Agribalyse de l'ADEME, via l'API Impact CO2, en kilos d'équivalent CO2 par portion.</p>
+</details>
+<details>
+  <summary>Les valeurs nutritionnelles sont-elles exactes ?</summary>
+  <p>Ce sont des estimations calculées avec la table Ciqual de l'Anses pour des ingrédients crus. Elles ne remplacent pas un avis médical ou diététique.</p>
+</details>
+<details>
+  <summary>Un code-barres n'est pas reconnu.</summary>
+  <p>Le produit n'est peut-être pas encore dans Open Food Facts. Saisissez-le à la main, ou ajoutez-le sur <a href="https://world.openfoodfacts.org" rel="noopener">Open Food Facts</a> pour en faire profiter tout le monde.</p>
+</details>
+
+<h2 id="compte">Compte et confidentialité</h2>
+<details>
+  <summary>{{ SITE_NAME }} est-il gratuit ?</summary>
+  <p>Oui. Le projet est libre et repose sur des données ouvertes.</p>
+</details>
+<details>
+  <summary>À quoi sert ma localisation ?</summary>
+  <p>Uniquement à trouver les magasins proches pour comparer les prix. Elle n'est jamais partagée.</p>
+</details>
+<details>
+  <summary>Je ne reçois pas les emails de rappel.</summary>
+  <p>Vérifiez que les rappels sont activés dans votre profil, que vos produits ont une date limite, et consultez votre dossier de courriers indésirables.</p>
+</details>
+<details>
+  <summary>Comment supprimer mes données ?</summary>
+  <p>Depuis votre profil, section <strong>Supprimer mon compte</strong>. Toutes vos données sont effacées définitivement.</p>
+</details>
+
+<h2 id="aide">Besoin d'aide ?</h2>
+<p>Écrivez-nous via la page <a href="{% url 'core:contact' %}">Contact</a>, ou signalez un problème sur <a href="https://github.com/Aziguy/reaco_updated/issues" rel="noopener">GitHub</a>.</p>

@@ -1,0 +1,10 @@
+{% load comegusto %}
+<ol class="space-y-1">
+  {% for item in chapters %}
+    <li>
+      <a href="{% url 'guide:chapter' item.slug %}" class="nav-link"{% if item.slug == chapter.slug %} aria-current="page"{% endif %}>
+        {% icon item.icon "size-4" %}{{ item.title }}
+      </a>
+    </li>
+  {% endfor %}
+</ol>

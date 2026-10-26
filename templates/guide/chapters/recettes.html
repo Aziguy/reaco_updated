@@ -1,0 +1,33 @@
+{% load guide %}
+<p>Chaque recette indique son coût par portion, sa durée, sa difficulté, son empreinte carbone et ses valeurs nutritionnelles.</p>
+
+<h2 id="rechercher">Rechercher et filtrer</h2>
+<p>La recherche porte sur le titre, les ingrédients et les régimes alimentaires. Elle ignore les majuscules et les accents : « creme » trouve « Crème fraîche ». Les résultats se mettent à jour pendant la saisie.</p>
+{% guide_figure "recipes-list" %}
+<p>Quatre tris sont proposés :</p>
+<ul>
+  <li><strong>Les plus récentes</strong>, par défaut ;</li>
+  <li><strong>Les moins chères</strong>, selon le coût par portion ;</li>
+  <li><strong>Les plus rapides</strong>, préparation et cuisson comprises ;</li>
+  <li><strong>Faible empreinte carbone</strong>, selon les données de l'ADEME.</li>
+</ul>
+<p>Les filtres se combinent entre eux et avec la recherche. Les résultats sont paginés par 12, et l'adresse de la page garde vos critères : vous pouvez l'enregistrer ou la partager. <strong>Réinitialiser les filtres</strong> revient à la liste complète.</p>
+
+<h3 id="sur-mobile">Sur mobile</h3>
+<p>Pour gagner de la place, seuls la recherche et le tri sont affichés. Le bouton <strong>Plus de filtres</strong> déplie les autres critères et indique combien sont actifs.</p>
+{% guide_figure "recipes-filters-mobile" %}
+
+<h2 id="fiche-recette">Lire une fiche recette</h2>
+{% guide_figure "recipe-detail" %}
+
+<h3 id="portions">Adapter les portions</h3>
+<p>Les boutons <strong>+</strong> et <strong>−</strong> recalculent instantanément les quantités, puis le coût. Les ingrédients déjà présents dans votre garde-manger sont cochés, et les produits de saison signalés.</p>
+{% guide_figure "recipe-ingredients" %}
+<p>Les assaisonnements sans quantité précise sont indiqués « à votre goût ».</p>
+
+<h3 id="nutrition">Étapes et valeurs nutritionnelles</h3>
+{% guide_figure "recipe-steps" %}
+<p class="guide-note">Les valeurs nutritionnelles sont calculées pour des ingrédients crus, à partir de la table Ciqual de l'Anses. Elles sont indicatives et ne tiennent pas compte des pertes à la cuisson.</p>
+
+<h2 id="favoris">Garder une recette en favori</h2>
+<p>Le bouton <strong>Ajouter aux favoris</strong> enregistre la recette. Retrouvez vos favoris depuis la liste des recettes (<strong>Mes favoris</strong>) ou sur votre tableau de bord.</p>

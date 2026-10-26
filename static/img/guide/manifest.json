@@ -1,0 +1,66 @@
+{
+  "anti-gaspi": {
+    "width": 1280,
+    "height": 1000
+  },
+  "dashboard": {
+    "width": 1280,
+    "height": 980
+  },
+  "home": {
+    "width": 1280,
+    "height": 860
+  },
+  "pantry-add": {
+    "width": 1280,
+    "height": 1100
+  },
+  "pantry-list": {
+    "width": 1280,
+    "height": 1000
+  },
+  "profile": {
+    "width": 1280,
+    "height": 1150
+  },
+  "recipe-add-to-list": {
+    "width": 1168,
+    "height": 225
+  },
+  "recipe-detail": {
+    "width": 1280,
+    "height": 860
+  },
+  "recipe-ingredients": {
+    "width": 551,
+    "height": 525
+  },
+  "recipe-prices": {
+    "width": 1168,
+    "height": 1039
+  },
+  "recipe-steps": {
+    "width": 649,
+    "height": 525
+  },
+  "recipes-filters-mobile": {
+    "width": 780,
+    "height": 1688
+  },
+  "recipes-list": {
+    "width": 1280,
+    "height": 860
+  },
+  "season": {
+    "width": 1280,
+    "height": 860
+  },
+  "shopping-list": {
+    "width": 1280,
+    "height": 1000
+  },
+  "signup": {
+    "width": 446,
+    "height": 546
+  }
+}

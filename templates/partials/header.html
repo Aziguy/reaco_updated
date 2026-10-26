@@ -8,6 +8,7 @@
       {% include "partials/nav_links.html" %}
     </nav>
     <div class="ml-auto flex items-center gap-1">
+      <a href="{% url 'guide:index' %}" class="btn-ghost px-2.5" aria-label="Guide utilisateur"{% nav_current "/guide/" %}>{% icon "help" %}</a>
       <button type="button" class="btn-ghost px-2.5" data-theme-toggle aria-label="Changer de thème">
         <span class="dark:hidden">{% icon "moon" %}</span><span class="hidden dark:inline">{% icon "sun" %}</span>
       </button>
@@ -27,6 +28,7 @@
       {% if user.is_authenticated %}
         <a href="{% url 'core:dashboard' %}" class="nav-link">{% icon "chart" "size-4" %}Tableau de bord</a>
       {% endif %}
+      <a href="{% url 'guide:index' %}" class="nav-link">{% icon "help" "size-4" %}Guide utilisateur</a>
     </div>
   </nav>
 </header>
