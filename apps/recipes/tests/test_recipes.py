@@ -1,10 +1,12 @@
 from decimal import Decimal
+from io import StringIO
 
 import pytest
+from django.core.management import call_command
 from django.urls import reverse
 
 from apps.recipes import metrics
-from apps.recipes.models import Favorite
+from apps.recipes.models import Favorite, Recipe, RecipeIngredient
 from apps.recipes.units import convert_unit_price, format_quantity, to_base
 
 
@@ -92,3 +94,26 @@ class TestViews:
     def test_favorite_requires_login(self, client, recipe):
         response = client.post(reverse("recipes:favorite", args=[recipe.slug]))
         assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_seed_demo_loads_credited_images():
+    call_command("seed_demo", stdout=StringIO())
+    assert Recipe.objects.count() >= 30
+    photo = Recipe.objects.get(slug="ratatouille")
+    assert photo.image_license.startswith("CC")
+    assert photo.image_source.startswith("https://commons.wikimedia.org/")
+    drawing = Recipe.objects.get(slug="dahl-de-lentilles-corail")
+    assert drawing.image.name.endswith(".svg")
+    assert drawing.image_credit == "Illustration Comégusto"
+    call_command("seed_demo", stdout=StringIO())
+    assert Recipe.objects.filter(slug="ratatouille").count() == 1
+    assert RecipeIngredient.objects.filter(recipe=photo).count() == 8
+
+
+@pytest.mark.django_db
+def test_credits_page(client, recipe):
+    recipe.image_credit = "Jane Doe"
+    recipe.image_license = "CC BY 4.0"
+    recipe.save()
+    assert "Jane Doe" in client.get(reverse("core:credits")).content.decode()

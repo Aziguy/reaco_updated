@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" role="img" aria-label="Illustration d'un bol de dahl de lentilles corail">
+  <defs>
+    <radialGradient id="dal" cx="45%" cy="40%" r="65%">
+      <stop offset="0" stop-color="#f6b04a"/>
+      <stop offset="0.7" stop-color="#e98a2a"/>
+      <stop offset="1" stop-color="#c96a1c"/>
+    </radialGradient>
+    <radialGradient id="bowl" cx="50%" cy="45%" r="60%">
+      <stop offset="0.82" stop-color="#2f6b55"/>
+      <stop offset="1" stop-color="#1f4c3c"/>
+    </radialGradient>
+    <linearGradient id="table" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3e9d8"/>
+      <stop offset="1" stop-color="#e7d6bb"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="750" fill="url(#table)"/>
+  <g fill="none" stroke="#dcc8a6" stroke-width="3" opacity="0.6">
+    <path d="M0 120 C250 100 750 140 1000 115"/>
+    <path d="M0 640 C300 625 700 660 1000 635"/>
+  </g>
+  <ellipse cx="800" cy="560" rx="170" ry="120" fill="#e8b866"/>
+  <ellipse cx="800" cy="560" rx="170" ry="120" fill="none" stroke="#c9913f" stroke-width="6"/>
+  <g fill="#b9772c" opacity="0.75">
+    <circle cx="740" cy="520" r="14"/><circle cx="820" cy="600" r="18"/><circle cx="870" cy="520" r="11"/>
+    <circle cx="760" cy="610" r="9"/><circle cx="900" cy="590" r="8"/>
+  </g>
+  <circle cx="455" cy="380" r="285" fill="#ffffff" opacity="0.55"/>
+  <circle cx="455" cy="375" r="250" fill="url(#bowl)"/>
+  <circle cx="455" cy="375" r="210" fill="url(#dal)"/>
+  <g fill="#f8c977" opacity="0.7">
+    <circle cx="380" cy="300" r="10"/><circle cx="520" cy="290" r="8"/><circle cx="560" cy="430" r="9"/>
+    <circle cx="350" cy="440" r="7"/><circle cx="470" cy="470" r="8"/><circle cx="420" cy="360" r="6"/>
+  </g>
+  <path d="M390 380 C420 330 500 330 520 370 C540 410 480 440 450 415 C425 395 455 365 480 380" fill="none" stroke="#fff6e6" stroke-width="16" stroke-linecap="round"/>
+  <g fill="#3f8f3a">
+    <path d="M350 330 c18 -22 46 -18 50 4 c-20 14 -40 14 -50 -4z"/>
+    <path d="M540 340 c10 -26 38 -30 48 -10 c-14 18 -34 22 -48 10z"/>
+    <path d="M500 470 c20 -16 46 -8 44 14 c-22 8 -40 4 -44 -14z"/>
+    <path d="M380 470 c6 -24 32 -32 44 -14 c-12 18 -30 24 -44 14z"/>
+    <path d="M455 270 c14 -20 40 -16 42 4 c-18 12 -36 12 -42 -4z"/>
+  </g>
+  <g transform="rotate(-25 600 250)">
+    <path d="M560 240 C590 205 650 210 670 240 C650 262 590 266 560 240z" fill="#d63a2a"/>
+    <path d="M668 240 l26 -8" stroke="#3f8f3a" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g transform="rotate(35 760 300)">
+    <rect x="700" y="250" width="34" height="230" rx="17" fill="#b9b9b9"/>
+    <ellipse cx="717" cy="240" rx="52" ry="70" fill="#d6d6d6"/>
+    <ellipse cx="717" cy="240" rx="38" ry="54" fill="#bdbdbd"/>
+  </g>
+</svg>
