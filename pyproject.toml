@@ -19,6 +19,7 @@ dependencies = [
     "redis>=5.2",
     "whitenoise>=6.8",
     "gunicorn>=23.0",
+    "django-storages[s3]>=1.14",
 ]
 
 [dependency-groups]

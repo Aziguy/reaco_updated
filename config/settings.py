@@ -147,6 +147,28 @@ STORAGES = {
         )
     },
 }
+AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME", default="")
+MEDIA_HOSTS = []
+if AWS_STORAGE_BUCKET_NAME:
+    s3_endpoint = env("AWS_S3_ENDPOINT_URL", default="") or None
+    s3_domain = env("AWS_S3_CUSTOM_DOMAIN", default="") or None
+    STORAGES["default"] = {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "bucket_name": AWS_STORAGE_BUCKET_NAME,
+            "access_key": env("AWS_ACCESS_KEY_ID"),
+            "secret_key": env("AWS_SECRET_ACCESS_KEY"),
+            "endpoint_url": s3_endpoint,
+            "region_name": env("AWS_S3_REGION_NAME", default="") or None,
+            "custom_domain": s3_domain,
+            "querystring_auth": not s3_domain,
+            "file_overwrite": False,
+            "default_acl": None,
+        },
+    }
+    MEDIA_HOSTS = (
+        [f"https://{s3_domain}"] if s3_domain else [s3_endpoint or "https://*.amazonaws.com"]
+    )
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 
@@ -174,7 +196,13 @@ CONTENT_SECURITY_POLICY = {
         "default-src": [SELF],
         "script-src": [SELF],
         "style-src": [SELF],
-        "img-src": [SELF, "data:", *OFF_IMAGE_HOSTS, "https://raw.githubusercontent.com"],
+        "img-src": [
+            SELF,
+            "data:",
+            *OFF_IMAGE_HOSTS,
+            *MEDIA_HOSTS,
+            "https://raw.githubusercontent.com",
+        ],
         "connect-src": [SELF],
         "font-src": [SELF],
         "object-src": [NONE],
