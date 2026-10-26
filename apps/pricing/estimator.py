@@ -14,6 +14,7 @@ from .models import PriceObservation, Store, distance_km
 
 CENT = Decimal("0.01")
 MIN_BRAND_COVERAGE = 0.4
+MIN_RAW_OBSERVATIONS = 5
 
 
 @dataclass
@@ -82,10 +83,23 @@ class BasketEstimate:
         return self.offers[0] if self.offers else None
 
     @property
-    def max_saving(self) -> Decimal:
-        if len(self.offers) < 2:
+    def saving(self) -> Decimal:
+        """Gap between the median basket and the cheapest brand."""
+        if not self.offers:
             return Decimal(0)
-        return self.offers[-1].total - self.offers[0].total
+        return max(self.total - self.offers[0].total, Decimal(0))
+
+
+def estimate_near(lines: list[Line], near) -> tuple[BasketEstimate, bool]:
+    """Estimate around the user, falling back to all stores when none nearby is usable.
+
+    Returns the basket and whether the local comparison was kept.
+    """
+    if near:
+        basket = estimate(lines, near=near)
+        if basket.offers:
+            return basket, True
+    return estimate(lines), False
 
 
 def _observations(ingredient_ids, since):
@@ -96,6 +110,7 @@ def _observations(ingredient_ids, since):
         .select_related("store")
         .only(
             "ingredient_id",
+            "product_code",
             "unit_price",
             "base_unit",
             "store__id",
@@ -122,6 +137,8 @@ def estimate(
 ) -> BasketEstimate:
     """Estimate a basket with median observed prices, overall and per store brand.
 
+    Loose prices (per kg or unit, no barcode) are preferred when there are enough of them,
+    since broad product categories also contain processed products.
     `near` is (latitude, longitude, radius_km): brand offers then only use nearby stores.
     """
     ingredients = {line.ingredient.pk: line.ingredient for line in lines}
@@ -132,12 +149,19 @@ def estimate(
     brand_stores: dict[str, dict[int, NearbyStore]] = defaultdict(dict)
     logos: dict[str, str] = {}
 
+    rows = []
+    loose: dict[int, int] = defaultdict(int)
     for obs in _observations(ingredients.keys(), since):
         ingredient = ingredients[obs.ingredient_id]
         price = convert_unit_price(
             obs.unit_price, obs.base_unit, ingredient.price_unit, ingredient.unit_weight_g
         )
-        if price is None:
+        if price is not None:
+            rows.append((obs, price))
+            loose[obs.ingredient_id] += not obs.product_code
+
+    for obs, price in rows:
+        if obs.product_code and loose[obs.ingredient_id] >= MIN_RAW_OBSERVATIONS:
             continue
         market[obs.ingredient_id].append(price)
         store = obs.store

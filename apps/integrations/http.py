@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 RETRY_STATUSES = {429, 500, 502, 503, 504}
 MAX_BACKOFF = 2.0
+FAILURE_TTL = 300
 
 
 class ServiceError(Exception):
@@ -24,15 +25,13 @@ class JsonClient:
         base_url: str,
         *,
         headers: dict | None = None,
-        retries: int = 2,
         cache_ttl: int = 3600,
-        backoff: float = 0.5,
     ):
         conf = settings.INTEGRATIONS
         self.base_url = base_url.rstrip("/")
-        self.retries = retries
+        self.retries = conf["RETRIES"]
+        self.backoff = conf["BACKOFF"]
         self.cache_ttl = cache_ttl
-        self.backoff = backoff
         self.headers = {"User-Agent": conf["USER_AGENT"], "Accept": "application/json"}
         self.headers.update(headers or {})
         self.timeout = conf["TIMEOUT"]
@@ -47,7 +46,13 @@ class JsonClient:
         if ttl and (cached := cache.get(key)) is not None:
             return cached
 
-        data = self._request(path, params)
+        if cache.get(f"{key}:failed"):
+            raise ServiceError(f"{self.base_url} recently unavailable")
+        try:
+            data = self._request(path, params)
+        except ServiceError:
+            cache.set(f"{key}:failed", True, FAILURE_TTL)
+            raise
         if ttl:
             cache.set(key, data, ttl)
         return data

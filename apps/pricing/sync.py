@@ -9,6 +9,7 @@ from django.utils import timezone
 from apps.integrations import openprices
 from apps.recipes.models import Ingredient
 
+from .estimator import MIN_RAW_OBSERVATIONS
 from .models import PriceObservation, Store
 
 logger = logging.getLogger(__name__)
@@ -87,12 +88,16 @@ def sync_ingredient(ingredient: Ingredient, *, days: int | None = None, max_page
     records = openprices.fetch_prices(
         category_tag=ingredient.off_category, since=since, max_pages=max_pages, currency=currency
     )
-    records += openprices.fetch_prices(
-        product_category=ingredient.off_category,
-        since=since,
-        max_pages=max_pages,
-        currency=currency,
-    )
     created = store_records(ingredient, records)
+    loose = sum(1 for r in records if r.unit_price is not None)
+    if loose < MIN_RAW_OBSERVATIONS:
+        products = openprices.fetch_prices(
+            product_category=ingredient.off_category,
+            since=since,
+            max_pages=max_pages,
+            currency=currency,
+        )
+        created += store_records(ingredient, products)
+        records += products
     logger.info("Synced %s: %s records, %s new", ingredient.slug, len(records), created)
     return created
