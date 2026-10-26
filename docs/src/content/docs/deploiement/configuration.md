@@ -1,15 +1,10 @@
-# Configurer Comégusto
-
-Toute la configuration passe par des variables d'environnement : fichier `.env` à la racine (option VPS avec Docker Compose) ou variables de la plateforme (PaaS). Après une modification, redémarrez l'application : `docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d`.
-
-- [Emails](#emails)
-- [Connexion avec Google](#connexion-avec-google)
-- [Domaine et sécurité](#domaine-et-sécurité)
-- [Base de données, cache et médias](#base-de-données-cache-et-médias)
-- [Données ouvertes et prix](#données-ouvertes-et-prix)
-- [Tâches planifiées](#tâches-planifiées)
-- [Journaux et alertes](#journaux-et-alertes)
-- [Référence des variables](#référence-des-variables)
+---
+title: Configuration
+description: Emails, connexion Google, sécurité et référence de toutes les variables d'environnement.
+sidebar:
+  order: 7
+---
+Toute la configuration passe par des variables d'environnement : fichier `.env` à la racine ([serveur VPS](/reaco_updated/deploiement/serveur-vps/) avec Docker Compose) ou variables de la plateforme (PaaS). Après une modification, redémarrez l'application : `docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d`.
 
 ## Emails
 
@@ -162,7 +157,7 @@ Créez le premier administrateur avec `python manage.py createsuperuser`.
 | `CONN_MAX_AGE` | Durée de vie des connexions en secondes (60 par défaut, 0 avec un pooler en mode transaction). |
 | `REDIS_URL` | Cache partagé entre les processus (`redis://redis:6379/0`). Sans Redis, chaque processus a son propre cache. |
 | `MEDIA_ROOT`, `SERVE_MEDIA` | Dossier des médias et service par Django. Avec Caddy, `SERVE_MEDIA=false` est déjà défini. |
-| `AWS_*` | Stockage S3 des médias, voir [le guide de déploiement](DEPLOIEMENT.md#médias-sur-un-stockage-compatible-s3). |
+| `AWS_*` | Stockage S3 des médias, voir [Stockage des médias](/reaco_updated/deploiement/stockage-medias/). |
 
 ## Données ouvertes et prix
 
@@ -184,7 +179,7 @@ Créez le premier administrateur avec `python manage.py createsuperuser`.
 | `SYNC_PAGES` | Nombre de pages Open Prices lues par ingrédient à chaque synchronisation (2 par défaut). |
 | `RUN_MIGRATIONS` | `1` (défaut) applique les migrations au démarrage du conteneur web. |
 
-Sans service `scheduler`, voir [les tâches planifiées du guide de déploiement](DEPLOIEMENT.md#tâches-planifiées).
+Sans service `scheduler`, voir [Tâches planifiées](/reaco_updated/deploiement/taches-planifiees/).
 
 ## Journaux et alertes
 
@@ -208,7 +203,7 @@ Sans service `scheduler`, voir [les tâches planifiées du guide de déploiement
 | `CONN_MAX_AGE` | `60` | [Base de données](#base-de-données-cache-et-médias) |
 | `REDIS_URL` | vide | [Cache](#base-de-données-cache-et-médias) |
 | `MEDIA_ROOT`, `SERVE_MEDIA` | `media/`, `true` | [Médias](#base-de-données-cache-et-médias) |
-| `AWS_STORAGE_BUCKET_NAME` et `AWS_*` | vide | [Médias](DEPLOIEMENT.md#médias-sur-un-stockage-compatible-s3) |
+| `AWS_STORAGE_BUCKET_NAME` et `AWS_*` | vide | [Médias](/reaco_updated/deploiement/stockage-medias/) |
 | `EMAIL_URL` | `consolemail://` | [Emails](#emails) |
 | `EMAIL_TIMEOUT` | `10` | [Emails](#6-dépannage) |
 | `DEFAULT_FROM_EMAIL` | `Comégusto <CONTACT_EMAIL>` | [Emails](#2-écrire-email_url) |
@@ -222,4 +217,4 @@ Sans service `scheduler`, voir [les tâches planifiées du guide de déploiement
 | `INTEGRATIONS_TIMEOUT` | `8` | [Données ouvertes](#données-ouvertes-et-prix) |
 | `SITE_URL`, `SCHEDULER_INTERVAL`, `SYNC_PAGES`, `RUN_MIGRATIONS` | voir la section | [Tâches](#tâches-planifiées) |
 | `LOG_LEVEL` | `INFO` | [Journaux](#journaux-et-alertes) |
-| `DOMAIN`, `POSTGRES_PASSWORD` | vide | `docker-compose.prod.yml`, voir [le déploiement](DEPLOIEMENT.md#option-a--un-serveur-vps-avec-docker-et-caddy) |
+| `DOMAIN`, `POSTGRES_PASSWORD` | vide | `docker-compose.prod.yml`, voir [Serveur VPS](/reaco_updated/deploiement/serveur-vps/) |

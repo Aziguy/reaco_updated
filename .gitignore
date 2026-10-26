@@ -21,3 +21,5 @@ htmlcov/
 .idea/
 .vscode/
 .DS_Store
+
+.playwright-cli/

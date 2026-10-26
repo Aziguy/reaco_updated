@@ -1,0 +1,49 @@
+---
+title: Documentation développeur
+description: Développer, déployer, maintenir et faire évoluer Comégusto.
+template: splash
+hero:
+  tagline: Recettes chiffrées avec de vrais prix, garde-manger anti-gaspi et listes de courses comparées, grâce aux données ouvertes. Tout ce qu'il faut pour développer, déployer et maintenir l'application.
+  image:
+    light: ../../assets/comegusto-dark.png
+    dark: ../../assets/comegusto-light.png
+    alt: Comégusto
+  actions:
+    - text: Installer le projet
+      link: /reaco_updated/demarrer/installation/
+      icon: right-arrow
+    - text: Voir sur GitHub
+      link: https://github.com/Aziguy/reaco_updated
+      icon: github
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard } from "@astrojs/starlight/components";
+
+## La pile en un coup d'œil
+
+<CardGrid>
+  <Card title="Django 5.2 LTS et HTMX" icon="seti:python">
+    Rendu côté serveur, interactions partielles avec HTMX, aucun framework JavaScript. Python 3.13, dépendances gérées par uv.
+  </Card>
+  <Card title="Données ouvertes" icon="open-book">
+    Open Prices, Open Food Facts, ADEME Impact CO2, Anses Ciqual et IGN, derrière un client HTTP commun tolérant aux pannes.
+  </Card>
+  <Card title="Tailwind CSS v4" icon="seti:css">
+    Styles compilés depuis `assets/app.css`, composants déclarés en `@utility`, CSP stricte sans script ni style en ligne.
+  </Card>
+  <Card title="Docker et CI" icon="rocket">
+    Image multi-étapes, Docker Compose avec Caddy en production, CI GitHub Actions (lint, tests PostgreSQL, `check --deploy`, image).
+  </Card>
+</CardGrid>
+
+## Par où commencer ?
+
+<CardGrid>
+  <LinkCard title="Installer le projet" href="/reaco_updated/demarrer/installation/" description="En local avec uv et npm, ou avec Docker Compose." />
+  <LinkCard title="Comprendre l'architecture" href="/reaco_updated/architecture/vue-ensemble/" description="Applications Django, flux de données et modèle." />
+  <LinkCard title="Contribuer" href="/reaco_updated/developpement/conventions/" description="Conventions de code, commits, issues et tests." />
+  <LinkCard title="Déployer" href="/reaco_updated/deploiement/hebergeurs/" description="Hébergeurs gratuits et payants, VPS ou PaaS." />
+  <LinkCard title="Configurer" href="/reaco_updated/deploiement/configuration/" description="Emails, connexion Google et toutes les variables." />
+  <LinkCard title="Maintenir" href="/reaco_updated/maintenance/dependances/" description="Mises à jour, données et exploitation." />
+</CardGrid>

@@ -13,6 +13,7 @@
   <img src="https://img.shields.io/badge/django-5.2%20LTS-092E20?logo=django&logoColor=white" alt="Django 5.2 LTS">
   <img src="https://img.shields.io/badge/htmx-2-3366CC" alt="htmx 2">
   <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-green" alt="Licence MIT"></a>
+  <a href="https://aziguy.github.io/reaco_updated/"><img src="https://img.shields.io/badge/docs-d%C3%A9veloppeur-1a7e4f" alt="Documentation développeur"></a>
 </p>
 
 ---
@@ -28,6 +29,13 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 | Accueil | Comparateur de prix | Garde-manger |
 | --- | --- | --- |
 | ![Accueil](docs/screenshots/accueil.webp) | ![Comparateur](docs/screenshots/comparateur.webp) | ![Garde-manger](docs/screenshots/garde-manger.webp) |
+
+## Documentation
+
+| Pour qui | Où |
+| --- | --- |
+| Utilisateurs | Guide intégré à l'application sur `/guide/` : chaque fonctionnalité expliquée avec des captures annotées, en thème clair et sombre. |
+| Développeurs | [Documentation développeur](https://aziguy.github.io/reaco_updated/) : installation, architecture, tests, déploiement, configuration, maintenance et évolution. |
 
 ## Fonctionnalités
 
@@ -59,6 +67,7 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 
 **Et aussi**
 - Calendrier des fruits et légumes de saison.
+- Guide utilisateur intégré, avec captures annotées générées automatiquement.
 - API REST documentée (OpenAPI).
 - Mode sombre, responsive, accessible au clavier.
 - Suppression du compte et de toutes les données en libre-service.
@@ -92,7 +101,7 @@ La pile comprend PostgreSQL, Redis, l'application (Gunicorn + WhiteNoise) et un 
 
 ## Déploiement
 
-Le guide [docs/DEPLOIEMENT.md](docs/DEPLOIEMENT.md) détaille :
+Le [guide de déploiement](https://aziguy.github.io/reaco_updated/deploiement/hebergeurs/) détaille :
 
 - un comparatif des hébergeurs **gratuits** (Oracle Cloud Always Free, Render + Neon, Cloud Run) et **payants** (VPS Hetzner, OVHcloud ou Scaleway, Clever Cloud, Scalingo, Railway…) ;
 - le déploiement sur un VPS avec `docker-compose.prod.yml` et Caddy (HTTPS automatique, médias servis par Caddy) ;
@@ -107,7 +116,7 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 
 ## Développement local
 
-Prérequis : [uv](https://docs.astral.sh/uv/) et Node.js 20+.
+Prérequis : [uv](https://docs.astral.sh/uv/) et Node.js 20+ (22.23+ pour construire la documentation).
 
 ```bash
 uv sync                     # dépendances Python (crée .venv)
@@ -132,7 +141,7 @@ Pendant le développement, `npm run dev` recompile les styles à chaque modifica
 
 ## Configuration
 
-Toute la configuration passe par des variables d'environnement (voir `.env.example`). Le guide [docs/CONFIGURATION.md](docs/CONFIGURATION.md) explique pas à pas :
+Toute la configuration passe par des variables d'environnement (voir `.env.example`). Le [guide de configuration](https://aziguy.github.io/reaco_updated/deploiement/configuration/) explique pas à pas :
 
 - l'**envoi d'emails** : format de `EMAIL_URL`, fournisseurs (Brevo, boîte mail du domaine, Gmail), délivrabilité, test et dépannage ;
 - la **connexion avec Google** : création du client OAuth et URL de redirection ;
@@ -162,11 +171,12 @@ apps/
   pantry/            garde-manger, scan, statistiques, suggestions, rappels
   shopping/          listes de courses, fusion, déduction du stock, comparaison
   api/               API REST (DRF) et schéma OpenAPI
+  guide/             guide utilisateur intégré, commande de capture des figures
 templates/           gabarits Django (HTMX pour les interactions)
 assets/app.css       source Tailwind CSS v4, compilée vers static/css/app.css
 demo/                recettes de démonstration, photos et crédits (images/credits.json)
 deploy/              configuration Caddy pour la production
-docs/                guide de déploiement, captures
+docs/                documentation développeur (Astro Starlight), captures du README
 ```
 
 ```mermaid
@@ -191,7 +201,7 @@ Chaque ingrédient est relié à un aliment de la table Ciqual 2025 (code et val
 1. Chaque ingrédient est relié à une catégorie Open Food Facts (`en:tomatoes`, `en:butters`…).
 2. `sync_prices` importe les relevés récents de cette catégorie : prix « vrac » au kilo ou à la pièce et, s'ils sont trop rares, prix de produits emballés ramenés au kilo ou au litre grâce à leur contenance.
 3. Les prix vrac sont préférés dès qu'il y en a au moins cinq, car les catégories larges contiennent aussi des produits transformés.
-4. L'estimateur retient la médiane des prix, globalement puis par enseigne. Pour une enseigne, un ingrédient sans relevé est compté au prix médian, et la part de prix réellement relevés est affichée.
+4. L'estimateur retient la médiane des prix, globalement puis par enseigne, en écartant les prix plus de 4 fois éloignés de la médiane. Pour une enseigne, un ingrédient sans relevé est compté au prix médian, et la part de prix réellement relevés est affichée.
 
 ## API
 
@@ -211,7 +221,7 @@ Authentification par session ou par jeton (`Authorization: Token ...`, jetons g�
 ## Qualité
 
 ```bash
-uv run pytest --cov          # 130+ tests, appels externes simulés
+uv run pytest --cov          # 150+ tests, appels externes simulés
 uv run ruff check . && uv run ruff format --check .
 uv run pre-commit install    # vérifications avant chaque commit
 ```

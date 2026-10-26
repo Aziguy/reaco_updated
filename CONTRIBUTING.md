@@ -1,6 +1,6 @@
 # Contribuer à Comégusto
 
-Merci de votre intérêt ! Voici comment proposer une modification.
+Merci de votre intérêt ! Voici comment proposer une modification. La [documentation développeur](https://aziguy.github.io/reaco_updated/) détaille l'architecture, les tests et les conventions.
 
 ## Préparer l'environnement
 
@@ -20,6 +20,7 @@ uv run python manage.py migrate && uv run python manage.py seed_demo
 - Toute nouvelle logique métier est accompagnée de tests. Les appels réseau sont simulés avec `respx`.
 - `uv run ruff check .`, `uv run ruff format --check .` et `uv run pytest` doivent passer, y compris sur PostgreSQL (`DATABASE_URL=postgres://... uv run pytest`), comme dans la CI.
 - Interface : pas de script ni de style en ligne (la CSP les bloque), classes Tailwind dans les templates, interactions avec HTMX.
+- Modification visible de l'interface : régénérez les captures du guide utilisateur avec `capture_guide` (voir [Guide utilisateur intégré](https://aziguy.github.io/reaco_updated/developpement/guide-utilisateur/)).
 
 ## Ajouter un ingrédient ou une recette
 
