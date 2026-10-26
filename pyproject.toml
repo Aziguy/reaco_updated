@@ -40,6 +40,7 @@ DJANGO_SETTINGS_MODULE = "config.settings_test"
 python_files = ["test_*.py"]
 addopts = "-q --strict-markers"
 testpaths = ["apps"]
+filterwarnings = ["ignore:The default scheme will be changed:django.utils.deprecation.RemovedInDjango60Warning"]
 
 [tool.coverage.run]
 source = ["apps"]

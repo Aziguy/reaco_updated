@@ -63,14 +63,15 @@
         </li>
       {% endfor %}
     </ol>
-    {% if recipe.kcal %}
+    {% if recipe.kcal is not None %}
       <h3 class="mt-10 text-base">Valeurs nutritionnelles par portion</h3>
       <dl class="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <div class="stat"><dt>Énergie</dt><dd class="!text-lg">{{ recipe.kcal }} kcal</dd></div>
-        <div class="stat"><dt>Protéines</dt><dd class="!text-lg">{{ recipe.proteins_g|default:"n.c." }} g</dd></div>
-        <div class="stat"><dt>Lipides</dt><dd class="!text-lg">{{ recipe.fat_g|default:"n.c." }} g</dd></div>
-        <div class="stat"><dt>Glucides</dt><dd class="!text-lg">{{ recipe.carbs_g|default:"n.c." }} g</dd></div>
+        <div class="stat"><dt>Protéines</dt><dd class="!text-lg">{{ recipe.proteins_g }} g</dd></div>
+        <div class="stat"><dt>Lipides</dt><dd class="!text-lg">{{ recipe.fat_g }} g</dd></div>
+        <div class="stat"><dt>Glucides</dt><dd class="!text-lg">{{ recipe.carbs_g }} g</dd></div>
       </dl>
+      <p class="muted mt-2 text-xs">Calculées pour {{ recipe.servings }} portion{{ recipe.servings|pluralize }} à partir de la table <a href="https://ciqual.anses.fr" class="underline" rel="noopener">Ciqual 2025 de l'Anses</a>{% if recipe.nutrition_coverage < 100 %}, sur {{ recipe.nutrition_coverage }} % des ingrédients{% endif %}. Valeurs indicatives pour les ingrédients crus.</p>
     {% endif %}
   </section>
 </div>

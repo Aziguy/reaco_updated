@@ -88,7 +88,6 @@ TEMPLATES = [
 DATABASES = {"default": env.db("DATABASE_URL", default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}")}
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-FORMS_URLFIELD_ASSUME_HTTPS = True
 
 REDIS_URL = env("REDIS_URL", default="")
 CACHES = {

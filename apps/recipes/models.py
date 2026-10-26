@@ -41,6 +41,21 @@ class Ingredient(models.Model):
         help_text="Taxonomie Open Food Facts, par ex. en:tomatoes.",
     )
     impactco2_slug = models.CharField("aliment ADEME", max_length=60, blank=True)
+    ciqual_code = models.CharField(
+        "code CIQUAL", max_length=10, blank=True, help_text="Aliment de la table Ciqual de l'Anses."
+    )
+    kcal_100g = models.DecimalField(
+        "kcal / 100 g", max_digits=6, decimal_places=1, null=True, blank=True
+    )
+    proteins_100g = models.DecimalField(
+        "protéines / 100 g", max_digits=5, decimal_places=2, null=True, blank=True
+    )
+    fat_100g = models.DecimalField(
+        "lipides / 100 g", max_digits=5, decimal_places=2, null=True, blank=True
+    )
+    carbs_100g = models.DecimalField(
+        "glucides / 100 g", max_digits=5, decimal_places=2, null=True, blank=True
+    )
     is_staple = models.BooleanField(
         "produit de base", default=False, help_text="Sel, poivre, huile : supposé disponible."
     )
@@ -117,10 +132,13 @@ class Recipe(TimeStampedModel):
     image_license = models.CharField("licence de l'image", max_length=60, blank=True)
     image_license_url = models.URLField("lien de la licence", blank=True)
     image_source = models.URLField("source de l'image", blank=True)
-    kcal = models.PositiveSmallIntegerField("kcal / portion", null=True, blank=True)
-    proteins_g = models.PositiveSmallIntegerField("protéines (g)", null=True, blank=True)
-    fat_g = models.PositiveSmallIntegerField("lipides (g)", null=True, blank=True)
-    carbs_g = models.PositiveSmallIntegerField("glucides (g)", null=True, blank=True)
+    kcal = models.PositiveSmallIntegerField("kcal / portion", null=True, editable=False)
+    proteins_g = models.PositiveSmallIntegerField("protéines (g)", null=True, editable=False)
+    fat_g = models.PositiveSmallIntegerField("lipides (g)", null=True, editable=False)
+    carbs_g = models.PositiveSmallIntegerField("glucides (g)", null=True, editable=False)
+    nutrition_coverage = models.PositiveSmallIntegerField(
+        "couverture nutritionnelle (%)", default=0, editable=False
+    )
     is_featured = models.BooleanField("mise en avant", default=False)
     is_published = models.BooleanField("publiée", default=True)
     author = models.ForeignKey(

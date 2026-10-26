@@ -28,6 +28,35 @@ def recipe_co2(recipe: Recipe, footprints: dict[str, Decimal]) -> Decimal | None
     return total if known else None
 
 
+NUTRIENTS = {
+    "kcal": "kcal_100g",
+    "proteins_g": "proteins_100g",
+    "fat_g": "fat_100g",
+    "carbs_g": "carbs_100g",
+}
+
+
+def recipe_nutrition(recipe: Recipe) -> tuple[dict[str, int] | None, int]:
+    """Per serving nutrients from Ciqual values, and the share of ingredients covered (%)."""
+    totals = dict.fromkeys(NUTRIENTS, Decimal(0))
+    counted = covered = 0
+    for item in recipe.items.all():
+        if item.quantity is None:
+            continue
+        counted += 1
+        ingredient = item.ingredient
+        kg = to_kilograms(item.quantity, item.unit, ingredient.unit_weight_g)
+        if kg is None or ingredient.kcal_100g is None:
+            continue
+        covered += 1
+        for field, source in NUTRIENTS.items():
+            totals[field] += kg * 10 * (getattr(ingredient, source) or 0)
+    coverage = round(100 * covered / counted) if counted else 0
+    if not covered:
+        return None, coverage
+    return {field: round(total / recipe.servings) for field, total in totals.items()}, coverage
+
+
 def refresh(recipe: Recipe, footprints: dict[str, Decimal] | None = None) -> Recipe:
     from apps.pricing.estimator import estimate
 
@@ -42,12 +71,17 @@ def refresh(recipe: Recipe, footprints: dict[str, Decimal] | None = None) -> Rec
     recipe.co2_per_serving = (
         (co2 / servings).quantize(Decimal("0.001")) if co2 is not None else None
     )
+    nutrition, recipe.nutrition_coverage = recipe_nutrition(recipe)
+    for field in NUTRIENTS:
+        setattr(recipe, field, nutrition[field] if nutrition else None)
     recipe.metrics_updated_at = timezone.now()
     recipe.save(
         update_fields=[
             "cost_per_serving",
             "price_coverage",
             "co2_per_serving",
+            *NUTRIENTS,
+            "nutrition_coverage",
             "metrics_updated_at",
         ]
     )

@@ -6,7 +6,7 @@ from django.core.management import call_command
 from django.urls import reverse
 
 from apps.recipes import metrics
-from apps.recipes.models import Favorite, Recipe, RecipeIngredient
+from apps.recipes.models import Favorite, Ingredient, Recipe, RecipeIngredient
 from apps.recipes.units import convert_unit_price, format_quantity, to_base
 
 
@@ -106,6 +106,7 @@ def test_seed_demo_loads_credited_images():
     drawing = Recipe.objects.get(slug="dahl-de-lentilles-corail")
     assert drawing.image.name.endswith(".svg")
     assert drawing.image_credit == "Illustration Comégusto"
+    assert drawing.kcal and drawing.nutrition_coverage == 100
     call_command("seed_demo", stdout=StringIO())
     assert Recipe.objects.filter(slug="ratatouille").count() == 1
     assert RecipeIngredient.objects.filter(recipe=photo).count() == 8
@@ -117,3 +118,28 @@ def test_credits_page(client, recipe):
     recipe.image_license = "CC BY 4.0"
     recipe.save()
     assert "Jane Doe" in client.get(reverse("core:credits")).content.decode()
+
+
+def test_recipe_nutrition_per_serving(recipe, ingredients):
+    Ingredient.objects.filter(pk=ingredients["tomate"].pk).update(
+        kcal_100g=20, proteins_100g=1, fat_100g=0, carbs_100g=4
+    )
+    Ingredient.objects.filter(pk=ingredients["oeuf"].pk).update(
+        kcal_100g=140, proteins_100g=12.8, fat_100g=9.8, carbs_100g=0
+    )
+    recipe = Recipe.objects.with_relations().get(pk=recipe.pk)
+    nutrition, coverage = metrics.recipe_nutrition(recipe)
+    # 250 g tomatoes (50 kcal) + 4 eggs of 60 g (336 kcal), salt not covered, 2 servings
+    assert nutrition == {"kcal": 193, "proteins_g": 17, "fat_g": 12, "carbs_g": 5}
+    assert coverage == 67
+
+
+def test_recipe_nutrition_without_data(recipe):
+    assert metrics.recipe_nutrition(Recipe.objects.with_relations().get(pk=recipe.pk)) == (None, 0)
+
+
+def test_nutrition_block(client, recipe):
+    Recipe.objects.filter(pk=recipe.pk).update(kcal=193, proteins_g=17, fat_g=12, carbs_g=5)
+    content = client.get(recipe.get_absolute_url()).content.decode()
+    assert "193 kcal" in content
+    assert "Ciqual" in content

@@ -8,6 +8,8 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 
 from apps.core.text import make_slug
+from apps.integrations.impactco2 import safe_food_footprints
+from apps.recipes import metrics
 from apps.recipes.models import Diet, Ingredient, Recipe, RecipeIngredient, RecipeStep
 
 DEMO_DIR = Path(settings.BASE_DIR) / "demo"
@@ -26,12 +28,14 @@ class Command(BaseCommand):
         self.refresh_images = refresh_images
         data = json.loads((DEMO_DIR / "recipes.json").read_text(encoding="utf-8"))
         self.credits = json.loads((DEMO_DIR / "images" / "credits.json").read_text("utf-8"))
+        ciqual = json.loads((DEMO_DIR / "ciqual.json").read_text("utf-8"))["foods"]
         diets = {
             name: Diet.objects.get_or_create(slug=make_slug(name), defaults={"name": name})[0]
             for name in data["diets"]
         }
         ingredients = {}
         for row in data["ingredients"]:
+            food = ciqual.get(row.get("ciqual", ""), {})
             ingredients[row["name"]], _ = Ingredient.objects.update_or_create(
                 slug=make_slug(row["name"]),
                 defaults={
@@ -42,11 +46,18 @@ class Command(BaseCommand):
                     "off_category": row.get("off", ""),
                     "impactco2_slug": row.get("co2", ""),
                     "is_staple": row.get("staple", False),
+                    "ciqual_code": row.get("ciqual", ""),
+                    "kcal_100g": food.get("kcal"),
+                    "proteins_100g": food.get("proteins"),
+                    "fat_100g": food.get("fat"),
+                    "carbs_100g": food.get("carbs"),
                 },
             )
+        footprints = safe_food_footprints()
         for row in data["recipes"]:
             recipe = self._recipe(row, ingredients)
             recipe.diets.set(diets[name] for name in row["diets"])
+            metrics.refresh(Recipe.objects.with_relations().get(pk=recipe.pk), footprints)
         self.stdout.write(
             self.style.SUCCESS(f"{len(ingredients)} ingrédients, {len(data['recipes'])} recettes.")
         )
@@ -74,10 +85,6 @@ class Command(BaseCommand):
                 "prep_minutes": row["prep"],
                 "cook_minutes": row["cook"],
                 "origin": row["origin"],
-                "kcal": row.get("kcal"),
-                "proteins_g": row.get("proteins"),
-                "fat_g": row.get("fat"),
-                "carbs_g": row.get("carbs"),
                 "is_featured": row.get("featured", False),
                 **self._credit(row["image"]),
             },

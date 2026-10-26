@@ -7,7 +7,7 @@ from .models import Diet, Ingredient, Recipe, RecipeIngredient, RecipeStep
 
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ("name", "aisle", "price_unit", "off_category", "impactco2_slug", "is_staple")
+    list_display = ("name", "aisle", "price_unit", "off_category", "ciqual_code", "kcal_100g")
     list_filter = ("aisle", "price_unit", "is_staple")
     search_fields = ("name", "off_category")
     prepopulated_fields = {"slug": ("name",)}
@@ -52,6 +52,11 @@ class RecipeAdmin(admin.ModelAdmin):
         "cost_per_serving",
         "price_coverage",
         "co2_per_serving",
+        "kcal",
+        "proteins_g",
+        "fat_g",
+        "carbs_g",
+        "nutrition_coverage",
         "metrics_updated_at",
     )
     inlines = (RecipeIngredientInline, RecipeStepInline)
@@ -66,7 +71,7 @@ class RecipeAdmin(admin.ModelAdmin):
             obj.image.url,
         )
 
-    @admin.action(description="Recalculer coût et empreinte carbone")
+    @admin.action(description="Recalculer coût, empreinte carbone et nutrition")
     def refresh_metrics(self, request, queryset):
         for recipe in queryset.with_relations():
             metrics.refresh(recipe)
