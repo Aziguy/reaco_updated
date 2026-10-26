@@ -33,10 +33,11 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 
 **Recettes**
 - 31 recettes de démonstration, économiques et anti-gaspi (pain perdu, hachis parmentier, riz cantonais, banana bread…), illustrées par des photos sous licence libre.
-- Recherche et filtres instantanés (type de plat, régime, difficulté, temps, tri par prix ou par CO2).
+- Recherche instantanée insensible aux accents (titre, ingrédients, régimes), filtres combinables (type de plat, régime, difficulté, temps) et tri par date, prix, durée ou CO2, avec pagination stable et URL partageables.
 - Ajustement des portions, quantités recalculées à la volée.
 - Coût par portion calculé à partir de prix réels, détail par ingrédient.
 - Empreinte carbone par portion (ADEME Agribalyse) et badge « de saison ».
+- Valeurs nutritionnelles par portion (énergie, protéines, lipides, glucides) calculées à partir de la table Ciqual 2025 de l'Anses.
 - Favoris.
 
 **Comparateur de prix**
@@ -69,6 +70,7 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 | [Open Prices](https://prices.openfoodfacts.org) | Prix observés en magasin, recherche géographique | ODbL |
 | [Open Food Facts](https://world.openfoodfacts.org) | Fiches produits, Nutri-Score, Green-Score, taxonomie des catégories | ODbL |
 | [ADEME Impact CO2](https://impactco2.fr) | Empreinte carbone des aliments, calendrier de saison | Licence Ouverte 2.0 |
+| [Anses Ciqual 2025](https://ciqual.anses.fr) | Composition nutritionnelle des ingrédients | Licence Ouverte 2.0 |
 | [IGN Géoplateforme](https://geoservices.ign.fr) | Géocodage des codes postaux | Licence Ouverte 2.0 |
 | [OpenStreetMap](https://www.openstreetmap.org) | Magasins (via Open Prices) | ODbL |
 
@@ -125,7 +127,7 @@ Pendant le développement, `npm run dev` recompile les styles à chaque modifica
 | --- | --- |
 | `seed_demo [--refresh-images]` | Charge les 83 ingrédients et 31 recettes de démonstration avec leurs photos (idempotent). |
 | `sync_prices [slug ...] [--days N] [--pages N]` | Importe les prix Open Prices puis recalcule les recettes. |
-| `refresh_metrics` | Recalcule coût par portion et empreinte carbone. |
+| `refresh_metrics` | Recalcule coût, empreinte carbone et valeurs nutritionnelles (automatique à chaque enregistrement dans l'administration). |
 | `send_expiry_reminders [--days N]` | Envoie les rappels de péremption. |
 
 ## Configuration
@@ -185,6 +187,10 @@ flowchart LR
   IGN[IGN Géoplateforme] --> U[Localisation utilisateur] --> E
 ```
 
+### Valeurs nutritionnelles
+
+Chaque ingrédient est relié à un aliment de la table Ciqual 2025 (code et valeurs pour 100 g dans `demo/ciqual.json`, modifiables dans l'administration). Les quantités de la recette sont converties en grammes (poids moyen d'une pièce, densité 1 pour les liquides et les cuillères), puis les apports sont additionnés et divisés par le nombre de portions. La part des ingrédients couverts est affichée quand elle n'est pas de 100 %.
+
 ### Calcul des prix
 
 1. Chaque ingrédient est relié à une catégorie Open Food Facts (`en:tomatoes`, `en:butters`…).
@@ -210,7 +216,7 @@ Authentification par session ou par jeton (`Authorization: Token ...`, jetons g�
 ## Qualité
 
 ```bash
-uv run pytest --cov          # 90+ tests, appels externes simulés
+uv run pytest --cov          # 130+ tests, appels externes simulés
 uv run ruff check . && uv run ruff format --check .
 uv run pre-commit install    # vérifications avant chaque commit
 ```
@@ -237,4 +243,4 @@ Les contributions sont bienvenues : voir [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licence
 
-Code sous licence [MIT](LICENSE). Les photos des recettes proviennent de Wikimedia Commons sous licences CC0, CC BY ou CC BY-SA : leurs auteurs et licences sont indiqués sous chaque photo, sur la page `/credits/` et dans `demo/images/credits.json`. Les données issues d'Open Food Facts, d'Open Prices et d'OpenStreetMap restent sous licence ODbL, celles de l'ADEME et de l'IGN sous Licence Ouverte 2.0.
+Code sous licence [MIT](LICENSE). Les photos des recettes proviennent de Wikimedia Commons sous licences CC0, CC BY ou CC BY-SA : leurs auteurs et licences sont indiqués sous chaque photo, sur la page `/credits/` et dans `demo/images/credits.json`. Les données issues d'Open Food Facts, d'Open Prices et d'OpenStreetMap restent sous licence ODbL, celles de l'Anses (Ciqual), de l'ADEME et de l'IGN sous Licence Ouverte 2.0.
