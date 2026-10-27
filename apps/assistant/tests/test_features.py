@@ -232,3 +232,19 @@ def test_hub_lists_tools(client, db):
     content = client.get(reverse("assistant:hub")).content.decode()
     for name in ("plan_new", "fridge", "receipt"):
         assert reverse(f"assistant:{name}") in content
+
+
+def test_fridge_keeps_unconvertible_amounts_as_notes(auth_client, fake_ai, stock):
+    eggs = {"name": "Œuf", "quantity": 150, "unit": "g", "note": "battus"}
+    fake_ai.reply({**RECIPE, "ingredients": [RECIPE["ingredients"][0], eggs]})
+    auth_client.post(
+        reverse("assistant:fridge"), {"products": [stock.pk], "servings": 2, "mode": Mode.FAST}
+    )
+    item = Recipe.objects.get(slug="omelette-du-frigo").items.get(ingredient__slug="oeuf")
+    assert (item.quantity, item.unit, item.note) == (None, "piece", "150 g battus")
+
+
+def test_plan_accepts_integer_budget(fake_ai, menu, user):
+    plan = MealPlan.objects.create(user=user, days=3, servings=2, budget=20)
+    fake_ai.reply({"meals": [], "summary": "", "tips": []})
+    assert planner.generate(plan, Caller(user, "")).status == MealPlan.Status.READY

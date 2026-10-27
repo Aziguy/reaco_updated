@@ -16,7 +16,7 @@ from apps.recipes.forms import SORTS
 from apps.recipes.models import Diet, Ingredient, Recipe, RecipeIngredient
 
 from .models import Feature
-from .providers import Prompt
+from .providers import Prompt, clean_text
 from .services import Caller, Unavailable, ask
 
 SALT = "assistant.search"
@@ -28,11 +28,15 @@ SORT_LABELS = {
     "quick": "Plus rapides d'abord",
     "low_co2": "Faible CO2 d'abord",
 }
+MEAL_COURSES = [
+    Recipe.Course.MAIN, Recipe.Course.STARTER, Recipe.Course.SALAD, Recipe.Course.SOUP,
+]  # fmt: skip
 RELAX_ORDER = [
     ("max_cost", "le budget"),
     ("max_minutes", "le temps"),
     ("keywords", "les mots-clés"),
     ("course", "le type de plat"),
+    ("meal", "le type de repas"),
     ("ingredients", "certains ingrédients"),
 ]
 
@@ -41,11 +45,15 @@ anti-gaspillage, en critères de recherche. Réponds uniquement avec le JSON dem
 
 - ingredients : ingrédients que l'utilisateur veut cuisiner, avec le nom exact de la liste des \
 ingrédients connus quand il existe.
-- excluded : ingrédients refusés (allergie, dégoût, « sans … »).
-- keywords : nom de plat ou de technique cité (gratin, soupe, curry, crêpes), sinon "". Jamais \
-« dîner », « rapide », « pas cher » ni un ingrédient.
-- course : code du type de plat seulement s'il est explicite, sinon "". « Dîner » ou « déjeuner » \
-ne précisent pas le type.
+- excluded : ingrédients refusés par leur nom (allergie, dégoût, « sans champignons »). Si un \
+régime de la liste couvre la demande (« sans lactose », « sans gluten »), utilise diet et laisse \
+excluded vide.
+- keywords : nom de plat ou de technique cité (gratin, curry, crêpes), sinon "". Jamais \
+« dîner », « rapide », « pas cher », un ingrédient ni un mot déjà couvert par course.
+- course : code du type de plat seulement s'il est explicite (« une soupe », « un dessert »), \
+sinon "".
+- meal : true pour un repas sans type précis (« dîner », « déjeuner », « un plat », « repas ») : \
+exclut desserts, boissons, sauces et petits déjeuners. false sinon.
 - diet : code du régime demandé ou évident (« végé » : vegetarien), sinon "".
 - max_minutes : temps total maximum en minutes, 30 pour « rapide », 0 si rien n'est dit.
 - max_cost : budget maximum par portion en euros. Divise un budget total par le nombre de \
@@ -70,6 +78,7 @@ def _schema(courses: list[str], diets: list[str]) -> dict:
             "excluded": names,
             "keywords": text,
             "course": {"type": "string", "enum": ["", *courses]},
+            "meal": {"type": "boolean"},
             "diet": {"type": "string", "enum": ["", *diets]},
             "max_minutes": {"type": "integer"},
             "max_cost": {"type": "number"},
@@ -79,7 +88,7 @@ def _schema(courses: list[str], diets: list[str]) -> dict:
             "summary": text,
         },
         "required": [
-            "ingredients", "excluded", "keywords", "course", "diet", "max_minutes",
+            "ingredients", "excluded", "keywords", "course", "meal", "diet", "max_minutes",
             "max_cost", "sort", "use_pantry", "servings", "summary",
         ],
         "additionalProperties": False,
@@ -101,6 +110,7 @@ class Criteria:
     excluded: list[str] = field(default_factory=list)
     unknown: list[str] = field(default_factory=list)
     course: str = ""
+    meal: bool = False
     diet: str = ""
     max_minutes: int = 0
     max_cost: str = ""
@@ -124,7 +134,7 @@ class Criteria:
     @property
     def is_empty(self) -> bool:
         return not any(
-            (self.keywords, self.ingredients, self.excluded, self.course, self.diet,
+            (self.keywords, self.ingredients, self.excluded, self.course, self.meal, self.diet,
              self.max_minutes, self.max_cost, self.sort, self.use_pantry)
         )  # fmt: skip
 
@@ -146,6 +156,8 @@ class Criteria:
             add(f"Sans {names.get(slug, slug).lower()}", "x", excluded=rest)
         if self.course:
             add(Recipe.Course(self.course).label, "chef", course="")
+        elif self.meal:
+            add("Plat salé", "chef", meal=False)
         if self.diet:
             diet = Diet.objects.filter(slug=self.diet).first()
             add(diet.name if diet else self.diet, "leaf", diet="")
@@ -205,9 +217,10 @@ def _clean(data: dict, text: str) -> Criteria:
         max_minutes=max(0, min(int(data.get("max_minutes") or 0), 600)),
         max_cost=str(Decimal(str(max_cost)).quantize(Decimal("0.01"))) if max_cost > 0 else "",
         sort=data.get("sort") if data.get("sort") in SORT_LABELS else "",
+        meal=bool(data.get("meal")),
         use_pantry=bool(data.get("use_pantry")),
         servings=max(0, min(int(data.get("servings") or 0), 30)),
-        summary=str(data.get("summary") or "")[:200],
+        summary=clean_text(data.get("summary"), 200),
     )
 
 
@@ -236,6 +249,7 @@ def guess(text: str) -> dict:
         "max_minutes": int(minutes.group(1)) if minutes else (30 if "rapide" in words else 0),
         "diet": next((slug for pattern, slug in DIET_WORDS if re.search(pattern, plain)), ""),
         "sort": "cheap" if re.search(r"pas cher|petit budget|econom", plain) else "",
+        "meal": bool(re.search(r"diner|dejeuner|repas|\bplat\b", plain)),
         "use_pantry": bool(re.search(r"frigo|reste|perim|j'ai|placard", plain)),
     }
     if cost:
@@ -294,6 +308,8 @@ def _queryset(criteria: Criteria, user, *, any_ingredient: bool = False):
         recipes = recipes.exclude(pk__in=items.filter(ingredient__slug__in=criteria.excluded))
     if criteria.course:
         recipes = recipes.filter(course=criteria.course)
+    elif criteria.meal:
+        recipes = recipes.filter(course__in=MEAL_COURSES)
     if criteria.diet:
         recipes = recipes.filter(diets__slug=criteria.diet)
     if criteria.max_minutes:

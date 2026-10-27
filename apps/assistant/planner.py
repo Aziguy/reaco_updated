@@ -14,7 +14,7 @@ from apps.shopping.models import ShoppingList
 from apps.shopping.services import add_recipe
 
 from .models import Feature, MealPlan, PlannedMeal
-from .providers import Prompt
+from .providers import Prompt, clean_text
 from .services import Caller, Unavailable, ask
 
 logger = logging.getLogger(__name__)
@@ -110,7 +110,7 @@ def candidates(plan: MealPlan, limit: int = SHORTLIST) -> list[Candidate]:
     stock, urgent = _stock(plan)
     seasonal = seasonal_slugs(timezone.localdate().month)
     meals = len(slots(plan)) * plan.servings
-    target = plan.budget / meals if plan.budget else None
+    target = Decimal(plan.budget) / meals if plan.budget else None
 
     ranked = []
     for recipe in recipes:
@@ -184,7 +184,7 @@ def _assign(plan, shortlist, data) -> list[PlannedMeal]:
         recipe_id = meal.get("recipe_id")
         if key not in wanted or key in chosen or recipe_id not in by_id or recipe_id in used:
             continue
-        reason = str(meal.get("reason") or "")[:300] or by_id[recipe_id].describe()
+        reason = clean_text(meal.get("reason"), 300) or by_id[recipe_id].describe()
         chosen[key] = PlannedMeal(
             plan=plan, day=key[0], slot=key[1], recipe=by_id[recipe_id].recipe, reason=reason
         )
@@ -223,8 +223,8 @@ def generate(plan: MealPlan, caller: Caller) -> MealPlan:
                 "garde-manger, de la saison et des prix."
             )
         else:
-            plan.summary = str(data.get("summary") or "")[:600]
-            plan.tips = [str(tip)[:200] for tip in (data.get("tips") or [])][:3]
+            plan.summary = clean_text(data.get("summary"), 600)
+            plan.tips = [clean_text(tip, 200) for tip in (data.get("tips") or [])][:3]
         with transaction.atomic():
             plan.meals.all().delete()
             PlannedMeal.objects.bulk_create(_assign(plan, shortlist, data))

@@ -37,6 +37,11 @@ class Completion:
     output_tokens: int = 0
 
 
+def clean_text(value, limit: int) -> str:
+    """Model text without stray JSON punctuation at its ends."""
+    return str(value or "").strip().strip("{}[]").strip()[:limit]
+
+
 def parse_json(text: str) -> dict:
     """JSON object from a reply, tolerating code fences or surrounding prose."""
     match = re.search(r"\{.*\}", text or "", re.DOTALL)

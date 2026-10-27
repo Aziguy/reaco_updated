@@ -269,5 +269,5 @@ LOGGING = {
     "formatters": {"simple": {"format": "%(asctime)s %(levelname)s %(name)s %(message)s"}},
     "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "simple"}},
     "root": {"handlers": ["console"], "level": env("LOG_LEVEL", default="INFO")},
-    "loggers": {"httpx": {"level": "WARNING"}},
+    "loggers": {"httpx": {"level": "WARNING"}, "httpx2": {"level": "WARNING"}},
 }

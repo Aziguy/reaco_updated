@@ -214,3 +214,8 @@ def test_setup_assistant_is_idempotent(db):
     call_command("setup_assistant")
     assert Route.objects.count() == len(Feature.values) * len(Mode.values)
     assert Provider.objects.get(name="Anthropic").api_key_env == "ANTHROPIC_API_KEY"
+
+
+def test_clean_text_strips_json_leftovers():
+    assert providers.clean_text(" Un repas léger.} ", 100) == "Un repas léger."
+    assert providers.clean_text(None, 10) == ""

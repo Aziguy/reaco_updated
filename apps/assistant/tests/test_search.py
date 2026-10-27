@@ -15,6 +15,7 @@ REPLY = {
     "excluded": [],
     "keywords": "",
     "course": "",
+    "meal": False,
     "diet": "",
     "max_minutes": 30,
     "max_cost": 4.5,
@@ -74,6 +75,13 @@ def test_apply_relaxes_budget_but_never_the_diet(recipe, vegetarian):
     assert recipes == [recipe] and relaxed == ["le budget"]
     recipes, _ = apply(Criteria(ingredients=["tomate"], diet="vegan"))
     assert recipes == []
+
+
+def test_meal_excludes_desserts(recipe, ingredients):
+    dessert = Recipe.objects.create(title="Crème aux oeufs", course="dessert")
+    dessert.items.create(ingredient=ingredients["oeuf"], quantity=Decimal(4), unit="piece")
+    assert apply(Criteria(ingredients=["oeuf"], meal=True))[0] == [recipe]
+    assert set(apply(Criteria(ingredients=["oeuf"]))[0]) == {recipe, dessert}
 
 
 def test_apply_excludes_ingredients(recipe):

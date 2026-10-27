@@ -7,14 +7,15 @@ from django.db import transaction
 from apps.core.text import make_slug
 from apps.recipes import metrics
 from apps.recipes.models import Ingredient, Recipe, RecipeIngredient, RecipeStep
-from apps.recipes.units import Unit
+from apps.recipes.units import BaseUnit, Unit, format_quantity, unit_label
 
 from .models import Feature
-from .providers import Prompt
+from .providers import Prompt, clean_text
 from .search import ingredient_index, resolve
 from .services import Caller, ask
 
 MIN_INGREDIENTS = 2
+MEASURED = {Unit.GRAM, Unit.KILOGRAM, Unit.MILLILITER, Unit.CENTILITER, Unit.LITER}
 
 SYSTEM = """Tu es le chef de Comégusto, un site qui aide à cuisiner ce que l'on a déjà pour \
 moins gaspiller. Crée une seule recette familiale, simple et appétissante.
@@ -22,7 +23,8 @@ moins gaspiller. Crée une seule recette familiale, simple et appétissante.
 - Utilise en priorité les produits choisis, surtout ceux qui périment bientôt (marqués !).
 - ingredients : uniquement des ingrédients de la liste des ingrédients connus, avec leur nom \
 exact. Les produits de base (sel, poivre, huile…) sont permis s'ils sont dans la liste.
-- Quantités réalistes pour le nombre de personnes demandé, dans les unités autorisées.
+- Quantités réalistes pour le nombre de personnes demandé, dans les unités autorisées. Pour un \
+ingrédient marqué [pièce] (œuf, cube de bouillon…), donne un nombre de pièces.
 - steps : 4 à 8 étapes claires, à l'impératif, sans numéro.
 - title : court et appétissant, sans le mot « anti-gaspi ».
 - summary : une ou deux phrases qui donnent envie.
@@ -71,7 +73,10 @@ class GenerationError(Exception):
 
 def _prompt(products, servings: int, wishes: str) -> Prompt:
     units = ", ".join(f"{unit.value} ({unit.label})" for unit in Unit)
-    known = ", ".join(Ingredient.objects.values_list("name", flat=True))
+    known = ", ".join(
+        f"{name}{' [pièce]' if price_unit == BaseUnit.UNIT else ''}"
+        for name, price_unit in Ingredient.objects.values_list("name", "price_unit")
+    )
     chosen = ", ".join(
         f"{item.ingredient.name if item.ingredient else item.name}"
         f"{' !' if item.urgency in ('soon', 'expired') else ''}"
@@ -119,19 +124,26 @@ def _save(data: dict, user, servings: int) -> Recipe:
         seen.add(slugs[0])
         lines.append((slugs[0], quantity if quantity and quantity > 0 else None, unit, row))
     ingredients = Ingredient.objects.in_bulk([line[0] for line in lines], field_name="slug")
+    for index, (slug, quantity, unit, row) in enumerate(lines):
+        # "0.75 l of stock" for an ingredient sold by the cube cannot be costed: keep it as a note.
+        if ingredients[slug].price_unit == BaseUnit.UNIT and unit in MEASURED and quantity:
+            amount = f"{format_quantity(quantity)} {unit_label(unit, quantity)}"
+            note = f"{amount} {row.get('note') or ''}".strip()
+            lines[index] = (slug, None, Unit.PIECE, {**row, "note": note})
     if sum(not ingredients[slug].is_staple for slug, *_ in lines) < MIN_INGREDIENTS:
         raise GenerationError("La recette proposée n'utilise pas assez d'ingrédients connus.")
-    steps = [str(step).strip() for step in data.get("steps") or [] if str(step).strip()]
+    steps = [clean_text(step, 2000) for step in data.get("steps") or []]
+    steps = [step for step in steps if step]
     if not steps:
         raise GenerationError("La recette proposée n'a pas d'étapes.")
 
-    title = str(data.get("title") or "Recette du frigo").strip()[:200]
+    title = clean_text(data.get("title"), 200) or "Recette du frigo"
     course = data.get("course") if data.get("course") in Recipe.Course.values else "main"
     difficulty = data.get("difficulty")
     recipe = Recipe.objects.create(
         title=title,
         slug=_unique_slug(title),
-        summary=str(data.get("summary") or "")[:500],
+        summary=clean_text(data.get("summary"), 500),
         course=course,
         difficulty=difficulty if difficulty in Recipe.Difficulty.values else 2,
         servings=servings,
