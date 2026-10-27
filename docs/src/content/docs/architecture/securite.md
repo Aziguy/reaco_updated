@@ -28,6 +28,8 @@ Le contrôle `/health/` est traité par un middleware placé avant la validation
 
 `django-csp` applique une politique stricte : `default-src 'self'`, scripts et styles du site uniquement, `object-src 'none'`, `base-uri 'self'`. Les règles qui en découlent pour les templates sont détaillées dans [Front-end](/reaco_updated/architecture/front-end/#contraintes-de-la-csp).
 
+**Exception : l'administration.** Le thème Unfold s'appuie sur Alpine.js et des attributs `style`. Sous `ADMIN_URL` seulement, `apps.core.middleware.CSPMiddleware` ajoute `'unsafe-eval'` aux scripts et `'unsafe-inline'` aux styles. Le reste du site garde la politique stricte, ce que vérifie un test. L'administration n'est accessible qu'au personnel connecté ; gardez un `ADMIN_URL` difficile à deviner en production.
+
 ## Authentification
 
 - django-allauth, connexion par email, vérification de l'adresse réglable (`ACCOUNT_EMAIL_VERIFICATION`, `mandatory` recommandé en production), limitation de débit intégrée d'allauth.

@@ -29,7 +29,9 @@ uv run pytest && uv run python manage.py check --deploy
 
 Django est contraint à `>=5.2,<5.3` : les correctifs de sécurité 5.2.x arrivent avec `uv lock --upgrade-package django`, le passage à une nouvelle version majeure se fait volontairement en modifiant la contrainte.
 
-Avant une montée de version de Django, lisez les notes de version, lancez les tests avec les avertissements de dépréciation visibles (`uv run python -Wd -m pytest`) et vérifiez la compatibilité de django-allauth, django-csp, djangorestframework et drf-spectacular.
+Avant une montée de version de Django, lisez les notes de version, lancez les tests avec les avertissements de dépréciation visibles (`uv run python -Wd -m pytest`) et vérifiez la compatibilité de django-allauth, django-csp, django-unfold, djangorestframework et drf-spectacular.
+
+Après une mise à jour de django-unfold, ouvrez l'administration : de nouveaux textes peuvent apparaître en anglais. Ajoutez leur traduction dans `locale/fr/LC_MESSAGES/django.po`, puis compilez avec `uv run --with babel pybabel compile -d locale -D django -l fr`.
 
 ## Dépendances front-end
 

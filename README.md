@@ -75,6 +75,9 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 **Et aussi**
 - Calendrier des fruits et légumes de saison.
 - Guide utilisateur intégré, avec captures annotées générées automatiquement.
+- Administration moderne (thème Unfold) : tableau de bord, navigation par domaine, mode sombre.
+
+![Tableau de bord de l'administration](docs/screenshots/administration.webp)
 - API REST documentée (OpenAPI).
 - Mode sombre, responsive, accessible au clavier.
 - Suppression du compte et de toutes les données en libre-service.

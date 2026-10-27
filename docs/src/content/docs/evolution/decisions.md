@@ -72,3 +72,9 @@ Chaque décision suit le même format : contexte, décision, conséquences. Pour
 - **Contexte** : apporter une aide en langage naturel sans prix inventés, sans dépendre d'un seul fournisseur et sans dépense incontrôlée.
 - **Décision** : le modèle reçoit les données de l'application et répond par un JSON contraint par un schéma ; l'application valide et calcule les chiffres. Deux clients maison (SDK Anthropic, API compatible OpenAI) plutôt qu'une bibliothèque d'abstraction. Fournisseurs, modèles et routes réglés dans l'administration, quotas, plafond mensuel et replis sans IA.
 - **Conséquences** : changer de modèle ne demande aucun déploiement ; chaque fonctionnalité reste utilisable sans IA ; un nouveau fournisseur compatible OpenAI se configure sans code.
+
+## 12. Administration avec le thème Unfold
+
+- **Contexte** : l'administration Django native est fonctionnelle mais datée, sans tableau de bord ni navigation par domaine.
+- **Décision** : django-unfold (Tailwind, clair et sombre) aux couleurs de Comégusto, barre latérale par domaine, tableau de bord (chiffres clés, budget et appels de l'assistant, recettes à relire), formulaires de recette en onglets. Les textes propres à Unfold sont traduits dans `locale/fr`.
+- **Conséquences** : les classes d'administration héritent de `unfold.admin.ModelAdmin`, y compris celles d'allauth et de DRF réenregistrées dans `apps/core/admin.py` ; la CSP est assouplie sur l'administration seulement (voir [Sécurité](/reaco_updated/architecture/securite/)).
