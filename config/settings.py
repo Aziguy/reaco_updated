@@ -202,6 +202,7 @@ CONTENT_SECURITY_POLICY = {
         "img-src": [
             SELF,
             "data:",
+            "blob:",
             *OFF_IMAGE_HOSTS,
             *MEDIA_HOSTS,
             "https://raw.githubusercontent.com",

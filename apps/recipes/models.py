@@ -89,6 +89,12 @@ class RecipeQuerySet(models.QuerySet):
     def published(self):
         return self.filter(is_published=True)
 
+    def visible_to(self, user):
+        """Published recipes, plus the user's own drafts such as assistant creations."""
+        if user.is_authenticated:
+            return self.filter(models.Q(is_published=True) | models.Q(author=user))
+        return self.published()
+
     def with_relations(self):
         return self.select_related("author").prefetch_related(
             "diets", models.Prefetch("items", RecipeIngredient.objects.select_related("ingredient"))
@@ -141,6 +147,8 @@ class Recipe(TimeStampedModel):
     )
     is_featured = models.BooleanField("mise en avant", default=False)
     is_published = models.BooleanField("publiée", default=True)
+    is_ai_generated = models.BooleanField("créée avec l'assistant", default=False)
+    review_requested = models.BooleanField("publication demandée", default=False)
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
     )

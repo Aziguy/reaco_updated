@@ -1,0 +1,69 @@
+{% load comegusto %}
+<div id="plan" class="space-y-8">
+  <section class="card ai-surface p-6">
+    <div class="flex items-start gap-3">
+      <span class="ai-icon !size-9">{% if plan.is_fallback %}{% icon "info" "size-4" %}{% else %}{% icon "sparkles" "size-4" %}{% endif %}</span>
+      <p class="pt-1.5 text-stone-800 dark:text-stone-100">{{ plan.summary|default:"Votre menu est prêt." }}</p>
+    </div>
+    <dl class="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div class="rounded-xl bg-white/80 p-4 dark:bg-stone-950/60"><dt class="muted">Coût estimé</dt><dd class="mt-1 text-2xl font-semibold text-stone-900 dark:text-white">{% if totals.priced %}{{ totals.cost|euro }}{% else %}n.c.{% endif %}</dd>{% if totals.priced and totals.priced < totals.meals %}<dd class="muted text-xs">sur {{ totals.priced }} repas chiffrés</dd>{% endif %}</div>
+      <div class="rounded-xl bg-white/80 p-4 dark:bg-stone-950/60"><dt class="muted">Par portion</dt><dd class="mt-1 text-2xl font-semibold text-stone-900 dark:text-white">{{ totals.per_serving|euro }}</dd></div>
+      <div class="rounded-xl bg-white/80 p-4 dark:bg-stone-950/60"><dt class="muted">Empreinte carbone</dt><dd class="mt-1 text-2xl font-semibold text-stone-900 dark:text-white">{% if totals.co2 %}{{ totals.co2|co2 }}{% else %}n.c.{% endif %}</dd></div>
+      <div class="rounded-xl bg-white/80 p-4 dark:bg-stone-950/60"><dt class="muted">Produits sauvés</dt><dd class="mt-1 text-2xl font-semibold {% if totals.saved %}text-brand-700 dark:text-brand-300{% else %}text-stone-900 dark:text-white{% endif %}">{{ totals.saved|length }}</dd>{% if totals.saved %}<dd class="muted truncate text-xs" title="{{ totals.saved|join:', ' }}">{{ totals.saved|join:", " }}</dd>{% endif %}</div>
+    </dl>
+  </section>
+
+  <div class="grid gap-8 lg:grid-cols-[1fr_20rem]">
+    <ol class="space-y-4">
+      {% for day in days %}
+        <li class="card overflow-hidden">
+          <h2 class="flex items-center justify-between border-b border-stone-100 bg-stone-50/80 px-5 py-3 text-sm dark:border-stone-800 dark:bg-stone-950/40"><span>{{ day.date|date:"l j F"|capfirst }}</span><span class="muted font-normal">Jour {{ day.number }}</span></h2>
+          <ul class="divide-y divide-stone-100 dark:divide-stone-800">
+            {% for meal in day.meals %}
+              {% with recipe=meal.recipe %}
+              <li class="flex gap-4 p-4 sm:p-5">
+                <a href="{{ recipe.get_absolute_url }}?servings={{ plan.servings }}" class="block size-20 shrink-0 overflow-hidden rounded-xl bg-stone-100 sm:size-24 dark:bg-stone-800" tabindex="-1" aria-hidden="true">
+                  {% if recipe.image %}<img src="{{ recipe.image.url }}" alt="" class="size-full object-cover" loading="lazy">{% else %}{% include "partials/recipe_placeholder.html" %}{% endif %}
+                </a>
+                <div class="min-w-0 flex-1">
+                  <p class="text-xs font-medium uppercase tracking-wide text-brand-700 dark:text-brand-300">{{ meal.get_slot_display }}</p>
+                  <h3 class="mt-0.5 text-base"><a href="{{ recipe.get_absolute_url }}?servings={{ plan.servings }}" class="no-underline hover:underline">{{ recipe.title }}</a></h3>
+                  <p class="mt-1 flex gap-1.5 text-sm text-stone-600 dark:text-stone-300">{% icon "sparkles" "size-3.5 mt-1 shrink-0 text-brand-500" %}<span>{{ meal.reason }}</span></p>
+                  <div class="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-stone-500 dark:text-stone-400">
+                    <span class="inline-flex items-center gap-1">{% icon "clock" "size-3.5" %}{{ recipe.total_minutes|duration }}</span>
+                    {% if recipe.cost_per_serving %}<span class="inline-flex items-center gap-1">{% icon "euro" "size-3.5" %}{{ recipe.cost_per_serving|euro }} / portion</span>{% endif %}
+                    {% if recipe.co2_per_serving %}<span class="inline-flex items-center gap-1">{% icon "cloud" "size-3.5" %}{{ recipe.co2_per_serving|co2 }}</span>{% endif %}
+                  </div>
+                </div>
+                <button type="button" class="btn-ghost no-print size-9 shrink-0 self-start !p-0" hx-post="{% url 'assistant:meal_swap' plan.pk meal.pk %}" hx-target="#plan" hx-swap="outerHTML" aria-label="Changer : {{ recipe.title }}" title="Proposer un autre repas">{% icon "refresh" "size-4" %}</button>
+              </li>
+              {% endwith %}
+            {% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+    </ol>
+
+    <aside class="space-y-6">
+      <div class="card p-5 lg:sticky lg:top-24">
+        <h2 class="text-base">Passer aux courses</h2>
+        <p class="muted mt-1">Tous les ingrédients du menu, moins ce que vous avez déjà, regroupés par rayon.</p>
+        {% if plan.shopping_list %}
+          <a href="{{ plan.shopping_list.get_absolute_url }}" class="btn-primary mt-4 w-full">{% icon "cart" "size-4" %}Voir ma liste</a>
+        {% else %}
+          <form method="post" action="{% url 'assistant:plan_shopping' plan.pk %}" class="mt-4">{% csrf_token %}<button type="submit" class="btn-primary w-full">{% icon "cart" "size-4" %}Créer la liste de courses</button></form>
+        {% endif %}
+        {% if totals.used %}<p class="muted mt-4 border-t border-stone-100 pt-3 text-xs dark:border-stone-800">Déjà dans votre garde-manger : {{ totals.used|join:", " }}.</p>{% endif %}
+      </div>
+      {% if plan.tips %}
+        <div class="card p-5">
+          <h2 class="flex items-center gap-2 text-base">{% icon "leaf" "size-4 text-brand-600" %}Conseils anti-gaspi</h2>
+          <ul class="mt-3 space-y-2 text-sm">
+            {% for tip in plan.tips %}<li class="flex gap-2"><span class="mt-2 size-1.5 shrink-0 rounded-full bg-brand-500"></span>{{ tip }}</li>{% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <p class="muted px-1 text-xs">Coûts estimés avec les prix médians relevés en magasin (Open Prices), CO2 selon l'ADEME. Le bouton {% icon "refresh" "size-3 inline" %} propose un autre repas.</p>
+    </aside>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Assistant anti-gaspi{% endblock %}
+{% block description %}Recherche en langage naturel, menu de la semaine, recette avec les restes du frigo : un assistant qui s'appuie sur de vrais prix et les données ouvertes.{% endblock %}
+{% block main %}
+<section class="ai-surface border-b border-stone-200 dark:border-stone-800">
+  <div class="container-page py-12 sm:py-16">
+    <div class="mx-auto max-w-3xl text-center">
+      <p class="badge-brand">{% icon "sparkles" "size-3.5" %}Nouveau · Assistant</p>
+      <h1 class="mt-4 text-4xl leading-tight sm:text-5xl">Votre assistant <span class="bg-linear-to-r from-brand-600 to-emerald-500 bg-clip-text text-transparent dark:from-brand-400 dark:to-emerald-300">anti-gaspi</span></h1>
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-stone-600 dark:text-stone-300">Dites ce que vous avez et ce que vous voulez dépenser. L'assistant choisit et explique ; les prix, le CO2 et la nutrition sont calculés à partir des données ouvertes.</p>
+    </div>
+    <div class="mx-auto mt-8 max-w-3xl">
+      {% include "assistant/_search_bar.html" %}
+      <div class="mt-4">{% include "assistant/_examples.html" with center=True %}</div>
+    </div>
+  </div>
+</section>
+
+<div class="container-page space-y-14 py-12">
+  <section aria-labelledby="tools-title">
+    <h2 id="tools-title" class="section-title">Trois coups de main pour la semaine</h2>
+    <div class="mt-6 grid gap-6 md:grid-cols-3">
+      {% url 'assistant:plan_new' as plan_url %}{% url 'assistant:fridge' as fridge_url %}{% url 'assistant:receipt' as receipt_url %}
+      {% include "assistant/_tool.html" with icon="calendar" title="Menu de la semaine" text="Des repas qui utilisent d'abord votre garde-manger, dans votre budget, puis la liste de courses en un clic." url=plan_url cta="Composer mon menu" %}
+      {% include "assistant/_tool.html" with icon="chef" title="Vider le frigo" text="Choisissez les produits à sauver : l'assistant invente une recette, Comégusto la chiffre." url=fridge_url cta="Créer une recette" %}
+      {% include "assistant/_tool.html" with icon="receipt" title="Ticket de caisse" text="Photographiez votre ticket : vos achats rejoignent le garde-manger, sans saisie." url=receipt_url cta="Scanner un ticket" %}
+    </div>
+  </section>
+
+  {% if plans or creations %}
+  <section class="grid gap-6 lg:grid-cols-2">
+    {% if plans %}
+      <div class="card p-6">
+        <h2 class="text-base">Mes derniers menus</h2>
+        <ul class="mt-3 divide-y divide-stone-100 dark:divide-stone-800">
+          {% for plan in plans %}
+            <li><a href="{{ plan.get_absolute_url }}" class="flex items-center justify-between gap-3 py-2.5 text-sm no-underline hover:text-brand-700 dark:hover:text-brand-300"><span class="flex items-center gap-2">{% icon "calendar" "size-4 text-stone-400" %}{{ plan }}</span><span class="muted">{{ plan.days }} jours · {{ plan.servings }} pers.</span></a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    {% if creations %}
+      <div class="card p-6">
+        <h2 class="text-base">Mes recettes créées</h2>
+        <ul class="mt-3 divide-y divide-stone-100 dark:divide-stone-800">
+          {% for recipe in creations %}
+            <li><a href="{{ recipe.get_absolute_url }}" class="flex items-center justify-between gap-3 py-2.5 text-sm no-underline hover:text-brand-700 dark:hover:text-brand-300"><span class="flex items-center gap-2">{% icon "chef" "size-4 text-stone-400" %}{{ recipe.title }}</span>{% if recipe.cost_per_serving %}<span class="muted">{{ recipe.cost_per_serving|euro }} / portion</span>{% endif %}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <section class="card p-6 sm:p-8" aria-labelledby="how-title">
+    <h2 id="how-title" class="section-title">Comment ça marche ?</h2>
+    <ol class="mt-6 grid gap-6 sm:grid-cols-3">
+      <li class="flex gap-4"><span class="guide-marker !size-8 !bg-brand-600 !text-sm">1</span><div><p class="font-medium text-stone-900 dark:text-white">Vous décrivez</p><p class="muted mt-1">En une phrase, comme à un ami : vos envies, votre budget, vos restes.</p></div></li>
+      <li class="flex gap-4"><span class="guide-marker !size-8 !bg-brand-600 !text-sm">2</span><div><p class="font-medium text-stone-900 dark:text-white">L'assistant choisit</p><p class="muted mt-1">Il comprend, sélectionne parmi nos recettes et explique ses choix.</p></div></li>
+      <li class="flex gap-4"><span class="guide-marker !size-8 !bg-brand-600 !text-sm">3</span><div><p class="font-medium text-stone-900 dark:text-white">Comégusto chiffre</p><p class="muted mt-1">Prix Open Prices, CO2 de l'ADEME, nutrition Ciqual : jamais de chiffre inventé.</p></div></li>
+    </ol>
+    <p class="muted mt-6 flex items-start gap-2 border-t border-stone-100 pt-4 text-xs dark:border-stone-800">{% icon "info" "size-4 shrink-0" %}<span>L'assistant peut se tromper : vérifiez les allergènes. Vos demandes sont transmises au fournisseur d'IA sans votre nom ni votre email, et les photos de tickets ne sont pas conservées.</span></p>
+  </section>
+</div>
+{% endblock %}

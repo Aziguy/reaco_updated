@@ -1,0 +1,8 @@
+{% load comegusto %}
+<article class="card group relative flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-md">
+  <span class="ai-icon">{% icon icon %}</span>
+  <h3 class="mt-4 text-lg">{{ title }}</h3>
+  <p class="muted mt-1 flex-1 !text-[15px] leading-relaxed">{{ text }}</p>
+  <a href="{{ url }}" class="mt-5 inline-flex items-center gap-1 text-sm font-medium text-brand-700 no-underline after:absolute after:inset-0 group-hover:underline dark:text-brand-300">{{ cta }}{% icon "arrow-right" "size-4 transition group-hover:translate-x-0.5" %}</a>
+  {% if not user.is_authenticated %}<span class="badge-neutral absolute right-4 top-4">Compte gratuit</span>{% endif %}
+</article>

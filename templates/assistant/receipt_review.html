@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Vérifier le ticket{% endblock %}
+{% block content %}
+<nav class="muted mb-6" aria-label="Fil d'Ariane"><a href="{% url 'assistant:hub' %}" class="hover:underline">Assistant</a> / <a href="{% url 'assistant:receipt' %}" class="hover:underline">Ticket de caisse</a> / Vérification</nav>
+<header class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="text-3xl">Vérifiez vos achats</h1>
+    <p class="muted mt-1 !text-base">{% if store or date %}{{ store|default:"Ticket" }}{% if date %} du {{ date }}{% endif %} · {% endif %}Décochez ce que vous ne voulez pas garder et ajoutez les dates de péremption.</p>
+  </div>
+  <a href="{% url 'assistant:receipt' %}" class="btn-secondary btn-sm">{% icon "camera" "size-4" %}Autre ticket</a>
+</header>
+
+<form method="post" action="{% url 'assistant:receipt_save' %}" class="mt-8">
+  {% csrf_token %}
+  {{ formset.management_form }}
+  {% if formset.non_form_errors %}<div class="mb-4 text-sm text-red-600">{{ formset.non_form_errors }}</div>{% endif %}
+  <div class="card overflow-hidden">
+    <div class="hidden grid-cols-[2rem_1fr_6rem_7rem_6rem_9.5rem] gap-3 border-b border-stone-100 bg-stone-50 px-5 py-2.5 text-xs font-medium uppercase tracking-wide text-stone-500 md:grid dark:border-stone-800 dark:bg-stone-950/40 dark:text-stone-400">
+      <span class="sr-only">Garder</span><span>Produit</span><span>Quantité</span><span>Unité</span><span>Prix</span><span>Périme le</span>
+    </div>
+    <ul class="divide-y divide-stone-100 dark:divide-stone-800">
+      {% for line in formset %}
+        <li class="grid grid-cols-[2rem_1fr] items-center gap-3 px-5 py-3 has-[input[type=checkbox]:not(:checked)]:opacity-50 md:grid-cols-[2rem_1fr_6rem_7rem_6rem_9.5rem]">
+          {{ line.ingredient }}
+          <input type="checkbox" name="{{ line.selected.html_name }}" id="{{ line.selected.id_for_label }}" class="size-4 rounded accent-brand-600"{% if line.selected.value %} checked{% endif %} aria-label="Garder {{ line.name.value }}">
+          <div class="min-w-0">
+            <input type="text" name="{{ line.name.html_name }}" value="{{ line.name.value|default:'' }}" maxlength="200" class="input" aria-label="Produit">
+            {% if line.ingredient.value %}<p class="mt-1 text-xs text-brand-700 dark:text-brand-300">{% icon "check" "size-3 inline" %} Relié à un ingrédient : recettes et listes en tiendront compte</p>{% endif %}
+            {{ line.name.errors }}
+          </div>
+          <div class="col-span-2 grid grid-cols-2 gap-2 sm:grid-cols-4 md:col-span-4 md:grid-cols-[6rem_7rem_6rem_9.5rem] md:gap-3">
+            <input type="number" name="{{ line.quantity.html_name }}" value="{{ line.quantity.value|default_if_none:''|stringformat:'s' }}" step="any" min="0" class="input" aria-label="Quantité">
+            <select name="{{ line.unit.html_name }}" class="input" aria-label="Unité">{% for value, label in line.unit.field.choices %}<option value="{{ value }}"{% if value == line.unit.value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>
+            <div class="relative"><input type="number" name="{{ line.estimated_value.html_name }}" value="{{ line.estimated_value.value|default_if_none:''|stringformat:'s' }}" step="0.01" min="0" class="input pr-7" aria-label="Prix payé"><span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-stone-400">€</span></div>
+            <input type="date" name="{{ line.expires_on.html_name }}" value="{{ line.expires_on.value|default_if_none:''|stringformat:'s' }}" class="input" aria-label="Date de péremption">
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+    <p class="muted">{{ formset.total_form_count }} produit{{ formset.total_form_count|pluralize }} reconnu{{ formset.total_form_count|pluralize }}. Vérifiez les quantités : la lecture peut se tromper.</p>
+    <button type="submit" class="btn-primary">{% icon "fridge" "size-4" %}Ajouter au garde-manger</button>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Vider le frigo{% endblock %}
+{% block content %}
+<nav class="muted mb-6" aria-label="Fil d'Ariane"><a href="{% url 'assistant:hub' %}" class="hover:underline">Assistant</a> / Vider le frigo</nav>
+<div class="mx-auto max-w-3xl">
+  <header class="flex items-start gap-4">
+    <span class="ai-icon !size-12">{% icon "chef" "size-6" %}</span>
+    <div>
+      <h1 class="text-3xl">Vider le frigo</h1>
+      <p class="muted mt-1 !text-base">Cochez les produits à sauver : l'assistant invente une recette, Comégusto calcule son prix, son CO2 et sa valeur nutritionnelle. {% include "partials/help_link.html" with chapter="assistant" %}</p>
+    </div>
+  </header>
+
+  {% if error %}<p class="guide-warning mt-6 flex items-start gap-2" role="alert">{% icon "alert" "size-4 mt-0.5 shrink-0" %}<span>{{ error }} Vous pouvez aussi consulter les <a href="{% url 'pantry:suggestions' %}" class="font-medium underline">idées du catalogue</a>.</span></p>{% endif %}
+
+  {% if has_stock %}
+    <form method="post" class="card form-flow relative mt-8 p-6 sm:p-8" data-ai-form>
+      {% csrf_token %}
+      <fieldset class="mb-6">
+        <legend class="mb-1 block text-sm font-medium text-stone-700 dark:text-stone-300">{{ form.products.label }}</legend>
+        <p class="muted mb-3 text-xs">Ceux qui périment bientôt sont déjà cochés. Dix au maximum.</p>
+        {{ form.products.errors }}
+        <div class="grid gap-2 sm:grid-cols-2">
+          {% for item in form.products.field.queryset %}
+            <label class="choice !mb-0 !font-normal">
+              <input type="checkbox" name="products" value="{{ item.pk }}"{% if item.pk in form.products.value or item.pk|stringformat:"s" in form.products.value %} checked{% endif %}>
+              <span class="min-w-0 flex-1"><span class="block truncate font-medium text-stone-900 dark:text-white">{{ item.name }}</span>{% if item.display_quantity %}<span class="muted text-xs">{{ item.display_quantity }}</span>{% endif %}</span>
+              {% if item.urgency == "expired" %}<span class="badge-danger shrink-0">Périmé</span>{% elif item.urgency == "soon" %}<span class="badge-warn shrink-0">{% if item.days_left == 0 %}Aujourd'hui{% else %}J-{{ item.days_left }}{% endif %}</span>{% endif %}
+            </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <div class="grid gap-x-6 sm:grid-cols-[8rem_1fr]">
+        {% include "partials/field.html" with field=form.servings %}
+        {% include "partials/field.html" with field=form.wishes %}
+      </div>
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        {% include "assistant/_mode.html" with field=form.mode help="Approfondi soigne davantage les associations de saveurs." %}
+        <button type="submit" class="btn-primary !w-auto px-5">{% icon "sparkles" "size-4" %}Créer ma recette</button>
+      </div>
+      {% if recipe_left is not None %}<p class="muted mt-4 text-xs">{{ recipe_left }} création{{ recipe_left|pluralize }} restante{{ recipe_left|pluralize }} aujourd'hui.</p>{% endif %}
+      {% include "assistant/_loading.html" with title="Le chef imagine votre recette…" text="Associations, quantités et étapes, puis calcul du prix et du CO2." %}
+    </form>
+  {% else %}
+    <div class="card mt-8 flex flex-col items-center p-10 text-center">
+      <span class="flex size-12 items-center justify-center rounded-full bg-stone-100 text-stone-500 dark:bg-stone-800 dark:text-stone-300">{% icon "fridge" %}</span>
+      <p class="mt-4 font-medium">Votre garde-manger est vide.</p>
+      <p class="muted mt-1">Ajoutez quelques produits, ou photographiez votre dernier ticket de caisse.</p>
+      <div class="mt-5 flex flex-wrap justify-center gap-3">
+        <a href="{% url 'assistant:receipt' %}" class="btn-primary">{% icon "receipt" "size-4" %}Scanner un ticket</a>
+        <a href="{% url 'pantry:add' %}" class="btn-secondary">{% icon "plus" "size-4" %}Ajouter un produit</a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

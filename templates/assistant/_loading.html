@@ -1,0 +1,11 @@
+{% load comegusto %}
+<div class="ai-loading absolute inset-0 z-10 flex-col items-center justify-center rounded-2xl bg-white/90 px-6 text-center backdrop-blur-sm dark:bg-stone-900/90" role="status">
+  <span class="ai-icon !size-14 motion-safe:animate-pulse">{% icon "sparkles" "size-7" %}</span>
+  <p class="mt-4 text-lg font-semibold text-stone-900 dark:text-white">{{ title }}</p>
+  <p class="muted mt-1 max-w-xs">{{ text }}</p>
+  <span class="mt-4 flex gap-1.5" aria-hidden="true">
+    <span class="size-2 rounded-full bg-brand-500 motion-safe:animate-bounce"></span>
+    <span class="size-2 rounded-full bg-brand-500 motion-safe:animate-bounce [animation-delay:150ms]"></span>
+    <span class="size-2 rounded-full bg-brand-500 motion-safe:animate-bounce [animation-delay:300ms]"></span>
+  </span>
+</div>

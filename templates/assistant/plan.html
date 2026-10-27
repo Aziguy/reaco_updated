@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}{{ plan }}{% endblock %}
+{% block content %}
+<nav class="muted mb-6 no-print" aria-label="Fil d'Ariane"><a href="{% url 'assistant:hub' %}" class="hover:underline">Assistant</a> / <a href="{% url 'assistant:plan_new' %}" class="hover:underline">Menu de la semaine</a> / {{ plan.created_at|date:"j F" }}</nav>
+<header class="flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <h1 class="text-3xl">{{ plan }}</h1>
+    <ul class="mt-2 flex flex-wrap gap-2">
+      <li class="badge-neutral">{% icon "calendar" "size-3.5" %}{{ plan.days }} jours</li>
+      <li class="badge-neutral">{% icon "users" "size-3.5" %}{{ plan.servings }} personne{{ plan.servings|pluralize }}</li>
+      {% if plan.budget %}<li class="badge-neutral">{% icon "euro" "size-3.5" %}Budget {{ plan.budget|euro }}</li>{% endif %}
+      {% if plan.diet %}<li class="badge-brand">{% icon "leaf" "size-3.5" %}{{ plan.diet.name }}</li>{% endif %}
+      {% if plan.is_fallback %}<li class="badge-warn">Composé automatiquement</li>{% elif plan.status == "ready" %}<li class="badge-brand">{% icon "sparkles" "size-3.5" %}{{ plan.get_mode_display }}</li>{% endif %}
+    </ul>
+  </div>
+  <div class="no-print flex gap-2">
+    <button type="button" class="btn-secondary btn-sm" data-print>{% icon "printer" "size-4" %}Imprimer</button>
+    <a href="{% url 'assistant:plan_new' %}" class="btn-secondary btn-sm">{% icon "plus" "size-4" %}Nouveau menu</a>
+  </div>
+</header>
+
+<div class="mt-8">
+  {% if plan.status == "ready" %}
+    {% include "assistant/_plan.html" %}
+  {% else %}
+    {% include "assistant/_plan_status.html" %}
+  {% endif %}
+</div>
+{% endblock %}

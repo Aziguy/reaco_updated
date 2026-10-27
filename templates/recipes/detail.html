@@ -3,6 +3,7 @@
 {% block title %}{{ recipe.title }}{% endblock %}
 {% block description %}{{ recipe.summary|default:recipe.title }}{% endblock %}
 {% block content %}
+{% if recipe.is_ai_generated %}{% include "assistant/_recipe_banner.html" %}{% endif %}
 <nav class="muted mb-6" aria-label="Fil d'Ariane"><a href="{% url 'recipes:list' %}" class="hover:underline">Recettes</a> / {{ recipe.get_course_display }}</nav>
 
 <div class="grid gap-8 lg:grid-cols-[1.2fr_1fr]">

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Menu de la semaine{% endblock %}
+{% block content %}
+<nav class="muted mb-6" aria-label="Fil d'Ariane"><a href="{% url 'assistant:hub' %}" class="hover:underline">Assistant</a> / Menu de la semaine</nav>
+<div class="grid gap-10 lg:grid-cols-[1fr_20rem]">
+  <div>
+    <header class="flex items-start gap-4">
+      <span class="ai-icon !size-12">{% icon "calendar" "size-6" %}</span>
+      <div>
+        <h1 class="text-3xl">Menu de la semaine</h1>
+        <p class="muted mt-1 !text-base">Des repas qui sauvent d'abord votre garde-manger et respectent votre budget. {% include "partials/help_link.html" with chapter="assistant" %}</p>
+      </div>
+    </header>
+
+    <form method="post" class="card form-flow relative mt-8 p-6 sm:p-8" data-ai-form>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div class="grid gap-x-6 sm:grid-cols-2">
+        {% include "partials/field.html" with field=form.days %}
+        {% include "partials/field.html" with field=form.servings %}
+      </div>
+      <fieldset class="mb-4">
+        <legend class="mb-1 block text-sm font-medium text-stone-700 dark:text-stone-300">{{ form.meals_per_day.label }}</legend>
+        <div class="grid gap-3 sm:grid-cols-2">
+          {% for radio in form.meals_per_day %}
+            <label for="{{ radio.id_for_label }}" class="choice !mb-0 !font-normal">{{ radio.tag }}<span class="flex size-8 items-center justify-center rounded-lg bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-300">{% if radio.data.value == 2 %}{% icon "sun" "size-4" %}{% else %}{% icon "moon" "size-4" %}{% endif %}</span><span class="font-medium text-stone-900 dark:text-white">{{ radio.choice_label }}</span></label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <div class="grid gap-x-6 sm:grid-cols-2">
+        <div class="field">
+          <label for="{{ form.budget.id_for_label }}">{{ form.budget.label }}</label>
+          {{ form.budget.errors }}
+          <div class="relative">{{ form.budget }}<span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-stone-400">€</span></div>
+        </div>
+        {% include "partials/field.html" with field=form.diet %}
+      </div>
+      {% include "partials/field.html" with field=form.preferences %}
+      <label for="{{ form.use_pantry.id_for_label }}" class="choice mb-5 !font-normal">{{ form.use_pantry }}<span><span class="block font-medium text-stone-900 dark:text-white">Utiliser mon garde-manger</span><span class="muted">Les produits qui périment bientôt passent en premier.</span></span></label>
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        {% include "assistant/_mode.html" with field=form.mode help="Approfondi équilibre mieux les repas, en quelques secondes de plus." %}
+        <button type="submit" class="btn-primary !w-auto px-5">{% icon "sparkles" "size-4" %}Composer mon menu</button>
+      </div>
+      {% include "assistant/_loading.html" with title="C'est parti !" text="Préparation de votre menu…" %}
+    </form>
+  </div>
+
+  <aside class="space-y-6">
+    <div class="card ai-surface p-5">
+      <h2 class="text-base">Ce que fait l'assistant</h2>
+      <ul class="mt-3 space-y-3 text-sm">
+        <li class="flex gap-2">{% icon "fridge" "size-4 mt-0.5 shrink-0 text-brand-600" %}Il part de vos produits, en priorité ceux qui périment.</li>
+        <li class="flex gap-2">{% icon "euro" "size-4 mt-0.5 shrink-0 text-brand-600" %}Il respecte votre budget, calculé avec les prix relevés en magasin.</li>
+        <li class="flex gap-2">{% icon "sprout" "size-4 mt-0.5 shrink-0 text-brand-600" %}Il varie les plats et privilégie la saison.</li>
+        <li class="flex gap-2">{% icon "cart" "size-4 mt-0.5 shrink-0 text-brand-600" %}Vous obtenez la liste de courses en un clic, sans ce que vous avez déjà.</li>
+      </ul>
+      {% if plan_left is not None %}<p class="muted mt-4 border-t border-brand-100 pt-3 text-xs dark:border-brand-900">{{ plan_left }} menu{{ plan_left|pluralize }} avec l'assistant restant{{ plan_left|pluralize }} aujourd'hui. Au-delà, le menu est composé automatiquement.</p>{% endif %}
+    </div>
+    {% if plans %}
+      <div class="card p-5">
+        <h2 class="text-base">Menus précédents</h2>
+        <ul class="mt-2 divide-y divide-stone-100 dark:divide-stone-800">
+          {% for plan in plans %}
+            <li><a href="{{ plan.get_absolute_url }}" class="block py-2.5 text-sm no-underline hover:text-brand-700 dark:hover:text-brand-300"><span class="font-medium">{{ plan }}</span><span class="muted mt-0.5 block truncate">{% for meal in plan.meals.all|slice:":3" %}{{ meal.recipe.title }}{% if not forloop.last %}, {% endif %}{% endfor %}…</span></a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </aside>
+</div>
+{% endblock %}

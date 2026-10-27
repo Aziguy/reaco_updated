@@ -1,0 +1,20 @@
+{% load comegusto %}
+{% if plan.status == "failed" %}
+  <div class="card p-10 text-center">
+    <p class="font-medium">La préparation du menu a échoué.</p>
+    <p class="muted mt-1">Réessayez dans un instant.</p>
+    <a href="{% url 'assistant:plan_new' %}" class="btn-primary mt-4">Recommencer</a>
+  </div>
+{% else %}
+  <div class="card ai-surface flex flex-col items-center px-6 py-14 text-center"
+       hx-post="{% url 'assistant:plan_run' plan.pk %}" hx-trigger="{% if plan.status == 'pending' %}load{% else %}load delay:3s{% endif %}" hx-swap="outerHTML">
+    <span class="ai-icon !size-16 motion-safe:animate-pulse">{% icon "sparkles" "size-8" %}</span>
+    <p class="mt-5 text-xl font-semibold text-stone-900 dark:text-white">Composition de votre menu…</p>
+    <ul class="mt-5 space-y-2 text-left text-sm text-stone-600 dark:text-stone-300">
+      <li class="flex items-center gap-2">{% icon "check" "size-4 text-brand-600" %}Lecture du garde-manger et des dates de péremption</li>
+      <li class="flex items-center gap-2">{% icon "check" "size-4 text-brand-600" %}Sélection des recettes de saison dans votre budget</li>
+      <li class="flex items-center gap-2"><span class="size-4 rounded-full border-2 border-brand-500 border-t-transparent motion-safe:animate-spin"></span>Équilibrage des repas de la semaine</li>
+    </ul>
+    <p class="muted mt-6 text-xs">Comptez quelques secondes.</p>
+  </div>
+{% endif %}

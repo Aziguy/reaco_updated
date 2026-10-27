@@ -1,0 +1,17 @@
+{% load comegusto %}
+{% if recipe.is_published %}
+  <p class="badge-brand mb-4">{% icon "sparkles" "size-3.5" %}Créée avec l'assistant, relue par l'équipe</p>
+{% elif recipe.author_id == user.pk %}
+  <section class="card ai-surface mb-6 flex flex-wrap items-center gap-4 p-4 sm:p-5" aria-label="Recette créée avec l'assistant">
+    <span class="ai-icon">{% icon "sparkles" %}</span>
+    <div class="min-w-0 flex-1">
+      <p class="font-medium text-stone-900 dark:text-white">Recette créée pour vous par l'assistant</p>
+      <p class="muted">Visible par vous seul. Prix, CO2 et nutrition sont calculés par Comégusto ; vérifiez les cuissons et les allergènes.</p>
+    </div>
+    {% if recipe.review_requested %}
+      <span class="badge-neutral">{% icon "clock" "size-3.5" %}Relecture demandée</span>
+    {% else %}
+      <form method="post" action="{% url 'assistant:propose' recipe.slug %}">{% csrf_token %}<button type="submit" class="btn-secondary btn-sm">{% icon "users" "size-4" %}Proposer à la communauté</button></form>
+    {% endif %}
+  </section>
+{% endif %}

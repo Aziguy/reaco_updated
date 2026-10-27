@@ -38,3 +38,5 @@ class AddRecipeForm(forms.Form):
         self.fields["shopping_list"].queryset = ShoppingList.objects.filter(
             user=user, is_archived=False
         )
+        if user is not None:
+            self.fields["recipe"].queryset = Recipe.objects.visible_to(user)

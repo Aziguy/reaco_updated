@@ -76,7 +76,8 @@ def _ingredients_context(request, recipe: Recipe, servings: int) -> dict:
 
 def recipe_detail(request, slug):
     recipe = get_object_or_404(
-        Recipe.objects.published().with_relations().prefetch_related("steps"), slug=slug
+        Recipe.objects.visible_to(request.user).with_relations().prefetch_related("steps"),
+        slug=slug,
     )
     servings = _servings(request, recipe)
     context = _ingredients_context(request, recipe, servings)
@@ -89,7 +90,7 @@ def recipe_detail(request, slug):
 
 
 def recipe_prices(request, slug):
-    recipe = get_object_or_404(Recipe.objects.published().with_relations(), slug=slug)
+    recipe = get_object_or_404(Recipe.objects.visible_to(request.user).with_relations(), slug=slug)
     servings = _servings(request, recipe)
     near = request.user.location if request.user.is_authenticated else None
     basket, local = estimate_near(basket_lines(recipe, servings), near)
@@ -107,7 +108,7 @@ def recipe_prices(request, slug):
 @login_required
 @require_POST
 def toggle_favorite(request, slug):
-    recipe = get_object_or_404(Recipe.objects.published(), slug=slug)
+    recipe = get_object_or_404(Recipe.objects.visible_to(request.user), slug=slug)
     favorite, created = Favorite.objects.get_or_create(user=request.user, recipe=recipe)
     if not created:
         favorite.delete()
@@ -116,5 +117,5 @@ def toggle_favorite(request, slug):
 
 @login_required
 def favorites(request):
-    recipes = Recipe.objects.published().filter(favorites__user=request.user)
+    recipes = Recipe.objects.visible_to(request.user).filter(favorites__user=request.user)
     return render(request, "recipes/favorites.html", {"recipes": recipes.order_by("title")})

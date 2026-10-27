@@ -43,7 +43,15 @@ class RecipeAdmin(admin.ModelAdmin):
         "is_published",
     )
     list_display_links = ("thumbnail", "title")
-    list_filter = ("course", "difficulty", "diets", "is_featured", "is_published")
+    list_filter = (
+        "course",
+        "difficulty",
+        "diets",
+        "is_featured",
+        "is_published",
+        "is_ai_generated",
+        "review_requested",
+    )
     list_editable = ("is_featured", "is_published")
     search_fields = ("title", "origin")
     prepopulated_fields = {"slug": ("title",)}
@@ -60,7 +68,7 @@ class RecipeAdmin(admin.ModelAdmin):
         "metrics_updated_at",
     )
     inlines = (RecipeIngredientInline, RecipeStepInline)
-    actions = ("refresh_metrics",)
+    actions = ("refresh_metrics", "publish")
 
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)
@@ -74,6 +82,11 @@ class RecipeAdmin(admin.ModelAdmin):
             '<img src="{}" width="48" height="48" style="object-fit:cover;border-radius:8px">',
             obj.image.url,
         )
+
+    @admin.action(description="Publier les recettes sélectionnées")
+    def publish(self, request, queryset):
+        count = queryset.update(is_published=True, review_requested=False)
+        self.message_user(request, f"{count} recette(s) publiée(s).")
 
     @admin.action(description="Recalculer coût, empreinte carbone et nutrition")
     def refresh_metrics(self, request, queryset):

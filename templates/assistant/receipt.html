@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Ticket de caisse{% endblock %}
+{% block content %}
+<nav class="muted mb-6" aria-label="Fil d'Ariane"><a href="{% url 'assistant:hub' %}" class="hover:underline">Assistant</a> / Ticket de caisse</nav>
+<div class="mx-auto max-w-2xl">
+  <header class="flex items-start gap-4">
+    <span class="ai-icon !size-12">{% icon "receipt" "size-6" %}</span>
+    <div>
+      <h1 class="text-3xl">Ticket de caisse</h1>
+      <p class="muted mt-1 !text-base">Photographiez votre ticket : l'assistant reconnaît vos achats, vous vérifiez, ils rejoignent le garde-manger. {% include "partials/help_link.html" with chapter="assistant" %}</p>
+    </div>
+  </header>
+
+  {% if error %}<p class="guide-warning mt-6 flex items-start gap-2" role="alert">{% icon "alert" "size-4 mt-0.5 shrink-0" %}<span>{{ error }}</span></p>{% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="card form-flow relative mt-8 p-6 sm:p-8" data-ai-form>
+    {% csrf_token %}
+    {{ form.photo.errors }}
+    <label for="{{ form.photo.id_for_label }}" class="!mb-0 flex cursor-pointer flex-col !font-normal items-center justify-center rounded-2xl border-2 border-dashed border-stone-300 bg-stone-50 px-6 py-10 text-center transition hover:border-brand-400 hover:bg-brand-50/50 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-brand-500 dark:border-stone-700 dark:bg-stone-950 dark:hover:border-brand-700 dark:hover:bg-brand-950/40" data-dropzone>
+      <img alt="" class="hidden max-h-56 rounded-xl object-contain shadow-sm" data-preview>
+      <span class="flex size-14 items-center justify-center rounded-full bg-white text-brand-600 shadow-sm dark:bg-stone-900 dark:text-brand-400" data-placeholder>{% icon "camera" "size-6" %}</span>
+      <span class="mt-4 text-base font-medium text-stone-900 dark:text-white" data-filename>Prendre une photo ou choisir une image</span>
+      <span class="muted mt-1">Ticket bien à plat, entier et lisible. JPEG, PNG ou WebP, 8 Mo maximum.</span>
+      <input type="file" name="photo" id="{{ form.photo.id_for_label }}" accept="image/*" capture="environment" required class="sr-only">
+    </label>
+    <div class="mt-6 flex flex-wrap items-end justify-between gap-4">
+      {% include "assistant/_mode.html" with field=form.mode help="Approfondi lit mieux les tickets froissés ou abrégés." %}
+      <button type="submit" class="btn-primary !w-auto px-5">{% icon "sparkles" "size-4" %}Lire le ticket</button>
+    </div>
+    <p class="muted mt-4 flex items-start gap-2 text-xs">{% icon "info" "size-4 shrink-0" %}<span>La photo est lue puis oubliée : elle n'est jamais enregistrée.{% if receipt_left is not None %} {{ receipt_left }} lecture{{ receipt_left|pluralize }} restante{{ receipt_left|pluralize }} aujourd'hui.{% endif %}</span></p>
+    {% include "assistant/_loading.html" with title="Lecture du ticket…" text="Reconnaissance des produits, des quantités et des prix." %}
+  </form>
+</div>
+{% endblock %}

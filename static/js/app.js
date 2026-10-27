@@ -118,6 +118,34 @@ function setupScanner() {
   });
 }
 
+function setupAiForms() {
+  document.addEventListener("submit", (event) => {
+    const form = event.target;
+    if (!form.matches("[data-ai-form]") || event.defaultPrevented) return;
+    form.classList.add("is-loading");
+    form.setAttribute("aria-busy", "true");
+  });
+  window.addEventListener("pageshow", () => {
+    document.querySelectorAll("[data-ai-form].is-loading").forEach((form) => {
+      form.classList.remove("is-loading");
+      form.removeAttribute("aria-busy");
+    });
+  });
+}
+
+function setupDropzone() {
+  document.addEventListener("change", (event) => {
+    const zone = event.target.closest("[data-dropzone]");
+    const file = event.target.files?.[0];
+    if (!zone || !file) return;
+    const preview = $("[data-preview]", zone);
+    preview.src = URL.createObjectURL(file);
+    preview.classList.remove("hidden");
+    $("[data-placeholder]", zone).classList.add("hidden");
+    $("[data-filename]", zone).textContent = file.name;
+  });
+}
+
 setupThemeToggle();
 setupMenu();
 setupConfirm();
@@ -126,3 +154,5 @@ setupAutosubmit();
 setupBrokenLogos();
 setupGeolocation();
 setupScanner();
+setupAiForms();
+setupDropzone();

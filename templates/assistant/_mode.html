@@ -1,0 +1,10 @@
+{% load comegusto %}
+<fieldset>
+  <legend class="mb-1 block text-sm font-medium text-stone-700 dark:text-stone-300">Mode de l'assistant</legend>
+  <div class="segmented">
+    {% for radio in field %}
+      <label for="{{ radio.id_for_label }}">{{ radio.tag }}{% if radio.data.value == "deep" %}{% icon "brain" "size-3.5" %}{% else %}{% icon "zap" "size-3.5" %}{% endif %}{{ radio.choice_label }}</label>
+    {% endfor %}
+  </div>
+  <span class="helptext">{{ help }}</span>
+</fieldset>
