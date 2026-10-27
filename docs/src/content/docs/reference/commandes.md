@@ -41,6 +41,10 @@ Envoie un email récapitulatif aux utilisateurs actifs, ayant gardé les rappels
 | `--days N` | 2 | Produits qui périment dans les N prochains jours (ou déjà périmés) |
 | `--base-url URL` | `http://localhost:8000` | Adresse du site dans le lien de l'email |
 
+### `setup_assistant`
+
+Crée les fournisseurs, modèles et routes par défaut de l'assistant, sans modifier ceux qui existent. Exécutée au démarrage du conteneur. Voir [Assistant IA](/reaco_updated/architecture/assistant-ia/).
+
 ### `capture_guide [nom ...]`
 
 Régénère les captures annotées du guide utilisateur dans `static/img/guide/`, en thème clair et sombre. Nécessite le serveur de développement lancé sur la même base. Voir [Guide utilisateur intégré](/reaco_updated/developpement/guide-utilisateur/).

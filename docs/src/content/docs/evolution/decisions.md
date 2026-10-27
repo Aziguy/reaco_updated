@@ -66,3 +66,9 @@ Chaque décision suit le même format : contexte, décision, conséquences. Pour
 - **Contexte** : documentation développeur publiée sur GitHub Pages, en français, avec recherche et diagrammes. Material for MkDocs n'est plus maintenu au-delà de novembre 2026.
 - **Décision** : Astro Starlight dans `docs/`, diagrammes Mermaid, publication par GitHub Actions.
 - **Conséquences** : la documentation vit dans le dépôt et suit les pull requests ; Node.js est nécessaire pour la construire.
+
+## 11. Assistant IA : l'application chiffre, les modèles sont interchangeables
+
+- **Contexte** : apporter une aide en langage naturel sans prix inventés, sans dépendre d'un seul fournisseur et sans dépense incontrôlée.
+- **Décision** : le modèle reçoit les données de l'application et répond par un JSON contraint par un schéma ; l'application valide et calcule les chiffres. Deux clients maison (SDK Anthropic, API compatible OpenAI) plutôt qu'une bibliothèque d'abstraction. Fournisseurs, modèles et routes réglés dans l'administration, quotas, plafond mensuel et replis sans IA.
+- **Conséquences** : changer de modèle ne demande aucun déploiement ; chaque fonctionnalité reste utilisable sans IA ; un nouveau fournisseur compatible OpenAI se configure sans code.

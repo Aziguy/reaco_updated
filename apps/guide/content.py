@@ -401,6 +401,13 @@ CHAPTERS = [
         ("anti-gaspi",),
     ),
     Chapter(
+        "assistant",
+        "Assistant IA",
+        "Chercher en une phrase, composer un menu, vider le frigo, lire un ticket.",
+        "sparkles",
+        (),
+    ),
+    Chapter(
         "courses",
         "Listes de courses",
         "Préparer, compléter et ranger vos courses.",

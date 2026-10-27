@@ -65,6 +65,13 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 - Articles regroupés par rayon, cochables, version imprimable.
 - Rangement des achats dans le garde-manger en un clic.
 
+**Assistant IA**
+- Recherche en langage naturel (« un dîner végé pour 4 à moins de 10 € ») traduite en critères, avec étiquettes retirables.
+- Menu de la semaine qui sauve d'abord les produits qui périment, dans un budget, puis liste de courses en un clic.
+- Recette « vider le frigo » inventée à partir des produits choisis, chiffrée par l'application.
+- Lecture d'un ticket de caisse en photo pour remplir le garde-manger.
+- Fournisseurs (Anthropic, GitHub Models, Mistral, Ollama…), modèles, niveau de réflexion et quotas réglés dans l'administration, plafond de dépenses mensuel, replis sans IA. Le modèle choisit et explique, les chiffres viennent toujours des données ouvertes.
+
 **Et aussi**
 - Calendrier des fruits et légumes de saison.
 - Guide utilisateur intégré, avec captures annotées générées automatiquement.
@@ -145,6 +152,7 @@ Toute la configuration passe par des variables d'environnement (voir `.env.examp
 
 - l'**envoi d'emails** : format de `EMAIL_URL`, fournisseurs (Brevo, boîte mail du domaine, Gmail), délivrabilité, test et dépannage ;
 - la **connexion avec Google** : création du client OAuth et URL de redirection ;
+- l'**assistant IA** : clés des fournisseurs, plafond de dépenses ;
 - le domaine, la sécurité, la base, le cache, les médias, les prix, les tâches planifiées et les alertes d'erreur ;
 - la référence complète des variables.
 
@@ -157,6 +165,7 @@ Les variables essentielles en production :
 | `DATABASE_URL` (ou `POSTGRES_PASSWORD` avec Docker Compose) | `postgres://...` |
 | `EMAIL_URL`, `DEFAULT_FROM_EMAIL`, `CONTACT_EMAIL` | `smtp+tls://...@smtp-relay.brevo.com:587` |
 | `ADMIN_URL` | `gestion-8f3k/` |
+| `ANTHROPIC_API_KEY` (facultatif) | clé de l'API Anthropic pour l'assistant |
 
 ## Architecture
 
@@ -172,6 +181,7 @@ apps/
   shopping/          listes de courses, fusion, déduction du stock, comparaison
   api/               API REST (DRF) et schéma OpenAPI
   guide/             guide utilisateur intégré, commande de capture des figures
+  assistant/         assistant IA : fournisseurs, quotas, recherche, menu, frigo, ticket
 templates/           gabarits Django (HTMX pour les interactions)
 assets/app.css       source Tailwind CSS v4, compilée vers static/css/app.css
 demo/                recettes de démonstration, photos et crédits (images/credits.json)
@@ -240,7 +250,7 @@ Pour signaler une vulnérabilité, merci d'écrire à l'adresse de contact plut�
 
 ## Feuille de route
 
-Le suivi se fait dans les [issues](https://github.com/Aziguy/reaco_updated/issues). Pistes : contribution de prix vers Open Prices depuis l'application, import de recettes, planning de repas hebdomadaire, notifications push, application mobile installable (PWA).
+Le suivi se fait dans les [issues](https://github.com/Aziguy/reaco_updated/issues). Pistes : contribution de prix vers Open Prices depuis l'application, import de recettes, notifications push, application mobile installable (PWA).
 
 ## Contribuer
 

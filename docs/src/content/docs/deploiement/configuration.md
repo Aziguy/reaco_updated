@@ -170,6 +170,21 @@ Créez le premier administrateur avec `python manage.py createsuperuser`.
 
 `CONTACT_EMAIL` figure aussi dans l'en-tête `User-Agent` envoyé à Open Food Facts, comme le demande le projet.
 
+## Assistant IA
+
+L'assistant fonctionne avec un ou plusieurs fournisseurs, configurés dans l'administration (section **Assistant IA**). Les clés restent dans l'environnement. Sans clé, l'application fonctionne normalement et l'assistant utilise ses replis sans IA. Voir [Assistant IA](/reaco_updated/architecture/assistant-ia/).
+
+| Variable | Rôle |
+| --- | --- |
+| `ANTHROPIC_API_KEY` | Clé de l'API Anthropic (console.anthropic.com). Fixez aussi une limite de dépenses dans la console. |
+| `GITHUB_MODELS_TOKEN` | Facultatif : jeton GitHub avec la permission `models:read`, pour GitHub Models. |
+| `MISTRAL_API_KEY` | Facultatif : clé Mistral, modèle de secours hébergé dans l'Union européenne. |
+| `AI_MONTHLY_BUDGET_USD` | Plafond de dépenses mensuel de l'application, en dollars (20 par défaut). |
+| `AI_ENABLED` | `false` coupe l'assistant (`true` par défaut). |
+| `AI_TIMEOUT` | Délai maximal d'un appel, en secondes (60 par défaut). |
+
+Après le premier déploiement, vérifiez dans l'administration que les fournisseurs voulus sont actifs et que la colonne **clé présente** est cochée.
+
 ## Tâches planifiées
 
 | Variable | Rôle |
@@ -215,6 +230,8 @@ Sans service `scheduler`, voir [Tâches planifiées](/reaco_updated/deploiement/
 | `PRICE_HISTORY_DAYS` | `365` | [Prix](#données-ouvertes-et-prix) |
 | `IMPACT_CO2_API_KEY` | vide | [Données ouvertes](#données-ouvertes-et-prix) |
 | `INTEGRATIONS_TIMEOUT` | `8` | [Données ouvertes](#données-ouvertes-et-prix) |
+| `ANTHROPIC_API_KEY`, `GITHUB_MODELS_TOKEN`, `MISTRAL_API_KEY` | vide | [Assistant IA](#assistant-ia) |
+| `AI_MONTHLY_BUDGET_USD`, `AI_ENABLED`, `AI_TIMEOUT` | `20`, `true`, `60` | [Assistant IA](#assistant-ia) |
 | `SITE_URL`, `SCHEDULER_INTERVAL`, `SYNC_PAGES`, `RUN_MIGRATIONS` | voir la section | [Tâches](#tâches-planifiées) |
 | `LOG_LEVEL` | `INFO` | [Journaux](#journaux-et-alertes) |
 | `DOMAIN`, `POSTGRES_PASSWORD` | vide | `docker-compose.prod.yml`, voir [Serveur VPS](/reaco_updated/deploiement/serveur-vps/) |
