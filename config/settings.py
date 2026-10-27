@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "apps.shopping",
     "apps.api",
     "apps.guide",
+    "apps.assistant",
 ]
 if GOOGLE_CLIENT_ID:
     INSTALLED_APPS.append("allauth.socialaccount.providers.google")
@@ -248,6 +249,11 @@ INTEGRATIONS = {
     "IMPACT_CO2_URL": "https://impactco2.fr/api/v1",
     "IMPACT_CO2_API_KEY": env("IMPACT_CO2_API_KEY", default=""),
     "GEOCODING_URL": "https://data.geopf.fr/geocodage",
+}
+AI = {
+    "ENABLED": env.bool("AI_ENABLED", default=True),
+    "MONTHLY_BUDGET_USD": env.float("AI_MONTHLY_BUDGET_USD", default=20.0),
+    "TIMEOUT": env.float("AI_TIMEOUT", default=60.0),
 }
 PRICING = {
     "COUNTRIES": env.list("PRICE_COUNTRIES", default=["FR"]),

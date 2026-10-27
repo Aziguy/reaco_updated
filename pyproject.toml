@@ -20,6 +20,7 @@ dependencies = [
     "whitenoise>=6.8",
     "gunicorn>=23.0",
     "django-storages[s3]>=1.14",
+    "anthropic>=2.3",
 ]
 
 [dependency-groups]
