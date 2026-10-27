@@ -24,7 +24,7 @@ class Figure:
     width: int = 1280
     height: int = 860
     mobile: bool = False
-    actions: tuple[tuple[str, str], ...] = ()
+    actions: tuple[tuple[str, ...], ...] = ()
     wait_for: str | None = None
 
 
@@ -41,6 +41,11 @@ class Chapter:
         return f"guide/chapters/{self.slug}.html"
 
 
+SEARCH_EXAMPLE = (
+    "/assistant/recherche/?demande=Un+d%C3%AEner+v%C3%A9g%C3%A9tarien+pour+4+"
+    "%C3%A0+moins+de+10+%E2%82%AC"
+)
+
 FIGURES = {
     figure.name: figure
     for figure in [
@@ -53,7 +58,12 @@ FIGURES = {
                 Callout(
                     'nav[aria-label="Navigation principale"]',
                     "Menu principal",
-                    "Recettes, anti-gaspi, garde-manger, courses et produits de saison.",
+                    "Recettes, assistant, anti-gaspi, garde-manger, courses et saison.",
+                ),
+                Callout(
+                    "main form[role=search]",
+                    "Recherche en une phrase",
+                    "Décrivez votre envie, l'assistant trouve les recettes.",
                 ),
                 Callout(
                     "[data-theme-toggle]",
@@ -118,7 +128,13 @@ FIGURES = {
             path="/recettes/",
             auth=False,
             caption="La liste des recettes et ses filtres.",
+            height=1180,
             callouts=(
+                Callout(
+                    "main form[role=search]",
+                    "Recherche en une phrase",
+                    "Confiée à l'assistant, voir le chapitre Assistant IA.",
+                ),
                 Callout(
                     ".field:has(#id_q)",
                     "Recherche",
@@ -355,6 +371,161 @@ FIGURES = {
                 Callout('main section:has(h2:text-is("Sécurité"))', "Sécurité"),
             ),
         ),
+        Figure(
+            name="assistant-hub",
+            path="/assistant/",
+            caption="La page Assistant et ses outils.",
+            height=1000,
+            callouts=(
+                Callout("main form[role=search]", "Recherche en une phrase"),
+                Callout(
+                    "main form[role=search] .segmented",
+                    "Rapide ou Approfondi",
+                    "Approfondi prend quelques secondes de plus pour les demandes complexes.",
+                ),
+                Callout(
+                    'ul[aria-label="Exemples de demandes"]',
+                    "Exemples",
+                    "Un clic pour lancer une demande type.",
+                ),
+                Callout(
+                    'section[aria-labelledby="tools-title"] .grid',
+                    "Outils",
+                    "Menu de la semaine, vider le frigo, ticket de caisse.",
+                ),
+            ),
+        ),
+        Figure(
+            name="assistant-search",
+            path=SEARCH_EXAMPLE,
+            caption="Une recherche en langage naturel et les critères compris.",
+            height=1200,
+            wait_for="#ai-results .ai-chip",
+            callouts=(
+                Callout("main form[role=search] input[name=demande]", "Votre demande"),
+                Callout(
+                    "#ai-results section[aria-label]",
+                    "Ce que l'assistant a compris",
+                ),
+                Callout(
+                    "#ai-results .ai-chip-remove >> nth=1",
+                    "Critères",
+                    "La croix retire un critère, sans nouvel appel à l'assistant.",
+                ),
+                Callout(
+                    "#ai-results article >> nth=0",
+                    "Recettes",
+                    "Prix et CO2 calculés par Comégusto.",
+                ),
+            ),
+        ),
+        Figure(
+            name="assistant-plan-form",
+            path="/assistant/menu/",
+            caption="Les réglages du menu de la semaine.",
+            clip="main form[data-ai-form]",
+            height=1100,
+            callouts=(
+                Callout('fieldset:has(input[name="meals_per_day"])', "Repas"),
+                Callout(".field:has(#id_budget)", "Budget total", "Facultatif, pour tout le menu."),
+                Callout(
+                    "label:has(#id_use_pantry)",
+                    "Garde-manger",
+                    "Les produits qui périment bientôt passent en premier.",
+                ),
+                Callout("main form[data-ai-form] .segmented", "Mode"),
+                Callout('main form[data-ai-form] button[type="submit"]', "Composer mon menu"),
+            ),
+        ),
+        Figure(
+            name="assistant-plan",
+            path="{plan}",
+            caption="Un menu composé par l'assistant.",
+            height=1500,
+            wait_for="#plan",
+            callouts=(
+                Callout(
+                    "#plan > section dl", "Bilan", "Coût, prix par portion, CO2 et produits sauvés."
+                ),
+                Callout(
+                    "#plan ol > li >> nth=0",
+                    "Repas du jour",
+                    "Chaque choix est expliqué en une phrase.",
+                ),
+                Callout(
+                    "#plan button[hx-post] >> nth=0",
+                    "Changer",
+                    "Propose un autre repas, sans nouvel appel à l'assistant.",
+                ),
+                Callout(
+                    "#plan aside .card >> nth=0",
+                    "Liste de courses",
+                    "Tout le menu, moins ce que vous avez déjà.",
+                ),
+            ),
+        ),
+        Figure(
+            name="assistant-fridge",
+            path="/assistant/frigo/",
+            caption="Choisir les produits à sauver.",
+            clip="main form[data-ai-form]",
+            height=1200,
+            callouts=(
+                Callout(
+                    "main form[data-ai-form] fieldset .grid",
+                    "Produits",
+                    "Ceux qui périment bientôt sont déjà cochés.",
+                ),
+                Callout(".field:has(#id_wishes)", "Vos envies", "Par exemple « sans four »."),
+                Callout('main form[data-ai-form] button[type="submit"]', "Créer ma recette"),
+            ),
+        ),
+        Figure(
+            name="assistant-recipe",
+            path="{ai_recipe}",
+            caption="Une recette créée par l'assistant, chiffrée par Comégusto.",
+            height=1000,
+            callouts=(
+                Callout("section[data-ai-banner]", "Recette privée", "Visible par vous seul."),
+                Callout(
+                    'form[action$="/proposer/"] button',
+                    "Proposer à la communauté",
+                    "L'équipe la relit avant de la publier.",
+                ),
+                Callout("main dl >> nth=0", "Repères", "Temps, difficulté et empreinte carbone."),
+            ),
+        ),
+        Figure(
+            name="assistant-receipt",
+            path="/assistant/ticket/",
+            caption="Les achats lus sur un ticket, à vérifier avant l'ajout.",
+            height=1100,
+            actions=(
+                ("set_input_files", "input[name=photo]", "{receipt}"),
+                ("click", 'main form[data-ai-form] button[type="submit"]'),
+            ),
+            wait_for='form[action$="/ticket/ajouter/"]',
+            callouts=(
+                Callout(
+                    'form[action$="/ticket/ajouter/"] li input[type=checkbox] >> nth=0',
+                    "Garder",
+                    "Décochez ce que vous ne voulez pas ajouter.",
+                ),
+                Callout(
+                    'form[action$="/ticket/ajouter/"] li input[type=text] >> nth=0',
+                    "Produit reconnu",
+                    "Nom, quantité, unité et prix payé, modifiables.",
+                ),
+                Callout(
+                    'form[action$="/ticket/ajouter/"] li input[type=date] >> nth=0',
+                    "Date de péremption",
+                ),
+                Callout(
+                    'form[action$="/ticket/ajouter/"] button[type="submit"]',
+                    "Ajouter au garde-manger",
+                ),
+            ),
+        ),
     ]
 }
 
@@ -405,7 +576,15 @@ CHAPTERS = [
         "Assistant IA",
         "Chercher en une phrase, composer un menu, vider le frigo, lire un ticket.",
         "sparkles",
-        (),
+        (
+            "assistant-hub",
+            "assistant-search",
+            "assistant-plan-form",
+            "assistant-plan",
+            "assistant-fridge",
+            "assistant-recipe",
+            "assistant-receipt",
+        ),
     ),
     Chapter(
         "courses",

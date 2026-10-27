@@ -3,6 +3,34 @@
     "width": 1280,
     "height": 1000
   },
+  "assistant-fridge": {
+    "width": 832,
+    "height": 758
+  },
+  "assistant-hub": {
+    "width": 1280,
+    "height": 1000
+  },
+  "assistant-plan": {
+    "width": 1280,
+    "height": 1500
+  },
+  "assistant-plan-form": {
+    "width": 808,
+    "height": 626
+  },
+  "assistant-receipt": {
+    "width": 1280,
+    "height": 1100
+  },
+  "assistant-recipe": {
+    "width": 1280,
+    "height": 1000
+  },
+  "assistant-search": {
+    "width": 1280,
+    "height": 1200
+  },
   "dashboard": {
     "width": 1280,
     "height": 980
@@ -49,7 +77,7 @@
   },
   "recipes-list": {
     "width": 1280,
-    "height": 860
+    "height": 1180
   },
   "season": {
     "width": 1280,

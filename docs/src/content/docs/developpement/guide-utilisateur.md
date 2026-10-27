@@ -28,6 +28,7 @@ Figure(
     height=1100,                         # hauteur de la fenêtre
     clip=None,                           # sélecteur pour recadrer sur une zone
     actions=(),                          # par exemple (("click", "#bouton"),)
+                                         # ou (("set_input_files", "input[type=file]", "{receipt}"),)
     callouts=(
         Callout("#id_code", "Code-barres", "Saisissez les chiffres sous le code."),
         Callout("[data-scan]", "Scanner", "Utilise la caméra du téléphone."),
@@ -55,13 +56,18 @@ La commande :
 
 1. vérifie que le serveur répond sur `/health/` ;
 2. prépare un compte de démonstration `guide@comegusto.local` (mot de passe aléatoire), avec un garde-manger, des favoris et une liste de courses réalistes, dates calculées à partir du jour ;
-3. ouvre chaque page dans Chromium, en thème clair puis sombre (en mobile pour les figures `mobile=True`) ;
-4. entoure chaque repère et ajoute son numéro, puis enregistre la capture en WebP et ses dimensions dans `manifest.json`.
+3. pour les figures de l'assistant, compose un menu, crée une recette « vider le frigo » et génère un ticket de caisse d'exemple, avec de vraies réponses de l'assistant (quelques centimes) ;
+4. ouvre chaque page dans Chromium, en thème clair puis sombre (en mobile pour les figures `mobile=True`) ;
+5. entoure chaque repère et ajoute son numéro, puis enregistre la capture en WebP et ses dimensions dans `manifest.json`.
 
 Un sélecteur introuvable arrête la commande avec le nom de la figure : corrigez `content.py` ou le gabarit. Vérifiez ensuite le rendu sur `/guide/`, puis committez les images avec la modification de l'interface.
 
 :::note
 Les captures dépendent des données de la base (recettes, prix synchronisés) et du mois en cours (produits de saison). Utilisez une base chargée avec `seed_demo` et `sync_prices` pour un rendu représentatif.
+:::
+
+:::caution[Figures de l'assistant]
+Elles exigent un fournisseur configuré (`ANTHROPIC_API_KEY` dans `.env`, puis `setup_assistant`). Sans assistant, la commande s'arrête sur ces figures : capturez les autres en les nommant.
 :::
 
 ## Ajouter une figure ou un chapitre

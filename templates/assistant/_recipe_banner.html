@@ -2,7 +2,7 @@
 {% if recipe.is_published %}
   <p class="badge-brand mb-4">{% icon "sparkles" "size-3.5" %}Créée avec l'assistant, relue par l'équipe</p>
 {% elif recipe.author_id == user.pk %}
-  <section class="card ai-surface mb-6 flex flex-wrap items-center gap-4 p-4 sm:p-5" aria-label="Recette créée avec l'assistant">
+  <section data-ai-banner class="card ai-surface mb-6 flex flex-wrap items-center gap-4 p-4 sm:p-5" aria-label="Recette créée avec l'assistant">
     <span class="ai-icon">{% icon "sparkles" %}</span>
     <div class="min-w-0 flex-1">
       <p class="font-medium text-stone-900 dark:text-white">Recette créée pour vous par l'assistant</p>

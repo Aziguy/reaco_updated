@@ -88,14 +88,16 @@ Pour Anthropic, la route fixe `output_config.effort` (`low`, `medium`, `high`). 
 
 Le journal (**Appels** dans l'administration) indique pour chaque appel la fonctionnalité, le modèle, les jetons, le coût, la durée et l'erreur éventuelle, avec le total du mois.
 
-Ordres de grandeur avec les tarifs publics d'Anthropic :
+Coûts et durées mesurés en octobre 2026 avec la configuration par défaut :
 
-| Usage | Modèle | Coût par appel |
+| Usage | Rapide (Claude Haiku 5.5) | Approfondi (Claude Sonnet 5.5) |
 | --- | --- | --- |
-| Recherche | Claude Haiku 5.5 | environ 0,0004 $ |
-| Menu de la semaine | Claude Sonnet 5.5 | environ 0,05 à 0,10 $ |
-| Recette vider le frigo | Claude Sonnet 5.5 | environ 0,02 $ |
-| Ticket de caisse | Claude Haiku 5.5 | environ 0,002 $ |
+| Recherche | 0,0003 $, 2 à 4 s | 0,006 $, 3 s |
+| Menu de 5 jours | 0,0005 $, 7 s | 0,01 $, 6 s |
+| Recette vider le frigo | 0,0007 $, 6 à 10 s | 0,012 $, 6 s |
+| Ticket de caisse | 0,0004 $, 4 s | non mesuré |
+
+Avec 100 $, on peut donc servir environ 300 000 recherches en mode Rapide.
 
 Les invites restent sous le seuil de la mise en cache des prompts : c'est le cache des réponses qui évite les appels répétés.
 

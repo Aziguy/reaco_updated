@@ -1,16 +1,23 @@
 import io
 import json
 import secrets
+import tempfile
 from datetime import timedelta
 from decimal import Decimal
+from pathlib import Path
 
 import httpx
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
+from django.db.models import F
 from django.utils import timezone
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
+from apps.assistant import planner
+from apps.assistant.generator import GenerationError, create_recipe
+from apps.assistant.models import MealPlan
+from apps.assistant.services import Caller, Unavailable
 from apps.guide.content import FIGURES, Figure
 from apps.pantry.models import PantryItem
 from apps.recipes.models import Favorite, Ingredient, Recipe
@@ -38,6 +45,20 @@ CLOSED = [
     ("Carottes", PantryItem.Status.CONSUMED, 3, "1.20"),
     ("Pain de mie", PantryItem.Status.CONSUMED, 6, "1.50"),
     ("Salade", PantryItem.Status.WASTED, 9, "1.10"),
+]
+RECEIPT = [
+    "      MARCHÉ DU QUARTIER",
+    "    12 rue des Lilas, Paris",
+    "",
+    "TOMATES GRAPPE 0,812 KG   2,43",
+    "COURGETTES BIO X2         1,98",
+    "OEUFS PLEIN AIR X6        2,35",
+    "LAIT DEMI-ECREME 1L       1,05",
+    "PATES PENNE 500G          0,95",
+    "SAC CABAS                 0,10",
+    "OIGNONS JAUNES 1KG        1,60",
+    "",
+    "TOTAL                    10,46",
 ]
 FAVORITES = ["ratatouille", "dahl-de-lentilles-corail", "crepes"]
 
@@ -88,8 +109,9 @@ class Command(BaseCommand):
             raise CommandError(f"Serveur injoignable sur {base_url} : lancez runserver.") from exc
 
         password = secrets.token_urlsafe(16)
-        paths = self.prepare_account(password)
         figures = [FIGURES[name] for name in names] if names else list(FIGURES.values())
+        paths = self.prepare_account(password)
+        paths.update(self.prepare_assistant(figures, Path(tempfile.mkdtemp())))
         OUTPUT.mkdir(parents=True, exist_ok=True)
         manifest_path = OUTPUT / "manifest.json"
         manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
@@ -157,6 +179,45 @@ class Command(BaseCommand):
             first.save(update_fields=["is_checked"])
         return {"shopping_list": shopping_list.get_absolute_url()}
 
+    def prepare_assistant(self, figures: list[Figure], folder: Path) -> dict:
+        """Real assistant answers for the figures that show them (a few cents at most)."""
+        used = " ".join(figure.path for figure in figures)
+        used += " ".join(
+            arg for figure in figures for _, _, *args in figure.actions for arg in args
+        )
+        user = get_user_model().objects.get(email=EMAIL)
+        caller = Caller(user, "127.0.0.1")
+        paths = {}
+        try:
+            if "{plan}" in used:
+                user.meal_plans.all().delete()
+                plan = MealPlan.objects.create(
+                    user=user, days=5, servings=4, budget=Decimal(60),
+                    preferences="un plat de pâtes, pas trop épicé",
+                )  # fmt: skip
+                paths["plan"] = planner.generate(plan, caller).get_absolute_url()
+            if "{ai_recipe}" in used:
+                Recipe.objects.filter(author=user, is_ai_generated=True).delete()
+                products = user.pantry_items.in_stock().order_by(
+                    F("expires_on").asc(nulls_last=True)
+                )
+                recipe = create_recipe(list(products[:4]), 4, "sans four", "fast", caller)
+                paths["ai_recipe"] = recipe.get_absolute_url()
+        except (Unavailable, GenerationError) as exc:
+            raise CommandError(f"Assistant indisponible : {exc}") from exc
+        if "{receipt}" in used:
+            paths["receipt"] = str(self.receipt_image(folder / "ticket.jpg"))
+        return paths
+
+    def receipt_image(self, path: Path) -> Path:
+        image = Image.new("RGB", (620, 900), "white")
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.load_default(size=22)
+        for index, line in enumerate(RECEIPT):
+            draw.text((30, 40 + index * 44), line, fill="black", font=font)
+        image.save(path, "JPEG", quality=90)
+        return path
+
     def context(self, browser, figure: Figure, theme: str, state=None):
         context = browser.new_context(
             viewport={"width": figure.width, "height": figure.height},
@@ -188,8 +249,8 @@ class Command(BaseCommand):
         context = self.context(browser, figure, theme, state if figure.auth else None)
         page = context.new_page()
         page.goto(base_url + figure.path.format(**paths), wait_until="networkidle")
-        for action, selector in figure.actions:
-            getattr(page.locator(selector).first, action)()
+        for action, selector, *args in figure.actions:
+            getattr(page.locator(selector).first, action)(*(a.format(**paths) for a in args))
         page.wait_for_load_state("networkidle")
         if figure.wait_for:
             page.wait_for_selector(figure.wait_for)
