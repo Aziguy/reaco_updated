@@ -1,0 +1,23 @@
+{% load comegusto %}
+<form action="{% url 'assistant:search' %}" method="get" role="search" class="ai-ring transition focus-within:shadow-[0_12px_40px_-12px_rgb(26_126_79/0.6)]"{% if target %} hx-get="{% url 'assistant:search' %}" hx-target="{{ target }}" hx-push-url="true" hx-indicator="#ai-results-wrap"{% endif %}>
+  <div class="rounded-[15px] bg-white p-2 dark:bg-stone-950">
+    <div class="flex items-center gap-2">
+      <span class="ml-2 hidden text-brand-600 sm:block dark:text-brand-400">{% icon "sparkles" %}</span>
+      <label for="ai-demande{{ suffix }}" class="sr-only">Décrivez votre envie</label>
+      <input id="ai-demande{{ suffix }}" name="demande" type="search" value="{{ text }}" maxlength="200" required autocomplete="off"
+             placeholder="Ex. un dîner végétarien pour 4 à moins de 10 €"
+             class="min-w-0 flex-1 bg-transparent px-2 py-2.5 text-base text-stone-900 placeholder:text-stone-400 focus:outline-none sm:px-1 dark:text-white">
+      <button type="submit" class="btn-primary shrink-0 px-3 sm:px-4" aria-label="Lancer la recherche">{% icon "send" "size-4" %}<span class="hidden sm:inline">Chercher</span></button>
+    </div>
+    <div class="mt-2 flex flex-wrap items-center justify-between gap-2 border-t border-stone-100 px-1 pt-2 dark:border-stone-800">
+      <fieldset class="segmented">
+        <legend class="sr-only">Mode de l'assistant</legend>
+        <label title="Réponse en une à deux secondes"><input type="radio" name="mode" value="fast"{% if mode != "deep" %} checked{% endif %}>{% icon "zap" "size-3.5" %}Rapide</label>
+        <label title="Analyse plus fine des demandes complexes"><input type="radio" name="mode" value="deep"{% if mode == "deep" %} checked{% endif %}>{% icon "brain" "size-3.5" %}Approfondi</label>
+      </fieldset>
+      <p class="px-1 text-xs text-stone-500 dark:text-stone-400">
+        {% if search_left is not None and search_left <= 5 %}{% if search_left %}{{ search_left }} recherche{{ search_left|pluralize }} IA restante{{ search_left|pluralize }} aujourd'hui{% else %}Recherche simplifiée jusqu'à demain{% endif %}{% if not user.is_authenticated %} · <a href="{% url 'account_signup' %}" class="font-medium text-brand-700 underline dark:text-brand-300">plus avec un compte</a>{% endif %}{% else %}Prix et CO2 calculés par Comégusto{% endif %}
+      </p>
+    </div>
+  </div>
+</form>

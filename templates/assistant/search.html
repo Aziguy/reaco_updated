@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}{% if text %}{{ text }}{% else %}Recherche intelligente{% endif %}{% endblock %}
+{% block description %}Décrivez votre envie en une phrase : l'assistant trouve les recettes, Comégusto calcule les prix et l'empreinte carbone.{% endblock %}
+{% block content %}
+<header class="mx-auto max-w-3xl text-center">
+  <p class="badge-brand">{% icon "sparkles" "size-3.5" %}Assistant</p>
+  <h1 class="mt-3 text-3xl sm:text-4xl">Que voulez-vous cuisiner ?</h1>
+  <p class="muted mt-2 !text-base">Décrivez votre envie en une phrase. L'assistant la traduit en critères ; les prix et le CO2 viennent des données ouvertes. {% include "partials/help_link.html" with chapter="assistant" %}</p>
+</header>
+<div class="mx-auto mt-6 max-w-3xl">
+  {% include "assistant/_search_bar.html" with target="#ai-results" %}
+</div>
+
+<div id="ai-results-wrap" class="mt-8">
+  <div class="ai-pending">{% include "assistant/_search_skeleton.html" %}</div>
+  <div id="ai-results" class="ai-settled"{% if lazy_url %} hx-get="{{ lazy_url }}" hx-trigger="load"{% endif %}>
+    {% if lazy_url %}
+      {% include "assistant/_search_skeleton.html" %}
+      <noscript><p class="muted mt-4 text-center">Activez JavaScript pour lancer l'assistant, ou utilisez la <a href="{% url 'recipes:list' %}" class="underline">recherche classique</a>.</p></noscript>
+    {% elif criteria %}
+      {% include "assistant/_search_results.html" %}
+    {% else %}
+      <div class="mx-auto max-w-3xl">
+        <p class="muted mb-3 text-center">Pour commencer, essayez :</p>
+        {% include "assistant/_examples.html" with center=True %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

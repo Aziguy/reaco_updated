@@ -1,0 +1,16 @@
+{% load comegusto %}
+<div aria-hidden="true">
+  <div class="card ai-surface flex items-start gap-3 p-5">
+    <span class="ai-icon !size-9">{% icon "sparkles" "size-4 motion-safe:animate-pulse" %}</span>
+    <div class="flex-1">
+      <p class="text-sm font-medium text-stone-700 dark:text-stone-200">L'assistant analyse votre demande…</p>
+      <div class="mt-3 flex flex-wrap gap-2"><span class="skeleton h-7 w-28 !rounded-full"></span><span class="skeleton h-7 w-36 !rounded-full"></span><span class="skeleton h-7 w-24 !rounded-full"></span></div>
+    </div>
+  </div>
+  <div class="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    {% for i in "123" %}
+      <div class="card overflow-hidden"><div class="skeleton aspect-[4/3] !rounded-none"></div><div class="space-y-2 p-4"><div class="skeleton h-3 w-20"></div><div class="skeleton h-4 w-3/4"></div><div class="skeleton h-3 w-1/2"></div></div></div>
+    {% endfor %}
+  </div>
+</div>
+<p class="sr-only" role="status">Recherche en cours</p>

@@ -7,10 +7,7 @@
       <p class="badge-brand">{% icon "leaf" "size-3.5" %}Anti-gaspillage et pouvoir d'achat</p>
       <h1 class="mt-4 text-4xl leading-tight sm:text-5xl">Mangez bien, dépensez moins, <span class="text-brand-600 dark:text-brand-400">ne jetez plus.</span></h1>
       <p class="mt-5 max-w-xl text-lg text-stone-600 dark:text-stone-300">Des recettes chiffrées avec de vrais prix relevés en magasin, un garde-manger qui vous alerte avant la date limite et des listes de courses comparées entre enseignes.</p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="{% url 'recipes:list' %}" class="btn-primary">{% icon "search" "size-4" %}Explorer les recettes</a>
-        <a href="{% url 'pantry:suggestions' %}" class="btn-secondary">{% icon "fridge" "size-4" %}Cuisiner ce que j'ai</a>
-      </div>
+      <div class="mt-8 max-w-xl">{% include "assistant/_search_bar.html" with suffix="-home" %}</div>
       <dl class="mt-10 grid max-w-lg grid-cols-3 gap-4">
         <div><dt class="muted">Recettes chiffrées</dt><dd class="text-2xl font-semibold">{{ stats.recipes|intcomma }}</dd></div>
         <div><dt class="muted">Prix réels</dt><dd class="text-2xl font-semibold">{{ stats.prices|intcomma }}</dd></div>

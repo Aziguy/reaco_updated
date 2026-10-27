@@ -97,7 +97,7 @@
 }
 
 @utility nav-link {
-    @apply flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-stone-600 no-underline
+    @apply flex items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-stone-600 no-underline
       hover:bg-stone-100 hover:text-stone-900 dark:text-stone-300 dark:hover:bg-stone-800 dark:hover:text-white;
 }
 
@@ -157,6 +157,48 @@
     dark:bg-amber-950 dark:text-stone-200;
 }
 
+@utility ai-ring {
+  @apply rounded-2xl bg-linear-to-r from-brand-400 via-emerald-300 to-amber-300 p-px
+    shadow-[0_12px_40px_-18px_rgb(26_126_79/0.55)]
+    dark:from-brand-600 dark:via-emerald-800 dark:to-amber-700 dark:shadow-none;
+}
+
+@utility ai-icon {
+  @apply flex size-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-brand-500 to-emerald-700
+    text-white shadow-sm;
+}
+
+@utility ai-surface {
+  @apply bg-linear-to-br from-brand-50 via-white to-amber-50/60
+    dark:from-brand-950 dark:via-stone-900 dark:to-stone-900;
+}
+
+@utility ai-chip {
+  @apply inline-flex items-center gap-1.5 rounded-full border border-brand-200 bg-white py-1 pl-2.5 pr-1 text-sm
+    text-stone-700 shadow-xs dark:border-brand-900 dark:bg-stone-900 dark:text-stone-200;
+}
+
+@utility ai-chip-remove {
+  @apply inline-flex size-6 items-center justify-center rounded-full text-stone-400 no-underline transition
+    hover:bg-stone-100 hover:text-stone-800 dark:hover:bg-stone-800 dark:hover:text-white;
+}
+
+@utility skeleton {
+  @apply rounded-xl bg-stone-200/80 motion-safe:animate-pulse dark:bg-stone-800;
+}
+
+@utility segmented {
+  @apply inline-flex rounded-xl bg-stone-100 p-1 dark:bg-stone-800;
+}
+
+@utility choice {
+  @apply flex cursor-pointer items-center gap-3 rounded-xl border border-stone-200 bg-white px-3 py-2.5 text-sm transition
+    hover:border-brand-300 has-[:checked]:border-brand-500 has-[:checked]:bg-brand-50 has-[:checked]:ring-1
+    has-[:checked]:ring-brand-500 has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2
+    has-[:focus-visible]:outline-brand-500 dark:border-stone-700 dark:bg-stone-900 dark:hover:border-brand-700
+    dark:has-[:checked]:bg-brand-950;
+}
+
 @layer components {
   .nav-link[aria-current="page"] {
     @apply bg-brand-50 text-brand-800 dark:bg-brand-950 dark:text-brand-200;
@@ -198,6 +240,35 @@
   }
   .form-flow a {
     @apply text-brand-700 underline dark:text-brand-300;
+  }
+  .segmented label {
+    @apply flex cursor-pointer items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium text-stone-600 transition
+      hover:text-stone-900 has-[:checked]:bg-white has-[:checked]:text-stone-900 has-[:checked]:shadow-sm
+      has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-brand-500
+      dark:text-stone-300 dark:hover:text-white dark:has-[:checked]:bg-stone-950 dark:has-[:checked]:text-white;
+  }
+  .segmented input,
+  .choice input[type="radio"] {
+    @apply sr-only;
+  }
+  .choice input[type="checkbox"] {
+    @apply size-4 shrink-0 rounded accent-brand-600;
+  }
+  .ai-loading,
+  .ai-pending {
+    @apply hidden;
+  }
+  .htmx-request .ai-pending {
+    @apply block;
+  }
+  .htmx-request .ai-settled {
+    @apply hidden;
+  }
+  .is-loading .ai-loading {
+    @apply flex;
+  }
+  .is-loading .ai-idle {
+    @apply hidden;
   }
   .guide-prose > * + * {
     @apply mt-4;

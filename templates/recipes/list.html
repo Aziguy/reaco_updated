@@ -10,6 +10,8 @@
   {% if user.is_authenticated %}<a href="{% url 'recipes:favorites' %}" class="btn-secondary btn-sm">{% icon "heart" "size-4" %}Mes favoris</a>{% endif %}
 </header>
 
+<div class="mt-6">{% include "assistant/_search_bar.html" with suffix="-recipes" %}</div>
+
 <div class="mt-8 grid gap-8 lg:grid-cols-[16rem_1fr]">
   <form id="filters" class="form-flow card h-fit p-5 lg:sticky lg:top-24"
         action="{% url 'recipes:list' %}" method="get"

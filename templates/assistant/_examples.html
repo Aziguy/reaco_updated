@@ -1,0 +1,6 @@
+{% load comegusto %}
+<ul class="flex flex-wrap {% if center %}justify-center {% endif %}gap-2" aria-label="Exemples de demandes">
+  {% for example in examples %}
+    <li><a href="{% url 'assistant:search' %}?demande={{ example|urlencode }}" class="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white/70 px-3 py-1.5 text-sm text-stone-600 no-underline transition hover:border-brand-300 hover:bg-white hover:text-stone-900 dark:border-stone-700 dark:bg-stone-900/70 dark:text-stone-300 dark:hover:border-brand-700 dark:hover:text-white">{% icon "sparkles" "size-3.5 text-brand-500" %}{{ example }}</a></li>
+  {% endfor %}
+</ul>

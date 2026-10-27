@@ -1,6 +1,6 @@
 {% load comegusto %}
 <article class="card group flex flex-col overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md">
-  <a href="{{ recipe.get_absolute_url }}" class="relative block aspect-[4/3] overflow-hidden bg-stone-100 dark:bg-stone-800">
+  <a href="{{ recipe.get_absolute_url }}{{ link_query }}" class="relative block aspect-[4/3] overflow-hidden bg-stone-100 dark:bg-stone-800">
     {% if recipe.image %}
       <img src="{{ recipe.image.url }}" alt="" loading="lazy" class="size-full object-cover transition duration-300 group-hover:scale-105">
     {% else %}
@@ -12,7 +12,7 @@
   </a>
   <div class="flex flex-1 flex-col p-4">
     <p class="text-xs font-medium uppercase tracking-wide text-brand-700 dark:text-brand-300">{{ recipe.get_course_display }}</p>
-    <h3 class="mt-1 text-base"><a href="{{ recipe.get_absolute_url }}" class="no-underline hover:underline">{{ recipe.title }}</a></h3>
+    <h3 class="mt-1 text-base"><a href="{{ recipe.get_absolute_url }}{{ link_query }}" class="no-underline hover:underline">{{ recipe.title }}</a></h3>
     <div class="mt-auto flex flex-wrap gap-2 pt-3 text-xs text-stone-600 dark:text-stone-400">
       <span class="inline-flex items-center gap-1">{% icon "clock" "size-3.5" %}{{ recipe.total_minutes|duration }}</span>
       <span class="inline-flex items-center gap-1">{% icon "chef" "size-3.5" %}{{ recipe.get_difficulty_display }}</span>

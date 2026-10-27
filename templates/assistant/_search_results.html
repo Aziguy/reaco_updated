@@ -1,0 +1,45 @@
+{% load comegusto %}
+<div aria-live="polite">
+  {% if notice %}
+    <p class="guide-warning mb-4 flex items-start gap-2">{% icon "info" "size-4 mt-0.5 shrink-0" %}<span>{{ notice }} Voici les résultats d'une recherche simplifiée.</span></p>
+  {% endif %}
+  <section class="card ai-surface p-5" aria-label="Critères compris par l'assistant">
+    <div class="flex items-start gap-3">
+      <span class="ai-icon !size-9">{% icon "sparkles" "size-4" %}</span>
+      <div class="min-w-0 flex-1">
+        <p class="font-medium text-stone-900 dark:text-white">{% if criteria.summary %}{{ criteria.summary }}{% elif criteria.is_empty %}Je n'ai pas repéré de critère précis : voici nos dernières recettes.{% else %}Voici les critères retenus.{% endif %}</p>
+        {% with chips=criteria.chips %}
+          {% if chips %}
+            <ul class="mt-3 flex flex-wrap gap-2">
+              {% for chip in chips %}
+                <li class="ai-chip">{% icon chip.icon "size-3.5 text-brand-600 dark:text-brand-400" %}{{ chip.label }}
+                  <a href="{% querystring c=chip.token %}" hx-get="{% querystring c=chip.token %}" hx-target="#ai-results" hx-indicator="#ai-results-wrap" class="ai-chip-remove" aria-label="Retirer le critère {{ chip.label }}">{% icon "x" "size-3.5" %}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        {% if relaxed %}<p class="mt-3 text-sm text-amber-800 dark:text-amber-300">Aucune recette ne remplissait tous les critères : j'ai assoupli {{ relaxed|join:", " }}.</p>{% endif %}
+        {% if criteria.unknown %}<p class="muted mt-2">Pas encore dans notre catalogue : {{ criteria.unknown|join:", " }}.</p>{% endif %}
+        {% if needs_login %}<p class="muted mt-2"><a href="{% url 'account_login' %}?next={{ request.get_full_path|urlencode }}" class="font-medium text-brand-700 underline dark:text-brand-300">Connectez-vous</a> pour tenir compte de votre garde-manger.</p>{% endif %}
+      </div>
+    </div>
+  </section>
+
+  <div class="mt-8 flex flex-wrap items-baseline justify-between gap-2">
+    <h2 class="text-lg">{{ recipes|length }} recette{{ recipes|length|pluralize }}{% if recipes|length >= 12 %} parmi les meilleures{% endif %}</h2>
+    <a href="{% url 'recipes:list' %}{% if classic %}?{{ classic }}{% endif %}" class="inline-flex items-center gap-1 text-sm font-medium text-brand-700 no-underline hover:underline dark:text-brand-300">Affiner avec les filtres{% icon "arrow-right" "size-4" %}</a>
+  </div>
+  {% if recipes %}
+    <div class="mt-4 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+      {% for recipe in recipes %}{% include "partials/recipe_card.html" %}{% endfor %}
+    </div>
+  {% else %}
+    <div class="card mt-4 flex flex-col items-center p-10 text-center">
+      <span class="flex size-12 items-center justify-center rounded-full bg-stone-100 text-stone-500 dark:bg-stone-800 dark:text-stone-300">{% icon "search" %}</span>
+      <p class="mt-4 font-medium">Aucune recette ne correspond, même en assouplissant.</p>
+      <p class="muted mt-1 max-w-md">Retirez un critère ci-dessus, ou laissez l'assistant inventer une recette avec ce que vous avez.</p>
+      <a href="{% url 'assistant:fridge' %}" class="btn-primary mt-5">{% icon "chef" "size-4" %}Créer une recette sur mesure</a>
+    </div>
+  {% endif %}
+</div>
