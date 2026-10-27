@@ -150,7 +150,11 @@ class Recipe(TimeStampedModel):
     is_ai_generated = models.BooleanField("créée avec l'assistant", default=False)
     review_requested = models.BooleanField("publication demandée", default=False)
     author = models.ForeignKey(
-        settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL
+        settings.AUTH_USER_MODEL,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        verbose_name="auteur",
     )
     cost_per_serving = models.DecimalField(
         "coût / portion (€)", max_digits=7, decimal_places=2, null=True, blank=True, editable=False
@@ -161,7 +165,9 @@ class Recipe(TimeStampedModel):
     co2_per_serving = models.DecimalField(
         "kg CO2e / portion", max_digits=7, decimal_places=3, null=True, blank=True, editable=False
     )
-    metrics_updated_at = models.DateTimeField(null=True, blank=True, editable=False)
+    metrics_updated_at = models.DateTimeField(
+        "chiffres mis à jour le", null=True, blank=True, editable=False
+    )
     search_text = models.TextField(blank=True, editable=False)
 
     objects = RecipeQuerySet.as_manager()

@@ -1,17 +1,18 @@
 from django.contrib import admin
+from unfold.admin import ModelAdmin
 
 from .models import PriceObservation, Store
 
 
 @admin.register(Store)
-class StoreAdmin(admin.ModelAdmin):
+class StoreAdmin(ModelAdmin):
     list_display = ("name", "brand", "city", "postcode", "country_code")
     list_filter = ("country_code", "brand")
     search_fields = ("name", "brand", "city", "postcode")
 
 
 @admin.register(PriceObservation)
-class PriceObservationAdmin(admin.ModelAdmin):
+class PriceObservationAdmin(ModelAdmin):
     list_display = (
         "ingredient",
         "product_name",

@@ -1,0 +1,60 @@
+{% extends "admin/base.html" %}
+{% load i18n unfold %}
+
+{% block title %}Tableau de bord | {{ site_title }}{% endblock %}
+
+{% block branding %}
+  {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="cg-dashboard">
+  <div class="cg-grid cg-grid-4">
+    {% for kpi in kpis %}
+      {% component "unfold/components/card.html" with href=kpi.url %}
+        {% component "unfold/components/text.html" %}{{ kpi.title }}{% endcomponent %}
+        {% component "unfold/components/title.html" %}{{ kpi.value }}{% endcomponent %}
+        {% component "unfold/components/text.html" with class="cg-footer" %}{{ kpi.footer }}{% endcomponent %}
+      {% endcomponent %}
+    {% endfor %}
+  </div>
+
+  <div class="cg-grid cg-grid-main">
+    {% component "unfold/components/card.html" with title="Assistant IA, 14 derniers jours" title_icon="auto_awesome" %}
+      {% component "unfold/components/chart/bar.html" with data=assistant_chart height=260 %}{% endcomponent %}
+    {% endcomponent %}
+
+    {% component "unfold/components/card.html" with title="Budget de l'assistant" title_icon="savings" %}
+      {% component "unfold/components/title.html" %}{{ month_spend|floatformat:2 }} $ <span class="cg-muted">/ {{ budget|floatformat:0 }} $</span>{% endcomponent %}
+      <div class="cg-gap">
+        {% component "unfold/components/progress.html" with value=budget_percent description=budget_label %}{% endcomponent %}
+      </div>
+      {% component "unfold/components/text.html" with class="cg-gap" %}{{ assistant_calls }} appel{{ assistant_calls|pluralize }} ce mois-ci{% if assistant_failed %}, dont {{ assistant_failed }} en échec{% endif %}.{% endcomponent %}
+      <div class="cg-links">
+        <a href="{% url 'admin:assistant_usage_changelist' %}">Journal des appels</a>
+        <a href="{% url 'admin:assistant_route_changelist' %}">Routes et quotas</a>
+        <a href="{% url 'admin:assistant_provider_changelist' %}">Fournisseurs</a>
+      </div>
+    {% endcomponent %}
+  </div>
+
+  <div class="cg-grid cg-grid-2">
+    {% component "unfold/components/card.html" with title="Recettes à relire" title_icon="rate_review" %}
+      {% if review_table.rows %}
+        {% component "unfold/components/table.html" with table=review_table card_included=1 striped=1 %}{% endcomponent %}
+      {% else %}
+        {% component "unfold/components/text.html" %}Aucune création de l'assistant en attente de relecture.{% endcomponent %}
+      {% endif %}
+      <div class="cg-links cg-gap"><a href="{{ review_url }}">Voir toutes les demandes</a></div>
+    {% endcomponent %}
+
+    {% component "unfold/components/card.html" with title="Derniers appels à l'assistant" title_icon="history" %}
+      {% if recent_calls.rows %}
+        {% component "unfold/components/table.html" with table=recent_calls card_included=1 striped=1 %}{% endcomponent %}
+      {% else %}
+        {% component "unfold/components/text.html" %}Aucun appel pour le moment.{% endcomponent %}
+      {% endif %}
+    {% endcomponent %}
+  </div>
+</div>
+{% endblock %}

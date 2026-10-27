@@ -1,13 +1,13 @@
-from django.conf import settings
 from django.contrib import admin
 from django.db.models import Count, Sum
+from unfold.admin import ModelAdmin, TabularInline
 
-from .models import AIModel, MealPlan, PlannedMeal, Provider, Route, Usage
-from .services import month_spend
+from .models import AIModel, Feature, MealPlan, PlannedMeal, Provider, Route, Usage
+from .services import spend_summary
 
 
 @admin.register(Provider)
-class ProviderAdmin(admin.ModelAdmin):
+class ProviderAdmin(ModelAdmin):
     list_display = ("name", "kind", "base_url", "api_key_env", "is_configured", "is_active")
     list_editable = ("is_active",)
 
@@ -17,7 +17,7 @@ class ProviderAdmin(admin.ModelAdmin):
 
 
 @admin.register(AIModel)
-class AIModelAdmin(admin.ModelAdmin):
+class AIModelAdmin(ModelAdmin):
     list_display = (
         "label",
         "model_id",
@@ -33,7 +33,7 @@ class AIModelAdmin(admin.ModelAdmin):
 
 
 @admin.register(Route)
-class RouteAdmin(admin.ModelAdmin):
+class RouteAdmin(ModelAdmin):
     list_display = (
         "__str__",
         "model",
@@ -48,12 +48,12 @@ class RouteAdmin(admin.ModelAdmin):
 
 
 @admin.register(Usage)
-class UsageAdmin(admin.ModelAdmin):
+class UsageAdmin(ModelAdmin):
     list_display = (
         "created_at",
         "feature",
         "mode",
-        "model",
+        "model_label",
         "user",
         "input_tokens",
         "output_tokens",
@@ -62,8 +62,14 @@ class UsageAdmin(admin.ModelAdmin):
         "ok",
     )
     list_filter = ("feature", "mode", "ok", "model")
+    list_select_related = ("model", "user")
     date_hierarchy = "created_at"
     search_fields = ("user__email", "error")
+    list_before_template = "admin/assistant/usage/summary.html"
+
+    @admin.display(description="modèle", ordering="model__label")
+    def model_label(self, obj):
+        return obj.model.label if obj.model else ""
 
     def has_add_permission(self, request):
         return False
@@ -73,23 +79,22 @@ class UsageAdmin(admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         totals = Usage.objects.values("feature").annotate(calls=Count("id"), cost=Sum("cost"))
-        extra_context = {
-            **(extra_context or {}),
-            "month_spend": month_spend(),
-            "budget": settings.AI["MONTHLY_BUDGET_USD"],
-            "totals": totals.order_by("feature"),
-        }
+        totals = totals.order_by("feature")
+        totals = [
+            {**row, "label": Feature(row["feature"]).label} for row in totals.order_by("feature")
+        ]
+        extra_context = {**(extra_context or {}), **spend_summary(), "totals": totals}
         return super().changelist_view(request, extra_context)
 
 
-class PlannedMealInline(admin.TabularInline):
+class PlannedMealInline(TabularInline):
     model = PlannedMeal
     raw_id_fields = ("recipe",)
     extra = 0
 
 
 @admin.register(MealPlan)
-class MealPlanAdmin(admin.ModelAdmin):
+class MealPlanAdmin(ModelAdmin):
     list_display = ("__str__", "user", "status", "mode", "days", "servings", "is_fallback")
     list_filter = ("status", "mode", "is_fallback")
     raw_id_fields = ("user", "shopping_list")

@@ -6,7 +6,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.core.cache import cache
 from django.db.models import Sum
-from django.utils import timezone
+from django.utils import formats, timezone
 
 from apps.core.ratelimit import client_ip
 
@@ -57,6 +57,18 @@ def month_spend() -> Decimal:
         return total["total"] or Decimal(0)
 
     return cache.get_or_set("assistant:month-spend", compute, 60)
+
+
+def spend_summary() -> dict:
+    spent = month_spend()
+    budget = Decimal(str(settings.AI["MONTHLY_BUDGET_USD"]))
+    percent = min(round(100 * spent / budget), 100) if budget else 100
+    return {
+        "month_spend": spent,
+        "budget": budget,
+        "budget_percent": percent,
+        "budget_label": f"{percent} % de {formats.number_format(budget, 0)} $",
+    }
 
 
 def _counter_key(caller: Caller, feature: str) -> str:

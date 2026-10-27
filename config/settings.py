@@ -2,6 +2,8 @@ from pathlib import Path
 
 import environ
 from csp.constants import NONE, SELF
+from django.templatetags.static import static
+from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,6 +24,9 @@ GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID", default="")
 GOOGLE_CLIENT_SECRET = env("GOOGLE_CLIENT_SECRET", default="")
 
 INSTALLED_APPS = [
+    "unfold",
+    "unfold.contrib.filters",
+    "unfold.contrib.forms",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -63,7 +68,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "csp.middleware.CSPMiddleware",
+    "apps.core.middleware.CSPMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
@@ -131,6 +136,7 @@ if GOOGLE_CLIENT_ID:
 LANGUAGE_CODE = "fr-fr"
 TIME_ZONE = "Europe/Paris"
 USE_I18N = True
+LOCALE_PATHS = [BASE_DIR / "locale"]
 USE_TZ = True
 
 STATIC_URL = "/static/"
@@ -256,6 +262,124 @@ AI = {
     "MONTHLY_BUDGET_USD": env.float("AI_MONTHLY_BUDGET_USD", default=20.0),
     "TIMEOUT": env.float("AI_TIMEOUT", default=60.0),
 }
+
+
+def _admin_link(title, icon, model):
+    app, name = model.split(".")
+    return {"title": title, "icon": icon, "link": reverse_lazy(f"admin:{app}_{name}_changelist")}
+
+
+UNFOLD = {
+    "SITE_TITLE": "Comégusto",
+    "SITE_HEADER": "Comégusto",
+    "SITE_SUBHEADER": "Administration",
+    "SITE_URL": "/",
+    "SITE_LOGO": {
+        "light": lambda request: static("img/logos/comegusto-dark.png"),
+        "dark": lambda request: static("img/logos/comegusto-light.png"),
+    },
+    "SITE_FAVICONS": [
+        {"rel": "icon", "type": "image/svg+xml", "href": lambda request: static("img/favicon.svg")}
+    ],
+    "SHOW_VIEW_ON_SITE": True,
+    "ENVIRONMENT": "apps.core.dashboard.environment_callback",
+    "DASHBOARD_CALLBACK": "apps.core.dashboard.dashboard_callback",
+    "STYLES": [lambda request: static("css/admin.css")],
+    "BORDER_RADIUS": "10px",
+    "COLORS": {
+        "base": {
+            "50": "oklch(98.5% .001 106.423)",
+            "100": "oklch(97% .001 106.424)",
+            "200": "oklch(92.3% .003 48.717)",
+            "300": "oklch(86.9% .005 56.366)",
+            "400": "oklch(70.9% .01 56.259)",
+            "500": "oklch(55.3% .013 58.071)",
+            "600": "oklch(44.4% .011 73.639)",
+            "700": "oklch(37.4% .01 67.558)",
+            "800": "oklch(26.8% .007 34.298)",
+            "900": "oklch(21.6% .006 56.043)",
+            "950": "oklch(14.7% .004 49.25)",
+        },
+        "primary": {
+            "50": "#effaf3",
+            "100": "#d8f3e1",
+            "200": "#b3e6c7",
+            "300": "#80d2a5",
+            "400": "#4bb87f",
+            "500": "#289c63",
+            "600": "#1a7e4f",
+            "700": "#166541",
+            "800": "#145136",
+            "900": "#11432e",
+            "950": "#08251a",
+        },
+    },
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": True,
+        "navigation": [
+            {
+                "title": "Pilotage",
+                "items": [
+                    {
+                        "title": "Tableau de bord",
+                        "icon": "space_dashboard",
+                        "link": reverse_lazy("admin:index"),
+                    },
+                ],
+            },
+            {
+                "title": "Catalogue",
+                "collapsible": True,
+                "items": [
+                    _admin_link("Recettes", "restaurant_menu", "recipes.recipe"),
+                    _admin_link("Ingrédients", "nutrition", "recipes.ingredient"),
+                    _admin_link("Régimes", "eco", "recipes.diet"),
+                ],
+            },
+            {
+                "title": "Prix",
+                "collapsible": True,
+                "items": [
+                    _admin_link("Relevés de prix", "sell", "pricing.priceobservation"),
+                    _admin_link("Magasins", "storefront", "pricing.store"),
+                ],
+            },
+            {
+                "title": "Utilisateurs",
+                "collapsible": True,
+                "items": [
+                    _admin_link("Utilisateurs", "person", "accounts.user"),
+                    _admin_link("Garde-manger", "kitchen", "pantry.pantryitem"),
+                    _admin_link("Listes de courses", "shopping_cart", "shopping.shoppinglist"),
+                    _admin_link("Groupes", "group", "auth.group"),
+                ],
+            },
+            {
+                "title": "Assistant IA",
+                "collapsible": True,
+                "items": [
+                    _admin_link("Journal des appels", "monitoring", "assistant.usage"),
+                    _admin_link("Routes et quotas", "alt_route", "assistant.route"),
+                    _admin_link("Modèles", "smart_toy", "assistant.aimodel"),
+                    _admin_link("Fournisseurs", "hub", "assistant.provider"),
+                    _admin_link("Menus", "calendar_month", "assistant.mealplan"),
+                ],
+            },
+            {
+                "title": "Connexion et API",
+                "collapsible": True,
+                "items": [
+                    _admin_link("Adresses email", "mail", "account.emailaddress"),
+                    _admin_link("Comptes sociaux", "account_circle", "socialaccount.socialaccount"),
+                    _admin_link("Applications OAuth", "key", "socialaccount.socialapp"),
+                    _admin_link("Jetons d'API", "token", "authtoken.tokenproxy"),
+                ],
+            },
+        ],
+    },
+}
+
 PRICING = {
     "COUNTRIES": env.list("PRICE_COUNTRIES", default=["FR"]),
     "CURRENCY": "EUR",

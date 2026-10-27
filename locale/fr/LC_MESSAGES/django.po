@@ -1,0 +1,249 @@
+# French translations for the Unfold admin theme strings that Django does not provide.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid " By %(filter_title)s "
+msgstr " Par %(filter_title)s "
+
+msgid "Add row"
+msgstr "Ajouter une ligne"
+
+msgid "After you"
+msgstr "Après vous"
+
+msgid "All"
+msgstr "Tout"
+
+msgid "All applications"
+msgstr "Toutes les applications"
+
+msgid "Apply Filters"
+msgstr "Appliquer les filtres"
+
+msgid "Available shortcuts"
+msgstr "Raccourcis disponibles"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Changelist shortcuts"
+msgstr "Raccourcis des listes"
+
+msgid "Choose file to upload"
+msgstr "Choisir un fichier"
+
+msgid "Clear"
+msgstr "Effacer"
+
+msgid "Clear all filters"
+msgstr "Effacer tous les filtres"
+
+msgid "Clear selection"
+msgstr "Effacer la sélection"
+
+msgid "Click here to select the objects across all pages"
+msgstr "Sélectionner les objets de toutes les pages"
+
+msgid "Click to cancel"
+msgstr "Cliquer pour annuler"
+
+msgid "Click to download"
+msgstr "Cliquer pour télécharger"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Command tool shortcuts"
+msgstr "Raccourcis de la palette de commandes"
+
+msgid "Create new record"
+msgstr "Créer un enregistrement"
+
+msgid "Dark"
+msgstr "Sombre"
+
+msgid "Dataset not found. No action performed."
+msgstr "Données introuvables. Aucune action effectuée."
+
+msgid "Date from"
+msgstr "Du"
+
+msgid "Date to"
+msgstr "Au"
+
+msgid "Date/time"
+msgstr "Date et heure"
+
+msgid "Filters"
+msgstr "Filtres"
+
+msgid "From"
+msgstr "De"
+
+msgid "General"
+msgstr "Général"
+
+msgid "Global shortcuts"
+msgstr "Raccourcis généraux"
+
+msgid "Go back"
+msgstr "Retour"
+
+msgid "Hide counts"
+msgstr "Masquer les compteurs"
+
+msgid "Image preview"
+msgstr "Aperçu de l'image"
+
+msgid "Light"
+msgstr "Clair"
+
+msgid "Navigate"
+msgstr "Naviguer"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "No data"
+msgstr "Aucune donnée"
+
+msgid "No results found"
+msgstr "Aucun résultat"
+
+msgid "Nothing matched your search"
+msgstr "Aucun élément ne correspond à votre recherche"
+
+msgid "Objects"
+msgstr "Objets"
+
+msgid "Open command tool"
+msgstr "Ouvrir la palette de commandes"
+
+msgid "Open selection"
+msgstr "Ouvrir la sélection"
+
+msgid "Open selection in new tab"
+msgstr "Ouvrir la sélection dans un nouvel onglet"
+
+msgid "Open shortcuts list"
+msgstr "Afficher les raccourcis"
+
+msgid "Previous"
+msgstr "Précédent"
+
+msgid "Recent searches"
+msgstr "Recherches récentes"
+
+msgid "Record picture"
+msgstr "Image de l'enregistrement"
+
+msgid "Remove from sorting"
+msgstr "Retirer du tri"
+
+msgid "Reset filters"
+msgstr "Réinitialiser les filtres"
+
+msgid "Return to site"
+msgstr "Retour au site"
+
+msgid "Run"
+msgstr "Exécuter"
+
+msgid "Run the selected action"
+msgstr "Exécuter l'action sélectionnée"
+
+msgid "Save and view"
+msgstr "Enregistrer et afficher"
+
+msgid "Search apps and models..."
+msgstr "Rechercher une page…"
+
+msgid "Select"
+msgstr "Sélectionner"
+
+msgid "Select action"
+msgstr "Choisir une action"
+
+msgid "Select action to run"
+msgstr "Choisir l'action à exécuter"
+
+msgid "Select currency"
+msgstr "Choisir une devise"
+
+msgid "Select format"
+msgstr "Choisir un format"
+
+msgid "Select record"
+msgstr "Choisir un enregistrement"
+
+msgid "Select value"
+msgstr "Choisir une valeur"
+
+msgid "Show all"
+msgstr "Tout afficher"
+
+msgid "Show counts"
+msgstr "Afficher les compteurs"
+
+msgid "Submit"
+msgstr "Valider"
+
+msgid "Summary"
+msgstr "Résumé"
+
+msgid "System"
+msgstr "Système"
+
+msgid "This item will be deleted."
+msgstr "Cet élément sera supprimé."
+
+msgid "This page yielded into no results."
+msgstr "Cette page ne contient aucun résultat."
+
+msgid "To"
+msgstr "À"
+
+msgid "Toggle dark/light mode"
+msgstr "Basculer le thème clair ou sombre"
+
+msgid "Toggle filter"
+msgstr "Afficher ou masquer le filtre"
+
+msgid "Toggle password visibility"
+msgstr "Afficher ou masquer le mot de passe"
+
+msgid "Toggle sidebar"
+msgstr "Afficher ou masquer la barre latérale"
+
+msgid "Toggle sorting"
+msgstr "Changer le tri"
+
+msgid "Type to search"
+msgstr "Tapez pour rechercher"
+
+msgid "Unknown content"
+msgstr "Contenu inconnu"
+
+msgid "Value"
+msgstr "Valeur"
+
+msgid "View"
+msgstr "Voir"
+
+msgid "View on site"
+msgstr "Voir sur le site"
+
+msgid "You can not create nested object without parent"
+msgstr "Impossible de créer un objet imbriqué sans parent"
+
+msgid "You have been successfully logged out from the administration"
+msgstr "Vous êtes déconnecté de l'administration"
+
+msgid "and"
+msgstr "et"
+
+msgid "Welcome back to"
+msgstr "Bienvenue sur"

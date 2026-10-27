@@ -344,6 +344,7 @@ dependencies = [
     { name = "django-environ" },
     { name = "django-htmx" },
     { name = "django-storages", extra = ["s3"] },
+    { name = "django-unfold" },
     { name = "djangorestframework" },
     { name = "drf-spectacular", extra = ["sidecar"] },
     { name = "gunicorn" },
@@ -374,6 +375,7 @@ requires-dist = [
     { name = "django-environ", specifier = ">=0.12" },
     { name = "django-htmx", specifier = ">=1.21" },
     { name = "django-storages", extras = ["s3"], specifier = ">=1.14" },
+    { name = "django-unfold", specifier = ">=0.110" },
     { name = "djangorestframework", specifier = ">=3.15" },
     { name = "drf-spectacular", extras = ["sidecar"], specifier = ">=0.28" },
     { name = "gunicorn", specifier = ">=23.0" },
@@ -662,6 +664,18 @@ wheels = [
 [package.optional-dependencies]
 s3 = [
     { name = "boto3" },
+]
+
+[[package]]
+name = "django-unfold"
+version = "0.110.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/44/45/8fed87cc80291ab694c46fa3c113dff3e25cc7b1de843f5c334679f9128d/django_unfold-0.110.0.tar.gz", hash = "sha256:cd0bbfd3b96454b6e6eccea98996f9de634e1aa08956807943011b12f2fbcdf2", size = 1172280, upload-time = "2026-10-13T06:47:18.085Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2b/d1/d9f998dcd02fbdcc5a63836ac3025e170f3a99cfdc0b64efe7a4ab1e861c/django_unfold-0.110.0-py3-none-any.whl", hash = "sha256:5b20e87cf389376398dee19f9e168ad1f8c4cd5e53850b4b7d38bb1e17c14f9a", size = 1301431, upload-time = "2026-10-13T06:47:16.414Z" },
 ]
 
 [[package]]

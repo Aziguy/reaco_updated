@@ -1,0 +1,65 @@
+/* Layout helpers for the Unfold admin dashboard (Unfold only ships the classes it uses). */
+.cg-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.cg-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+.cg-mb {
+  margin-bottom: 1.5rem;
+}
+.cg-gap {
+  margin-top: 1rem;
+}
+.cg-footer {
+  margin-top: 0.25rem;
+  color: var(--color-font-subtle-light);
+}
+.dark .cg-footer,
+.dark .cg-muted {
+  color: var(--color-font-subtle-dark);
+}
+.cg-muted {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-font-subtle-light);
+}
+.cg-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.cg-links a {
+  color: var(--color-primary-600);
+}
+.dark .cg-links a {
+  color: var(--color-primary-400);
+}
+.cg-links a:hover {
+  text-decoration: underline;
+}
+@media (min-width: 768px) {
+  .cg-grid-2,
+  .cg-grid-4,
+  .cg-grid-5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1280px) {
+  .cg-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .cg-grid-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .cg-grid-main {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,15 @@
+{% load unfold %}
+<div class="cg-grid cg-grid-5 cg-mb">
+  {% component "unfold/components/card.html" %}
+    {% component "unfold/components/text.html" %}Dépenses du mois{% endcomponent %}
+    {% component "unfold/components/title.html" %}{{ month_spend|floatformat:4 }} ${% endcomponent %}
+    {% component "unfold/components/progress.html" with value=budget_percent description=budget_label %}{% endcomponent %}
+  {% endcomponent %}
+  {% for row in totals %}
+    {% component "unfold/components/card.html" %}
+      {% component "unfold/components/text.html" %}{{ row.label }}{% endcomponent %}
+      {% component "unfold/components/title.html" %}{{ row.calls }} appel{{ row.calls|pluralize }}{% endcomponent %}
+      {% component "unfold/components/text.html" %}{{ row.cost|floatformat:4 }} $ depuis le début{% endcomponent %}
+    {% endcomponent %}
+  {% endfor %}
+</div>

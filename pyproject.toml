@@ -21,6 +21,7 @@ dependencies = [
     "gunicorn>=23.0",
     "django-storages[s3]>=1.14",
     "anthropic>=2.3",
+    "django-unfold>=0.110",
 ]
 
 [dependency-groups]

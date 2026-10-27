@@ -1,12 +1,15 @@
 from django.contrib import admin
+from django.db import models
 from django.utils.html import format_html
+from unfold.admin import ModelAdmin, TabularInline
+from unfold.widgets import UnfoldAdminTextareaWidget
 
 from . import metrics
 from .models import Diet, Ingredient, Recipe, RecipeIngredient, RecipeStep
 
 
 @admin.register(Ingredient)
-class IngredientAdmin(admin.ModelAdmin):
+class IngredientAdmin(ModelAdmin):
     list_display = ("name", "aisle", "price_unit", "off_category", "ciqual_code", "kcal_100g")
     list_filter = ("aisle", "price_unit", "is_staple")
     search_fields = ("name", "off_category")
@@ -14,23 +17,29 @@ class IngredientAdmin(admin.ModelAdmin):
 
 
 @admin.register(Diet)
-class DietAdmin(admin.ModelAdmin):
+class DietAdmin(ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
 
-class RecipeIngredientInline(admin.TabularInline):
+class RecipeIngredientInline(TabularInline):
     model = RecipeIngredient
     autocomplete_fields = ("ingredient",)
+    verbose_name_plural = "ingrédients"
     extra = 1
+    tab = True
 
 
-class RecipeStepInline(admin.TabularInline):
+class RecipeStepInline(TabularInline):
     model = RecipeStep
     extra = 1
+    tab = True
+    formfield_overrides = {
+        models.TextField: {"widget": UnfoldAdminTextareaWidget(attrs={"rows": 3})}
+    }
 
 
 @admin.register(Recipe)
-class RecipeAdmin(admin.ModelAdmin):
+class RecipeAdmin(ModelAdmin):
     list_display = (
         "thumbnail",
         "title",
@@ -56,6 +65,56 @@ class RecipeAdmin(admin.ModelAdmin):
     search_fields = ("title", "origin")
     prepopulated_fields = {"slug": ("title",)}
     filter_horizontal = ("diets",)
+    raw_id_fields = ("author",)
+    fieldsets = (
+        (
+            "Recette",
+            {
+                "classes": ["tab"],
+                "fields": (
+                    ("title", "slug"),
+                    "summary",
+                    ("course", "difficulty"),
+                    ("servings", "prep_minutes", "cook_minutes"),
+                    "origin",
+                    "diets",
+                ),
+            },
+        ),
+        (
+            "Image",
+            {
+                "classes": ["tab"],
+                "fields": (
+                    "image",
+                    ("image_credit", "image_license"),
+                    ("image_license_url", "image_source"),
+                ),
+            },
+        ),
+        (
+            "Publication",
+            {
+                "classes": ["tab"],
+                "fields": (
+                    ("is_published", "is_featured"),
+                    ("is_ai_generated", "review_requested"),
+                    "author",
+                ),
+            },
+        ),
+        (
+            "Chiffres calculés",
+            {
+                "classes": ["tab"],
+                "fields": (
+                    ("cost_per_serving", "price_coverage", "co2_per_serving"),
+                    ("kcal", "proteins_g", "fat_g", "carbs_g"),
+                    ("nutrition_coverage", "metrics_updated_at"),
+                ),
+            },
+        ),
+    )
     readonly_fields = (
         "cost_per_serving",
         "price_coverage",
