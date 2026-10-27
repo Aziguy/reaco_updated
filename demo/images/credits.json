@@ -1,4 +1,22 @@
 {
+ "alloco-aux-oeufs.webp": {
+  "author": "Jacquitoz",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Alloco_feuille_verte.JPG"
+ },
+ "aloo-gobi.webp": {
+  "author": "Ifrasaifi12",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Gobi-aloo_ki_sabji_by_me,_location_-_my_kitchen,_meerut,_state_-_Uttar_Pradesh,_0002.jpg"
+ },
+ "arroz-con-pollo.webp": {
+  "author": "Kobako",
+  "license": "CC BY-SA 2.5",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Arroz-con-Pollo.jpg"
+ },
  "banana-bread.webp": {
   "author": "Shisma",
   "license": "CC BY 4.0",
@@ -10,6 +28,18 @@
   "license": "CC BY-SA 4.0",
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Blanquette_de_veau_%C3%A0_l%27ancienne_01.jpg"
+ },
+ "butter-chicken.webp": {
+  "author": "stu_spivack",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Chicken_makhani.jpg"
+ },
+ "chana-masala.webp": {
+  "author": "Parzeus",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Chana_Masala_in_Paul%C3%ADnia,_2023-10-16.jpg"
  },
  "chili-sin-carne.webp": {
   "author": "Benreis",
@@ -71,6 +101,24 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Hachis_parmentier_02.jpg"
  },
+ "harira.webp": {
+  "author": "Mountaflou",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Harira_d%27aflou.jpg"
+ },
+ "houmous.webp": {
+  "author": "Paul Lowry",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Hummus_at_Saba,_Uptown_New_Orleans_April_2025.jpg"
+ },
+ "mafe-de-poulet.webp": {
+  "author": "Akouete",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Sauce_d%27Arachide_03.jpg"
+ },
  "moussaka-vegetarienne.webp": {
   "author": "Andy Li",
   "license": "CC0",
@@ -83,11 +131,29 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Mousse_au_Chocolat_2010_003.JPG"
  },
+ "mujaddara.webp": {
+  "author": "Bazel",
+  "license": "CC BY-SA 3.0",
+  "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Mujaddara.jpg"
+ },
+ "nouilles-sautees-aux-legumes.webp": {
+  "author": "Biswarup Ganguly",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Vegetable_Chow_Mein_-_Howrah_2014-03-23_9721.JPG"
+ },
  "omelette-roulee-au-fromage.webp": {
   "author": "joyce godsey",
   "license": "CC BY 2.0",
   "license_url": "https://creativecommons.org/licenses/by/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Asparagus_cheddar_cheese_omelet.jpg"
+ },
+ "pad-thai-aux-crevettes.webp": {
+  "author": "P1898",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Shrimp_Pad_Thai_2026-09-11_classic_02.jpg"
  },
  "pain-perdu.webp": {
   "author": "Ocdp",
@@ -101,11 +167,35 @@
   "license_url": "https://creativecommons.org/licenses/by/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Pasta_with_tuna_%26_vegetables_(5746832862).jpg"
  },
+ "porc-au-caramel.webp": {
+  "author": "HungryHuy",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Vietnamese_thit_kho,_braised_pork_belly_and_boiled_eggs.jpg"
+ },
  "poulet-basquaise.webp": {
   "author": "Arnaud 25",
   "license": "CC BY-SA 4.0",
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Poulet_basquaise_02.jpg"
+ },
+ "poulet-dg.webp": {
+  "author": "Affirebecca",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Poulet_DG.JPG"
+ },
+ "poulet-teriyaki.webp": {
+  "author": "Daderot",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Chicken_teriyaki_bento_box_-_Massachusetts.jpg"
+ },
+ "poulet-yassa.webp": {
+  "author": "Arnaud 25",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Poulet_yassa_01.jpg"
  },
  "quiche-lorraine.webp": {
   "author": "Arnaud 25",
@@ -130,6 +220,12 @@
   "license": "CC0",
   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
   "source": "https://commons.wikimedia.org/wiki/File:Riz_cantonais.jpg"
+ },
+ "riz-jollof.webp": {
+  "author": "Skarfmacaronne",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Jollof_rice_and_Dodo.jpg"
  },
  "salade-de-lentilles.webp": {
   "author": "Joey Doll",
@@ -161,11 +257,29 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Flickr_-_cyclonebill_-_Tabbouleh.jpg"
  },
+ "tacos-aux-haricots-rouges.webp": {
+  "author": "Gerardolagunes",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Mexican_food_vegetarian_tacos_20260607_161424_(3).jpg"
+ },
+ "tajine-de-poulet-aux-citrons-et-olives.webp": {
+  "author": "Foodista",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Moroccan_food-Chicken_tagine_with_preserved_lemons_and_olives-02.jpg"
+ },
  "tiramisu.webp": {
   "author": "Sharon Chen from Austin, United States",
   "license": "CC BY 2.0",
   "license_url": "https://creativecommons.org/licenses/by/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Classic_Italian_Tiramisu-3_(29989504485).jpg"
+ },
+ "tofu-saute-au-brocoli.webp": {
+  "author": "Miscellaneous contributor",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Baked_Tofu_with_Broccoli_and_Rice.jpg"
  },
  "tortilla-espagnole.webp": {
   "author": "Tamorlan",
