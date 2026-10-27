@@ -20,7 +20,7 @@ TIMES = [
     ("45", "45 min ou moins"),
     ("90", "1 h 30 ou moins"),
 ]
-SECONDARY = ("course", "diet", "difficulty", "max_minutes")
+SECONDARY = ("course", "cuisine", "diet", "difficulty", "max_minutes")
 
 
 class RecipeFilterForm(forms.Form):
@@ -32,6 +32,9 @@ class RecipeFilterForm(forms.Form):
     )
     course = forms.ChoiceField(
         label="Type de plat", required=False, choices=[("", "Tous"), *Recipe.Course.choices]
+    )
+    cuisine = forms.ChoiceField(
+        label="Cuisine", required=False, choices=[("", "Toutes"), *Recipe.Cuisine.choices]
     )
     diet = forms.ModelChoiceField(
         label="Régime",
@@ -68,8 +71,10 @@ class RecipeFilterForm(forms.Form):
             queryset = queryset.filter(search_text__contains=word)
         if data.get("course"):
             queryset = queryset.filter(course=data["course"])
+        if data.get("cuisine"):
+            queryset = queryset.filter(cuisine=data["cuisine"])
         if data.get("diet"):
-            queryset = queryset.filter(diets=data["diet"])
+            queryset = queryset.for_diet(data["diet"].slug)
         if data.get("difficulty"):
             queryset = queryset.filter(difficulty__lte=data["difficulty"])
         if data.get("max_minutes"):

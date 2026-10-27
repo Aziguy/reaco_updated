@@ -45,6 +45,31 @@
 </section>
 
 <div class="container-page space-y-16 py-14">
+  {% if cuisines %}
+  <section aria-labelledby="world-title">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 id="world-title" class="section-title">Cuisines du monde</h2>
+        <p class="muted mt-1">Mafé, pad thaï, chana masala, tajine… des plats du quotidien venus d'ailleurs, chiffrés eux aussi.</p>
+      </div>
+    </div>
+    <ul class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+      {% for cuisine in cuisines %}
+        <li>
+          <a href="{% url 'recipes:list' %}?cuisine={{ cuisine.value }}" class="group relative block aspect-[4/5] overflow-hidden rounded-2xl bg-stone-200 no-underline shadow-sm dark:bg-stone-800">
+            {% if cuisine.cover.image %}<img src="{{ cuisine.cover.image.url }}" alt="" loading="lazy" class="size-full object-cover transition duration-300 group-hover:scale-105">{% endif %}
+            <span class="absolute inset-0 bg-linear-to-t from-stone-950/85 via-stone-950/20 to-transparent"></span>
+            <span class="absolute inset-x-0 bottom-0 p-4">
+              <span class="block text-base font-semibold text-white">{{ cuisine.label }}</span>
+              <span class="mt-0.5 flex items-center gap-1 text-xs text-white/80">{{ cuisine.count }} recette{{ cuisine.count|pluralize }}{% icon "arrow-right" "size-3.5 transition group-hover:translate-x-0.5" %}</span>
+            </span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
   {% if featured %}
   <section>
     <div class="flex items-end justify-between gap-4">

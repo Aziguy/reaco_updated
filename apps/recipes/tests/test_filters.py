@@ -144,3 +144,29 @@ def test_default_sort_is_not_sent(client, catalog):
     content = client.get(LIST_URL).content.decode()
     assert '<option value="" selected>Les plus récentes</option>' in content
     assert client.get(LIST_URL, {"sort": "recent"}).status_code == 200
+
+
+def test_cuisine_filter(client, recipe):
+    Recipe.objects.filter(pk=recipe.pk).update(cuisine=Recipe.Cuisine.INDIA)
+    assert recipe.title in client.get(LIST_URL, {"cuisine": "india"}).content.decode()
+    assert recipe.title not in client.get(LIST_URL, {"cuisine": "asia"}).content.decode()
+
+
+def test_cuisine_is_searchable(recipe):
+    recipe.cuisine = Recipe.Cuisine.AFRICA
+    recipe.save()
+    assert "afrique" in recipe.search_text
+
+
+def test_home_lists_world_cuisines(client, recipe):
+    Recipe.objects.filter(pk=recipe.pk).update(cuisine=Recipe.Cuisine.ASIA)
+    content = client.get(reverse("core:home")).content.decode()
+    assert "Cuisines du monde" in content and "?cuisine=asia" in content
+
+
+def test_vegetarian_filter_includes_vegan_recipes(client, recipe):
+    Diet.objects.create(name="Végétarien", slug="vegetarien")
+    recipe.diets.add(Diet.objects.create(name="Vegan", slug="vegan"))
+    content = client.get(LIST_URL, {"diet": "vegetarien"}).content.decode()
+    assert recipe.title in content
+    assert list(Recipe.objects.for_diet("vegetarien")) == [recipe]

@@ -51,6 +51,7 @@ class RecipeDetailSerializer(RecipeListSerializer):
         fields = [
             *RecipeListSerializer.Meta.fields,
             "origin",
+            "cuisine",
             "kcal",
             "proteins_g",
             "fat_g",

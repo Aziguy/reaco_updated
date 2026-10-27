@@ -54,6 +54,7 @@ class RecipeAdmin(ModelAdmin):
     list_display_links = ("thumbnail", "title")
     list_filter = (
         "course",
+        "cuisine",
         "difficulty",
         "diets",
         "is_featured",
@@ -76,7 +77,7 @@ class RecipeAdmin(ModelAdmin):
                     "summary",
                     ("course", "difficulty"),
                     ("servings", "prep_minutes", "cook_minutes"),
-                    "origin",
+                    ("origin", "cuisine"),
                     "diets",
                 ),
             },

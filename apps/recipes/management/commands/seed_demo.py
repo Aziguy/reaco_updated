@@ -85,6 +85,7 @@ class Command(BaseCommand):
                 "prep_minutes": row["prep"],
                 "cook_minutes": row["cook"],
                 "origin": row["origin"],
+                "cuisine": row.get("cuisine", ""),
                 "is_featured": row.get("featured", False),
                 **self._credit(row["image"]),
             },

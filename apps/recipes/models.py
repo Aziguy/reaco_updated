@@ -85,9 +85,20 @@ class Diet(models.Model):
         return self.name
 
 
+STRICTER_DIETS = {
+    "vegetarien": ("vegan",),
+    "pescetarien": ("vegetarien", "vegan"),
+    "sans-lactose": ("vegan",),
+}
+
+
 class RecipeQuerySet(models.QuerySet):
     def published(self):
         return self.filter(is_published=True)
+
+    def for_diet(self, slug: str):
+        """Recipes suiting a diet, stricter diets included (a vegan dish is vegetarian)."""
+        return self.filter(diets__slug__in=[slug, *STRICTER_DIETS.get(slug, ())]).distinct()
 
     def visible_to(self, user):
         """Published recipes, plus the user's own drafts such as assistant creations."""
@@ -113,6 +124,15 @@ class Recipe(TimeStampedModel):
         SAUCE = "sauce", "Sauce"
         DRINK = "drink", "Boisson"
 
+    class Cuisine(models.TextChoices):
+        FRANCE = "france", "France"
+        EUROPE = "europe", "Europe"
+        MAGHREB = "maghreb", "Maghreb et Moyen-Orient"
+        AFRICA = "africa", "Afrique"
+        ASIA = "asia", "Asie"
+        INDIA = "india", "Inde"
+        AMERICAS = "americas", "Amériques"
+
     class Difficulty(models.IntegerChoices):
         VERY_EASY = 1, "Très facile"
         EASY = 2, "Facile"
@@ -132,6 +152,7 @@ class Recipe(TimeStampedModel):
     prep_minutes = models.PositiveSmallIntegerField("préparation (min)", default=0)
     cook_minutes = models.PositiveSmallIntegerField("cuisson (min)", default=0)
     origin = models.CharField("origine", max_length=120, blank=True)
+    cuisine = models.CharField("cuisine", max_length=20, choices=Cuisine, blank=True)
     diets = models.ManyToManyField(Diet, blank=True, related_name="recipes", verbose_name="régimes")
     image = models.ImageField(upload_to="recipes/", blank=True)
     image_credit = models.CharField("auteur de l'image", max_length=200, blank=True)
@@ -189,7 +210,10 @@ class Recipe(TimeStampedModel):
         super().save(*args, **kwargs)
 
     def build_search_text(self) -> str:
-        parts = [self.title, self.summary, self.origin, self.get_course_display()]
+        parts = [
+            self.title, self.summary, self.origin, self.get_course_display(),
+            self.get_cuisine_display(),
+        ]  # fmt: skip
         if self.pk:
             parts += self.items.values_list("ingredient__name", flat=True)
             parts += self.diets.values_list("name", flat=True)

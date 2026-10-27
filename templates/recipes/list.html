@@ -25,6 +25,7 @@
     </button>
     <div id="more-filters" class="{% if not active %}hidden {% endif %}lg:block">
       {% include "partials/field.html" with field=form.course %}
+      {% include "partials/field.html" with field=form.cuisine %}
       {% include "partials/field.html" with field=form.diet %}
       {% include "partials/field.html" with field=form.difficulty %}
       {% include "partials/field.html" with field=form.max_minutes %}

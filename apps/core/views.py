@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.db import connection
+from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -38,6 +39,46 @@ def produce_of(month: int):
         return []
 
 
+WORLD = [
+    Recipe.Cuisine.AFRICA,
+    Recipe.Cuisine.ASIA,
+    Recipe.Cuisine.INDIA,
+    Recipe.Cuisine.MAGHREB,
+    Recipe.Cuisine.AMERICAS,
+    Recipe.Cuisine.EUROPE,
+]
+
+
+COVERS = {
+    Recipe.Cuisine.AFRICA: "riz-jollof",
+    Recipe.Cuisine.ASIA: "pad-thai-aux-crevettes",
+    Recipe.Cuisine.INDIA: "butter-chicken",
+    Recipe.Cuisine.MAGHREB: "tajine-de-poulet-aux-citrons-et-olives",
+    Recipe.Cuisine.AMERICAS: "tacos-aux-haricots-rouges",
+    Recipe.Cuisine.EUROPE: "risotto-aux-champignons",
+}
+
+
+def world_cuisines(recipes) -> list[dict]:
+    """Cuisines other than French with their recipe count and a cover photo."""
+    counts = dict(recipes.filter(cuisine__in=WORLD).values_list("cuisine").annotate(n=Count("id")))
+    cuisines = []
+    for cuisine in WORLD:
+        if not counts.get(cuisine):
+            continue
+        photos = recipes.filter(cuisine=cuisine).exclude(image="").exclude(image__endswith=".svg")
+        cover = photos.filter(slug=COVERS.get(cuisine)).first() or photos.order_by("pk").first()
+        cuisines.append(
+            {
+                "value": cuisine.value,
+                "label": cuisine.label,
+                "count": counts[cuisine],
+                "cover": cover,
+            }
+        )
+    return cuisines
+
+
 def home(request):
     recipes = Recipe.objects.published().prefetch_related("diets")
     stats = cache.get_or_set(
@@ -51,6 +92,7 @@ def home(request):
     )
     month = timezone.localdate().month
     context = {
+        "cuisines": world_cuisines(recipes),
         "featured": recipes.filter(is_featured=True)[:6],
         "cheapest": recipes.filter(cost_per_serving__isnull=False).order_by("cost_per_serving")[:4],
         "produce": produce_of(month)[:12],
