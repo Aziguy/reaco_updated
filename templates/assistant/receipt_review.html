@@ -17,7 +17,7 @@
   {% if formset.non_form_errors %}<div class="mb-4 text-sm text-red-600">{{ formset.non_form_errors }}</div>{% endif %}
   <div class="card overflow-hidden">
     <div class="hidden grid-cols-[2rem_1fr_6rem_7rem_6rem_9.5rem] gap-3 border-b border-stone-100 bg-stone-50 px-5 py-2.5 text-xs font-medium uppercase tracking-wide text-stone-500 md:grid dark:border-stone-800 dark:bg-stone-950/40 dark:text-stone-400">
-      <span class="sr-only">Garder</span><span>Produit</span><span>Quantité</span><span>Unité</span><span>Prix</span><span>Périme le</span>
+      <span><span class="sr-only">Garder</span></span><span>Produit</span><span>Quantité</span><span>Unité</span><span>Prix</span><span>Périme le</span>
     </div>
     <ul class="divide-y divide-stone-100 dark:divide-stone-800">
       {% for line in formset %}
