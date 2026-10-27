@@ -21,7 +21,7 @@ from .services import Caller, Unavailable, get_route, remaining
 EXAMPLES = [
     "Un dîner végétarien pour 4 à moins de 10 €",
     "Que faire avec mes courgettes et des œufs ?",
-    "Une soupe rapide et pas chère",
+    "Un plat indien végétarien et pas cher",
     "Un plat sans gluten, faible en CO2",
 ]
 

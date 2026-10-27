@@ -54,6 +54,8 @@ excluded vide.
 sinon "".
 - meal : true pour un repas sans type précis (« dîner », « déjeuner », « un plat », « repas ») : \
 exclut desserts, boissons, sauces et petits déjeuners. false sinon.
+- cuisine : code de la cuisine demandée (« africain », « thaï » : asia, « marocain » : maghreb), \
+sinon "".
 - diet : code du régime demandé ou évident (« végé » : vegetarien), sinon "".
 - max_minutes : temps total maximum en minutes, 30 pour « rapide », 0 si rien n'est dit.
 - max_cost : budget maximum par portion en euros. Divise un budget total par le nombre de \
@@ -79,6 +81,7 @@ def _schema(courses: list[str], diets: list[str]) -> dict:
             "keywords": text,
             "course": {"type": "string", "enum": ["", *courses]},
             "meal": {"type": "boolean"},
+            "cuisine": {"type": "string", "enum": ["", *Recipe.Cuisine.values]},
             "diet": {"type": "string", "enum": ["", *diets]},
             "max_minutes": {"type": "integer"},
             "max_cost": {"type": "number"},
@@ -88,8 +91,8 @@ def _schema(courses: list[str], diets: list[str]) -> dict:
             "summary": text,
         },
         "required": [
-            "ingredients", "excluded", "keywords", "course", "meal", "diet", "max_minutes",
-            "max_cost", "sort", "use_pantry", "servings", "summary",
+            "ingredients", "excluded", "keywords", "course", "meal", "cuisine", "diet",
+            "max_minutes", "max_cost", "sort", "use_pantry", "servings", "summary",
         ],
         "additionalProperties": False,
     }  # fmt: skip
@@ -111,6 +114,7 @@ class Criteria:
     unknown: list[str] = field(default_factory=list)
     course: str = ""
     meal: bool = False
+    cuisine: str = ""
     diet: str = ""
     max_minutes: int = 0
     max_cost: str = ""
@@ -134,7 +138,8 @@ class Criteria:
     @property
     def is_empty(self) -> bool:
         return not any(
-            (self.keywords, self.ingredients, self.excluded, self.course, self.meal, self.diet,
+            (self.keywords, self.ingredients, self.excluded, self.course, self.meal, self.cuisine,
+             self.diet,
              self.max_minutes, self.max_cost, self.sort, self.use_pantry)
         )  # fmt: skip
 
@@ -158,6 +163,8 @@ class Criteria:
             add(Recipe.Course(self.course).label, "chef", course="")
         elif self.meal:
             add("Plat salé", "chef", meal=False)
+        if self.cuisine:
+            add(Recipe.Cuisine(self.cuisine).label, "map-pin", cuisine="")
         if self.diet:
             diet = Diet.objects.filter(slug=self.diet).first()
             add(diet.name if diet else self.diet, "leaf", diet="")
@@ -218,6 +225,7 @@ def _clean(data: dict, text: str) -> Criteria:
         max_cost=str(Decimal(str(max_cost)).quantize(Decimal("0.01"))) if max_cost > 0 else "",
         sort=data.get("sort") if data.get("sort") in SORT_LABELS else "",
         meal=bool(data.get("meal")),
+        cuisine=data.get("cuisine") if data.get("cuisine") in Recipe.Cuisine.values else "",
         use_pantry=bool(data.get("use_pantry")),
         servings=max(0, min(int(data.get("servings") or 0), 30)),
         summary=clean_text(data.get("summary"), 200),
@@ -230,6 +238,15 @@ DIET_WORDS = [
     (r"sans gluten", "sans-gluten"),
     (r"sans lactose", "sans-lactose"),
     (r"pesc[eé]tarien|poisson", "pescetarien"),
+]
+CUISINE_WORDS = [
+    (r"afri|senegal|ivoir|camerou", "africa"),
+    (r"asiat|chinois|japonais|tha[iï]|vietnam|cor[eé]en", "asia"),
+    (r"indien|\binde\b", "india"),
+    (r"marocain|maghreb|liban|oriental|tunisien|algerien", "maghreb"),
+    (r"mexicain|latino|bresilien|americain", "americas"),
+    (r"italien|espagnol|grec\b", "europe"),
+    (r"francais|bistrot", "france"),
 ]
 
 
@@ -248,6 +265,7 @@ def guess(text: str) -> dict:
         "servings": int(servings.group(1)) if servings else 0,
         "max_minutes": int(minutes.group(1)) if minutes else (30 if "rapide" in words else 0),
         "diet": next((slug for pattern, slug in DIET_WORDS if re.search(pattern, plain)), ""),
+        "cuisine": next((key for pattern, key in CUISINE_WORDS if re.search(pattern, plain)), ""),
         "sort": "cheap" if re.search(r"pas cher|petit budget|econom", plain) else "",
         "meal": bool(re.search(r"diner|dejeuner|repas|\bplat\b", plain)),
         "use_pantry": bool(re.search(r"frigo|reste|perim|j'ai|placard", plain)),
@@ -272,6 +290,7 @@ def interpret(text: str, mode: str, caller: Caller) -> tuple[Criteria, str]:
         catalogue = "\n".join(
             [
                 "Types de plat : " + ", ".join(f"{c.value} ({c.label})" for c in Recipe.Course),
+                "Cuisines : " + ", ".join(f"{c.value} ({c.label})" for c in Recipe.Cuisine),
                 "Régimes : "
                 + ", ".join(
                     f"{slug} ({name})" for slug, name in Diet.objects.values_list("slug", "name")
@@ -310,8 +329,10 @@ def _queryset(criteria: Criteria, user, *, any_ingredient: bool = False):
         recipes = recipes.filter(course=criteria.course)
     elif criteria.meal:
         recipes = recipes.filter(course__in=MEAL_COURSES)
+    if criteria.cuisine:
+        recipes = recipes.filter(cuisine=criteria.cuisine)
     if criteria.diet:
-        recipes = recipes.filter(diets__slug=criteria.diet)
+        recipes = recipes.for_diet(criteria.diet)
     if criteria.max_minutes:
         recipes = recipes.alias(total=F("prep_minutes") + F("cook_minutes")).filter(
             total__lte=criteria.max_minutes
@@ -368,6 +389,7 @@ def classic_query(criteria: Criteria) -> str:
     params = {
         "q": criteria.keywords,
         "course": criteria.course,
+        "cuisine": criteria.cuisine,
         "diet": criteria.diet,
         "sort": criteria.sort,
         "max_minutes": next(

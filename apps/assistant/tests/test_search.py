@@ -16,6 +16,7 @@ REPLY = {
     "keywords": "",
     "course": "",
     "meal": False,
+    "cuisine": "",
     "diet": "",
     "max_minutes": 30,
     "max_cost": 4.5,
@@ -134,3 +135,18 @@ def test_search_with_token_needs_no_model(client, fake_ai, recipe):
 def test_search_bar_on_home_and_recipes(client, db):
     for name in ("core:home", "recipes:list"):
         assert reverse("assistant:search") in client.get(reverse(name)).content.decode()
+
+
+def test_cuisine_criterion(fake_ai, recipe):
+    Recipe.objects.filter(pk=recipe.pk).update(cuisine=Recipe.Cuisine.INDIA)
+    fake_ai.reply({**REPLY, "ingredients": [], "max_minutes": 0, "max_cost": 0, "cuisine": "india"})
+    criteria, _ = interpret("un plat indien", Mode.FAST, caller())
+    assert criteria.cuisine == "india"
+    assert "Inde" in [chip.label for chip in criteria.chips()]
+    assert apply(criteria)[0] == [recipe]
+    assert apply(Criteria(cuisine="asia"))[0] == []
+
+
+def test_guess_reads_cuisine():
+    assert guess("un curry indien pas cher")["cuisine"] == "india"
+    assert guess("quelque chose d'africain")["cuisine"] == "africa"

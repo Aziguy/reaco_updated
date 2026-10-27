@@ -106,7 +106,7 @@ def candidates(plan: MealPlan, limit: int = SHORTLIST) -> list[Candidate]:
     """Recipes ranked by pantry use (expiring first), season and price per serving."""
     recipes = Recipe.objects.published().with_relations().filter(course__in=PLAN_COURSES)
     if plan.diet_id:
-        recipes = recipes.filter(diets=plan.diet_id)
+        recipes = recipes.for_diet(plan.diet.slug)
     stock, urgent = _stock(plan)
     seasonal = seasonal_slugs(timezone.localdate().month)
     meals = len(slots(plan)) * plan.servings
@@ -150,8 +150,8 @@ def _prompt(plan: MealPlan, shortlist: list[Candidate]) -> Prompt:
         lines.append(f"Régime : {plan.diet.name}.")
     if plan.preferences:
         lines.append(f"Envies : <<<{plan.preferences}>>>")
-    lines.append("\nRecettes candidates (id | titre | type | € par portion | minutes | kg CO2e "
-                 "par portion | garde-manger utilisé | produits de saison) :")  # fmt: skip
+    lines.append("\nRecettes candidates (id | titre | type | cuisine | € par portion | minutes | "
+                 "kg CO2e par portion | garde-manger utilisé | produits de saison) :")  # fmt: skip
     for c in shortlist:
         recipe = c.recipe
         pantry = ", ".join(f"{name}{' !' if name in c.urgent else ''}" for name in c.pantry)
@@ -161,6 +161,7 @@ def _prompt(plan: MealPlan, shortlist: list[Candidate]) -> Prompt:
                     str(recipe.pk),
                     recipe.title,
                     recipe.get_course_display(),
+                    recipe.get_cuisine_display() or "?",
                     f"{recipe.cost_per_serving}" if recipe.cost_per_serving else "?",
                     str(recipe.total_minutes),
                     f"{recipe.co2_per_serving}" if recipe.co2_per_serving else "?",
