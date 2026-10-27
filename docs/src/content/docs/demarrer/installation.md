@@ -28,7 +28,7 @@ uv run python manage.py runserver
 ```
 
 - L'application répond sur <http://localhost:8000>, l'administration sur `/admin/` (chemin réglable avec `ADMIN_URL`) et la documentation de l'API sur `/api/docs/`.
-- `seed_demo` charge 83 ingrédients et 31 recettes avec leurs photos. La commande est idempotente.
+- `seed_demo` charge 102 ingrédients et 50 recettes avec leurs photos. La commande est idempotente.
 - `sync_prices` interroge Open Prices pour chaque ingrédient. Elle prend quelques minutes ; `sync_prices tomate oeuf` limite la synchronisation à quelques ingrédients.
 - Les emails sont affichés dans la console (`EMAIL_URL=consolemail://`).
 

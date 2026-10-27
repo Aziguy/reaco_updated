@@ -143,7 +143,11 @@ FIGURES = {
                 Callout(
                     ".field:has(#id_sort)", "Tri", "Récentes, moins chères, rapides ou bas carbone."
                 ),
-                Callout("#more-filters", "Filtres", "Type de plat, régime, difficulté et durée."),
+                Callout(
+                    "#more-filters",
+                    "Filtres",
+                    "Type de plat, cuisine, régime, difficulté et durée.",
+                ),
                 Callout(
                     "#results article >> nth=0",
                     "Fiche recette",

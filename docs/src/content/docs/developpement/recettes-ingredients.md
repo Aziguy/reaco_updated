@@ -50,6 +50,7 @@ Les données de démonstration sont dans `demo/` :
   "prep": 15,
   "cook": 40,
   "origin": "Normandie, France",
+  "cuisine": "france",
   "diets": ["Pescétarien", "Sans gluten"],
   "featured": true,
   "image": "choucroute-de-poisson.webp",
@@ -69,6 +70,8 @@ Les données de démonstration sont dans `demo/` :
 {"name": "Pavé de saumon", "aisle": "fish", "price_unit": "kg", "unit_weight_g": 125,
  "off": "en:salmon-fillets", "co2": "saumon", "ciqual": "26036"}
 ```
+
+`cuisine` prend l'une des valeurs de `Recipe.Cuisine` : `france`, `europe`, `maghreb`, `africa`, `asia`, `india`, `americas`. Les ingrédients vendus à la pièce (`price_unit` à `unit`) doivent être dosés en pièces dans les recettes.
 
 `off`, `co2`, `ciqual`, `unit_weight_g` et `staple` sont facultatifs. Ajoutez l'aliment correspondant dans `demo/ciqual.json` (`kcal`, `proteins`, `fat`, `carbs` pour 100 g).
 

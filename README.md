@@ -40,7 +40,8 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 ## Fonctionnalités
 
 **Recettes**
-- 31 recettes de démonstration, économiques et anti-gaspi (pain perdu, hachis parmentier, riz cantonais, banana bread…), illustrées par des photos sous licence libre.
+- 50 recettes de démonstration, économiques et anti-gaspi, de France et du monde entier : mafé, poulet yassa, riz jollof, pad thaï, porc au caramel, chana masala, tajine, houmous, tacos… illustrées par des photos sous licence libre.
+- Filtre par cuisine (France, Europe, Maghreb et Moyen-Orient, Afrique, Asie, Inde, Amériques) et vignettes « Cuisines du monde » sur l'accueil.
 - Recherche instantanée insensible aux accents (titre, ingrédients, régimes), filtres combinables (type de plat, régime, difficulté, temps) et tri par date, prix, durée ou CO2, avec pagination stable et URL partageables.
 - Ajustement des portions, quantités recalculées à la volée.
 - Coût par portion calculé à partir de prix réels, détail par ingrédient.
@@ -144,7 +145,7 @@ Pendant le développement, `npm run dev` recompile les styles à chaque modifica
 
 | Commande | Rôle |
 | --- | --- |
-| `seed_demo [--refresh-images]` | Charge les 83 ingrédients et 31 recettes de démonstration avec leurs photos (idempotent). |
+| `seed_demo [--refresh-images]` | Charge les 102 ingrédients et 50 recettes de démonstration avec leurs photos (idempotent). |
 | `sync_prices [slug ...] [--days N] [--pages N]` | Importe les prix Open Prices puis recalcule les recettes. |
 | `refresh_metrics` | Recalcule coût, empreinte carbone et valeurs nutritionnelles (automatique à chaque enregistrement dans l'administration). |
 | `send_expiry_reminders [--days N]` | Envoie les rappels de péremption. |

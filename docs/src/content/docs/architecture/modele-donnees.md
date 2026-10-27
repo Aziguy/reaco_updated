@@ -28,7 +28,7 @@ erDiagram
 | Modèle | Rôle | Champs notables |
 | --- | --- | --- |
 | `Ingredient` | Ingrédient générique, relié aux données ouvertes | `off_category` (taxonomie Open Food Facts), `impactco2_slug` (ADEME), `ciqual_code` et valeurs pour 100 g (`kcal_100g`, `proteins_100g`, `fat_100g`, `carbs_100g`), `price_unit` (kg, l ou unité), `unit_weight_g` (poids d'une pièce), `aisle` (rayon), `is_staple` (produit de base supposé disponible) |
-| `Recipe` | Recette | métadonnées (type, difficulté, portions, durées, origine), image et crédits (`image_credit`, `image_license`, `image_license_url`, `image_source`), métriques calculées non éditables (`cost_per_serving`, `price_coverage`, `co2_per_serving`, `kcal`, `proteins_g`, `fat_g`, `carbs_g`, `nutrition_coverage`, `metrics_updated_at`), `search_text` |
+| `Recipe` | Recette | métadonnées (type, difficulté, portions, durées, origine en texte libre, `cuisine` parmi sept régions), image et crédits (`image_credit`, `image_license`, `image_license_url`, `image_source`), métriques calculées non éditables (`cost_per_serving`, `price_coverage`, `co2_per_serving`, `kcal`, `proteins_g`, `fat_g`, `carbs_g`, `nutrition_coverage`, `metrics_updated_at`), `search_text` |
 | `RecipeIngredient` | Ligne d'ingrédient | `quantity` (facultative), `unit`, `note`, `position` |
 | `RecipeStep` | Étape | `position`, `text` |
 | `Diet` | Régime (végétarien, sans gluten...) | `name`, `slug` |
@@ -38,7 +38,9 @@ Les unités de recette (`g`, `kg`, `ml`, `cl`, `l`, `piece`, `tbsp`, `tsp`, `pin
 
 ### Index de recherche
 
-`Recipe.search_text` contient le titre, le résumé, l'origine, le type de plat, les ingrédients et les régimes, en minuscules et sans accents (`apps.core.text.normalize`). Il est mis à jour :
+Les filtres par régime passent par `Recipe.objects.for_diet(slug)`, qui inclut les régimes plus stricts : une recette végane convient aux végétariens, une recette végétarienne aux pescétariens (`STRICTER_DIETS`).
+
+`Recipe.search_text` contient le titre, le résumé, l'origine, le type de plat, la cuisine, les ingrédients et les régimes, en minuscules et sans accents (`apps.core.text.normalize`). Il est mis à jour :
 
 - à chaque `Recipe.save()` ;
 - par les signaux de `apps/recipes/signals.py` quand un `RecipeIngredient` est créé, modifié ou supprimé, ou quand les régimes changent.
