@@ -1,0 +1,31 @@
+{% load comegusto %}
+{% with recipe=suggestion.recipe best=suggestion.best %}
+<article class="card group relative flex flex-col overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md">
+  <div class="relative aspect-[16/10] overflow-hidden bg-stone-100 dark:bg-stone-800">
+    {% if recipe.image %}<img src="{{ recipe.image.url }}" alt="" loading="lazy" class="size-full object-cover transition duration-300 group-hover:scale-105">{% else %}{% include "partials/recipe_placeholder.html" %}{% endif %}
+    <span class="absolute left-3 top-3 badge bg-white/95 text-stone-900 shadow-sm dark:bg-stone-950/90 dark:text-white">{% if suggestion.missing %}{{ suggestion.missing|length }} à acheter{% else %}{% icon "check" "size-3.5 text-brand-600" %}Rien à acheter{% endif %}</span>
+  </div>
+  <div class="flex flex-1 flex-col p-4">
+    <p class="text-xs font-medium uppercase tracking-wide text-brand-700 dark:text-brand-300">{{ recipe.get_course_display }}{% if recipe.cuisine %} · {{ recipe.get_cuisine_display }}{% endif %}</p>
+    <h3 class="mt-1 text-base"><a href="?{{ query }}&amp;recette={{ recipe.slug }}" hx-get="?{{ query }}&amp;recette={{ recipe.slug }}" hx-target="#cook-results" hx-push-url="true" hx-indicator="#cook-results-wrap" class="no-underline after:absolute after:inset-0 hover:underline">{{ recipe.title }}</a></h3>
+    <div class="mt-3 flex gap-1" aria-hidden="true">
+      {% for need in suggestion.have %}<span class="h-1.5 flex-1 rounded-full bg-brand-500"></span>{% endfor %}
+      {% for need in suggestion.missing %}<span class="h-1.5 flex-1 rounded-full bg-stone-200 dark:bg-stone-700"></span>{% endfor %}
+    </div>
+    <p class="mt-2 text-sm text-stone-600 dark:text-stone-300">Vous avez {{ suggestion.have|length }} ingrédient{{ suggestion.have|length|pluralize }} sur {{ suggestion.needed }}</p>
+    {% if suggestion.missing %}<p class="muted mt-1 line-clamp-2">Il manque : {% for need in suggestion.missing %}{{ need.item.ingredient.name|lower }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+    <div class="mt-auto flex items-center justify-between gap-2 border-t border-stone-100 pt-3 text-sm dark:border-stone-800">
+      {% if best %}
+        <span class="inline-flex min-w-0 items-center gap-1.5 text-stone-600 dark:text-stone-300">{% icon "store" "size-4 shrink-0 text-stone-400" %}<span class="truncate">{{ best.brand }}{% if suggestion.local and best.stores.0.distance_km is not None %} · {{ best.stores.0.distance_km|floatformat:1 }} km{% endif %}</span></span>
+        <span class="shrink-0 font-semibold tabular-nums text-stone-900 dark:text-white">{{ best.total|euro }}</span>
+      {% elif suggestion.missing_total %}
+        <span class="muted">Prix médian</span><span class="font-semibold tabular-nums text-stone-900 dark:text-white">{{ suggestion.missing_total|euro }}</span>
+      {% elif suggestion.missing %}
+        <span class="muted">Prix non disponibles</span>
+      {% else %}
+        <span class="inline-flex items-center gap-1.5 font-medium text-brand-700 dark:text-brand-300">{% icon "leaf" "size-4" %}0 € de courses</span>
+      {% endif %}
+    </div>
+  </div>
+</article>
+{% endwith %}

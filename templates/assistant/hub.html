@@ -19,9 +19,10 @@
 
 <div class="container-page space-y-14 py-12">
   <section aria-labelledby="tools-title">
-    <h2 id="tools-title" class="section-title">Trois coups de main pour la semaine</h2>
-    <div class="mt-6 grid gap-6 md:grid-cols-3">
-      {% url 'assistant:plan_new' as plan_url %}{% url 'assistant:fridge' as fridge_url %}{% url 'assistant:receipt' as receipt_url %}
+    <h2 id="tools-title" class="section-title">Quatre coups de main pour la semaine</h2>
+    <div class="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      {% url 'assistant:cook' as cook_url %}{% url 'assistant:plan_new' as plan_url %}{% url 'assistant:fridge' as fridge_url %}{% url 'assistant:receipt' as receipt_url %}
+      {% include "assistant/_tool.html" with icon="cart" title="Cuisiner avec ce que j'ai" text="Votre envie et vos ingrédients : on liste ce qui manque et le magasin le moins cher près de chez vous." url=cook_url cta="Trouver mon repas" public=True %}
       {% include "assistant/_tool.html" with icon="calendar" title="Menu de la semaine" text="Des repas qui utilisent d'abord votre garde-manger, dans votre budget, puis la liste de courses en un clic." url=plan_url cta="Composer mon menu" %}
       {% include "assistant/_tool.html" with icon="chef" title="Vider le frigo" text="Choisissez les produits à sauver : l'assistant invente une recette, Comégusto la chiffre." url=fridge_url cta="Créer une recette" %}
       {% include "assistant/_tool.html" with icon="receipt" title="Ticket de caisse" text="Photographiez votre ticket : vos achats rejoignent le garde-manger, sans saisie." url=receipt_url cta="Scanner un ticket" %}

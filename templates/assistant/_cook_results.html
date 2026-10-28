@@ -1,0 +1,50 @@
+{% load comegusto %}
+<div aria-live="polite">
+{% if empty %}
+  <p class="guide-warning flex items-start gap-2" role="alert">{% icon "info" "size-4 mt-0.5 shrink-0" %}<span>Indiquez un plat dont vous avez envie, ou au moins un ingrédient que vous avez.</span></p>
+{% endif %}
+
+{% if searched %}
+  <div class="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+    <span class="inline-flex items-center gap-1.5 font-medium text-stone-900 dark:text-white">{% icon "users" "size-4 text-stone-400" %}{{ servings }} personne{{ servings|pluralize }}</span>
+    {% if place %}<span class="inline-flex items-center gap-1.5 text-stone-600 dark:text-stone-300">{% icon "map-pin" "size-4 text-stone-400" %}Autour de {{ place.label }}</span>{% endif %}
+    {% if have %}
+      <span class="inline-flex items-center gap-1.5 text-stone-600 dark:text-stone-300">{% icon "fridge" "size-4 text-stone-400" %}{{ have|length }} ingrédient{{ have|length|pluralize }} chez vous</span>
+    {% endif %}
+    {% if unknown %}<span class="muted">Pas encore au catalogue : {{ unknown|join:", " }}</span>{% endif %}
+  </div>
+
+  {% if plan %}
+    {% include "assistant/_cook_plan.html" %}
+  {% elif create %}
+    {% include "assistant/_cook_create.html" %}
+  {% elif suggestions %}
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
+      <h2 class="text-xl">Avec ce que vous avez</h2>
+      <p class="muted">Classées par nombre d'ingrédients à acheter, puis par prix.</p>
+    </div>
+    <div class="mt-4 grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+      {% for suggestion in suggestions %}{% include "assistant/_cook_suggestion.html" %}{% endfor %}
+      {% include "assistant/_cook_invent.html" %}
+    </div>
+  {% else %}
+    <div class="grid gap-6 lg:grid-cols-2">
+      <div class="card flex flex-col items-center p-10 text-center">
+        <span class="flex size-12 items-center justify-center rounded-full bg-stone-100 text-stone-500 dark:bg-stone-800 dark:text-stone-300">{% icon "search" %}</span>
+        <p class="mt-4 font-medium">Aucune recette du catalogue n'utilise ces ingrédients.</p>
+        <p class="muted mt-1">Vérifiez l'orthographe ou laissez l'assistant inventer une recette.</p>
+      </div>
+      {% include "assistant/_cook_invent.html" %}
+    </div>
+  {% endif %}
+{% elif not empty %}
+  <section aria-labelledby="cook-how" class="card p-6 sm:p-8">
+    <h2 id="cook-how" class="section-title">Comment ça marche ?</h2>
+    <ol class="mt-6 grid gap-6 sm:grid-cols-3">
+      <li class="flex gap-4"><span class="guide-marker !size-8 !bg-brand-600 !text-sm">1</span><div><p class="font-medium text-stone-900 dark:text-white">Vous dites ce que vous avez</p><p class="muted mt-1">En quelques mots, en photo ou depuis votre garde-manger.</p></div></li>
+      <li class="flex gap-4"><span class="guide-marker !size-8 !bg-brand-600 !text-sm">2</span><div><p class="font-medium text-stone-900 dark:text-white">On trouve la recette</p><p class="muted mt-1">Votre plat, ou les recettes qui demandent le moins d'achats. Un plat inconnu ? L'assistant l'écrit.</p></div></li>
+      <li class="flex gap-4"><span class="guide-marker !size-8 !bg-brand-600 !text-sm">3</span><div><p class="font-medium text-stone-900 dark:text-white">Vous achetez moins cher</p><p class="muted mt-1">Seulement ce qui manque, dans l'enseigne la moins chère près de chez vous, d'après Open Prices.</p></div></li>
+    </ol>
+  </section>
+{% endif %}
+</div>

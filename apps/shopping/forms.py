@@ -1,6 +1,6 @@
 from django import forms
 
-from apps.recipes.models import Recipe
+from apps.recipes.models import Ingredient, Recipe
 
 from .models import ShoppingItem, ShoppingList
 
@@ -32,6 +32,9 @@ class AddRecipeForm(forms.Form):
         empty_label="Nouvelle liste",
     )
     use_pantry = forms.BooleanField(label="Déduire mon garde-manger", required=False, initial=True)
+    have = forms.ModelMultipleChoiceField(
+        queryset=Ingredient.objects.all(), required=False, widget=forms.MultipleHiddenInput
+    )
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)

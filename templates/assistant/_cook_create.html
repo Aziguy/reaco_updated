@@ -1,0 +1,37 @@
+{% load comegusto %}
+{% if user.is_authenticated and recipe_left != 0 %}
+  <div class="card ai-surface relative flex min-h-72 flex-col items-center justify-center overflow-hidden p-10 text-center"
+       hx-post="{% url 'assistant:cook_create' %}" hx-trigger="load" hx-include="#cook-form" hx-target="#cook-results" hx-swap="innerHTML" role="status">
+    <span class="ai-icon !size-14 motion-safe:animate-pulse">{% icon "chef" "size-7" %}</span>
+    <p class="mt-5 text-lg font-semibold text-stone-900 dark:text-white">« {{ dish }} » n'est pas encore au catalogue</p>
+    <p class="muted mt-1 max-w-md">Le chef de l'assistant écrit la recette pour {{ servings }} personne{{ servings|pluralize }}, puis Comégusto cherche le magasin le moins cher pour ce qui manque.</p>
+    <span class="mt-5 flex gap-1.5" aria-hidden="true">
+      <span class="size-2 rounded-full bg-brand-500 motion-safe:animate-bounce"></span>
+      <span class="size-2 rounded-full bg-brand-500 motion-safe:animate-bounce [animation-delay:150ms]"></span>
+      <span class="size-2 rounded-full bg-brand-500 motion-safe:animate-bounce [animation-delay:300ms]"></span>
+    </span>
+  </div>
+{% else %}
+  <div class="card ai-surface flex flex-col items-center p-10 text-center">
+    <span class="ai-icon !size-12">{% icon "chef" "size-6" %}</span>
+    <p class="mt-4 text-lg font-semibold text-stone-900 dark:text-white">« {{ dish }} » n'est pas encore au catalogue</p>
+    {% if user.is_authenticated %}
+      <p class="muted mt-1 max-w-md">Vous avez utilisé vos créations de recettes du jour. Revenez demain, ou passez à une formule qui en offre davantage.</p>
+      <a href="{% url 'billing:pricing' %}" class="btn-primary mt-5">{% icon "sparkles" "size-4" %}Voir les formules</a>
+    {% else %}
+      <p class="muted mt-1 max-w-md">Avec un compte gratuit, l'assistant écrit la recette pour vous et trouve le magasin le moins cher pour ce qui manque.</p>
+      <div class="mt-5 flex flex-wrap justify-center gap-3">
+        <a href="{% url 'account_signup' %}" class="btn-primary">Créer un compte gratuit</a>
+        <a href="{% url 'account_login' %}?next={{ request.get_full_path|urlencode }}" class="btn-secondary">Se connecter</a>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}
+{% if close %}
+  <section class="mt-10" aria-labelledby="cook-close">
+    <h2 id="cook-close" class="text-lg">En attendant, dans le catalogue</h2>
+    <div class="mt-4 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      {% for recipe in close %}{% include "partials/recipe_card.html" %}{% endfor %}
+    </div>
+  </section>
+{% endif %}

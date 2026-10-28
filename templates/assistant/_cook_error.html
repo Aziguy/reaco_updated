@@ -1,0 +1,9 @@
+{% load comegusto %}
+<div class="guide-warning flex items-start gap-2" role="alert">
+  {% icon "alert" "size-4 mt-0.5 shrink-0" %}
+  <div>
+    <p>{{ error }}</p>
+    {% if reason == "quota" or reason == "plan" %}<p class="mt-1"><a href="{% url 'billing:pricing' %}" class="font-medium underline">Voir les formules</a> pour en profiter davantage.</p>{% endif %}
+    <p class="mt-1">Vous pouvez aussi <a href="{% url 'recipes:list' %}" class="font-medium underline">parcourir le catalogue</a>.</p>
+  </div>
+</div>

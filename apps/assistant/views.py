@@ -5,15 +5,18 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 from apps.pantry.models import PantryItem
-from apps.recipes.models import Recipe, RecipeIngredient
+from apps.recipes.models import Ingredient, Recipe, RecipeIngredient
 
+from . import cook as cooking
 from . import planner
-from .forms import FridgeForm, MealPlanForm, ReceiptForm, ReceiptLineFormSet
-from .generator import GenerationError, create_recipe
+from .forms import CookForm, FridgeForm, MealPlanForm, PhotoForm, ReceiptForm, ReceiptLineFormSet
+from .generator import Brief, GenerationError, create_recipe, generate
 from .models import Feature, MealPlan, Mode, PlannedMeal
+from .photo import PhotoError, read_photo
 from .receipts import ReceiptError, read_receipt
 from .search import MAX_LENGTH, Criteria, apply, classic_query, interpret
 from .services import Caller, Unavailable, get_route, remaining
@@ -23,6 +26,13 @@ EXAMPLES = [
     "Que faire avec mes courgettes et des œufs ?",
     "Un plat indien végétarien et pas cher",
     "Un plat sans gluten, faible en CO2",
+]
+
+
+COOK_EXAMPLES = [
+    ("Riz sauce tomate pour 2", {"envie": "riz sauce tomate", "personnes": 2}),
+    ("J'ai des pommes, du riz et de l'ail", {"j": "pommes, riz, ail"}),
+    ("Un mafé avec mes oignons", {"envie": "mafé", "j": "oignon"}),
 ]
 
 
@@ -246,3 +256,158 @@ def receipt_save(request):
     PantryItem.objects.bulk_create(items)
     messages.success(request, f"{len(items)} produit(s) ajouté(s) à votre garde-manger.")
     return redirect("pantry:list")
+
+
+def _cook_query(data: dict, **changes) -> str:
+    params = {
+        "envie": data.get("envie") or "",
+        "j": data.get("j") or "",
+        "personnes": data.get("personnes") or "",
+        "cp": data.get("cp") or "",
+        "garde_manger": "1" if data.get("garde_manger") else "",
+        **changes,
+    }
+    return urlencode({key: value for key, value in params.items() if value})
+
+
+def _cook_inputs(request, data: dict) -> dict:
+    user = request.user if request.user.is_authenticated else None
+    dish, servings = cooking.split_dish(data.get("envie") or "")
+    typed, unknown = cooking.parse_have(data.get("j") or "")
+    have = {ingredient.pk: ingredient for ingredient in typed}
+    if user and data.get("garde_manger"):
+        for ingredient in cooking.pantry_ingredients(user):
+            have.setdefault(ingredient.pk, ingredient)
+    return {
+        "user": user,
+        "dish": dish,
+        "servings": data.get("personnes") or servings or (user.household_size if user else 2),
+        "have": have,
+        "unknown": unknown,
+        "place": cooking.locate(user, data.get("cp") or ""),
+    }
+
+
+def _cook_results(request, data: dict) -> dict:
+    inputs = _cook_inputs(request, data)
+    user, dish, servings, have = (inputs[k] for k in ("user", "dish", "servings", "have"))
+    context = {
+        "dish": dish,
+        "servings": servings,
+        "have": list(have.values()),
+        "unknown": inputs["unknown"],
+        "place": inputs["place"],
+        "query": _cook_query(data),
+        "searched": True,
+    }
+    recipe = None
+    if data.get("recette"):
+        recipe = (
+            Recipe.objects.visible_to(request.user)
+            .with_relations()
+            .filter(slug=data["recette"])
+            .first()
+        )
+    elif dish:
+        recipe, context["close"] = cooking.find_dish(dish, user)
+    if recipe:
+        context["plan"] = cooking.plan_for(recipe, servings, set(have), inputs["place"])
+    elif dish:
+        context["create"] = True
+    elif have:
+        context["suggestions"] = cooking.suggest(set(have), user, servings, inputs["place"])
+    else:
+        context["searched"] = False
+        context["empty"] = True
+    return context
+
+
+def cook(request):
+    initial = {"garde_manger": True}
+    if request.user.is_authenticated:
+        initial["personnes"] = request.user.household_size
+    form = CookForm(request.GET or None, initial=initial)
+    context = {
+        "form": form,
+        "examples": [(label, urlencode(params)) for label, params in COOK_EXAMPLES],
+        "recipe_left": _remaining(request, Feature.RECIPE),
+        "photo_left": _remaining(request, Feature.PHOTO),
+    }
+    if request.user.is_authenticated:
+        context["lists"] = request.user.shopping_lists.filter(is_archived=False)
+        context["pantry_count"] = (
+            PantryItem.objects.filter(user=request.user, ingredient__isnull=False)
+            .in_stock()
+            .count()
+        )
+    if form.is_bound and form.is_valid():
+        context.update(_cook_results(request, form.cleaned_data))
+    if request.htmx and request.htmx.target == "cook-results":
+        return render(request, "assistant/_cook_results.html", context)
+    context["ingredient_names"] = Ingredient.objects.values_list("name", flat=True)
+    return render(request, "assistant/cook.html", context)
+
+
+@login_required
+@require_POST
+def cook_create(request):
+    form = CookForm(request.POST)
+    if not form.is_valid():
+        return render(request, "assistant/_cook_error.html", {"error": "Demande incomplète."})
+    data = form.cleaned_data
+    inputs = _cook_inputs(request, data)
+    if not inputs["dish"] and len(inputs["have"]) < 2:
+        error = "Indiquez un plat ou au moins deux ingrédients."
+        return render(request, "assistant/_cook_error.html", {"error": error})
+    brief = Brief(
+        servings=inputs["servings"],
+        dish=inputs["dish"],
+        have=[ingredient.name for ingredient in inputs["have"].values()],
+    )
+    try:
+        recipe = generate(brief, data["mode"], Caller.from_request(request))
+    except (Unavailable, GenerationError) as exc:
+        context = {"error": getattr(exc, "message", str(exc)), "reason": getattr(exc, "reason", "")}
+        return render(request, "assistant/_cook_error.html", context)
+    url = f"{reverse('assistant:cook')}?{_cook_query(data, recette=recipe.slug)}"
+    if not request.htmx:
+        return redirect(url)
+    plan = cooking.plan_for(recipe, inputs["servings"], set(inputs["have"]), inputs["place"])
+    context = {
+        "plan": plan,
+        "dish": inputs["dish"],
+        "servings": inputs["servings"],
+        "have": list(inputs["have"].values()),
+        "place": inputs["place"],
+        "query": _cook_query(data),
+        "searched": True,
+        "created": True,
+        "lists": request.user.shopping_lists.filter(is_archived=False),
+    }
+    response = render(request, "assistant/_cook_results.html", context)
+    response["HX-Replace-Url"] = url
+    return response
+
+
+@login_required
+@require_POST
+def cook_photo(request):
+    form = PhotoForm(request.POST, request.FILES)
+    current = cooking.split_names(request.POST.get("j", ""))
+    context = {"value": ", ".join(current), "photo_left": _remaining(request, Feature.PHOTO)}
+    if not form.is_valid():
+        context["error"] = " ".join(form.errors.get("photo", ["Photo illisible."]))
+        return render(request, "assistant/_cook_have.html", context)
+    try:
+        detected = read_photo(form.cleaned_data["photo"], Mode.FAST, Caller.from_request(request))
+    except (Unavailable, PhotoError) as exc:
+        context["error"] = getattr(exc, "message", str(exc))
+        return render(request, "assistant/_cook_have.html", context)
+    known = {name.lower() for name in current}
+    merged = current + [name for name in detected if name.lower() not in known]
+    context.update(
+        value=", ".join(merged),
+        detected=detected,
+        photo_left=_remaining(request, Feature.PHOTO),
+    )
+    return render(request, "assistant/_cook_have.html", context)

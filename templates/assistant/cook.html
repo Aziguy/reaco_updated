@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Cuisiner avec ce que j'ai{% endblock %}
+{% block description %}Dites ce que vous avez et ce dont vous avez envie : Comégusto trouve la recette, liste ce qui manque et le magasin le moins cher près de chez vous.{% endblock %}
+{% block main %}
+<section class="ai-surface border-b border-stone-200 dark:border-stone-800">
+  <div class="container-page py-10 sm:py-14">
+    <nav class="muted mb-6" aria-label="Fil d'Ariane"><a href="{% url 'assistant:hub' %}" class="hover:underline">Assistant</a> / Cuisiner avec ce que j'ai</nav>
+    <div class="mx-auto max-w-3xl text-center">
+      <h1 class="text-4xl leading-tight sm:text-5xl">Cuisiner avec ce que <span class="bg-linear-to-r from-brand-600 to-emerald-500 bg-clip-text text-transparent dark:from-brand-400 dark:to-emerald-300">j'ai</span></h1>
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-stone-600 dark:text-stone-300">Votre envie, vos ingrédients : on vous dit ce qui manque et où l'acheter le moins cher près de chez vous. {% include "partials/help_link.html" with chapter="assistant" anchor="cuisiner" %}</p>
+    </div>
+
+    <form id="cook-form" method="get" action="{% url 'assistant:cook' %}" class="ai-ring mx-auto mt-8 max-w-4xl"
+          hx-get="{% url 'assistant:cook' %}" hx-target="#cook-results" hx-push-url="true" hx-indicator="#cook-results-wrap">
+      <div class="rounded-[15px] bg-white p-4 sm:p-6 dark:bg-stone-950">
+        <div class="grid gap-5 lg:grid-cols-2">
+          <div>
+            <label for="id_envie" class="mb-1.5 flex items-center justify-between text-sm font-medium text-stone-700 dark:text-stone-300"><span class="flex items-center gap-1.5">{% icon "chef" "size-4 text-brand-600 dark:text-brand-400" %}J'ai envie de…</span><span class="text-xs font-normal text-stone-400">facultatif</span></label>
+            <input id="id_envie" name="envie" type="text" maxlength="120" autocomplete="off" value="{{ form.envie.value|default:'' }}"
+                   placeholder="Ex. riz sauce tomate pour 2, mafé, une soupe" class="input !py-2.5 !text-base">
+            <p class="mt-1.5 text-xs text-stone-500 dark:text-stone-400">Un plat absent du catalogue ? L'assistant l'écrit pour vous.</p>
+          </div>
+          {% include "assistant/_cook_have.html" with value=form.j.value|default:"" %}
+        </div>
+        <datalist id="ingredient-names">{% for name in ingredient_names %}<option value="{{ name }}"></option>{% endfor %}</datalist>
+
+        <div class="mt-5 flex flex-wrap items-end gap-x-5 gap-y-4 border-t border-stone-100 pt-5 dark:border-stone-800">
+          <div>
+            <label for="id_personnes" class="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-stone-700 dark:text-stone-300">{% icon "users" "size-4 text-stone-400" %}Personnes</label>
+            <input id="id_personnes" name="personnes" type="number" min="1" max="12" value="{{ form.personnes.value|default:'' }}" placeholder="2" class="input !w-24">
+          </div>
+          <div>
+            <label for="id_cp" class="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-stone-700 dark:text-stone-300">{% icon "map-pin" "size-4 text-stone-400" %}Près de</label>
+            <input id="id_cp" name="cp" type="text" maxlength="60" autocomplete="postal-code" value="{{ form.cp.value|default:'' }}"
+                   placeholder="{% if user.is_authenticated and user.has_location %}{{ user.postal_code|default:user.city|default:'Mon adresse' }}{% else %}Code postal ou ville{% endif %}" class="input !w-44">
+          </div>
+          {% if pantry_count %}
+            <label class="flex items-center gap-2 pb-2.5 text-sm text-stone-700 dark:text-stone-300">
+              <input type="checkbox" name="garde_manger" value="1" class="size-4 rounded accent-brand-600"{% if form.garde_manger.value %} checked{% endif %}>
+              Compter mon garde-manger <span class="badge-neutral">{{ pantry_count }}</span>
+            </label>
+          {% endif %}
+          <div class="ml-auto flex flex-wrap items-end gap-3">
+            <fieldset class="segmented" title="Pour les recettes créées par l'assistant">
+              <legend class="sr-only">Mode de l'assistant</legend>
+              <label><input type="radio" name="mode" value="fast"{% if form.mode.value != "deep" %} checked{% endif %}>{% icon "zap" "size-3.5" %}Rapide</label>
+              <label><input type="radio" name="mode" value="deep"{% if form.mode.value == "deep" %} checked{% endif %}>{% icon "brain" "size-3.5" %}Approfondi</label>
+            </fieldset>
+            <button type="submit" class="btn-primary px-5">{% icon "search" "size-4" %}Trouver</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <ul class="mx-auto mt-5 flex max-w-4xl flex-wrap justify-center gap-2" aria-label="Exemples">
+      {% for label, params in examples %}
+        <li><a href="?{{ params }}" class="ai-chip !pr-2.5 no-underline transition hover:border-brand-400 hover:text-stone-900 dark:hover:text-white">{% icon "sparkles" "size-3.5 text-brand-600 dark:text-brand-400" %}{{ label }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<div id="cook-results-wrap" class="container-page py-10">
+  <div class="ai-pending" aria-hidden="true">
+    <div class="card grid gap-6 p-6 lg:grid-cols-[1fr_20rem]">
+      <div class="space-y-4"><div class="skeleton h-20"></div><div class="skeleton h-4 w-2/3"></div><div class="skeleton h-32"></div></div>
+      <div class="skeleton h-56"></div>
+    </div>
+  </div>
+  <div id="cook-results" class="ai-settled">{% include "assistant/_cook_results.html" %}</div>
+</div>
+{% endblock %}

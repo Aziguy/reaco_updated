@@ -1,0 +1,142 @@
+{% load comegusto %}
+{% with recipe=plan.recipe best=plan.best %}
+<article class="card overflow-hidden" aria-labelledby="cook-recipe-title">
+  <div class="grid lg:grid-cols-[minmax(0,1fr)_22rem]">
+    <div class="p-6 sm:p-8">
+      <div class="flex items-start gap-4">
+        <a href="{{ recipe.get_absolute_url }}?servings={{ servings }}" class="relative block size-20 shrink-0 overflow-hidden rounded-xl bg-stone-100 sm:size-24 dark:bg-stone-800" tabindex="-1" aria-hidden="true">
+          {% if recipe.image %}<img src="{{ recipe.image.url }}" alt="" class="size-full object-cover">{% else %}{% include "partials/recipe_placeholder.html" %}{% endif %}
+        </a>
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-medium uppercase tracking-wide text-brand-700 dark:text-brand-300">{{ recipe.get_course_display }}{% if recipe.cuisine %} · {{ recipe.get_cuisine_display }}{% endif %}</p>
+          <h2 id="cook-recipe-title" class="mt-1 text-2xl"><a href="{{ recipe.get_absolute_url }}?servings={{ servings }}" class="no-underline hover:underline">{{ recipe.title }}</a></h2>
+          <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-stone-600 dark:text-stone-400">
+            <span class="inline-flex items-center gap-1">{% icon "clock" "size-3.5" %}{{ recipe.total_minutes|duration }}</span>
+            <span class="inline-flex items-center gap-1">{% icon "chef" "size-3.5" %}{{ recipe.get_difficulty_display }}</span>
+            {% if recipe.co2_per_serving %}<span class="inline-flex items-center gap-1">{% icon "cloud" "size-3.5" %}{{ recipe.co2_per_serving|co2 }} / portion</span>{% endif %}
+            {% if recipe.is_ai_generated %}<span class="badge-brand">{% icon "sparkles" "size-3" %}Créée par l'assistant</span>{% endif %}
+          </div>
+        </div>
+      </div>
+      {% if created %}<p class="guide-note mt-5">Recette écrite pour vous. Elle reste dans votre espace{% if recipe.review_requested %} et l'équipe la relira avant de la publier pour tous{% endif %}.</p>{% endif %}
+
+      {% if plan.needed %}
+        <div class="mt-6">
+          <div class="flex items-baseline justify-between gap-3 text-sm">
+            <p class="font-medium text-stone-900 dark:text-white">{% if plan.missing %}Vous avez {{ plan.have|length }} ingrédient{{ plan.have|length|pluralize }} sur {{ plan.needed }}{% else %}Vous avez tout ce qu'il faut{% endif %}</p>
+            <p class="muted tabular-nums">{{ plan.coverage }} %</p>
+          </div>
+          <div class="mt-2 flex gap-1" aria-hidden="true">
+            {% for need in plan.have %}<span class="h-2 flex-1 rounded-full bg-brand-500"></span>{% endfor %}
+            {% for need in plan.missing %}<span class="h-2 flex-1 rounded-full bg-stone-200 dark:bg-stone-700"></span>{% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="mt-6 grid gap-6 sm:grid-cols-2">
+        <section aria-labelledby="cook-missing">
+          <h3 id="cook-missing" class="flex items-center gap-2 text-sm">{% icon "cart" "size-4 text-accent-600" %}À acheter <span class="badge-neutral">{{ plan.missing|length }}</span></h3>
+          {% if plan.missing %}
+            <ul class="mt-2 divide-y divide-stone-100 dark:divide-stone-800">
+              {% for need in plan.missing %}
+                <li class="flex items-baseline justify-between gap-3 py-2 text-sm">
+                  <span class="min-w-0"><span class="font-medium text-stone-900 dark:text-white">{{ need.item.ingredient.name }}</span>{% if need.quantity %} <span class="muted">{{ need.quantity }}</span>{% endif %}</span>
+                  <span class="shrink-0 tabular-nums text-stone-600 dark:text-stone-300">{% if need.cost %}{{ need.cost|euro }}{% else %}<span class="muted">non chiffré</span>{% endif %}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="muted mt-2">Rien à acheter.</p>
+          {% endif %}
+        </section>
+        <section aria-labelledby="cook-have-title">
+          <h3 id="cook-have-title" class="flex items-center gap-2 text-sm">{% icon "check" "size-4 text-brand-600" %}Déjà chez vous <span class="badge-neutral">{{ plan.have|length }}</span></h3>
+          {% if plan.have %}
+            <ul class="mt-2 divide-y divide-stone-100 dark:divide-stone-800">
+              {% for need in plan.have %}
+                <li class="flex items-baseline justify-between gap-3 py-2 text-sm"><span class="font-medium text-stone-900 dark:text-white">{{ need.item.ingredient.name }}</span>{% if need.quantity %}<span class="muted shrink-0">{{ need.quantity }}</span>{% endif %}</li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="muted mt-2">Aucun ingrédient de cette recette n'est indiqué chez vous.</p>
+          {% endif %}
+        </section>
+      </div>
+      {% if plan.staples %}<p class="muted mt-4 text-xs">Supposés dans vos placards : {% for need in plan.staples %}{{ need.item.ingredient.name|lower }}{% if not forloop.last %}, {% endif %}{% endfor %}.</p>{% endif %}
+    </div>
+
+    <aside class="border-t border-stone-200 bg-stone-50/70 p-6 sm:p-8 lg:border-l lg:border-t-0 dark:border-stone-800 dark:bg-stone-950/40" aria-label="Où acheter">
+      {% if plan.missing %}
+        <p class="text-xs font-medium uppercase tracking-wide text-stone-500 dark:text-stone-400">{% if best and plan.local %}Le moins cher près de chez vous{% elif best %}L'enseigne la moins chère{% else %}Coût estimé{% endif %}</p>
+        {% if best %}
+          {% with store=best.stores.0 %}
+          <div class="mt-3 flex items-center gap-3">
+            {% if best.logo_url %}<img src="{{ best.logo_url }}" alt="" data-logo class="size-11 shrink-0 rounded-lg bg-white object-contain p-1 shadow-xs" loading="lazy">{% endif %}
+            <span class="{% if best.logo_url %}hidden {% endif %}flex size-11 shrink-0 items-center justify-center rounded-lg bg-white text-stone-500 shadow-xs dark:bg-stone-800" data-logo-fallback>{% icon "store" %}</span>
+            <div class="min-w-0">
+              <p class="truncate text-lg font-semibold text-stone-900 dark:text-white">{{ best.brand }}</p>
+              {% if plan.local and store %}<p class="muted truncate text-xs">{{ store.store.name }}{% if store.distance_km is not None %} · {{ store.distance_km|floatformat:1 }} km{% endif %}</p>{% endif %}
+            </div>
+          </div>
+          <p class="mt-4 text-4xl font-semibold tabular-nums text-stone-900 dark:text-white">{{ best.total|euro }}</p>
+          <p class="muted mt-1">pour {% if plan.missing|length == 1 %}l'ingrédient manquant{% else %}les {{ plan.missing|length }} ingrédients manquants{% endif %}</p>
+          {% if plan.basket.saving %}<p class="badge-brand mt-3">{{ plan.basket.saving|euro }} de moins que le prix médian</p>{% endif %}
+          {% if plan.local and store %}<a href="{{ store.store.osm_url }}" class="mt-3 inline-flex items-center gap-1 text-sm font-medium text-brand-700 no-underline hover:underline dark:text-brand-300" rel="noopener">{% icon "map-pin" "size-4" %}Voir sur la carte</a>{% endif %}
+          {% endwith %}
+          {% if plan.basket.offers|length > 1 %}
+            <ol class="mt-5 space-y-1.5 border-t border-stone-200 pt-4 text-sm dark:border-stone-800">
+              {% for offer in plan.basket.offers|slice:"1:4" %}
+                <li class="flex items-center justify-between gap-3"><span class="truncate text-stone-600 dark:text-stone-300">{{ offer.brand }}{% if plan.local and offer.stores.0.distance_km is not None %} <span class="muted text-xs">{{ offer.stores.0.distance_km|floatformat:1 }} km</span>{% endif %}</span><span class="shrink-0 tabular-nums font-medium">{{ offer.total|euro }}</span></li>
+              {% endfor %}
+            </ol>
+          {% endif %}
+        {% elif plan.basket.total %}
+          <p class="mt-3 text-4xl font-semibold tabular-nums text-stone-900 dark:text-white">{{ plan.basket.total|euro }}</p>
+          <p class="muted mt-1">au prix médian, faute de relevés par enseigne pour ces produits.</p>
+        {% else %}
+          <p class="mt-3 font-medium">Pas encore assez de prix relevés pour ces ingrédients.</p>
+        {% endif %}
+        {% if plan.saving %}<p class="mt-5 flex items-start gap-2 rounded-xl bg-brand-50 p-3 text-sm text-stone-700 dark:bg-brand-950 dark:text-stone-200">{% icon "leaf" "size-4 mt-0.5 shrink-0 text-brand-600" %}<span>Ce que vous avez déjà vaut environ <strong>{{ plan.saving|euro }}</strong> : autant d'économisé et de gaspillage évité.</span></p>{% endif %}
+        {% if not place %}<p class="muted mt-4 flex items-start gap-2 text-xs">{% icon "map-pin" "size-4 shrink-0" %}<span>Indiquez votre code postal pour comparer les magasins proches.</span></p>{% elif not plan.local and best %}<p class="muted mt-4 text-xs">Pas assez de relevés autour de {{ place.label }} : comparaison sur l'ensemble des magasins.</p>{% endif %}
+
+        <div class="mt-6 space-y-2">
+          {% if user.is_authenticated %}
+            <form method="post" action="{% url 'shopping:add_recipe' %}" class="space-y-2">
+              {% csrf_token %}
+              <input type="hidden" name="recipe" value="{{ recipe.pk }}">
+              <input type="hidden" name="servings" value="{{ servings }}">
+              {% for need in plan.have %}<input type="hidden" name="have" value="{{ need.item.ingredient_id }}">{% endfor %}
+              {% if lists %}
+                <label for="cook-list" class="sr-only">Liste de courses</label>
+                <select id="cook-list" name="shopping_list" class="input">
+                  <option value="">Nouvelle liste</option>
+                  {% for list in lists %}<option value="{{ list.pk }}">{{ list.name }}</option>{% endfor %}
+                </select>
+              {% endif %}
+              <button type="submit" class="btn-primary w-full">{% icon "cart" "size-4" %}Ajouter à ma liste de courses</button>
+            </form>
+          {% else %}
+            <a href="{% url 'account_signup' %}" class="btn-primary w-full">{% icon "cart" "size-4" %}Créer un compte pour ma liste</a>
+          {% endif %}
+          <a href="{{ recipe.get_absolute_url }}?servings={{ servings }}" class="btn-secondary w-full">Voir la recette complète{% icon "arrow-right" "size-4" %}</a>
+        </div>
+      {% else %}
+        <span class="flex size-12 items-center justify-center rounded-full bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-200">{% icon "check" %}</span>
+        <p class="mt-4 text-lg font-semibold text-stone-900 dark:text-white">Rien à acheter !</p>
+        <p class="muted mt-1">Vous avez tout ce qu'il faut pour cette recette.</p>
+        {% if plan.saving %}<p class="mt-4 text-sm">Valeur de ce que vous allez cuisiner : <strong>{{ plan.saving|euro }}</strong>.</p>{% endif %}
+        <a href="{{ recipe.get_absolute_url }}?servings={{ servings }}" class="btn-primary mt-6 w-full">Voir la recette{% icon "arrow-right" "size-4" %}</a>
+      {% endif %}
+    </aside>
+  </div>
+</article>
+{% endwith %}
+
+{% if close %}
+  <section class="mt-10" aria-labelledby="cook-close">
+    <h2 id="cook-close" class="text-lg">Dans le catalogue, vous aimerez aussi</h2>
+    <div class="mt-4 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      {% for recipe in close %}{% include "partials/recipe_card.html" %}{% endfor %}
+    </div>
+  </section>
+{% endif %}

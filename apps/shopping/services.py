@@ -48,8 +48,14 @@ def _rounded(quantity: Decimal | None, unit: str) -> Decimal | None:
 
 @transaction.atomic
 def add_recipe(
-    shopping_list: ShoppingList, recipe: Recipe, servings: int, *, use_pantry: bool = True
+    shopping_list: ShoppingList,
+    recipe: Recipe,
+    servings: int,
+    *,
+    use_pantry: bool = True,
+    have: frozenset[int] = frozenset(),
 ) -> AddResult:
+    """Add the recipe ingredients, minus staples, `have` ingredients and pantry stock."""
     result = AddResult()
     factor = Decimal(servings) / recipe.servings
     stock = pantry_stock(shopping_list.user) if use_pantry else {}
@@ -61,6 +67,9 @@ def add_recipe(
     for entry in recipe.items.select_related("ingredient"):
         ingredient = entry.ingredient
         if ingredient.is_staple:
+            continue
+        if ingredient.pk in have:
+            result.in_pantry += 1
             continue
         quantity = entry.scaled(factor)
         if ingredient.pk in stock:

@@ -115,11 +115,15 @@ def add_recipe(request):
         user=request.user, name=f"Courses : {data['recipe'].title}"[:120]
     )
     result = services.add_recipe(
-        shopping_list, data["recipe"], data["servings"], use_pantry=data["use_pantry"]
+        shopping_list,
+        data["recipe"],
+        data["servings"],
+        use_pantry=data["use_pantry"],
+        have=frozenset(ingredient.pk for ingredient in data["have"]),
     )
     summary = f"{result.added} article(s) ajouté(s), {result.merged} complété(s)"
     if result.in_pantry:
-        summary += f", {result.in_pantry} déjà dans votre garde-manger"
+        summary += f", {result.in_pantry} déjà chez vous"
     messages.success(request, summary + ".")
     return redirect(shopping_list)
 

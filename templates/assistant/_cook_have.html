@@ -1,0 +1,27 @@
+{% load comegusto %}
+<div id="cook-have" class="relative">
+  <label for="id_j" class="mb-1.5 flex items-center justify-between text-sm font-medium text-stone-700 dark:text-stone-300"><span class="flex items-center gap-1.5">{% icon "fridge" "size-4 text-brand-600 dark:text-brand-400" %}J'ai déjà…</span><span class="text-xs font-normal text-stone-400">séparés par des virgules</span></label>
+  <div data-chips>
+    <input id="id_j" name="j" type="text" maxlength="600" autocomplete="off" list="ingredient-names" value="{{ value }}"
+           placeholder="Ex. riz, ail, pommes" class="input !py-2.5 !text-base">
+  </div>
+  <div class="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-stone-500 dark:text-stone-400">
+    {% if user.is_authenticated %}
+      <label class="inline-flex cursor-pointer items-center gap-1.5 font-medium text-brand-700 hover:underline dark:text-brand-300">
+        {% icon "camera" "size-4" %}Photographier mes ingrédients
+        <input type="file" accept="image/*" capture="environment" class="sr-only" data-photo-ingredients data-url="{% url 'assistant:cook_photo' %}" data-target="cook-have">
+      </label>
+      {% if photo_left is not None %}<span>{{ photo_left }} photo{{ photo_left|pluralize }} restante{{ photo_left|pluralize }} aujourd'hui</span>{% endif %}
+    {% else %}
+      <span>{% icon "camera" "size-3.5 inline" %} <a href="{% url 'account_login' %}?next={% url 'assistant:cook' %}" class="font-medium text-brand-700 underline dark:text-brand-300">Connectez-vous</a> pour photographier vos ingrédients.</span>
+    {% endif %}
+  </div>
+  {% if detected %}
+    <p class="mt-2 flex items-start gap-2 rounded-xl bg-brand-50 px-3 py-2 text-xs text-stone-700 dark:bg-brand-950 dark:text-stone-200" role="status">{% icon "sparkles" "size-4 shrink-0 text-brand-600 dark:text-brand-400" %}<span>{{ detected|length }} aliment{{ detected|length|pluralize }} reconnu{{ detected|length|pluralize }} : {{ detected|join:", " }}. Retirez ceux qui ne conviennent pas.</span></p>
+  {% endif %}
+  {% if error %}<p class="mt-2 flex items-start gap-2 text-xs text-red-700 dark:text-red-400" role="alert">{% icon "alert" "size-4 shrink-0" %}<span>{{ error }}</span></p>{% endif %}
+  <div class="ai-loading absolute inset-0 z-10 flex-col items-center justify-center gap-2 rounded-xl bg-white/90 text-center backdrop-blur-sm dark:bg-stone-950/90" role="status">
+    <span class="ai-icon !size-9 motion-safe:animate-pulse">{% icon "camera" "size-4" %}</span>
+    <p class="text-sm font-medium text-stone-900 dark:text-white">Je regarde votre photo…</p>
+  </div>
+</div>

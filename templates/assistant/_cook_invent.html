@@ -1,0 +1,15 @@
+{% load comegusto %}
+<article class="card ai-surface relative flex flex-col items-start p-6">
+  <span class="ai-icon">{% icon "sparkles" %}</span>
+  <h3 class="mt-4 text-lg">Une recette sur mesure</h3>
+  <p class="muted mt-1 flex-1 !text-[15px] leading-relaxed">L'assistant invente un plat autour de vos ingrédients, puis Comégusto chiffre ce qui manque.</p>
+  {% if user.is_authenticated %}
+    <form hx-post="{% url 'assistant:cook_create' %}" hx-include="#cook-form" hx-target="#cook-results" hx-indicator="this" class="mt-5 w-full">
+      <button type="submit" class="btn-primary w-full">{% icon "sparkles" "size-4" %}Inventer une recette</button>
+      <p class="ai-pending mt-3 text-center text-xs text-stone-500" role="status">Le chef imagine votre recette…</p>
+    </form>
+    {% if recipe_left is not None %}<p class="muted mt-2 text-xs">{{ recipe_left }} création{{ recipe_left|pluralize }} restante{{ recipe_left|pluralize }} aujourd'hui.</p>{% endif %}
+  {% else %}
+    <a href="{% url 'account_signup' %}" class="btn-primary mt-5 w-full">Créer un compte gratuit</a>
+  {% endif %}
+</article>

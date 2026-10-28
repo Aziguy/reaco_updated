@@ -124,3 +124,45 @@ class ReceiptLineForm(forms.Form):
 
 
 ReceiptLineFormSet = forms.formset_factory(ReceiptLineForm, extra=0, max_num=40)
+
+
+class CookForm(forms.Form):
+    envie = forms.CharField(
+        label="J'ai envie de…",
+        required=False,
+        max_length=120,
+        widget=forms.TextInput(
+            attrs={"placeholder": "Ex. riz sauce tomate, mafé, une soupe", "autocomplete": "off"}
+        ),
+    )
+    j = forms.CharField(
+        label="J'ai déjà…",
+        required=False,
+        max_length=600,
+        widget=forms.TextInput(
+            attrs={"placeholder": "Ex. riz, ail, pommes", "autocomplete": "off"}
+        ),
+    )
+    personnes = forms.IntegerField(
+        label="Personnes", min_value=1, max_value=12, required=False,
+        widget=forms.NumberInput(attrs={"min": 1, "max": 12}),
+    )  # fmt: skip
+    garde_manger = forms.BooleanField(label="Compter mon garde-manger", required=False)
+    cp = forms.CharField(
+        label="Code postal ou ville",
+        required=False,
+        max_length=60,
+        widget=forms.TextInput(attrs={"placeholder": "Ex. 69003", "autocomplete": "postal-code"}),
+    )
+    recette = forms.SlugField(required=False, widget=forms.HiddenInput)
+    mode = ModeField(required=False)
+
+    def clean_mode(self):
+        return self.cleaned_data.get("mode") or Mode.FAST
+
+
+class PhotoForm(forms.Form):
+    photo = forms.FileField(label="Photo de vos ingrédients")
+    j = forms.CharField(required=False, max_length=600)
+
+    clean_photo = ReceiptForm.clean_photo
