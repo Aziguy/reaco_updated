@@ -43,6 +43,13 @@ Le contrôle `/health/` est traité par un middleware placé avant la validation
 - L'utilisateur peut supprimer son compte et toutes ses données depuis son profil (confirmation par saisie).
 - Les seules données envoyées à des tiers sont un code postal ou une ville (IGN) et un code-barres (Open Food Facts, Open Prices).
 
+## Paiements
+
+- Aucune donnée de carte ne transite par Comégusto : Stripe Checkout et le portail client sont hébergés par Stripe.
+- Le webhook Stripe est exempté de CSRF mais vérifie la signature (`STRIPE_WEBHOOK_SECRET`) ; il répond 404 tant que Stripe n'est pas configuré.
+- Les clés Stripe restent dans l'environnement. L'IBAN et l'identifiant Wero, destinés à être affichés aux abonnés, sont en base.
+- Une page de paiement n'est visible que par son abonné ; une formule n'est activée que par l'équipe (virement, Wero) ou par un événement signé (Stripe).
+
 ## Abus
 
 - Formulaire de contact : pot de miel et limite de 3 messages par heure et par adresse IP (`apps/core/ratelimit.py`, compteur en cache).

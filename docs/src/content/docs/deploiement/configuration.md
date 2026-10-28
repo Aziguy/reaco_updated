@@ -185,6 +185,16 @@ L'assistant fonctionne avec un ou plusieurs fournisseurs, configurés dans l'adm
 
 Après le premier déploiement, vérifiez dans l'administration que les fournisseurs voulus sont actifs et que la colonne **clé présente** est cochée.
 
+## Abonnements
+
+Formules, coordonnées de virement et Wero se règlent dans l'administration (section **Abonnements**). Stripe reste désactivé tant que ses clés manquent. Voir [Abonnements et paiements](/reaco_updated/architecture/abonnements/).
+
+| Variable | Rôle |
+| --- | --- |
+| `STRIPE_SECRET_KEY` | Facultatif : clé secrète Stripe (`sk_live_…` ou `sk_test_…`). |
+| `STRIPE_WEBHOOK_SECRET` | Facultatif : secret de signature du webhook (`whsec_…`). |
+| `BILLING_USD_TO_EUR` | Taux de conversion du coût de l'IA sur la page « Où va votre argent » (0,86 par défaut). |
+
 ## Tâches planifiées
 
 | Variable | Rôle |
@@ -232,6 +242,8 @@ Sans service `scheduler`, voir [Tâches planifiées](/reaco_updated/deploiement/
 | `INTEGRATIONS_TIMEOUT` | `8` | [Données ouvertes](#données-ouvertes-et-prix) |
 | `ANTHROPIC_API_KEY`, `GITHUB_MODELS_TOKEN`, `MISTRAL_API_KEY` | vide | [Assistant IA](#assistant-ia) |
 | `AI_MONTHLY_BUDGET_USD`, `AI_ENABLED`, `AI_TIMEOUT` | `20`, `true`, `60` | [Assistant IA](#assistant-ia) |
+| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | vide | [Abonnements](#abonnements) |
+| `BILLING_USD_TO_EUR` | `0.86` | [Abonnements](#abonnements) |
 | `SITE_URL`, `SCHEDULER_INTERVAL`, `SYNC_PAGES`, `RUN_MIGRATIONS` | voir la section | [Tâches](#tâches-planifiées) |
 | `LOG_LEVEL` | `INFO` | [Journaux](#journaux-et-alertes) |
 | `DOMAIN`, `POSTGRES_PASSWORD` | vide | `docker-compose.prod.yml`, voir [Serveur VPS](/reaco_updated/deploiement/serveur-vps/) |

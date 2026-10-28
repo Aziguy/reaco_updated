@@ -18,6 +18,7 @@ from apps.assistant import planner
 from apps.assistant.generator import GenerationError, create_recipe
 from apps.assistant.models import MealPlan
 from apps.assistant.services import Caller, Unavailable
+from apps.billing.models import Plan, Subscription
 from apps.guide.content import FIGURES, Figure
 from apps.pantry.models import PantryItem
 from apps.recipes.models import Favorite, Ingredient, Recipe
@@ -142,6 +143,14 @@ class Command(BaseCommand):
 
         user.pantry_items.all().delete()
         user.shopping_lists.all().delete()
+        user.subscriptions.all().delete()
+        plan = Plan.objects.filter(slug="plus").first()
+        if plan:
+            Subscription.objects.create(
+                user=user, plan=plan, method=Subscription.Method.TRANSFER, amount=plan.yearly_price,
+                period="year", status=Subscription.Status.ACTIVE, starts_on=timezone.localdate(),
+                ends_on=timezone.localdate() + timedelta(days=200),
+            )  # fmt: skip
         Favorite.objects.filter(user=user).delete()
 
         today = timezone.localdate()

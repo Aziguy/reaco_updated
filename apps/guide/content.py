@@ -46,9 +46,86 @@ SEARCH_EXAMPLE = (
     "%C3%A0+moins+de+10+%E2%82%AC"
 )
 
+COOK_DISH = "/assistant/cuisiner/?envie=riz+jollof&j=riz%2C+oignon%2C+ail&personnes=2"
+COOK_HAVE = "/assistant/cuisiner/?j=pommes%2C+riz%2C+ail%2C+oeufs&personnes=2"
+
 FIGURES = {
     figure.name: figure
     for figure in [
+        Figure(
+            name="cook-dish",
+            path=COOK_DISH,
+            caption="Un plat, ce que vous avez déjà, ce qui manque et où l'acheter.",
+            height=1500,
+            callouts=(
+                Callout("#cook-form #id_envie", "Votre envie", "Facultative, avec « pour 2 »."),
+                Callout(
+                    "#cook-have",
+                    "Ce que vous avez",
+                    "Tapez, photographiez ou comptez le garde-manger.",
+                ),
+                Callout('section[aria-labelledby="cook-missing"]', "À acheter"),
+                Callout(
+                    'aside[aria-label="Où acheter"] > div >> nth=0',
+                    "Le moins cher",
+                    "L'enseigne la moins chère près de chez vous, pour ce qui manque.",
+                ),
+                Callout(
+                    'aside[aria-label="Où acheter"] form button',
+                    "Liste de courses",
+                    "Seuls les ingrédients manquants y sont ajoutés.",
+                ),
+            ),
+        ),
+        Figure(
+            name="cook-suggestions",
+            path=COOK_HAVE,
+            caption="Les recettes qui demandent le moins d'achats.",
+            height=2200,
+            callouts=(
+                Callout("#cook-results article >> nth=0", "Moins d'achats en tête"),
+                Callout(
+                    "#cook-results article >> nth=0 >> .border-t",
+                    "Prix des manquants",
+                    "Dans l'enseigne la moins chère.",
+                ),
+                Callout(
+                    "#cook-results article.ai-surface",
+                    "Recette sur mesure",
+                    "L'assistant invente un plat avec vos ingrédients.",
+                ),
+            ),
+        ),
+        Figure(
+            name="pricing",
+            path="/abonnement/",
+            auth=False,
+            caption="Les formules Gratuit, Plus et Famille.",
+            height=1300,
+            callouts=(
+                Callout("main fieldset.segmented", "Mensuel ou annuel"),
+                Callout("main article >> nth=1", "Formule", "Prix et avantages."),
+                Callout(
+                    "main article >> nth=1 >> dl",
+                    "Assistant IA par jour",
+                    "Le nombre d'utilisations incluses.",
+                ),
+            ),
+        ),
+        Figure(
+            name="billing-account",
+            path="/abonnement/mon-abonnement/",
+            caption="Votre formule et l'assistant IA du jour.",
+            height=760,
+            callouts=(
+                Callout('section[aria-labelledby="plan-title"] .ai-surface', "Formule actuelle"),
+                Callout(
+                    'section[aria-labelledby="plan-title"] ul',
+                    "Utilisations du jour",
+                    "Remises à zéro chaque nuit.",
+                ),
+            ),
+        ),
         Figure(
             name="home",
             path="/",
@@ -395,7 +472,7 @@ FIGURES = {
                 Callout(
                     'section[aria-labelledby="tools-title"] .grid',
                     "Outils",
-                    "Menu de la semaine, vider le frigo, ticket de caisse.",
+                    "Cuisiner, menu de la semaine, vider le frigo, ticket de caisse.",
                 ),
             ),
         ),
@@ -576,6 +653,13 @@ CHAPTERS = [
         ("anti-gaspi",),
     ),
     Chapter(
+        "cuisiner",
+        "Cuisiner avec ce que j'ai",
+        "Votre envie, ce qui manque et le magasin le moins cher près de chez vous.",
+        "cart",
+        ("cook-dish", "cook-suggestions"),
+    ),
+    Chapter(
         "assistant",
         "Assistant IA",
         "Chercher en une phrase, composer un menu, vider le frigo, lire un ticket.",
@@ -610,6 +694,13 @@ CHAPTERS = [
         "Profil, localisation, rappels, sécurité et suppression.",
         "user",
         ("profile",),
+    ),
+    Chapter(
+        "abonnement",
+        "Formules et abonnement",
+        "Gratuit, Plus ou Famille, paiement par virement ou Wero.",
+        "heart",
+        ("pricing", "billing-account"),
     ),
     Chapter(
         "faq",

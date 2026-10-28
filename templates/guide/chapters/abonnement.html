@@ -1,0 +1,23 @@
+{% load guide %}
+<p>Comégusto ne cherche pas le profit. L'essentiel reste gratuit : catalogue, prix, comparateur, garde-manger et listes de courses. Les formules payantes couvrent les frais de l'assistant IA, de l'hébergement, du nom de domaine, du développement et de la communication.</p>
+
+<h2 id="formules">Les formules</h2>
+{% guide_figure "pricing" %}
+<ul>
+  <li><strong>Gratuit</strong> : tout le site, et l'assistant IA pour découvrir.</li>
+  <li><strong>Plus</strong> : l'assistant au quotidien, photos d'ingrédients et de tickets.</li>
+  <li><strong>Famille</strong> : les quotas les plus élevés et le mode <strong>Approfondi</strong>.</li>
+</ul>
+<p>La formule annuelle revient à environ 30 % moins cher que douze mois. La page <a href="{% url 'billing:costs' %}">Où va votre argent</a> montre les frais du mois et leur couverture par les abonnements.</p>
+
+<h2 id="payer">Payer</h2>
+<ol>
+  <li>Choisissez une formule et la période, puis le moyen de paiement : <strong>virement bancaire</strong> ou <strong>Wero</strong>.</li>
+  <li>Faites le paiement depuis votre banque en indiquant la <strong>référence</strong> affichée (CG-…). Les boutons <strong>Copier</strong> évitent les erreurs de saisie.</li>
+  <li>Cliquez sur <strong>J'ai effectué le paiement</strong>. L'équipe active votre formule dès réception et vous prévient par email.</li>
+</ol>
+<p class="guide-note">Rien n'est prélevé automatiquement : à la fin de la période, votre compte revient à la formule Gratuit. Un renouvellement commence le lendemain de la formule en cours.</p>
+
+<h2 id="suivi">Mon abonnement</h2>
+{% guide_figure "billing-account" %}
+<p>Depuis <strong>Mon profil</strong>, la carte <strong>Mon abonnement</strong> affiche votre formule, sa date de fin, les utilisations de l'assistant du jour, les paiements en attente et l'historique. À moins de quinze jours de la fin, un bouton <strong>Renouveler</strong> apparaît.</p>

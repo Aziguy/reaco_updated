@@ -5,7 +5,7 @@ sidebar:
   order: 8
 ---
 
-L'application `apps/assistant` ajoute quatre fonctionnalités qui s'appuient sur un modèle de langage :
+L'application `apps/assistant` ajoute des fonctionnalités qui s'appuient sur un modèle de langage :
 
 | Fonctionnalité | URL | Rôle du modèle | Ce que calcule l'application |
 | --- | --- | --- | --- |
@@ -13,6 +13,8 @@ L'application `apps/assistant` ajoute quatre fonctionnalités qui s'appuient sur
 | Menu de la semaine | `/assistant/menu/` | Choisir parmi des recettes présélectionnées et expliquer | Présélection, coût, CO2, produits sauvés, liste de courses |
 | Vider le frigo | `/assistant/frigo/` | Écrire une recette avec les ingrédients connus | Correspondance des ingrédients, prix, CO2, nutrition |
 | Ticket de caisse | `/assistant/ticket/` | Lire la photo d'un ticket | Correspondance des ingrédients, écran de vérification |
+| Cuisiner avec ce que j'ai | `/assistant/cuisiner/` | Écrire un plat absent du catalogue ou une recette sur mesure, lire une photo d'ingrédients | Plat du catalogue, ingrédients manquants, panier des manquants par enseigne proche |
+| Génération du catalogue | Admin, **Recettes > Générer avec l'IA** | Proposer des plats absents, puis les écrire | Brouillons en relecture, ingrédients à vérifier |
 
 ## Principe : le modèle choisit, l'application chiffre
 
@@ -42,7 +44,10 @@ flowchart LR
 | `services.py` | `ask()` : choix de la route, quotas, plafond mensuel, modèle de secours, journal des appels |
 | `search.py` | Interprétation, critères signés, application et assouplissement, analyseur de secours |
 | `planner.py` | Présélection, appel au modèle, menu de secours, remplacement d'un repas, liste de courses |
-| `generator.py` | Recette « vider le frigo » enregistrée en brouillon privé |
+| `generator.py` | Recette écrite par le modèle à partir d'un `Brief` (plat demandé, produits disponibles, cuisine), en brouillon ; ingrédients inconnus créés « à vérifier » |
+| `cook.py` | Page Cuisiner : ce que l'on a, plat du catalogue, ingrédients manquants, suggestions, localisation |
+| `photo.py` | Aliments reconnus sur une photo |
+| `catalog.py`, `admin_views.py` | Suggestion de plats et génération par lot depuis l'administration |
 | `receipts.py` | Lecture d'un ticket, réduction de l'image, lignes à vérifier |
 | `management/commands/setup_assistant.py` | Configuration par défaut |
 
@@ -79,7 +84,8 @@ Pour Anthropic, la route fixe `output_config.effort` (`low`, `medium`, `high`). 
 
 | Garde-fou | Réglage |
 | --- | --- |
-| Quota par utilisateur et par jour | `Route.daily_quota`, compté sur les appels réussis du journal |
+| Quota par utilisateur et par jour | Quota de la formule (`PlanQuota`, voir [Abonnements](/reaco_updated/architecture/abonnements/)), sinon `Route.daily_quota` ; compté sur les appels réussis du journal |
+| Mode Approfondi | Réservé aux formules avec `deep_mode` |
 | Quota par visiteur et par jour | `Route.anonymous_quota` (0 : réservé aux comptes), compté par adresse IP dans le cache |
 | Plafond mensuel | `AI_MONTHLY_BUDGET_USD` : au-delà, l'assistant se coupe jusqu'au mois suivant |
 | Coupure générale | `AI_ENABLED=false` |
@@ -96,10 +102,27 @@ Coûts et durées mesurés en octobre 2026 avec la configuration par défaut :
 | Menu de 5 jours | 0,0005 $, 7 s | 0,01 $, 6 s |
 | Recette vider le frigo | 0,0007 $, 6 à 10 s | 0,012 $, 6 s |
 | Ticket de caisse | 0,0004 $, 4 s | non mesuré |
+| Plat demandé (Cuisiner) | 0,0008 $, 8 s | non mesuré |
+| Photo d'ingrédients | 0,0004 $, 3 s | non mesuré |
 
 Avec 100 $, on peut donc servir environ 300 000 recherches en mode Rapide.
 
 Les invites restent sous le seuil de la mise en cache des prompts : c'est le cache des réponses qui évite les appels répétés.
+
+## Cuisiner avec ce que j'ai
+
+1. **Ce que l'on a** : texte libre découpé et rapproché du catalogue (`cook.parse_have`), photo (`photo.read_photo`) et, en option, garde-manger.
+2. **Le plat** : `cook.find_dish` cherche une recette dont le titre contient tous les mots de la demande. Sinon, la page déclenche au chargement (HTMX) `cook_create`, qui fait écrire le plat par le modèle ; « pour 2 » fixe le nombre de personnes.
+3. **Ce qui manque** : `cook.plan_for` sépare les ingrédients disponibles, à acheter et de base, puis chiffre **seulement les manquants** par enseigne autour de l'utilisateur (`estimate_near`, 10 km autour du code postal saisi ou du profil).
+4. **Sans plat** : `cook.suggest` classe les recettes par nombre d'ingrédients à acheter puis par prix des manquants.
+
+Le bouton de liste de courses passe les ingrédients disponibles à `shopping.services.add_recipe(have=…)`, qui ne les ajoute pas.
+
+## Recettes générées et ingrédients inconnus
+
+Le schéma de `generator.py` accepte une liste `new_ingredients` : un ingrédient essentiel absent du catalogue est créé avec le rayon, l'unité de prix, le poids d'une pièce et la catégorie Open Food Facts proposés par le modèle, marqué `is_draft` (trois au plus par recette, catégorie ignorée si elle n'a pas la forme `en:…`). Dans l'administration, le filtre **à vérifier** les liste ; les actions **Récupérer les prix Open Prices** et **Marquer comme vérifiés** complètent la vérification.
+
+Un plat demandé par son nom est générique : il part en relecture (`review_requested`). Une recette sur mesure reste privée jusqu'à ce que son auteur la propose. La page d'administration **Générer avec l'IA** propose des plats absents du catalogue, puis les génère un par un (requêtes HTMX en file, `hx-sync`), en brouillon et en relecture.
 
 ## Replis sans IA
 
@@ -120,7 +143,7 @@ Le menu est préparé par une requête HTMX déclenchée au chargement de la pag
 
 ## Tests
 
-Les tests n'appellent aucun fournisseur. La fixture `fake_ai` (`apps/assistant/tests/conftest.py`) remplace le client et rejoue des réponses :
+Les tests n'appellent aucun fournisseur. La fixture `fake_ai` (`apps/conftest.py`) remplace le client et rejoue des réponses :
 
 ```python
 def test_exemple(fake_ai, user):

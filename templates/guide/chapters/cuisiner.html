@@ -1,0 +1,27 @@
+{% load guide %}
+<p>La page <strong>Cuisiner</strong> répond à deux questions : « J'ai envie de tel plat, que me manque-t-il ? » et « Que faire avec ce que j'ai ? ». Pour ce qui manque, elle indique l'enseigne la moins chère près de chez vous, d'après les prix relevés par Open Prices.</p>
+
+<h2 id="plat">J'ai envie d'un plat</h2>
+{% guide_figure "cook-dish" %}
+<ol>
+  <li>Écrivez le plat dans <strong>J'ai envie de…</strong>, par exemple « riz sauce tomate pour 2 » : le nombre de personnes est compris.</li>
+  <li>Indiquez ce que vous avez déjà dans <strong>J'ai déjà…</strong>, séparé par des virgules. Chaque ingrédient devient une étiquette, retirée d'un clic sur la croix.</li>
+  <li>Cliquez sur <strong>Trouver</strong>.</li>
+</ol>
+<p>Comégusto affiche ce que vous avez déjà, ce qu'il reste à acheter avec son prix, et l'enseigne la moins chère pour ces seuls ingrédients, avec le magasin le plus proche. Les produits de base (sel, poivre, huile) sont supposés dans vos placards.</p>
+<p>Le plat n'est pas au catalogue ? Avec un compte, l'assistant écrit la recette pour vous, puis Comégusto la chiffre. Elle reste dans votre espace et l'équipe la relit avant de la publier pour tous.</p>
+<p class="guide-note">Le bouton <strong>Ajouter à ma liste de courses</strong> n'ajoute que les ingrédients manquants.</p>
+
+<h2 id="ingredients">Ce que vous avez</h2>
+<ul>
+  <li><strong>En quelques mots</strong> : « riz, ail, pommes ». Les suggestions s'affichent pendant la saisie.</li>
+  <li><strong>En photo</strong> : <strong>Photographier mes ingrédients</strong> reconnaît les aliments d'un frigo ou d'un plan de travail et les ajoute à la liste. La photo n'est pas conservée.</li>
+  <li><strong>Depuis le garde-manger</strong> : cochez <strong>Compter mon garde-manger</strong> pour y ajouter vos produits en stock.</li>
+</ul>
+
+<h2 id="suggestions">Sans plat précis</h2>
+{% guide_figure "cook-suggestions" %}
+<p>Laissez <strong>J'ai envie de…</strong> vide : Comégusto classe les recettes du catalogue par nombre d'ingrédients à acheter, puis par prix. Cliquez sur une recette pour voir le détail et le magasin. La carte <strong>Une recette sur mesure</strong> demande à l'assistant d'inventer un plat avec vos ingrédients.</p>
+
+<h2 id="magasin">Le magasin le moins cher</h2>
+<p>La comparaison utilise votre code postal (profil ou champ <strong>Près de</strong>) et un rayon de 10 km. Quand il n'y a pas assez de relevés autour de vous, elle porte sur l'ensemble des magasins. Voir <a href="{% url 'guide:chapter' 'prix' %}">Prix et comparaison</a>.</p>

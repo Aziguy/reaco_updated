@@ -22,6 +22,8 @@ npm install && npm run build
 cp .env.example .env        # DEBUG=true pour le développement
 uv run python manage.py migrate
 uv run python manage.py seed_demo
+uv run python manage.py setup_assistant
+uv run python manage.py setup_billing
 uv run python manage.py sync_prices
 uv run python manage.py createsuperuser
 uv run python manage.py runserver
@@ -29,6 +31,7 @@ uv run python manage.py runserver
 
 - L'application répond sur <http://localhost:8000>, l'administration sur `/admin/` (chemin réglable avec `ADMIN_URL`) et la documentation de l'API sur `/api/docs/`.
 - `seed_demo` charge 102 ingrédients et 50 recettes avec leurs photos. La commande est idempotente.
+- `setup_assistant` et `setup_billing` créent les routes de l'assistant et les formules Gratuit, Plus et Famille.
 - `sync_prices` interroge Open Prices pour chaque ingrédient. Elle prend quelques minutes ; `sync_prices tomate oeuf` limite la synchronisation à quelques ingrédients.
 - Les emails sont affichés dans la console (`EMAIL_URL=consolemail://`).
 

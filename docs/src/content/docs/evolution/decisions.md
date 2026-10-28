@@ -78,3 +78,15 @@ Chaque décision suit le même format : contexte, décision, conséquences. Pour
 - **Contexte** : l'administration Django native est fonctionnelle mais datée, sans tableau de bord ni navigation par domaine.
 - **Décision** : django-unfold (Tailwind, clair et sombre) aux couleurs de Comégusto, barre latérale par domaine, tableau de bord (chiffres clés, budget et appels de l'assistant, recettes à relire), formulaires de recette en onglets. Les textes propres à Unfold sont traduits dans `locale/fr`.
 - **Conséquences** : les classes d'administration héritent de `unfold.admin.ModelAdmin`, y compris celles d'allauth et de DRF réenregistrées dans `apps/core/admin.py` ; la CSP est assouplie sur l'administration seulement (voir [Sécurité](/reaco_updated/architecture/securite/)).
+
+## 13. Abonnements pour couvrir les frais, virement et Wero d'abord
+
+- **Contexte** : couvrir l'IA, l'hébergement, le domaine, le développement et la communication, sans but lucratif ni frais fixes de prestataire au démarrage.
+- **Décision** : trois formules (Gratuit, Plus, Famille) qui ne changent que les quotas de l'assistant et l'accès au mode Approfondi. Paiement par virement ou Wero, confirmé par l'équipe ; Stripe intégré mais désactivé par défaut. Page publique des frais et de leur couverture.
+- **Conséquences** : aucune commission tant que les paiements sont manuels, au prix d'une confirmation à la main ; les quotas restent réglables dans l'administration ; passer à la carte ne demande que des clés et une case à cocher.
+
+## 14. Le catalogue grandit avec l'assistant, sous relecture
+
+- **Contexte** : l'équipe ne peut pas saisir tous les plats demandés par les utilisateurs.
+- **Décision** : un plat absent est écrit par l'assistant à la demande et part en relecture ; l'administration peut suggérer et générer des plats par lot. Un ingrédient inconnu est créé « à vérifier » plutôt que retiré de la recette.
+- **Conséquences** : le catalogue s'enrichit des envies réelles ; rien n'est publié sans relecture ; les nouveaux ingrédients ont un prix dès que leur catégorie Open Food Facts est vérifiée.

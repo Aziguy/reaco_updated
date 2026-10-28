@@ -45,6 +45,10 @@ Envoie un email récapitulatif aux utilisateurs actifs, ayant gardé les rappels
 
 Crée les fournisseurs, modèles et routes par défaut de l'assistant, sans modifier ceux qui existent. Exécutée au démarrage du conteneur. Voir [Assistant IA](/reaco_updated/architecture/assistant-ia/).
 
+### `setup_billing`
+
+Crée les formules Gratuit, Plus et Famille et leurs quotas, sans modifier celles qui existent. Exécutée au démarrage du conteneur. Voir [Abonnements et paiements](/reaco_updated/architecture/abonnements/).
+
 ### `capture_guide [nom ...]`
 
 Régénère les captures annotées du guide utilisateur dans `static/img/guide/`, en thème clair et sombre. Nécessite le serveur de développement lancé sur la même base. Voir [Guide utilisateur intégré](/reaco_updated/developpement/guide-utilisateur/).

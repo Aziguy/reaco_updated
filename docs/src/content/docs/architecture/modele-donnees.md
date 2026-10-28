@@ -27,7 +27,7 @@ erDiagram
 
 | Modèle | Rôle | Champs notables |
 | --- | --- | --- |
-| `Ingredient` | Ingrédient générique, relié aux données ouvertes | `off_category` (taxonomie Open Food Facts), `impactco2_slug` (ADEME), `ciqual_code` et valeurs pour 100 g (`kcal_100g`, `proteins_100g`, `fat_100g`, `carbs_100g`), `price_unit` (kg, l ou unité), `unit_weight_g` (poids d'une pièce), `aisle` (rayon), `is_staple` (produit de base supposé disponible) |
+| `Ingredient` | Ingrédient générique, relié aux données ouvertes | `off_category` (taxonomie Open Food Facts), `impactco2_slug` (ADEME), `ciqual_code` et valeurs pour 100 g (`kcal_100g`, `proteins_100g`, `fat_100g`, `carbs_100g`), `price_unit` (kg, l ou unité), `unit_weight_g` (poids d'une pièce), `aisle` (rayon), `is_staple` (produit de base supposé disponible), `is_draft` (créé par l'assistant, à vérifier) |
 | `Recipe` | Recette | métadonnées (type, difficulté, portions, durées, origine en texte libre, `cuisine` parmi sept régions), image et crédits (`image_credit`, `image_license`, `image_license_url`, `image_source`), métriques calculées non éditables (`cost_per_serving`, `price_coverage`, `co2_per_serving`, `kcal`, `proteins_g`, `fat_g`, `carbs_g`, `nutrition_coverage`, `metrics_updated_at`), `search_text` |
 | `RecipeIngredient` | Ligne d'ingrédient | `quantity` (facultative), `unit`, `note`, `position` |
 | `RecipeStep` | Étape | `position`, `text` |
@@ -61,6 +61,10 @@ La recherche découpe la requête en mots et exige que chacun figure dans `searc
 ## Courses (`apps.shopping`)
 
 `ShoppingList` appartient à un utilisateur et peut être archivée. `ShoppingItem` est soit relié à un ingrédient (quantités fusionnées par ingrédient et unité), soit un article libre ; il garde la trace des recettes d'origine et son état coché.
+
+## Abonnements (`apps.billing`)
+
+`Plan` et `PlanQuota` décrivent les formules et leurs quotas d'assistant ; `Subscription` enregistre chaque période payée (virement, Wero ou Stripe) avec une référence unique ; `PaymentSettings` (une seule ligne) porte les coordonnées de paiement ; `Expense` les frais mensuels publiés. Voir [Abonnements et paiements](/reaco_updated/architecture/abonnements/).
 
 ## Utilisateurs (`apps.accounts`)
 

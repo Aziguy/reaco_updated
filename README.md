@@ -66,12 +66,23 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 - Articles regroupés par rayon, cochables, version imprimable.
 - Rangement des achats dans le garde-manger en un clic.
 
+**Cuisiner avec ce que j'ai**
+- « Riz sauce tomate pour 2 » : la recette du catalogue, ou écrite par l'assistant si le plat n'y est pas encore.
+- Ce que vous avez déjà (texte, photo ou garde-manger), ce qui manque, et l'enseigne la moins chère près de chez vous pour les seuls ingrédients manquants.
+- Sans plat précis : les recettes qui demandent le moins d'achats, ou une recette sur mesure.
+
 **Assistant IA**
 - Recherche en langage naturel (« un dîner végé pour 4 à moins de 10 € ») traduite en critères, avec étiquettes retirables.
 - Menu de la semaine qui sauve d'abord les produits qui périment, dans un budget, puis liste de courses en un clic.
 - Recette « vider le frigo » inventée à partir des produits choisis, chiffrée par l'application.
 - Lecture d'un ticket de caisse en photo pour remplir le garde-manger.
+- Catalogue enrichi par l'assistant : plats demandés et génération par lot depuis l'administration, en relecture ; ingrédients inconnus créés « à vérifier ».
 - Fournisseurs (Anthropic, GitHub Models, Mistral, Ollama…), modèles, niveau de réflexion et quotas réglés dans l'administration, plafond de dépenses mensuel, replis sans IA. Le modèle choisit et explique, les chiffres viennent toujours des données ouvertes.
+
+**Formules sans but lucratif**
+- Gratuit, Plus (2,99 € par mois) et Famille (4,99 € par mois), environ 30 % de moins à l'année : seuls les quotas de l'assistant et le mode Approfondi changent.
+- Paiement par virement ou Wero, confirmé depuis l'administration ; Stripe intégré, désactivé par défaut.
+- Page « Où va votre argent » : frais du mois, coût réel de l'IA et part couverte par les abonnements.
 
 **Et aussi**
 - Calendrier des fruits et légumes de saison.
@@ -135,6 +146,7 @@ npm install && npm run build
 cp .env.example .env        # DEBUG=true, base SQLite si DATABASE_URL est vide
 uv run python manage.py migrate
 uv run python manage.py seed_demo
+uv run python manage.py setup_billing
 uv run python manage.py sync_prices
 uv run python manage.py runserver
 ```
@@ -149,6 +161,7 @@ Pendant le développement, `npm run dev` recompile les styles à chaque modifica
 | `sync_prices [slug ...] [--days N] [--pages N]` | Importe les prix Open Prices puis recalcule les recettes. |
 | `refresh_metrics` | Recalcule coût, empreinte carbone et valeurs nutritionnelles (automatique à chaque enregistrement dans l'administration). |
 | `send_expiry_reminders [--days N]` | Envoie les rappels de péremption. |
+| `setup_assistant`, `setup_billing` | Créent la configuration par défaut de l'assistant et les formules (idempotent). |
 
 ## Configuration
 
@@ -157,6 +170,7 @@ Toute la configuration passe par des variables d'environnement (voir `.env.examp
 - l'**envoi d'emails** : format de `EMAIL_URL`, fournisseurs (Brevo, boîte mail du domaine, Gmail), délivrabilité, test et dépannage ;
 - la **connexion avec Google** : création du client OAuth et URL de redirection ;
 - l'**assistant IA** : clés des fournisseurs, plafond de dépenses ;
+- les **abonnements** : coordonnées de virement et Wero dans l'administration, clés Stripe facultatives ;
 - le domaine, la sécurité, la base, le cache, les médias, les prix, les tâches planifiées et les alertes d'erreur ;
 - la référence complète des variables.
 

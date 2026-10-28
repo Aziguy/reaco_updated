@@ -31,6 +31,18 @@
     "width": 1280,
     "height": 1200
   },
+  "billing-account": {
+    "width": 1280,
+    "height": 760
+  },
+  "cook-dish": {
+    "width": 1280,
+    "height": 1500
+  },
+  "cook-suggestions": {
+    "width": 1280,
+    "height": 2200
+  },
   "dashboard": {
     "width": 1280,
     "height": 980
@@ -46,6 +58,10 @@
   "pantry-list": {
     "width": 1280,
     "height": 1000
+  },
+  "pricing": {
+    "width": 1280,
+    "height": 1300
   },
   "profile": {
     "width": 1280,
