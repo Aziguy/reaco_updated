@@ -200,6 +200,9 @@
 }
 
 @layer components {
+  #main-nav .nav-link svg {
+    @apply hidden 2xl:block;
+  }
   .nav-link[aria-current="page"] {
     @apply bg-brand-50 text-brand-800 dark:bg-brand-950 dark:text-brand-200;
   }

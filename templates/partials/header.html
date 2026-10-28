@@ -4,7 +4,7 @@
     <a href="{% url 'core:home' %}" class="shrink-0" aria-label="{{ SITE_NAME }}, accueil">
       {% include "partials/logo.html" with css="h-9 w-auto" %}
     </a>
-    <nav class="ml-2 hidden items-center gap-0.5 xl:flex" aria-label="Navigation principale">
+    <nav id="main-nav" class="ml-2 hidden items-center gap-0.5 xl:flex" aria-label="Navigation principale">
       {% include "partials/nav_links.html" %}
     </nav>
     <div class="ml-auto flex items-center gap-1">
