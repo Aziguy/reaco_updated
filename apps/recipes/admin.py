@@ -1,8 +1,16 @@
-from django.contrib import admin
+from functools import partial
+
+from django.contrib import admin, messages
 from django.db import models
+from django.urls import path
 from django.utils.html import format_html
 from unfold.admin import ModelAdmin, TabularInline
+from unfold.decorators import action
 from unfold.widgets import UnfoldAdminTextareaWidget
+
+from apps.assistant import admin_views
+from apps.integrations.http import ServiceError
+from apps.pricing.sync import sync_ingredient
 
 from . import metrics
 from .models import Diet, Ingredient, Recipe, RecipeIngredient, RecipeStep
@@ -10,10 +18,28 @@ from .models import Diet, Ingredient, Recipe, RecipeIngredient, RecipeStep
 
 @admin.register(Ingredient)
 class IngredientAdmin(ModelAdmin):
-    list_display = ("name", "aisle", "price_unit", "off_category", "ciqual_code", "kcal_100g")
-    list_filter = ("aisle", "price_unit", "is_staple")
+    list_display = (
+        "name", "aisle", "price_unit", "off_category", "ciqual_code", "kcal_100g", "is_draft",
+    )  # fmt: skip
+    list_filter = ("is_draft", "aisle", "price_unit", "is_staple")
     search_fields = ("name", "off_category")
     prepopulated_fields = {"slug": ("name",)}
+    actions = ("mark_checked", "fetch_prices")
+
+    @admin.action(description="Marquer comme vérifiés")
+    def mark_checked(self, request, queryset):
+        count = queryset.update(is_draft=False)
+        self.message_user(request, f"{count} ingrédient(s) vérifié(s).")
+
+    @admin.action(description="Récupérer les prix Open Prices")
+    def fetch_prices(self, request, queryset):
+        created = 0
+        for ingredient in queryset.exclude(off_category=""):
+            try:
+                created += sync_ingredient(ingredient, days=365, max_pages=2)
+            except ServiceError as exc:
+                self.message_user(request, f"{ingredient} : {exc}", messages.WARNING)
+        self.message_user(request, f"{created} prix ajouté(s).")
 
 
 @admin.register(Diet)
@@ -129,6 +155,15 @@ class RecipeAdmin(ModelAdmin):
     )
     inlines = (RecipeIngredientInline, RecipeStepInline)
     actions = ("refresh_metrics", "publish")
+    actions_list = ("generate_with_ai",)
+
+    def get_urls(self):
+        one = self.admin_site.admin_view(partial(admin_views.generate_one, self))
+        return [path("generer/une/", one, name="recipes_recipe_generate_one"), *super().get_urls()]
+
+    @action(description="Générer avec l'IA", url_path="generer", icon="auto_awesome")
+    def generate_with_ai(self, request):
+        return admin_views.generate_page(self, request)
 
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)

@@ -1,0 +1,12 @@
+{% load comegusto %}
+<li class="cg-row">
+  {% if recipe %}
+    <span class="material-symbols-outlined cg-ok">check_circle</span>
+    <a href="{% url 'admin:recipes_recipe_change' recipe.pk %}" class="cg-row-title">{{ recipe.title }}</a>
+    <span class="cg-muted">{% if recipe.cost_per_serving %}{{ recipe.cost_per_serving|euro }} / portion · {% endif %}{{ recipe.items.count }} ingrédients{% if drafts %} · {{ drafts }} à vérifier{% endif %}</span>
+  {% else %}
+    <span class="material-symbols-outlined cg-error">error</span>
+    <span class="cg-row-title">{{ name }}</span>
+    <span class="cg-muted">{{ error }}</span>
+  {% endif %}
+</li>

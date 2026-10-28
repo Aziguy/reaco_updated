@@ -1,0 +1,57 @@
+{% extends "admin/base_site.html" %}
+{% load i18n unfold %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div class="cg-dashboard">
+  {% if drafts %}
+    <p class="cg-mb">{% component "unfold/components/link.html" with href="../../ingredient/?is_draft__exact=1" %}{{ drafts }} ingrédient{{ drafts|pluralize }} créé{{ drafts|pluralize }} par l'assistant à vérifier{% endcomponent %}</p>
+  {% endif %}
+
+  {% if queue %}
+    {% component "unfold/components/card.html" with title="Génération en cours" title_icon="auto_awesome" class="cg-mb" %}
+      {% component "unfold/components/text.html" %}Les recettes sont créées une par une, en brouillon et en relecture. Gardez cette page ouverte jusqu'à la fin.{% endcomponent %}
+      <ol class="cg-queue" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        {% for name in queue.dishes %}
+          <li hx-post="{% url 'admin:recipes_recipe_generate_one' %}" hx-trigger="load" hx-swap="outerHTML" hx-sync="closest ol:queue all" hx-include="this" class="cg-row">
+            <input type="hidden" name="name" value="{{ name }}">
+            <input type="hidden" name="servings" value="{{ queue.servings }}">
+            <input type="hidden" name="cuisine" value="{{ queue.cuisine }}">
+            <input type="hidden" name="mode" value="{{ queue.mode }}">
+            <span class="material-symbols-outlined cg-spin">progress_activity</span>
+            <span class="cg-row-title">{{ name }}</span>
+            <span class="cg-muted">en attente…</span>
+          </li>
+        {% endfor %}
+      </ol>
+    {% endcomponent %}
+  {% endif %}
+
+  <div class="cg-grid cg-grid-2">
+    {% component "unfold/components/card.html" with title="1. Trouver des plats absents du catalogue" title_icon="travel_explore" %}
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="suggest">
+        {% for field in suggest_form %}{% include "unfold/helpers/field.html" %}{% endfor %}
+        {% component "unfold/components/button.html" with submit=1 %}Suggérer des plats{% endcomponent %}
+      </form>
+      {% if dishes %}
+        <ul class="cg-suggestions">
+          {% for dish in dishes %}<li><strong>{{ dish.name }}</strong><span class="cg-muted">{{ dish.why }}</span></li>{% endfor %}
+        </ul>
+      {% endif %}
+    {% endcomponent %}
+
+    {% component "unfold/components/card.html" with title="2. Créer les recettes" title_icon="restaurant_menu" %}
+      <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="generate">
+        {% for field in generate_form %}{% include "unfold/helpers/field.html" %}{% endfor %}
+        {% component "unfold/components/button.html" with submit=1 variant="primary" %}Générer les recettes{% endcomponent %}
+      </form>
+      {% component "unfold/components/text.html" with class="cg-footer" %}Les ingrédients inconnus sont créés « à vérifier » (3 au plus par recette). Relisez chaque recette avant de la publier.{% endcomponent %}
+    {% endcomponent %}
+  </div>
+</div>
+{% endblock %}
