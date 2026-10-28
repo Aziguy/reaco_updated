@@ -84,6 +84,10 @@ Chaque Français jette en moyenne une trentaine de kilos de nourriture par an, p
 - Paiement par virement ou Wero, confirmé depuis l'administration ; Stripe intégré, désactivé par défaut.
 - Page « Où va votre argent » : frais du mois, coût réel de l'IA et part couverte par les abonnements.
 
+**Sécurité du compte**
+- Double authentification : application d'authentification, clés d'accès (empreinte, visage) et codes de secours ; obligatoire pour l'administration.
+- Inscriptions multiples freinées : adresses jetables et alias refusés, limite par connexion, quota gratuit partagé par appareil.
+
 **Et aussi**
 - Calendrier des fruits et légumes de saison.
 - Guide utilisateur intégré, avec captures annotées générées automatiquement.
@@ -260,6 +264,7 @@ La CI GitHub Actions exécute le lint, les tests sur PostgreSQL, `check --deploy
 
 - Aucun secret dans le code : configuration par variables d'environnement.
 - Content Security Policy stricte (aucun script ni style en ligne), HSTS, cookies sécurisés, `X-Frame-Options: DENY`.
+- Double authentification (TOTP, clés d'accès, codes de secours), obligatoire pour l'équipe.
 - Limitation de débit sur l'authentification (allauth), l'API et le formulaire de contact (avec pot de miel).
 - Isolation stricte des données par utilisateur, couverte par des tests.
 - Images externes restreintes aux domaines Open Food Facts.

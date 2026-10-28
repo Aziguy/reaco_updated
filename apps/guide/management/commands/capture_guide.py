@@ -144,6 +144,7 @@ class Command(BaseCommand):
         user.pantry_items.all().delete()
         user.shopping_lists.all().delete()
         user.subscriptions.all().delete()
+        user.authenticator_set.all().delete()
         plan = Plan.objects.filter(slug="plus").first()
         if plan:
             Subscription.objects.create(

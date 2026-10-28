@@ -36,6 +36,8 @@ L'application `apps/billing` finance le site sans chercher le profit : les fonct
 2. le `PlanQuota` de la formule de l'utilisateur : celle de son abonnement en cours, sinon la formule par défaut ;
 3. le quota de la route (`Route.daily_quota`) si la formule ne fixe rien pour cette fonctionnalité.
 
+Pour un compte sans abonnement, le compteur du jour additionne les appels des comptes gratuits vus sur le même appareil (voir [Sécurité](/reaco_updated/architecture/securite/#comptes-multiples)). L'assistant demande aussi une adresse email vérifiée.
+
 Le mode Approfondi exige une formule avec `deep_mode`. Les comptes de l'équipe en sont dispensés, et la génération du catalogue (`catalog`) n'a pas de quota de formule.
 
 | Fonctionnalité | Gratuit | Plus | Famille |

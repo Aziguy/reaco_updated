@@ -68,7 +68,7 @@ La recherche découpe la requête en mots et exige que chacun figure dans `searc
 
 ## Utilisateurs (`apps.accounts`)
 
-`User` remplace le modèle Django par défaut : pas de nom d'utilisateur, connexion par email (`USERNAME_FIELD = "email"`). Il porte la taille du foyer, la localisation (code postal, ville, latitude, longitude, rayon de recherche) et la préférence de rappels par email. Supprimer un compte supprime en cascade son garde-manger, ses listes et ses favoris.
+`User` remplace le modèle Django par défaut : pas de nom d'utilisateur, connexion par email (`USERNAME_FIELD = "email"`). Il porte la taille du foyer, la localisation (code postal, ville, latitude, longitude, rayon de recherche) et la préférence de rappels par email. `email_canonical` identifie la boîte mail (sans alias) pour refuser un second compte. `Device` enregistre l'empreinte du jeton posé sur un navigateur et `DeviceLink` les comptes qui s'y sont connectés. Les méthodes de double authentification sont dans `allauth.mfa` (`Authenticator`). Supprimer un compte supprime en cascade son garde-manger, ses listes et ses favoris.
 
 ## Modèle abstrait
 

@@ -90,3 +90,15 @@ Chaque décision suit le même format : contexte, décision, conséquences. Pour
 - **Contexte** : l'équipe ne peut pas saisir tous les plats demandés par les utilisateurs.
 - **Décision** : un plat absent est écrit par l'assistant à la demande et part en relecture ; l'administration peut suggérer et générer des plats par lot. Un ingrédient inconnu est créé « à vérifier » plutôt que retiré de la recette.
 - **Conséquences** : le catalogue s'enrichit des envies réelles ; rien n'est publié sans relecture ; les nouveaux ingrédients ont un prix dès que leur catégorie Open Food Facts est vérifiée.
+
+## 15. Double authentification avec allauth.mfa, obligatoire pour l'équipe
+
+- **Contexte** : un mot de passe volé ouvrirait un compte, et pour l'équipe l'administration, les paiements et les données des utilisateurs.
+- **Décision** : `allauth.mfa`, déjà cohérent avec la connexion existante : application d'authentification, clés d'accès et codes de secours. La connexion de l'administration passe par celle du site ; la double authentification y est obligatoire. Pour les utilisateurs, elle est proposée et recommandée.
+- **Conséquences** : pas de service tiers ni de SMS ; un super-utilisateur peut réinitialiser la double authentification d'un compte ; les jetons d'API restent réservés à l'équipe.
+
+## 16. Comptes multiples : mesures proportionnées, sans empreinte du navigateur
+
+- **Contexte** : le quota gratuit de l'assistant coûte environ un centime par jour et par compte ; des comptes en série pourraient épuiser le budget mensuel.
+- **Décision** : refuser les adresses jetables et les alias d'une même boîte, limiter les inscriptions par adresse IP, exiger un email vérifié pour l'assistant, et poser un jeton signé sur l'appareil des comptes connectés : les comptes gratuits d'un appareil partagent le quota du jour. Pas d'empreinte du navigateur (fingerprinting), soumise au consentement et peu fiable, ni de vérification par SMS, payante.
+- **Conséquences** : contourner demande une nouvelle boîte mail réelle, un navigateur vierge et une autre connexion ; une famille sur un même appareil partage le quota gratuit, ce que couvre la formule Famille.

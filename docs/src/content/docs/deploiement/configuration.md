@@ -146,8 +146,11 @@ Une erreur `redirect_uri_mismatch` signifie que l'URI déclarée ne correspond p
 | `ADMIN_URL` | Chemin de l'administration, à personnaliser (`gestion-8f3k/`). |
 | `SECURE_SSL_REDIRECT`, `SECURE_COOKIES` | Redirection HTTPS et cookies sécurisés, actifs par défaut hors `DEBUG`. Ne les désactivez que derrière un proxy qui ne transmet pas `X-Forwarded-Proto`. |
 | `SECURE_HSTS_SECONDS`, `SECURE_HSTS_PRELOAD` | HSTS d'un an par défaut. N'activez le préchargement qu'une fois tous les sous-domaines en HTTPS. |
+| `MFA_REQUIRED_FOR_STAFF` | Double authentification obligatoire pour l'administration (`true` par défaut). |
+| `SIGNUP_LIMIT_PER_IP` | Comptes créés au plus par adresse IP et par jour (5 par défaut, 0 pour désactiver). |
+| `BLOCKED_EMAIL_DOMAINS` | Domaines refusés à l'inscription, en plus de la liste des adresses jetables (séparés par des virgules). |
 
-Créez le premier administrateur avec `python manage.py createsuperuser`.
+Créez le premier administrateur avec `python manage.py createsuperuser`. À sa première visite de l'administration, il active la double authentification (application ou clé d'accès) : gardez ses codes de secours en lieu sûr.
 
 ## Base de données, cache et médias
 
@@ -224,6 +227,8 @@ Sans service `scheduler`, voir [Tâches planifiées](/reaco_updated/deploiement/
 | `ADMIN_URL` | `admin/` | [Sécurité](#domaine-et-sécurité) |
 | `SECURE_SSL_REDIRECT`, `SECURE_COOKIES` | actifs hors `DEBUG` | [Sécurité](#domaine-et-sécurité) |
 | `SECURE_HSTS_SECONDS`, `SECURE_HSTS_PRELOAD` | `31536000`, `false` | [Sécurité](#domaine-et-sécurité) |
+| `MFA_REQUIRED_FOR_STAFF` | `true` | [Sécurité](#domaine-et-sécurité) |
+| `SIGNUP_LIMIT_PER_IP`, `BLOCKED_EMAIL_DOMAINS` | `5`, vide | [Sécurité](#domaine-et-sécurité) |
 | `DATABASE_URL` | SQLite local | [Base de données](#base-de-données-cache-et-médias) |
 | `CONN_MAX_AGE` | `60` | [Base de données](#base-de-données-cache-et-médias) |
 | `REDIS_URL` | vide | [Cache](#base-de-données-cache-et-médias) |

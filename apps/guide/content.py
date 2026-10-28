@@ -439,6 +439,7 @@ FIGURES = {
             height=1150,
             caption="Votre profil.",
             callouts=(
+                Callout('main a[href="/compte/2fa/"] >> nth=0', "Sécurité du compte"),
                 Callout(
                     ".field:has(#id_postal_code)",
                     "Code postal",
@@ -449,7 +450,29 @@ FIGURES = {
                     "[data-geolocate]", "Ma position", "Remplit la localisation automatiquement."
                 ),
                 Callout("#id_expiry_reminders", "Rappels par email"),
-                Callout('main section:has(h2:text-is("Sécurité"))', "Sécurité"),
+            ),
+        ),
+        Figure(
+            name="security",
+            path="/compte/2fa/",
+            height=820,
+            caption="La double authentification, depuis Sécurité du compte.",
+            callouts=(
+                Callout(
+                    'main li:has(h2:text-is("Application d\'authentification"))',
+                    "Application",
+                    "Un code à 6 chiffres à chaque connexion.",
+                ),
+                Callout(
+                    'main li:has(h2:text-is("Clés d\'accès"))',
+                    "Clé d'accès",
+                    "Empreinte, visage ou code de l'appareil.",
+                ),
+                Callout(
+                    'main li:has(h2:text-is("Codes de secours"))',
+                    "Codes de secours",
+                    "Si vous perdez votre téléphone.",
+                ),
             ),
         ),
         Figure(
@@ -691,9 +714,9 @@ CHAPTERS = [
     Chapter(
         "compte",
         "Mon compte",
-        "Profil, localisation, rappels, sécurité et suppression.",
+        "Profil, localisation, double authentification et suppression.",
         "user",
-        ("profile",),
+        ("profile", "security"),
     ),
     Chapter(
         "abonnement",

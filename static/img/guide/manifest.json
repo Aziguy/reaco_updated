@@ -99,6 +99,10 @@
     "width": 1280,
     "height": 860
   },
+  "security": {
+    "width": 1280,
+    "height": 820
+  },
   "shopping-list": {
     "width": 1280,
     "height": 1000
