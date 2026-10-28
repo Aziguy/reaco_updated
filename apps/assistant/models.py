@@ -15,8 +15,10 @@ MILLION = Decimal(1_000_000)
 class Feature(models.TextChoices):
     SEARCH = "search", "Recherche"
     PLANNER = "planner", "Menu de la semaine"
-    RECIPE = "recipe", "Recette vider le frigo"
+    RECIPE = "recipe", "Création de recette"
     RECEIPT = "receipt", "Ticket de caisse"
+    PHOTO = "photo", "Photo des ingrédients"
+    CATALOG = "catalog", "Catalogue (admin)"
 
 
 class Mode(models.TextChoices):

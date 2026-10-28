@@ -32,6 +32,10 @@ ROUTES = [
     (Feature.RECIPE, Mode.DEEP, SONNET, HAIKU, Effort.MEDIUM, 16000, 5, 0),
     (Feature.RECEIPT, Mode.FAST, HAIKU, MISTRAL, Effort.LOW, 8000, 10, 0),
     (Feature.RECEIPT, Mode.DEEP, SONNET, HAIKU, Effort.LOW, 12000, 5, 0),
+    (Feature.PHOTO, Mode.FAST, HAIKU, MISTRAL, Effort.LOW, 4000, 10, 0),
+    (Feature.PHOTO, Mode.DEEP, SONNET, HAIKU, Effort.LOW, 4000, 5, 0),
+    (Feature.CATALOG, Mode.FAST, HAIKU, SONNET, Effort.LOW, 16000, 200, 0),
+    (Feature.CATALOG, Mode.DEEP, SONNET, HAIKU, Effort.MEDIUM, 16000, 100, 0),
 ]
 
 

@@ -59,6 +59,11 @@ class Ingredient(models.Model):
     is_staple = models.BooleanField(
         "produit de base", default=False, help_text="Sel, poivre, huile : supposé disponible."
     )
+    is_draft = models.BooleanField(
+        "à vérifier",
+        default=False,
+        help_text="Créé par l'assistant : rayon, unité et catégorie à contrôler.",
+    )
 
     class Meta:
         ordering = ["name"]

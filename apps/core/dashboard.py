@@ -13,6 +13,7 @@ from django.utils import formats, timezone
 
 from apps.assistant.models import Feature, Usage
 from apps.assistant.services import spend_summary
+from apps.billing.models import Subscription
 from apps.pantry.models import PantryItem
 from apps.pricing.models import PriceObservation
 from apps.recipes.models import Recipe
@@ -34,7 +35,7 @@ def _assistant_chart() -> str:
     )
     counts = {(row["day"], row["feature"]): row["calls"] for row in rows}
     days = [start + timedelta(days=offset) for offset in range(DAYS)]
-    palette = ["#1a7e4f", "#4bb87f", "#f97316", "#80d2a5"]
+    palette = ["#1a7e4f", "#4bb87f", "#f97316", "#80d2a5", "#145136", "#fdba74"]
     return json.dumps(
         {
             "labels": [formats.date_format(day, "j M") for day in days],
@@ -66,6 +67,7 @@ def dashboard_callback(request, context):
     failed = usage.filter(ok=False).count()
 
     saved_count, wasted_count = consumed.count(), wasted.count()
+    pending = Subscription.objects.filter(status=Subscription.Status.PENDING).count()
     context.update(
         {
             "title": "Tableau de bord",
@@ -88,6 +90,13 @@ def dashboard_callback(request, context):
                     "value": formats.number_format(prices["total"], force_grouping=True),
                     "footer": f"Dernier relevé : {last_price}",
                     "url": reverse("admin:pricing_priceobservation_changelist"),
+                },
+                {
+                    "title": "Abonnés",
+                    "value": Subscription.objects.current().values("user").distinct().count(),
+                    "footer": f"{pending} paiement(s) à confirmer",
+                    "url": reverse("admin:billing_subscription_changelist")
+                    + "?status__exact=pending",
                 },
                 {
                     "title": "Anti-gaspi ce mois-ci",
