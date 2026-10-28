@@ -1,0 +1,12 @@
+{% extends "mfa/layout.html" %}
+{% block title %}Nouveaux codes de secours{% endblock %}
+{% block card %}
+{% include "mfa/_heading.html" with name="key" title="Nouveaux codes de secours" %}
+<p class="mt-5 text-sm text-stone-700 dark:text-stone-300">Une nouvelle série de codes va être créée.{% if unused_code_count %} Les {{ unused_code_count }} codes encore disponibles ne fonctionneront plus.{% endif %}</p>
+<form method="post" action="{% url 'mfa_generate_recovery_codes' %}" class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+  {% csrf_token %}
+  {{ form.as_div }}
+  <a href="{% url 'mfa_index' %}" class="btn-secondary">Annuler</a>
+  <button type="submit" class="btn-primary">Créer de nouveaux codes</button>
+</form>
+{% endblock %}

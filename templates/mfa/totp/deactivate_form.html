@@ -1,0 +1,13 @@
+{% extends "mfa/layout.html" %}
+{% block title %}Désactiver l'application d'authentification{% endblock %}
+{% block card %}
+{% include "mfa/_heading.html" with name="smartphone" title="Désactiver l'application" %}
+{% include "mfa/_errors.html" %}
+<p class="mt-5 text-sm text-stone-700 dark:text-stone-300">Les codes de votre application ne seront plus demandés à la connexion.{% if user.is_staff %} Sans autre méthode active, l'administration ne vous sera plus accessible.{% endif %}</p>
+<form method="post" action="{% url 'mfa_deactivate_totp' %}" class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+  {% csrf_token %}
+  {{ form.as_div }}
+  <a href="{% url 'mfa_index' %}" class="btn-secondary">Annuler</a>
+  <button type="submit" class="btn bg-red-600 text-white shadow-sm hover:bg-red-700">Désactiver</button>
+</form>
+{% endblock %}

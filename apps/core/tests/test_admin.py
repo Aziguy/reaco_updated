@@ -4,13 +4,6 @@ from django.urls import reverse
 pytestmark = pytest.mark.django_db
 
 
-@pytest.fixture
-def admin_client(client, django_user_model):
-    admin = django_user_model.objects.create_superuser(email="admin@example.com", password="x")
-    client.force_login(admin)
-    return client
-
-
 def test_dashboard_shows_key_figures(admin_client, recipe):
     content = admin_client.get(reverse("admin:index")).content.decode()
     for text in ("Recettes publiées", "Budget de l", "Recettes à relire"):

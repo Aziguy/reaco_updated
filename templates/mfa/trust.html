@@ -1,0 +1,22 @@
+{% extends "mfa/layout.html" %}
+{% load comegusto %}
+{% block title %}Faire confiance à ce navigateur{% endblock %}
+{% block back %}{% endblock %}
+{% block card %}
+<div class="text-center">
+  <span class="ai-icon mx-auto !size-12">{% icon "shield" "size-6" %}</span>
+  <h1 class="mt-4 text-2xl">Faire confiance à ce navigateur ?</h1>
+  <p class="muted mt-1">Le code ne vous sera plus demandé ici pendant {{ trust_until|timeuntil:trust_from }}. À éviter sur un ordinateur partagé.</p>
+</div>
+<form method="post" action="{% url 'mfa_trust' %}" class="mt-6 space-y-2">
+  {% csrf_token %}
+  {{ form.as_div }}
+  <button type="submit" name="action" value="trust" class="btn-primary w-full">Oui, pendant {{ trust_until|timeuntil:trust_from }}</button>
+  <button type="submit" name="action" value="skip" class="btn-secondary w-full">Non, merci</button>
+</form>
+<button type="submit" form="logout-from-stage" class="btn-ghost mt-2 w-full">Annuler la connexion</button>
+<form id="logout-from-stage" method="post" action="{% url 'account_logout' %}">
+  <input type="hidden" name="next" value="{% url 'account_login' %}">
+  {% csrf_token %}
+</form>
+{% endblock %}

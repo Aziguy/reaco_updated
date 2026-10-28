@@ -1,0 +1,23 @@
+{% extends "mfa/layout.html" %}
+{% load comegusto %}
+{% block title %}Confirmer votre identité{% endblock %}
+{% block back %}{% endblock %}
+{% block card %}
+<div class="text-center">
+  <span class="ai-icon mx-auto !size-12">{% icon "lock" "size-6" %}</span>
+  <h1 class="mt-4 text-2xl">Confirmer votre identité</h1>
+  <p class="muted mt-1">Action sensible : saisissez un code de votre application d'authentification.</p>
+</div>
+<form method="post" action="{% url 'mfa_reauthenticate' %}" class="mt-6">
+  {% csrf_token %}
+  {% include "mfa/_errors.html" %}
+  {% include "mfa/_code.html" with field=form.code label="Code" %}
+  {{ redirect_field }}
+  <button type="submit" class="btn-primary mt-4 w-full">Confirmer</button>
+</form>
+{% if reauthentication_alternatives %}
+  <div class="mt-5 space-y-2 border-t border-stone-200 pt-5 dark:border-stone-800">
+    {% for alt in reauthentication_alternatives %}<a href="{{ alt.url }}" class="btn-secondary w-full">{{ alt.description }}</a>{% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

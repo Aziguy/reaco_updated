@@ -275,6 +275,15 @@ function setupCopy() {
   });
 }
 
+function setupWebauthnErrors() {
+  document.addEventListener("allauth.error", (event) => {
+    const message = $("[data-webauthn-error]");
+    if (!message) return;
+    event.preventDefault();
+    message.hidden = false;
+  });
+}
+
 setupThemeToggle();
 setupMenu();
 setupConfirm();
@@ -288,3 +297,4 @@ setupDropzone();
 setupChips();
 setupPhotoIngredients();
 setupCopy();
+setupWebauthnErrors();

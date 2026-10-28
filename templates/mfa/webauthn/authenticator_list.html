@@ -1,0 +1,29 @@
+{% extends "mfa/layout.html" %}
+{% load comegusto humanize %}
+{% block title %}Clés d'accès{% endblock %}
+{% block card %}
+<div class="flex flex-wrap items-center justify-between gap-3">
+  {% include "mfa/_heading.html" with name="fingerprint" title="Clés d'accès" %}
+  <a href="{% url 'mfa_add_webauthn' %}" class="btn-primary btn-sm">{% icon "plus" "size-4" %}Ajouter</a>
+</div>
+{% if authenticators %}
+  <ul class="mt-6 divide-y divide-stone-100 border-y border-stone-100 dark:divide-stone-800 dark:border-stone-800">
+    {% for authenticator in authenticators %}
+      <li class="flex flex-wrap items-center gap-x-4 gap-y-2 py-4">
+        <div class="min-w-0 flex-1">
+          <p class="flex flex-wrap items-center gap-2 font-medium text-stone-900 dark:text-white">{{ authenticator }}
+            {% if authenticator.wrap.is_passwordless %}<span class="badge-brand">Sans mot de passe</span>{% else %}<span class="badge-neutral">Second facteur</span>{% endif %}
+          </p>
+          <p class="muted mt-0.5 text-xs">Ajoutée le {{ authenticator.created_at|date:"j F Y" }} · {% if authenticator.last_used_at %}utilisée {{ authenticator.last_used_at|naturaltime }}{% else %}jamais utilisée{% endif %}</p>
+        </div>
+        <div class="flex gap-1">
+          <a href="{% url 'mfa_edit_webauthn' pk=authenticator.pk %}" class="btn-ghost btn-sm">Renommer</a>
+          <a href="{% url 'mfa_remove_webauthn' pk=authenticator.pk %}" class="btn-danger btn-sm">{% icon "trash" "size-4" %}<span class="sr-only sm:not-sr-only">Supprimer</span></a>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p class="muted mt-6">Aucune clé d'accès pour l'instant.</p>
+{% endif %}
+{% endblock %}

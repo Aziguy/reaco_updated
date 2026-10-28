@@ -1,0 +1,24 @@
+{% extends "mfa/layout.html" %}
+{% load comegusto %}
+{% block title %}Codes de secours{% endblock %}
+{% block card %}
+{% include "mfa/_heading.html" with name="key" title="Codes de secours" %}
+<p class="mt-5 text-sm text-stone-700 dark:text-stone-300">Si vous perdez votre téléphone, chacun de ces codes remplace une fois le code de l'application. Conservez-les hors de votre téléphone : imprimés, ou dans un gestionnaire de mots de passe.</p>
+<p class="muted mt-2 text-xs">{{ unused_codes|length }} code{{ unused_codes|length|pluralize }} disponible{{ unused_codes|length|pluralize }} sur {{ total_count }}</p>
+{% if can_view_codes %}
+  <ul class="mt-4 grid grid-cols-2 gap-2 rounded-xl border border-dashed border-stone-300 bg-stone-50 p-3 dark:border-stone-700 dark:bg-stone-950" aria-label="Codes de secours non utilisés">
+    {% for code in unused_codes %}<li class="rounded-lg bg-white px-3 py-2 text-center font-mono text-sm tracking-wider text-stone-900 shadow-xs dark:bg-stone-900 dark:text-stone-100">{{ code }}</li>{% endfor %}
+  </ul>
+{% endif %}
+<div class="mt-4 flex flex-wrap gap-2">
+  {% if can_download_codes %}<a href="{% url 'mfa_download_recovery_codes' %}" class="btn-primary btn-sm">{% icon "download" "size-4" %}Télécharger</a>{% endif %}
+  {% if can_view_codes %}<button type="button" class="btn-secondary btn-sm" data-copy="{% for code in unused_codes %}{{ code }}&#10;{% endfor %}">{% icon "copy" "size-4" %}<span data-copy-label>Copier</span></button>{% endif %}
+  {% if can_generate_codes %}<a href="{% url 'mfa_generate_recovery_codes' %}" class="btn-ghost btn-sm">{% icon "refresh" "size-4" %}Nouveaux codes</a>{% endif %}
+</div>
+{% if user.is_staff %}
+  <div class="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-stone-200 pt-5 dark:border-stone-800">
+    <p class="muted">L'administration vous est ouverte.</p>
+    <a href="{% url 'admin:index' %}" class="btn-secondary btn-sm">Ouvrir l'administration{% icon "arrow-right" "size-4" %}</a>
+  </div>
+{% endif %}
+{% endblock %}

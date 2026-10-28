@@ -1,0 +1,41 @@
+{% extends "mfa/layout.html" %}
+{% load comegusto security %}
+{% block title %}Double authentification{% endblock %}
+{% block back %}{% endblock %}
+{% block card %}
+{% with types=form.user|mfa_types %}
+<div class="text-center">
+  <span class="ai-icon mx-auto !size-12">{% icon "shield" "size-6" %}</span>
+  <h1 class="mt-4 text-2xl">Double authentification</h1>
+  <p class="muted mt-1">{% if "totp" in types %}Saisissez le code de votre application d'authentification, ou un code de secours.{% else %}Utilisez votre clé d'accès, ou un code de secours.{% endif %}</p>
+</div>
+<div class="mt-6">
+  {% include "mfa/_errors.html" %}
+  {% if "webauthn" in types %}
+    {% include "mfa/_errors.html" with form=webauthn_form %}
+    <p class="mb-3 text-sm text-red-600 dark:text-red-400" data-webauthn-error hidden>La clé d'accès n'a pas été reconnue. Réessayez, ou saisissez un code.</p>
+    <button type="button" id="mfa_webauthn_authenticate" class="{% if 'totp' in types %}btn-secondary{% else %}btn-primary{% endif %} w-full">{% icon "fingerprint" "size-4" %}Utiliser une clé d'accès</button>
+    <p class="my-5 flex items-center gap-3 text-xs uppercase tracking-wide text-stone-400 before:h-px before:flex-1 before:bg-stone-200 after:h-px after:flex-1 after:bg-stone-200 dark:before:bg-stone-800 dark:after:bg-stone-800">ou</p>
+  {% endif %}
+  <form method="post" action="{% url 'mfa_authenticate' %}">
+    {% csrf_token %}
+    {% include "mfa/_code.html" with field=form.code label="Code de l'application ou code de secours" %}
+    <button type="submit" class="btn-primary mt-4 w-full">Valider</button>
+  </form>
+  <button type="submit" form="logout-from-stage" class="btn-ghost mt-2 w-full">Annuler</button>
+</div>
+<form id="logout-from-stage" method="post" action="{% url 'account_logout' %}">
+  <input type="hidden" name="next" value="{% url 'account_login' %}">
+  {% csrf_token %}
+</form>
+{% if "webauthn" in types %}
+  <form id="webauthn_form" method="post" action="{% url 'mfa_authenticate' %}">
+    {% csrf_token %}
+    {{ webauthn_form.credential }}
+  </form>
+  {{ js_data|json_script:"js_data" }}
+  {% include "mfa/webauthn/snippets/scripts.html" %}
+  <script data-allauth-onload="allauth.webauthn.forms.authenticateForm" type="application/json">{"ids": {"authenticate": "mfa_webauthn_authenticate", "credential": "{{ webauthn_form.credential.auto_id }}", "data": "js_data"}}</script>
+{% endif %}
+{% endwith %}
+{% endblock %}

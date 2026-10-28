@@ -1,0 +1,11 @@
+{% extends "mfa/layout.html" %}
+{% block title %}Supprimer la clé d'accès{% endblock %}
+{% block card %}
+{% include "mfa/_heading.html" with name="fingerprint" title="Supprimer la clé d'accès" %}
+<p class="mt-5 text-sm text-stone-700 dark:text-stone-300">La clé <strong class="font-semibold text-stone-900 dark:text-white">{{ authenticator }}</strong> ne permettra plus de vous connecter.</p>
+<form method="post" action="{% url 'mfa_remove_webauthn' pk=authenticator.pk %}" class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+  {% csrf_token %}
+  <a href="{% url 'mfa_list_webauthn' %}" class="btn-secondary">Annuler</a>
+  <button type="submit" class="btn bg-red-600 text-white shadow-sm hover:bg-red-700">Supprimer</button>
+</form>
+{% endblock %}

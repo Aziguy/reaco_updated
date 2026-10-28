@@ -1,0 +1,35 @@
+{% extends "allauth/layouts/base.html" %}
+{% load comegusto %}
+{% block head_title %}Connexion{% endblock head_title %}
+{% block content %}
+<h1>Connexion</h1>
+<p class="-mt-4 mb-6 text-sm text-stone-600 dark:text-stone-300">Pas encore de compte ? <a href="{{ signup_url }}">Créer un compte</a></p>
+<form method="post" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {% if form.non_field_errors %}<div class="mb-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-900 dark:bg-red-950 dark:text-red-200" role="alert">{{ form.non_field_errors|join:" " }}</div>{% endif %}
+  <div class="field">
+    <label for="{{ form.login.id_for_label }}">Adresse email</label>
+    {{ form.login.errors }}
+    <input type="email" name="{{ form.login.html_name }}" id="{{ form.login.id_for_label }}" value="{{ form.login.value|default:'' }}" autocomplete="email webauthn" required autofocus>
+  </div>
+  <div class="field">
+    <div class="mb-1 flex items-baseline justify-between gap-3">
+      <label for="{{ form.password.id_for_label }}" class="!mb-0">Mot de passe</label>
+      <a href="{% url 'account_reset_password' %}" class="text-xs">Mot de passe oublié ?</a>
+    </div>
+    {{ form.password.errors }}
+    <input type="password" name="{{ form.password.html_name }}" id="{{ form.password.id_for_label }}" autocomplete="current-password" required>
+  </div>
+  {% if form.remember %}
+    <label class="mb-5 flex items-center text-sm font-normal text-stone-700 dark:text-stone-300"><input type="checkbox" name="{{ form.remember.html_name }}" id="{{ form.remember.id_for_label }}"{% if form.remember.value %} checked{% endif %}>Rester connecté</label>
+  {% endif %}
+  {{ redirect_field }}
+  <button type="submit">Se connecter</button>
+</form>
+{% if PASSKEY_LOGIN_ENABLED %}
+  <p class="my-5 flex items-center gap-3 text-xs uppercase tracking-wide text-stone-400 before:h-px before:flex-1 before:bg-stone-200 after:h-px after:flex-1 after:bg-stone-200 dark:before:bg-stone-800 dark:after:bg-stone-800">ou</p>
+  <p class="mb-3 text-sm text-red-600 dark:text-red-400" data-webauthn-error hidden>La clé d'accès n'a pas été reconnue. Réessayez, ou utilisez votre mot de passe.</p>
+  <button type="submit" form="mfa_login" id="passkey_login" class="btn-secondary w-full">{% icon "fingerprint" "size-4" %}Se connecter avec une clé d'accès</button>
+  {% include "mfa/webauthn/snippets/login_script.html" with button_id="passkey_login" %}
+{% endif %}
+{% endblock content %}

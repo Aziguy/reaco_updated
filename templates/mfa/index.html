@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load comegusto humanize security %}
+{% block title %}Sécurité du compte{% endblock %}
+{% block content %}
+{% with blocked=user|mfa_blocked %}
+<div class="mx-auto max-w-2xl">
+  <a href="{% url 'accounts:profile' %}" class="inline-flex items-center gap-1.5 text-sm text-stone-500 no-underline hover:text-stone-900 dark:text-stone-400 dark:hover:text-white">{% icon "arrow-right" "size-4 rotate-180" %}Mon profil</a>
+  <div class="mt-3 flex flex-wrap items-end justify-between gap-3">
+    <div>
+      <h1 class="text-3xl">Sécurité du compte</h1>
+      <p class="muted mt-1">Un second facteur protège votre compte, même si quelqu'un connaît votre mot de passe.</p>
+    </div>
+    {% if is_mfa_enabled %}
+      <span class="badge-brand !py-1">{% icon "shield" "size-3.5" %}Double authentification active</span>
+    {% else %}
+      <span class="badge-warn !py-1">{% icon "alert" "size-3.5" %}Double authentification inactive</span>
+    {% endif %}
+  </div>
+
+  {% if blocked %}
+    <div class="guide-warning mt-6 flex flex-wrap items-center justify-between gap-3" role="alert">
+      <p class="flex items-start gap-2">{% icon "mail" "size-4 mt-0.5 shrink-0" %}<span>Confirmez d'abord votre adresse email : la double authentification ne peut pas être activée avant.</span></p>
+      <a href="{% url 'account_email' %}" class="btn-secondary btn-sm">Renvoyer le lien</a>
+    </div>
+  {% elif user.is_staff and not is_mfa_enabled %}
+    <div class="guide-warning mt-6 flex items-start gap-2" role="alert">
+      {% icon "lock" "size-4 mt-0.5 shrink-0" %}
+      <p>L'administration exige la double authentification. Activez l'application d'authentification ou une clé d'accès ci-dessous.</p>
+    </div>
+  {% endif %}
+
+  <ul class="mt-6 space-y-4">
+    {% if "totp" in MFA_SUPPORTED_TYPES %}
+      {% with totp=authenticators.totp %}
+        <li class="card grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3 p-5 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:p-6">
+          <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300">{% icon "smartphone" %}</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 class="text-base">Application d'authentification</h2>
+              {% if totp %}<span class="badge-brand">{% icon "check" "size-3" %}Active</span>{% endif %}
+            </div>
+            <p class="muted mt-1">Google Authenticator, Microsoft Authenticator, 1Password… Un code à 6 chiffres, renouvelé toutes les 30 secondes.</p>
+            {% if totp %}<p class="mt-2 text-xs text-stone-500 dark:text-stone-400">Activée le {{ totp.instance.created_at|date:"j F Y" }}{% if totp.instance.last_used_at %} · utilisée {{ totp.instance.last_used_at|naturaltime }}{% endif %}</p>{% endif %}
+          </div>
+          <div class="col-start-2 sm:col-start-3 sm:row-start-1">
+          {% if totp %}
+            <a href="{% url 'mfa_deactivate_totp' %}" class="btn-danger btn-sm">Désactiver</a>
+          {% else %}
+            {% if blocked %}<span class="btn-primary btn-sm !cursor-not-allowed opacity-50" aria-disabled="true">Activer</span>{% else %}<a href="{% url 'mfa_activate_totp' %}" class="btn-primary btn-sm">Activer</a>{% endif %}
+          {% endif %}
+          </div>
+        </li>
+      {% endwith %}
+    {% endif %}
+
+    {% if "webauthn" in MFA_SUPPORTED_TYPES %}
+      {% with keys=authenticators.webauthn %}
+        <li class="card grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3 p-5 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:p-6">
+          <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300">{% icon "fingerprint" %}</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 class="text-base">Clés d'accès</h2>
+              {% if keys %}<span class="badge-brand">{% icon "check" "size-3" %}{{ keys|length }} clé{{ keys|length|pluralize }}</span>{% endif %}
+            </div>
+            <p class="muted mt-1">Empreinte, Face ID, Windows Hello ou clé de sécurité. Une clé d'accès permet aussi de se connecter sans mot de passe.</p>
+          </div>
+          <div class="col-start-2 sm:col-start-3 sm:row-start-1">
+          {% if keys %}
+            <a href="{% url 'mfa_list_webauthn' %}" class="btn-secondary btn-sm">Gérer</a>
+          {% else %}
+            {% if blocked %}<span class="btn-secondary btn-sm !cursor-not-allowed opacity-50" aria-disabled="true">Ajouter</span>{% else %}<a href="{% url 'mfa_add_webauthn' %}" class="{% if authenticators.totp %}btn-secondary{% else %}btn-primary{% endif %} btn-sm">Ajouter</a>{% endif %}
+          {% endif %}
+          </div>
+        </li>
+      {% endwith %}
+    {% endif %}
+
+    {% if "recovery_codes" in MFA_SUPPORTED_TYPES %}
+      {% with codes=authenticators.recovery_codes %}
+        <li class="card grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-3 p-5 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:p-6">
+          <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-stone-100 text-stone-600 dark:bg-stone-800 dark:text-stone-300">{% icon "key" %}</span>
+          <div class="min-w-0 flex-1">
+            <h2 class="text-base">Codes de secours</h2>
+            <p class="muted mt-1">Pour vous connecter si vous perdez votre téléphone. Chaque code ne sert qu'une fois.</p>
+            {% if codes %}
+              {% with unused=codes.get_unused_codes|length total=codes.generate_codes|length %}
+                <p class="mt-2 text-xs {% if unused <= 2 %}font-medium text-amber-700 dark:text-amber-400{% else %}text-stone-500 dark:text-stone-400{% endif %}">{{ unused }} code{{ unused|pluralize }} disponible{{ unused|pluralize }} sur {{ total }}</p>
+              {% endwith %}
+            {% elif not is_mfa_enabled %}
+              <p class="mt-2 text-xs text-stone-500 dark:text-stone-400">Créés automatiquement à l'activation d'une méthode.</p>
+            {% endif %}
+          </div>
+          {% if is_mfa_enabled %}
+            <div class="col-start-2 flex flex-wrap gap-2 sm:col-start-3 sm:row-start-1">
+              {% if codes %}<a href="{% url 'mfa_view_recovery_codes' %}" class="btn-secondary btn-sm">Afficher</a>{% endif %}
+              <a href="{% url 'mfa_generate_recovery_codes' %}" class="btn-ghost btn-sm">{% icon "refresh" "size-4" %}Nouveaux codes</a>
+            </div>
+          {% endif %}
+        </li>
+      {% endwith %}
+    {% endif %}
+  </ul>
+
+  <section class="mt-8">
+    <h2 class="text-base">Connexion</h2>
+    <div class="mt-3 flex flex-wrap gap-2">
+      <a href="{% url 'account_change_password' %}" class="btn-secondary btn-sm">{% icon "lock" "size-4" %}Changer le mot de passe</a>
+      <a href="{% url 'account_email' %}" class="btn-secondary btn-sm">{% icon "mail" "size-4" %}Adresses email</a>
+    </div>
+  </section>
+</div>
+{% endwith %}
+{% endblock %}

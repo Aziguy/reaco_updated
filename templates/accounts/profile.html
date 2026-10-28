@@ -12,6 +12,13 @@
     {% icon "arrow-right" "size-4 text-stone-400" %}
   </a>
 
+  <a href="{% url 'mfa_index' %}" class="card mt-3 flex items-center gap-4 p-5 no-underline transition hover:border-brand-300">
+    <span class="flex size-10 shrink-0 items-center justify-center rounded-xl {% if mfa_enabled %}bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300{% else %}bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300{% endif %}">{% icon "shield" %}</span>
+    <span class="min-w-0 flex-1"><span class="block font-medium text-stone-900 dark:text-white">Sécurité du compte</span><span class="muted text-sm">{% if mfa_enabled %}Double authentification active{% else %}Activez la double authentification : Authenticator ou clé d'accès{% endif %}</span></span>
+    {% if not mfa_enabled %}<span class="badge-warn hidden sm:inline-flex">Recommandé</span>{% endif %}
+    {% icon "arrow-right" "size-4 text-stone-400" %}
+  </a>
+
   <form method="post" class="card form-flow mt-6 p-6">
     {% csrf_token %}
     {{ form.non_field_errors }}
@@ -35,6 +42,7 @@
   <section class="card mt-6 p-6">
     <h2 class="text-base">Sécurité</h2>
     <div class="mt-3 flex flex-wrap gap-2">
+      <a href="{% url 'mfa_index' %}" class="btn-secondary btn-sm">{% icon "shield" "size-4" %}Double authentification</a>
       <a href="{% url 'account_change_password' %}" class="btn-secondary btn-sm">Changer le mot de passe</a>
       <a href="{% url 'account_email' %}" class="btn-secondary btn-sm">Adresses email</a>
       <form method="post" action="{% url 'account_logout' %}">{% csrf_token %}<button class="btn-secondary btn-sm">{% icon "logout" "size-4" %}Se déconnecter</button></form>

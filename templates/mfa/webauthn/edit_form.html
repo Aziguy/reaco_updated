@@ -1,0 +1,16 @@
+{% extends "mfa/layout.html" %}
+{% block title %}Renommer la clé d'accès{% endblock %}
+{% block card %}
+{% include "mfa/_heading.html" with name="fingerprint" title="Renommer la clé d'accès" %}
+<form method="post" class="mt-6">
+  {% csrf_token %}
+  {% include "mfa/_errors.html" %}
+  <label for="{{ form.name.id_for_label }}" class="mb-1.5 block text-sm font-medium text-stone-700 dark:text-stone-300">Nom de la clé</label>
+  <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" value="{{ form.name.value|default:'' }}" class="input" maxlength="255" required autofocus>
+  {% if form.name.errors %}<p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ form.name.errors|join:" " }}</p>{% endif %}
+  <div class="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+    <a href="{% url 'mfa_list_webauthn' %}" class="btn-secondary">Annuler</a>
+    <button type="submit" class="btn-primary">Enregistrer</button>
+  </div>
+</form>
+{% endblock %}

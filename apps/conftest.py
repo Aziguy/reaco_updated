@@ -3,6 +3,7 @@ from decimal import Decimal
 
 import pytest
 import respx
+from allauth.mfa.totp.internal.auth import TOTP, generate_totp_secret
 from django.core.cache import cache
 
 from apps.assistant import services
@@ -36,6 +37,18 @@ def user(django_user_model):
 @pytest.fixture
 def other_user(django_user_model):
     return django_user_model.objects.create_user(email="bob@example.com", password="x")
+
+
+def with_mfa(user):
+    TOTP.activate(user, generate_totp_secret())
+    return user
+
+
+@pytest.fixture
+def admin_user(django_user_model):
+    """Staff accounts need two-factor authentication to open the admin."""
+    admin = django_user_model.objects.create_superuser(email="admin@example.com", password="x")
+    return with_mfa(admin)
 
 
 @pytest.fixture

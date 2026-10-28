@@ -1,0 +1,25 @@
+{% extends "mfa/layout.html" %}
+{% load comegusto %}
+{% block title %}Ajouter une clé d'accès{% endblock %}
+{% block card %}
+{% include "mfa/_heading.html" with name="fingerprint" title="Ajouter une clé d'accès" subtitle="Empreinte, Face ID, Windows Hello ou clé de sécurité." %}
+<form method="post" action="{% url 'mfa_add_webauthn' %}" class="mt-6">
+  {% csrf_token %}
+  {% include "mfa/_errors.html" %}
+  <p class="text-sm text-red-600 dark:text-red-400" data-webauthn-error hidden>La clé d'accès n'a pas été enregistrée. Réessayez, ou utilisez un autre appareil.</p>
+  <label for="{{ form.name.id_for_label }}" class="mb-1.5 block text-sm font-medium text-stone-700 dark:text-stone-300">Nom de la clé</label>
+  <input type="text" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" value="{{ form.name.value|default:'' }}" class="input" maxlength="255" placeholder="Téléphone, ordinateur portable…">
+  <p class="muted mt-1 text-xs">Pour la reconnaître dans la liste.</p>
+  {% if form.passwordless %}
+    <label class="choice mt-4 items-start">
+      <input type="checkbox" name="{{ form.passwordless.html_name }}" id="{{ form.passwordless.id_for_label }}" class="mt-0.5"{% if form.passwordless.value is not False %} checked{% endif %}>
+      <span><span class="block font-medium text-stone-900 dark:text-white">Se connecter sans mot de passe</span><span class="muted block text-xs">L'appareil demandera votre empreinte, votre visage ou son code PIN.</span></span>
+    </label>
+  {% endif %}
+  {{ form.credential }}
+  <button type="button" id="mfa_webauthn_add" class="btn-primary mt-6 w-full">{% icon "fingerprint" "size-4" %}Créer la clé d'accès</button>
+</form>
+{% include "mfa/webauthn/snippets/scripts.html" %}
+{{ js_data|json_script:"js_data" }}
+<script data-allauth-onload="allauth.webauthn.forms.addForm" type="application/json">{"ids": {"add": "mfa_webauthn_add", "passwordless": "{{ form.passwordless.auto_id }}", "credential": "{{ form.credential.auto_id }}", "data": "js_data"}}</script>
+{% endblock %}

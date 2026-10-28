@@ -1,3 +1,4 @@
+from allauth.account.decorators import secure_admin_login
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -6,6 +7,7 @@ from django.views.static import serve
 
 admin.site.site_header = "Administration Comégusto"
 admin.site.site_title = "Comégusto"
+admin.site.login = secure_admin_login(admin.site.login)
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),

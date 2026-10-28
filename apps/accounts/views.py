@@ -1,3 +1,4 @@
+from allauth.mfa.utils import is_mfa_enabled
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -13,7 +14,8 @@ def profile(request):
         form.save()
         messages.success(request, "Profil mis à jour.")
         return redirect("accounts:profile")
-    return render(request, "accounts/profile.html", {"form": form})
+    context = {"form": form, "mfa_enabled": is_mfa_enabled(request.user)}
+    return render(request, "accounts/profile.html", context)
 
 
 @login_required

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "allauth",
     "allauth.account",
+    "allauth.mfa",
     "allauth.socialaccount",
     "rest_framework",
     "rest_framework.authtoken",
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "apps.core.middleware.CSPMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "apps.accounts.middleware.StaffMFAMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
 
@@ -127,6 +129,12 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = env("ACCOUNT_EMAIL_VERIFICATION", default="optional")
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_SESSION_REMEMBER = None
+MFA_SUPPORTED_TYPES = ["totp", "recovery_codes", "webauthn"]
+MFA_TOTP_ISSUER = "Comégusto"
+MFA_PASSKEY_LOGIN_ENABLED = True
+MFA_TRUST_ENABLED = True
+MFA_WEBAUTHN_ALLOW_INSECURE_ORIGIN = DEBUG
+MFA_REQUIRED_FOR_STAFF = env.bool("MFA_REQUIRED_FOR_STAFF", default=True)
 SOCIALACCOUNT_PROVIDERS = {}
 if GOOGLE_CLIENT_ID:
     SOCIALACCOUNT_PROVIDERS["google"] = {

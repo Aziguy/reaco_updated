@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block content %}
+<div class="mx-auto w-full max-w-lg">
+  {% block back %}<a href="{% url 'mfa_index' %}" class="inline-flex items-center gap-1.5 text-sm text-stone-500 no-underline hover:text-stone-900 dark:text-stone-400 dark:hover:text-white">{% icon "arrow-right" "size-4 rotate-180" %}Sécurité du compte</a>{% endblock %}
+  <section class="card mt-3 p-6 sm:p-8">{% block card %}{% endblock %}</section>
+</div>
+{% endblock %}
