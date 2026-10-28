@@ -2,6 +2,8 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+from .emails import canonical
+
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -27,6 +29,9 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField("adresse email", unique=True)
+    email_canonical = models.CharField(
+        "adresse normalisée", max_length=254, db_index=True, blank=True, editable=False
+    )
 
     household_size = models.PositiveSmallIntegerField(
         "personnes au foyer", default=2, validators=[MinValueValidator(1), MaxValueValidator(20)]
@@ -53,6 +58,13 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_full_name() or self.email
 
+    def save(self, *args, **kwargs):
+        self.email_canonical = canonical(self.email)
+        update_fields = kwargs.get("update_fields")
+        if update_fields is not None and "email" in update_fields:
+            kwargs["update_fields"] = {*update_fields, "email_canonical"}
+        super().save(*args, **kwargs)
+
     @property
     def has_location(self) -> bool:
         return self.latitude is not None and self.longitude is not None
@@ -62,3 +74,34 @@ class User(AbstractUser):
         if not self.has_location:
             return None
         return (self.latitude, self.longitude, self.search_radius_km)
+
+
+class Device(models.Model):
+    """A browser identified by the hash of a signed cookie."""
+
+    digest = models.CharField("empreinte", max_length=64, unique=True)
+    created_at = models.DateTimeField("vu la première fois", auto_now_add=True)
+
+    class Meta:
+        verbose_name = "appareil"
+
+    def __str__(self):
+        return f"Appareil {self.digest[:8]}"
+
+
+class DeviceLink(models.Model):
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, related_name="links")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="device_links")
+    signed_up = models.BooleanField("compte créé ici", default=False)
+    first_seen = models.DateTimeField("première connexion", auto_now_add=True)
+    last_seen = models.DateTimeField("dernière connexion", auto_now=True)
+
+    class Meta:
+        verbose_name = "connexion d'appareil"
+        verbose_name_plural = "connexions d'appareils"
+        constraints = [
+            models.UniqueConstraint(fields=["device", "user"], name="unique_device_user")
+        ]
+
+    def __str__(self):
+        return f"{self.user} sur {self.device}"

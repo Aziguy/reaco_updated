@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from apps.assistant.models import Feature
-from apps.assistant.services import Caller, get_route, used_today
+from apps.assistant.services import Caller, get_route, quota_users, used_today
 
 from . import services, stripe_gateway
 from .models import PaymentSettings, Period, Plan, Subscription
@@ -168,6 +168,7 @@ def account(request):
         "current": current,
         "plan": plan,
         "usage": _usage(request.user, plan),
+        "shared": len(quota_users(request.user)) - 1,
         "pending": subscriptions.filter(status=Subscription.Status.PENDING),
         "history": subscriptions.exclude(status=Subscription.Status.PENDING)[:12],
         "upcoming": subscriptions.filter(

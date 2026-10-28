@@ -4,6 +4,7 @@
   <div>
     <p>{{ error }}</p>
     {% if reason == "quota" or reason == "plan" %}<p class="mt-1"><a href="{% url 'billing:pricing' %}" class="font-medium underline">Voir les formules</a> pour en profiter davantage.</p>{% endif %}
+    {% if reason == "verify" %}<p class="mt-1"><a href="{% url 'account_email' %}" class="font-medium underline">Renvoyer le lien de confirmation</a></p>{% endif %}
     <p class="mt-1">Vous pouvez aussi <a href="{% url 'recipes:list' %}" class="font-medium underline">parcourir le catalogue</a>.</p>
   </div>
 </div>

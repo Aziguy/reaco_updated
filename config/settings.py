@@ -72,6 +72,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "apps.core.middleware.CSPMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "apps.accounts.middleware.DeviceMiddleware",
     "apps.accounts.middleware.StaffMFAMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
@@ -129,6 +130,11 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = env("ACCOUNT_EMAIL_VERIFICATION", default="optional")
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_SESSION_REMEMBER = None
+ACCOUNT_ADAPTER = "apps.accounts.adapter.AccountAdapter"
+ACCOUNT_FORMS = {"signup": "apps.accounts.forms.SignupForm"}
+SIGNUP_LIMIT_PER_IP = env.int("SIGNUP_LIMIT_PER_IP", default=5)
+BLOCKED_EMAIL_DOMAINS = env.list("BLOCKED_EMAIL_DOMAINS", default=[])
+
 MFA_SUPPORTED_TYPES = ["totp", "recovery_codes", "webauthn"]
 MFA_TOTP_ISSUER = "Comégusto"
 MFA_PASSKEY_LOGIN_ENABLED = True

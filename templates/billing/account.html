@@ -36,7 +36,7 @@
             </li>
           {% endfor %}
         </ul>
-        <p class="muted mt-4 text-xs">Les compteurs repartent à zéro chaque nuit.</p>
+        <p class="muted mt-4 text-xs">Les compteurs repartent à zéro chaque nuit.{% if shared %} Ils sont partagés avec {% if shared == 1 %}un autre compte gratuit utilisé{% else %}{{ shared }} autres comptes gratuits utilisés{% endif %} sur le même appareil.{% endif %}</p>
       </div>
     {% endif %}
   </section>

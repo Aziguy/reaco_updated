@@ -1,8 +1,13 @@
+from allauth.account.forms import SignupForm as BaseSignupForm
+from allauth.core import context
 from django import forms
+from django.conf import settings
 
+from apps.core.ratelimit import client_ip
 from apps.integrations.geocoding import geocode_city
 from apps.integrations.http import ServiceError
 
+from .emails import canonical, signups_from
 from .models import User
 
 
@@ -62,3 +67,25 @@ class DeleteAccountForm(forms.Form):
         if self.cleaned_data["confirm"].strip().upper() != "SUPPRIMER":
             raise forms.ValidationError("Confirmation incorrecte.")
         return self.cleaned_data["confirm"]
+
+
+class SignupForm(BaseSignupForm):
+    def clean_email(self):
+        email = super().clean_email()
+        if User.objects.filter(email_canonical=canonical(email)).exists():
+            raise forms.ValidationError(
+                "Un compte existe déjà pour cette boîte mail. "
+                "Connectez-vous ou réinitialisez votre mot de passe."
+            )
+        return email
+
+    def clean(self):
+        data = super().clean()
+        limit = settings.SIGNUP_LIMIT_PER_IP
+        request = context.request
+        if limit and request and signups_from(client_ip(request)) >= limit:
+            raise forms.ValidationError(
+                "Trop de comptes ont été créés depuis cette connexion aujourd'hui. "
+                "Réessayez demain."
+            )
+        return data

@@ -95,16 +95,35 @@ def deep_allowed(caller: Caller) -> bool:
     return plan is None or plan.deep_mode
 
 
+def quota_users(user) -> list[int]:
+    """Free accounts sharing a device share one daily quota."""
+    from apps.accounts.devices import free_siblings
+    from apps.billing.services import current_subscription
+
+    if user.is_staff or current_subscription(user):
+        return [user.pk]
+    return free_siblings(user)
+
+
 def used_today(route: Route, caller: Caller) -> int:
     if caller.user:
         return Usage.objects.filter(
-            user=caller.user, feature=route.feature, ok=True, created_at__date=timezone.localdate()
+            user__in=quota_users(caller.user),
+            feature=route.feature,
+            ok=True,
+            created_at__date=timezone.localdate(),
         ).count()
     return cache.get(_counter_key(caller, route.feature), 0)
 
 
 def remaining(route: Route, caller: Caller) -> int:
     return max(quota(route, caller) - used_today(route, caller), 0)
+
+
+def verified(user) -> bool:
+    from apps.accounts.emails import email_verified
+
+    return settings.ACCOUNT_EMAIL_VERIFICATION == "none" or email_verified(user)
 
 
 def availability(feature: str, mode: str, caller: Caller) -> Route:
@@ -116,6 +135,12 @@ def availability(feature: str, mode: str, caller: Caller) -> Route:
         raise Unavailable("disabled", "L'assistant est momentanément indisponible.")
     if month_spend() >= Decimal(str(settings.AI["MONTHLY_BUDGET_USD"])):
         raise Unavailable("budget", "L'assistant a atteint son budget du mois.")
+    if caller.user and not caller.user.is_staff and not verified(caller.user):
+        raise Unavailable(
+            "verify",
+            "Confirmez votre adresse email pour utiliser l'assistant, "
+            "avec le lien reçu à l'inscription.",
+        )
     if route.mode == Mode.DEEP and not deep_allowed(caller):
         from apps.billing.services import deep_plan
 

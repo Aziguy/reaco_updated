@@ -2,10 +2,14 @@ from allauth.mfa.models import Authenticator
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.db.models import Exists, OuterRef
+from django.urls import reverse
+from django.utils.html import format_html_join
+from django.utils.safestring import mark_safe
 from unfold.admin import ModelAdmin
 from unfold.decorators import display
 from unfold.forms import AdminPasswordChangeForm, UserChangeForm, UserCreationForm
 
+from . import devices
 from .models import User
 
 MFA_LABELS = {
@@ -28,6 +32,22 @@ class MFAFilter(admin.SimpleListFilter):
         return queryset
 
 
+class SharedDeviceFilter(admin.SimpleListFilter):
+    title = "appareil partagé"
+    parameter_name = "partage"
+
+    def lookups(self, request, model_admin):
+        return (("1", "Avec d'autres comptes"),)
+
+    def queryset(self, request, queryset):
+        if self.value() == "1":
+            others = User.objects.filter(device_links__device__links__user=OuterRef("pk")).exclude(
+                pk=OuterRef("pk")
+            )
+            return queryset.filter(Exists(others))
+        return queryset
+
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin, ModelAdmin):
     form = UserChangeForm
@@ -35,9 +55,9 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     change_password_form = AdminPasswordChangeForm
     ordering = ("email",)
     list_display = ("email", "first_name", "last_name", "city", "mfa", "is_staff", "date_joined")
-    list_filter = (MFAFilter, "is_staff", "is_active")
+    list_filter = (MFAFilter, SharedDeviceFilter, "is_staff", "is_active")
     search_fields = ("email", "first_name", "last_name", "city")
-    readonly_fields = ("mfa_methods",)
+    readonly_fields = ("mfa_methods", "linked_accounts")
     actions = ("reset_mfa",)
     fieldsets = (
         (None, {"fields": ("email", "password")}),
@@ -47,7 +67,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
             {"fields": ("postal_code", "city", "latitude", "longitude", "search_radius_km")},
         ),
         ("Préférences", {"fields": ("expiry_reminders",)}),
-        ("Sécurité", {"fields": ("mfa_methods",)}),
+        ("Sécurité", {"fields": ("mfa_methods", "linked_accounts")}),
         (
             "Permissions",
             {"fields": ("is_active", "is_staff", "is_superuser", "groups", "user_permissions")},
@@ -71,6 +91,17 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     def mfa_methods(self, obj):
         types = Authenticator.objects.filter(user=obj).values_list("type", flat=True)
         return ", ".join(sorted({MFA_LABELS.get(t, t) for t in types})) or "Inactive"
+
+    @admin.display(description="comptes du même appareil")
+    def linked_accounts(self, obj):
+        users = devices.linked_users(obj)[:20]
+        if not users:
+            return "Aucun"
+        return format_html_join(
+            mark_safe("<br>"),
+            '<a href="{}">{}</a>',
+            ((reverse("admin:accounts_user_change", args=[u.pk]), u.email) for u in users),
+        )
 
     @admin.action(description="Réinitialiser la double authentification")
     def reset_mfa(self, request, queryset):
