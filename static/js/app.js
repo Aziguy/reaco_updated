@@ -146,6 +146,135 @@ function setupDropzone() {
   });
 }
 
+function csrfToken() {
+  try {
+    return JSON.parse(document.body.getAttribute("hx-headers"))["X-CSRFToken"];
+  } catch (e) {
+    return "";
+  }
+}
+
+function initChips(root) {
+  root.querySelectorAll("[data-chips]:not([data-ready])").forEach((box) => {
+    box.dataset.ready = "1";
+    const source = $("input", box);
+    const split = (text) => text.split(",").map((n) => n.trim()).filter(Boolean);
+    let chips = split(source.value);
+    const field = document.createElement("div");
+    field.className =
+      "flex min-h-11 flex-wrap items-center gap-1.5 rounded-xl border border-stone-300 bg-white px-2 py-1.5 " +
+      "focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-500/30 dark:border-stone-700 dark:bg-stone-950";
+    const typing = document.createElement("input");
+    typing.type = "text";
+    typing.id = source.id;
+    typing.setAttribute("list", source.getAttribute("list") || "");
+    typing.autocomplete = "off";
+    typing.className =
+      "min-w-32 flex-1 bg-transparent px-1 py-1 text-base text-stone-900 placeholder:text-stone-400 focus:outline-none dark:text-white";
+    const placeholder = source.placeholder;
+    source.removeAttribute("id");
+    source.type = "hidden";
+
+    const sync = () => {
+      source.value = [...chips, ...split(typing.value)].join(", ");
+    };
+    const render = () => {
+      field.querySelectorAll("[data-chip]").forEach((chip) => chip.remove());
+      chips.forEach((name) => {
+        const chip = document.createElement("span");
+        chip.dataset.chip = "";
+        chip.className = "ai-chip !py-0.5";
+        chip.textContent = name;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "ai-chip-remove !size-5";
+        remove.setAttribute("aria-label", `Retirer ${name}`);
+        remove.textContent = "×";
+        remove.addEventListener("click", () => {
+          chips = chips.filter((n) => n !== name);
+          render();
+          typing.focus();
+        });
+        chip.append(remove);
+        field.insertBefore(chip, typing);
+      });
+      typing.placeholder = chips.length ? "Ajouter…" : placeholder;
+      sync();
+    };
+    const commit = () => {
+      const known = chips.map((n) => n.toLowerCase());
+      const added = split(typing.value).filter((n) => !known.includes(n.toLowerCase()));
+      if (!typing.value.trim()) return false;
+      chips = [...chips, ...added];
+      typing.value = "";
+      render();
+      return true;
+    };
+    typing.addEventListener("keydown", (event) => {
+      if ((event.key === "Enter" || event.key === ",") && commit()) event.preventDefault();
+      if (event.key === "Backspace" && !typing.value && chips.length) {
+        chips = chips.slice(0, -1);
+        render();
+      }
+    });
+    typing.addEventListener("input", (event) => {
+      if (event.inputType === "insertReplacementText" || !event.inputType) commit();
+      else sync();
+    });
+    typing.addEventListener("blur", commit);
+    field.addEventListener("click", (event) => event.target === field && typing.focus());
+    field.append(typing);
+    box.append(field);
+    render();
+  });
+}
+
+function setupChips() {
+  initChips(document);
+  document.addEventListener("htmx:load", (event) => initChips(event.target));
+}
+
+function setupPhotoIngredients() {
+  document.addEventListener("change", async (event) => {
+    const input = event.target.closest("[data-photo-ingredients]");
+    const file = input?.files?.[0];
+    if (!file) return;
+    const box = document.getElementById(input.dataset.target);
+    const data = new FormData();
+    data.append("photo", file);
+    data.append("j", $("input[name=j]", box)?.value || "");
+    box.classList.add("is-loading");
+    box.setAttribute("aria-busy", "true");
+    try {
+      const response = await fetch(input.dataset.url, {
+        method: "POST",
+        body: data,
+        headers: { "X-CSRFToken": csrfToken(), "HX-Request": "true" },
+      });
+      box.outerHTML = await response.text();
+      initChips(document.getElementById(input.dataset.target).parentElement);
+    } catch (e) {
+      box.classList.remove("is-loading");
+      box.removeAttribute("aria-busy");
+    }
+  });
+}
+
+function setupCopy() {
+  document.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-copy]");
+    if (!button) return;
+    const label = $("[data-copy-label]", button);
+    try {
+      await navigator.clipboard.writeText(button.dataset.copy);
+      if (label) label.textContent = "Copié";
+    } catch (e) {
+      if (label) label.textContent = "Sélectionnez";
+    }
+    setTimeout(() => label && (label.textContent = "Copier"), 2000);
+  });
+}
+
 setupThemeToggle();
 setupMenu();
 setupConfirm();
@@ -156,3 +285,6 @@ setupGeolocation();
 setupScanner();
 setupAiForms();
 setupDropzone();
+setupChips();
+setupPhotoIngredients();
+setupCopy();

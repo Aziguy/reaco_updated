@@ -9,7 +9,7 @@
 
 {% block content %}
 <div class="cg-dashboard">
-  <div class="cg-grid cg-grid-4">
+  <div class="cg-grid cg-grid-5">
     {% for kpi in kpis %}
       {% component "unfold/components/card.html" with href=kpi.url %}
         {% component "unfold/components/text.html" %}{{ kpi.title }}{% endcomponent %}

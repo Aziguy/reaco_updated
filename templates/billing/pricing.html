@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Formules et tarifs{% endblock %}
+{% block description %}Gratuit, Plus ou Famille : des formules à prix juste qui couvrent les frais de Comégusto, sans chercher le profit.{% endblock %}
+{% block main %}
+<div class="group/pricing">
+<section class="ai-surface border-b border-stone-200 dark:border-stone-800">
+  <div class="container-page py-12 text-center sm:py-16">
+    <p class="badge-brand">{% icon "heart" "size-3.5" %}Sans but lucratif</p>
+    <h1 class="mx-auto mt-4 max-w-3xl text-4xl leading-tight text-balance sm:text-5xl">Des formules justes,<br class="hidden sm:block"> pour <span class="bg-linear-to-r from-brand-600 to-emerald-500 bg-clip-text text-transparent dark:from-brand-400 dark:to-emerald-300">couvrir nos frais</span></h1>
+    <p class="mx-auto mt-4 max-w-2xl text-lg text-stone-600 dark:text-stone-300">L'essentiel de Comégusto reste gratuit. Les abonnements paient l'assistant IA, l'hébergement, le nom de domaine, le développement et la communication. <a href="{% url 'billing:costs' %}" class="font-medium text-brand-700 underline dark:text-brand-300">Où va votre argent ?</a></p>
+
+    <fieldset class="segmented mt-8 !p-1.5">
+      <legend class="sr-only">Période de facturation</legend>
+      <label class="!px-4 !py-2 !text-sm"><input type="radio" name="period" id="period-month" value="month"{% if period != "year" %} checked{% endif %}>Mensuel</label>
+      <label class="!px-4 !py-2 !text-sm"><input type="radio" name="period" id="period-year" value="year"{% if period == "year" %} checked{% endif %}>Annuel <span class="badge-brand !py-0">−30 % et plus</span></label>
+    </fieldset>
+  </div>
+</section>
+
+<div class="container-page py-12">
+  {% if current %}
+    <p class="guide-note mx-auto mb-8 max-w-3xl">Votre formule {{ current.plan }} est active jusqu'au {{ current.ends_on|date:"j F Y" }}. Un nouvel abonnement prendra le relais à cette date. <a href="{% url 'billing:account' %}">Mon abonnement</a></p>
+  {% endif %}
+  <div class="grid items-stretch gap-6 lg:grid-cols-3">
+    {% for plan in plans %}
+      <article class="card relative flex flex-col p-6 sm:p-8 {% if plan.is_highlighted %}border-brand-400 ring-2 ring-brand-500/40 dark:border-brand-700{% endif %}" aria-labelledby="plan-{{ plan.slug }}">
+        {% if plan.is_highlighted %}<span class="badge absolute -top-3 left-6 bg-brand-600 text-white shadow-sm">{% icon "sparkles" "size-3.5" %}Recommandée</span>{% endif %}
+        <div class="flex items-center justify-between gap-3">
+          <h2 id="plan-{{ plan.slug }}" class="text-xl">{{ plan.name }}</h2>
+          {% if plan.deep_mode %}<span class="badge-neutral">{% icon "crown" "size-3.5" %}Complète</span>{% endif %}
+          {% if current_plan and current_plan.pk == plan.pk %}<span class="badge-brand">Votre formule</span>{% endif %}
+        </div>
+        <p class="muted mt-1 min-h-10">{{ plan.tagline }}</p>
+
+        <div class="mt-6">
+          {% if plan.is_free %}
+            <p class="flex items-baseline gap-1"><span class="text-4xl font-semibold tabular-nums text-stone-900 dark:text-white">0 €</span><span class="muted">pour toujours</span></p>
+            <p class="muted mt-1 text-xs">&nbsp;</p>
+          {% else %}
+            <div class="group-has-[#period-year:checked]/pricing:hidden">
+              <p class="flex items-baseline gap-1"><span class="text-4xl font-semibold tabular-nums text-stone-900 dark:text-white">{{ plan.monthly_price|euro }}</span><span class="muted">/ mois</span></p>
+              <p class="muted mt-1 text-xs">Sans engagement.</p>
+            </div>
+            <div class="hidden group-has-[#period-year:checked]/pricing:block">
+              <p class="flex items-baseline gap-1"><span class="text-4xl font-semibold tabular-nums text-stone-900 dark:text-white">{{ plan.yearly_price|euro }}</span><span class="muted">/ an</span></p>
+              <p class="mt-1 text-xs font-medium text-brand-700 dark:text-brand-300">Soit {{ plan.yearly_per_month|euro }} par mois, {{ plan.yearly_saving|euro }} d'économie.</p>
+            </div>
+          {% endif %}
+        </div>
+
+        <ul class="mt-6 space-y-2.5 text-sm">
+          {% for feature in plan.feature_list %}
+            <li class="flex items-start gap-2.5">{% icon "check" "size-4 mt-0.5 shrink-0 text-brand-600 dark:text-brand-400" %}<span>{{ feature }}</span></li>
+          {% endfor %}
+        </ul>
+        {% if plan.ordered_quotas %}
+          <dl class="mt-6 space-y-1.5 border-t border-stone-100 pt-5 text-sm dark:border-stone-800">
+            <dt class="mb-2 text-xs font-medium uppercase tracking-wide text-stone-500 dark:text-stone-400">Assistant IA, chaque jour</dt>
+            {% for quota in plan.ordered_quotas %}
+              <div class="flex items-center justify-between gap-3"><dd class="text-stone-600 dark:text-stone-300">{{ quota.get_feature_display }}</dd><dd class="font-medium tabular-nums text-stone-900 dark:text-white">{{ quota.daily }}</dd></div>
+            {% endfor %}
+          </dl>
+        {% endif %}
+
+        <div class="mt-auto pt-8">
+          {% if plan.is_free %}
+            {% if user.is_authenticated %}
+              <p class="btn-secondary w-full cursor-default">{% icon "check" "size-4" %}Inclus dans votre compte</p>
+            {% else %}
+              <a href="{% url 'account_signup' %}" class="btn-secondary w-full">Créer un compte gratuit</a>
+            {% endif %}
+          {% elif methods %}
+            <a href="{% url 'billing:checkout' plan.slug %}?periode=mois" class="{% if plan.is_highlighted %}btn-primary{% else %}btn-secondary{% endif %} w-full group-has-[#period-year:checked]/pricing:hidden">Choisir {{ plan.name }}</a>
+            <a href="{% url 'billing:checkout' plan.slug %}?periode=an" class="{% if plan.is_highlighted %}btn-primary{% else %}btn-secondary{% endif %} hidden w-full group-has-[#period-year:checked]/pricing:flex">Choisir {{ plan.name }} à l'année</a>
+          {% else %}
+            <p class="btn-secondary w-full cursor-default opacity-60">Bientôt disponible</p>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+
+  {% if methods %}
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-stone-600 dark:text-stone-300">
+      <span class="muted">Paiement par</span>
+      {% for value, label, detail in methods %}
+        <span class="inline-flex items-center gap-1.5 font-medium">{% if value == "transfer" %}{% icon "landmark" "size-4 text-stone-400" %}{% elif value == "wero" %}{% icon "smartphone" "size-4 text-stone-400" %}{% else %}{% icon "credit-card" "size-4 text-stone-400" %}{% endif %}{{ label }}</span>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <section class="mx-auto mt-16 max-w-3xl" aria-labelledby="faq-title">
+    <h2 id="faq-title" class="section-title text-center">Questions fréquentes</h2>
+    <div class="mt-6 divide-y divide-stone-200 rounded-2xl border border-stone-200 bg-white dark:divide-stone-800 dark:border-stone-800 dark:bg-stone-900">
+      {% for question, answer in faq %}
+        <details class="group px-5 py-4"{% if forloop.first %} open{% endif %}>
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium text-stone-900 dark:text-white">{{ question }}<span class="text-stone-400 transition group-open:rotate-45">{% icon "plus" "size-4" %}</span></summary>
+          <p class="muted mt-2 !text-[15px] leading-relaxed">{{ answer }}</p>
+        </details>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+</div>
+{% endblock %}

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "apps.api",
     "apps.guide",
     "apps.assistant",
+    "apps.billing",
 ]
 if GOOGLE_CLIENT_ID:
     INSTALLED_APPS.append("allauth.socialaccount.providers.google")
@@ -262,6 +263,11 @@ AI = {
     "MONTHLY_BUDGET_USD": env.float("AI_MONTHLY_BUDGET_USD", default=20.0),
     "TIMEOUT": env.float("AI_TIMEOUT", default=60.0),
 }
+STRIPE = {
+    "SECRET_KEY": env("STRIPE_SECRET_KEY", default=""),
+    "WEBHOOK_SECRET": env("STRIPE_WEBHOOK_SECRET", default=""),
+}
+BILLING = {"USD_TO_EUR": env.float("BILLING_USD_TO_EUR", default=0.86)}
 
 
 def _admin_link(title, icon, model):
@@ -364,6 +370,18 @@ UNFOLD = {
                     _admin_link("Modèles", "smart_toy", "assistant.aimodel"),
                     _admin_link("Fournisseurs", "hub", "assistant.provider"),
                     _admin_link("Menus", "calendar_month", "assistant.mealplan"),
+                ],
+            },
+            {
+                "title": "Abonnements",
+                "collapsible": True,
+                "items": [
+                    _admin_link("Abonnements", "card_membership", "billing.subscription"),
+                    _admin_link("Formules", "workspace_premium", "billing.plan"),
+                    _admin_link(
+                        "Réglages de paiement", "account_balance", "billing.paymentsettings"
+                    ),
+                    _admin_link("Frais mensuels", "receipt_long", "billing.expense"),
                 ],
             },
             {

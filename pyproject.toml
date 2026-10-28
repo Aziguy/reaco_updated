@@ -22,6 +22,7 @@ dependencies = [
     "django-storages[s3]>=1.14",
     "anthropic>=2.3",
     "django-unfold>=0.110",
+    "stripe>=12",
 ]
 
 [dependency-groups]

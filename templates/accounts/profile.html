@@ -6,6 +6,12 @@
   <h1 class="text-3xl">Mon profil</h1>
   <p class="muted mt-1">{{ user.email }}{% if user.city %} · {{ user.city }}{% endif %}</p>
 
+  <a href="{% url 'billing:account' %}" class="card mt-6 flex items-center gap-4 p-5 no-underline transition hover:border-brand-300">
+    <span class="ai-icon">{% icon "sparkles" %}</span>
+    <span class="min-w-0 flex-1"><span class="block font-medium text-stone-900 dark:text-white">Mon abonnement</span><span class="muted text-sm">Formule, assistant IA du jour et paiements</span></span>
+    {% icon "arrow-right" "size-4 text-stone-400" %}
+  </a>
+
   <form method="post" class="card form-flow mt-6 p-6">
     {% csrf_token %}
     {{ form.non_field_errors }}

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Mon abonnement{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl">
+  <h1 class="text-3xl">Mon abonnement</h1>
+  <p class="muted mt-1">Votre formule, l'assistant IA du jour et vos paiements.</p>
+
+  <section class="card mt-6 overflow-hidden" aria-labelledby="plan-title">
+    <div class="ai-surface flex flex-wrap items-center justify-between gap-4 p-6">
+      <div class="flex items-center gap-4">
+        <span class="ai-icon !size-12">{% if plan.deep_mode %}{% icon "crown" "size-6" %}{% else %}{% icon "sparkles" "size-6" %}{% endif %}</span>
+        <div>
+          <p class="text-xs font-medium uppercase tracking-wide text-stone-500 dark:text-stone-400">Formule actuelle</p>
+          <h2 id="plan-title" class="text-2xl">{{ plan.name|default:"Gratuit" }}</h2>
+          {% if current %}<p class="muted">{{ current.get_period_display }} · jusqu'au {{ current.ends_on|date:"j F Y" }}{% if current.days_left is not None and current.days_left <= 15 %} <span class="badge-warn ml-1">{% if current.days_left == 0 %}dernier jour{% else %}J-{{ current.days_left }}{% endif %}</span>{% endif %}</p>{% endif %}
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        {% if current and current.stripe_customer %}
+          <form method="post" action="{% url 'billing:portal' %}">{% csrf_token %}<button type="submit" class="btn-secondary">{% icon "credit-card" "size-4" %}Gérer ma carte</button></form>
+        {% elif renew_soon %}
+          <a href="{% url 'billing:checkout' current.plan.slug %}?periode={% if current.period == 'year' %}an{% else %}mois{% endif %}" class="btn-primary">{% icon "refresh" "size-4" %}Renouveler</a>
+        {% endif %}
+        <a href="{% url 'billing:pricing' %}" class="{% if current %}btn-secondary{% else %}btn-primary{% endif %}">{% if current %}Changer de formule{% else %}{% icon "sparkles" "size-4" %}Voir les formules{% endif %}</a>
+      </div>
+    </div>
+    {% if usage %}
+      <div class="border-t border-stone-200 p-6 dark:border-stone-800">
+        <h3 class="text-sm">Assistant IA aujourd'hui</h3>
+        <ul class="mt-4 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+          {% for row in usage %}
+            <li>
+              <div class="flex items-baseline justify-between gap-3 text-sm"><span class="text-stone-700 dark:text-stone-300">{{ row.label }}</span><span class="tabular-nums text-stone-500 dark:text-stone-400"><strong class="font-semibold text-stone-900 dark:text-white">{{ row.used }}</strong> / {{ row.limit }}</span></div>
+              <svg class="mt-1.5 h-1.5 w-full overflow-hidden rounded-full" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="2" class="fill-stone-200 dark:fill-stone-800"/><rect width="{{ row.percent }}" height="2" class="{% if row.percent >= 100 %}fill-amber-500{% else %}fill-brand-500{% endif %}"/></svg>
+            </li>
+          {% endfor %}
+        </ul>
+        <p class="muted mt-4 text-xs">Les compteurs repartent à zéro chaque nuit.</p>
+      </div>
+    {% endif %}
+  </section>
+
+  {% if pending %}
+    <section class="card mt-6 p-6" aria-labelledby="pending-title">
+      <h2 id="pending-title" class="text-base">En attente de paiement</h2>
+      <ul class="mt-3 divide-y divide-stone-100 dark:divide-stone-800">
+        {% for subscription in pending %}
+          <li class="flex flex-wrap items-center justify-between gap-3 py-3 text-sm">
+            <span><span class="font-medium text-stone-900 dark:text-white">{{ subscription.plan }}</span> <span class="muted">· {{ subscription.get_period_display|lower }} · {{ subscription.amount|euro }} · {{ subscription.get_method_display }}</span><br><span class="font-mono text-xs text-stone-500">{{ subscription.reference }}</span>{% if subscription.declared_at %} <span class="badge-neutral ml-1">paiement signalé</span>{% endif %}</span>
+            <a href="{{ subscription.get_absolute_url }}" class="btn-secondary btn-sm">Instructions{% icon "arrow-right" "size-4" %}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if upcoming %}
+    <p class="guide-note mt-6">{% for subscription in upcoming %}Formule {{ subscription.plan }} prévue du {{ subscription.starts_on|date:"j F Y" }} au {{ subscription.ends_on|date:"j F Y" }}.{% if not forloop.last %} {% endif %}{% endfor %}</p>
+  {% endif %}
+
+  {% if history %}
+    <section class="card mt-6 p-6" aria-labelledby="history-title">
+      <h2 id="history-title" class="text-base">Historique</h2>
+      <div class="mt-3 overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="muted"><tr><th class="py-2 font-medium">Référence</th><th class="py-2 font-medium">Formule</th><th class="py-2 font-medium">Période</th><th class="py-2 text-right font-medium">Montant</th></tr></thead>
+          <tbody class="divide-y divide-stone-100 dark:divide-stone-800">
+            {% for subscription in history %}
+              <tr>
+                <td class="py-2 font-mono text-xs">{{ subscription.reference }}</td>
+                <td class="py-2">{{ subscription.plan }}{% if subscription.status == "canceled" %} <span class="badge-neutral ml-1">annulée</span>{% endif %}</td>
+                <td class="py-2 text-stone-600 dark:text-stone-300">{% if subscription.starts_on %}{{ subscription.starts_on|date:"d/m/Y" }} au {{ subscription.ends_on|date:"d/m/Y" }}{% else %}·{% endif %}</td>
+                <td class="py-2 text-right tabular-nums">{{ subscription.amount|euro }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  {% endif %}
+</div>
+{% endblock %}

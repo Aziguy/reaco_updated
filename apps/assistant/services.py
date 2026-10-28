@@ -76,7 +76,23 @@ def _counter_key(caller: Caller, feature: str) -> str:
 
 
 def quota(route: Route, caller: Caller) -> int:
-    return route.daily_quota if caller.user else route.anonymous_quota
+    """Visitor quota, else the daily quota of the user's plan, else the route default."""
+    if not caller.user:
+        return route.anonymous_quota
+    from apps.billing.services import plan_of
+
+    plan = plan_of(caller.user)
+    limit = plan.daily_quota(route.feature) if plan else None
+    return route.daily_quota if limit is None else limit
+
+
+def deep_allowed(caller: Caller) -> bool:
+    from apps.billing.services import plan_of
+
+    if not caller.user or caller.user.is_staff:
+        return True
+    plan = plan_of(caller.user)
+    return plan is None or plan.deep_mode
 
 
 def used_today(route: Route, caller: Caller) -> int:
@@ -100,7 +116,15 @@ def availability(feature: str, mode: str, caller: Caller) -> Route:
         raise Unavailable("disabled", "L'assistant est momentanément indisponible.")
     if month_spend() >= Decimal(str(settings.AI["MONTHLY_BUDGET_USD"])):
         raise Unavailable("budget", "L'assistant a atteint son budget du mois.")
+    if route.mode == Mode.DEEP and not deep_allowed(caller):
+        from apps.billing.services import deep_plan
+
+        plan = deep_plan()
+        name = f"la formule {plan}" if plan else "une formule payante"
+        raise Unavailable("plan", f"Le mode Approfondi est inclus dans {name}.")
     if quota(route, caller) == 0:
+        if caller.user:
+            raise Unavailable("quota", "Cette fonction n'est pas incluse dans votre formule.")
         raise Unavailable("login", "Connectez-vous pour utiliser l'assistant.")
     if remaining(route, caller) <= 0:
         raise Unavailable("quota", "Vous avez atteint la limite du jour. Revenez demain !")

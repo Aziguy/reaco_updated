@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load comegusto %}
+{% block title %}Où va votre argent{% endblock %}
+{% block description %}Les frais mensuels de Comégusto et leur couverture par les abonnements, en toute transparence.{% endblock %}
+{% block content %}
+<div class="mx-auto max-w-3xl">
+  <header class="text-center">
+    <span class="ai-icon mx-auto !size-12">{% icon "piggy" "size-6" %}</span>
+    <h1 class="mt-4 text-3xl sm:text-4xl">Où va votre argent</h1>
+    <p class="muted mx-auto mt-2 max-w-xl !text-base">Comégusto ne cherche pas le profit : voici ce que coûte le site chaque mois et la part couverte par les abonnements.</p>
+  </header>
+
+  <section class="card mt-8 p-6 sm:p-8" aria-labelledby="coverage-title">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <p class="text-xs font-medium uppercase tracking-wide text-stone-500 dark:text-stone-400">{{ month|date:"F Y"|capfirst }}</p>
+        <h2 id="coverage-title" class="mt-1 text-2xl">{{ costs.coverage }} % des frais couverts</h2>
+      </div>
+      <p class="text-right text-sm text-stone-600 dark:text-stone-300"><span class="block text-2xl font-semibold tabular-nums text-stone-900 dark:text-white">{{ costs.revenue|euro }}</span>sur {{ costs.total|euro }} de frais</p>
+    </div>
+    <svg class="mt-5 h-3 w-full overflow-hidden rounded-full" viewBox="0 0 100 2" preserveAspectRatio="none" role="img" aria-label="{{ costs.coverage }} % couverts">
+      <rect width="100" height="2" class="fill-stone-200 dark:fill-stone-800"/><rect width="{{ costs.coverage }}" height="2" class="fill-brand-500"/>
+    </svg>
+    <p class="muted mt-3 text-sm">{% if costs.subscribers %}Merci aux {{ costs.subscribers }} abonné{{ costs.subscribers|pluralize }} qui font vivre le site.{% else %}Soyez parmi les premiers à soutenir le site.{% endif %} Les abonnements annuels sont comptés au douzième.</p>
+  </section>
+
+  <section class="card mt-6 p-6 sm:p-8" aria-labelledby="lines-title">
+    <h2 id="lines-title" class="text-base">Frais du mois</h2>
+    <ul class="mt-4 space-y-4">
+      {% for line in costs.lines %}
+        <li>
+          <div class="flex items-baseline justify-between gap-3 text-sm">
+            <span class="min-w-0"><span class="font-medium text-stone-900 dark:text-white">{{ line.label }}</span>{% if line.measured %} <span class="badge-brand ml-1">mesuré</span>{% endif %}{% if line.note %}<span class="muted block text-xs">{{ line.note }}</span>{% endif %}</span>
+            <span class="shrink-0 tabular-nums font-medium">{{ line.amount|euro }}</span>
+          </div>
+          <svg class="mt-1.5 h-1.5 w-full overflow-hidden rounded-full" viewBox="0 0 100 2" preserveAspectRatio="none" aria-hidden="true"><rect width="100" height="2" class="fill-stone-100 dark:fill-stone-800"/><rect width="{{ line.share }}" height="2" class="fill-accent-500"/></svg>
+        </li>
+      {% endfor %}
+    </ul>
+    <p class="muted mt-6 border-t border-stone-100 pt-4 text-xs dark:border-stone-800">Montants mensuels hors frais bancaires. Le coût de l'assistant IA est calculé à partir des appels réels du mois, convertis de dollars en euros.</p>
+  </section>
+
+  <div class="mt-8 flex flex-wrap justify-center gap-3">
+    <a href="{% url 'billing:pricing' %}" class="btn-primary">{% icon "heart" "size-4" %}Soutenir Comégusto</a>
+    <a href="{% url 'core:about' %}" class="btn-secondary">À propos du projet</a>
+  </div>
+</div>
+{% endblock %}
